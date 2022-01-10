@@ -4,33 +4,33 @@
 
     <item
         android:id="@+id/myCoin"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="@string/myCoin"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/my_coin"
+        app:showAsAction="ifRoom"
+        android:title="@string/myCoin"/>
 
     <item
         android:id="@+id/debate"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="@string/debate_room"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/debate"
+        app:showAsAction="ifRoom"
+        android:title="@string/debate_room"/>
 
     <item
         android:id="@+id/feed"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="@string/feed"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/feed"
+        app:showAsAction="ifRoom"
+        android:title="@string/feed"/>
 
     <item
         android:id="@+id/add_on"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="@string/add_on"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/add_on"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_on"/>
 
     <item
         android:id="@+id/profile"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="@string/profile"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/profile"
+        app:showAsAction="ifRoom"
+        android:title="@string/profile"/>
 
 
 
