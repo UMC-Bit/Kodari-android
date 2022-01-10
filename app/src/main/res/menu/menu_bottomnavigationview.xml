@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/myCoin"
+        android:icon="@drawable/my_coin"
+        app:showAsAction="ifRoom"
+        android:title="@string/myCoin"/>
+
+    <item
+        android:id="@+id/debate"
+        android:icon="@drawable/debate"
+        app:showAsAction="ifRoom"
+        android:title="@string/debate_room"/>
+
+    <item
+        android:id="@+id/feed"
+        android:icon="@drawable/feed"
+        app:showAsAction="ifRoom"
+        android:title="@string/feed"/>
+
+    <item
+        android:id="@+id/add_on"
+        android:icon="@drawable/add_on"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_on"/>
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profile"
+        app:showAsAction="ifRoom"
+        android:title="@string/profile"/>
+
+
+
+</menu>

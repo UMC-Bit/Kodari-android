@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Kodari</string>
+    <string name="myCoin">내자산</string>
+    <string name="debate_room">토론장</string>
+    <string name="feed">피드</string>
+    <string name="add_on">애드온</string>
+    <string name="profile">프로필</string>
 </resources>
