@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDCC68"
-    tools:context=".LoginActivity">
+    android:background="#FDCC68">
 
     <ImageView
         android:id="@+id/login_logo_iv"
@@ -31,37 +29,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <EditText
+        android:id="@+id/loginid_id_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        android:hint="아이디를 입력해 주세요."
+        android:textColorHint="#36000000"
+        android:inputType="text"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_logo_tv" />
+
+    <View
+        android:id="@+id/loginid_id_underscore_view"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="15dp"
+        android:background="#FFF6F6"
+        app:layout_constraintStart_toStartOf="@id/loginid_id_et"
+        app:layout_constraintEnd_toEndOf="@id/loginid_id_et"
+        app:layout_constraintTop_toBottomOf="@id/loginid_id_et" />
+
+    <TextView
+        android:id="@+id/loginid_forget_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="아이디를 잊으셨나요?"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/loginid_id_underscore_view"
+        app:layout_constraintStart_toStartOf="@id/loginid_id_underscore_view" />
 
     <Button
-        android:id="@+id/login_sign_up_btn"
+        android:id="@+id/loginin_next_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="회원 가입"
-        android:textSize="16sp"
+        android:text="다음"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#FDCC68"
         android:backgroundTint="#FFF6F6"
         android:background="@drawable/button_white"
-        app:layout_constraintTop_toBottomOf="@id/login_logo_tv" />
-
-    <Button
-        android:id="@+id/login_sign_in_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="아이디 로그인"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#B35C5C5C"
-        android:backgroundTint="#FDCC68"
-        app:layout_constraintTop_toBottomOf="@id/login_sign_up_btn"
-        style="?android:attr/borderlessButtonStyle"/>
-
+        app:layout_constraintTop_toBottomOf="@id/loginid_forget_id_tv" />
 
     <TextView
-        android:id="@+id/login_name_tv"
+        android:id="@+id/loginid_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="코다리"
