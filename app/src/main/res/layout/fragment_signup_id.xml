@@ -42,7 +42,7 @@
 
 
     <EditText
-        android:id="@+id/signup_id_id_et"
+        android:id="@+id/signup_id_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -58,14 +58,14 @@
         app:layout_constraintTop_toBottomOf="@id/signup_id_info_tv" />
 
     <View
-        android:id="@+id/signup_id_id_underscore_view"
+        android:id="@+id/signup_id_underscore_view"
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:layout_marginTop="10dp"
         android:background="#FFF6F6"
-        app:layout_constraintStart_toStartOf="@id/signup_id_id_et"
-        app:layout_constraintEnd_toEndOf="@id/signup_id_id_et"
-        app:layout_constraintTop_toBottomOf="@id/signup_id_id_et" />
+        app:layout_constraintStart_toStartOf="@id/signup_id_et"
+        app:layout_constraintEnd_toEndOf="@id/signup_id_et"
+        app:layout_constraintTop_toBottomOf="@id/signup_id_et" />
 
     <Button
         android:id="@+id/signup_id_next_btn"
@@ -80,7 +80,7 @@
         android:textColor="#FDCC68"
         android:backgroundTint="#FFF6F6"
         android:background="@drawable/button_white"
-        app:layout_constraintTop_toBottomOf="@id/signup_id_id_underscore_view" />
+        app:layout_constraintTop_toBottomOf="@id/signup_id_underscore_view" />
 
     <TextView
         android:id="@+id/signup_id_agree_tv"

@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/login_id_id_et"
+        android:id="@+id/login_id_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -46,14 +46,14 @@
         app:layout_constraintTop_toBottomOf="@id/login_id_logo_tv" />
 
     <View
-        android:id="@+id/login_id_id_underscore_view"
+        android:id="@+id/login_id_underscore_view"
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:layout_marginTop="10dp"
         android:background="#FFF6F6"
-        app:layout_constraintStart_toStartOf="@id/login_id_id_et"
-        app:layout_constraintEnd_toEndOf="@id/login_id_id_et"
-        app:layout_constraintTop_toBottomOf="@id/login_id_id_et" />
+        app:layout_constraintStart_toStartOf="@id/login_id_et"
+        app:layout_constraintEnd_toEndOf="@id/login_id_et"
+        app:layout_constraintTop_toBottomOf="@id/login_id_et" />
 
     <TextView
         android:id="@+id/login_id_forget_id_tv"
@@ -64,8 +64,8 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/login_id_id_underscore_view"
-        app:layout_constraintStart_toStartOf="@id/login_id_id_underscore_view" />
+        app:layout_constraintTop_toBottomOf="@id/login_id_underscore_view"
+        app:layout_constraintStart_toStartOf="@id/login_id_underscore_view" />
 
     <Button
         android:id="@+id/login_id_next_btn"
