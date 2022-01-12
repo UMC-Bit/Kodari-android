@@ -119,7 +119,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/search_coin_line_iv"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    tools:listitem="@layout/list_coin_item"
+                    tools:itemCount="3"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
