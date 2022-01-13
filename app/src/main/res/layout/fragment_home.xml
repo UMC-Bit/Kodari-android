@@ -196,7 +196,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:background="@color/main_color"
+                                    android:background="@drawable/btn_outline_yellow"
                                     android:padding="5dp"
                                     android:text="소득"
                                     android:textColor="@color/black"
@@ -210,7 +210,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:background="@color/main_color"
+                                    android:background="@drawable/btn_outline_white"
                                     android:padding="5dp"
                                     android:text="수익률"
                                     android:textColor="@color/black"
@@ -234,7 +234,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="5dp"
-                                    android:background="@color/main_color"
+                                    android:background="@drawable/btn_outline_white"
                                     android:padding="5dp"
                                     android:text="월"
                                     android:textColor="@color/black"
@@ -248,7 +248,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="5dp"
-                                    android:background="@color/main_color"
+                                    android:background="@drawable/btn_outline_white"
                                     android:padding="5dp"
                                     android:text="주"
                                     android:textColor="@color/black"
@@ -262,7 +262,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="5dp"
-                                    android:background="@color/main_color"
+                                    android:background="@drawable/btn_outline_yellow"
                                     android:padding="5dp"
                                     android:text="일"
                                     android:textColor="@color/black"
@@ -341,7 +341,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/home_next_btn_ib"
                             app:layout_constraintEnd_toStartOf="@id/home_next_btn_ib"
-                            android:background="@drawable/button_outline"
+                            android:background="@drawable/btn_outline_white"
                             android:orientation="horizontal"
                             android:layout_marginEnd="20dp">
 
@@ -351,7 +351,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/upbit"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>
@@ -362,7 +362,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/binanace"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>
@@ -373,7 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/kimchi"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="9sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>
@@ -440,7 +440,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/home_my_next_btn_ib"
                             app:layout_constraintEnd_toStartOf="@id/home_my_next_btn_ib"
-                            android:background="@drawable/button_outline"
+                            android:background="@drawable/btn_outline_white"
                             android:orientation="horizontal"
                             android:layout_marginEnd="20dp">
 
@@ -450,7 +450,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="현재가"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>
@@ -461,7 +461,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="평가 순익"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>
@@ -472,7 +472,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="매수 평단가"
                                 android:padding="10dp"
-                                android:background="@drawable/button_outline"
+                                android:background="@drawable/btn_outline_white"
                                 android:textSize="9sp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"/>

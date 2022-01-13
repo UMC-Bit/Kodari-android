@@ -18,7 +18,11 @@ import android.R.attr.data
 class HomeFragment : Fragment() {
 
     lateinit var binding:FragmentHomeBinding
-
+    var incomeIsSelect = true       //각각 텍스트뷰가 선택되었는지 구분위해 사용.
+    var yeildIsSelect = false
+    var dayIsSelect = true
+    var weekIsSelect = false
+    var monthIsSelect = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,6 +30,14 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater , container , false)
         setChartDummy()
         return binding.root
+    }
+    //처음 화면이 켜져있을 때 셋팅되어야하는 것들 -> 데이터 불러오기 or 일/주/월, 등 선택
+    fun initSetting(){
+
+    }
+    //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
+    fun setListener(){
+
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
