@@ -14,21 +14,20 @@ import com.github.mikephil.charting.data.LineDataSet
 import android.R.color
 
 import android.R.attr.data
+import android.graphics.drawable.RippleDrawable
+import androidx.appcompat.content.res.AppCompatResources
 
 class HomeFragment : Fragment() {
 
     lateinit var binding:FragmentHomeBinding
-    var incomeIsSelect = true       //각각 텍스트뷰가 선택되었는지 구분위해 사용.
-    var yeildIsSelect = false
-    var dayIsSelect = true
-    var weekIsSelect = false
-    var monthIsSelect = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater , container , false)
         setChartDummy()
+        setListener()
         return binding.root
     }
     //처음 화면이 켜져있을 때 셋팅되어야하는 것들 -> 데이터 불러오기 or 일/주/월, 등 선택
@@ -37,7 +36,35 @@ class HomeFragment : Fragment() {
     }
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener(){
+        //소득 클릭시 변경
+        binding.homeIncomeTv.setOnClickListener {
+            binding.homeIncomeTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_yellow)
+            binding.homeYieldTv.background = AppCompatResources.getDrawable(context as MainActivity , R.drawable.btn_outline_white)
+        }
+        //수익률 클릭시 변경
+        binding.homeYieldTv.setOnClickListener {
+            binding.homeYieldTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_yellow)
+            binding.homeIncomeTv.background = AppCompatResources.getDrawable(context as MainActivity , R.drawable.btn_outline_white)
+        }
 
+        //일 클릭시 변경
+        binding.homeDayTv.setOnClickListener {
+            binding.homeDayTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_yellow)
+            binding.homeWeekTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+            binding.homeMonthTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+        }
+
+        binding.homeWeekTv.setOnClickListener {
+            binding.homeDayTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+            binding.homeWeekTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_yellow)
+            binding.homeMonthTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+        }
+
+        binding.homeMonthTv.setOnClickListener {
+            binding.homeDayTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+            binding.homeWeekTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_white)
+            binding.homeMonthTv.background = AppCompatResources.getDrawable(context as MainActivity, R.drawable.btn_outline_yellow)
+        }
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
