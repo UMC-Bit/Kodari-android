@@ -42,7 +42,7 @@
         android:textStyle="bold"
         android:textColor="#FDCC68"
         android:backgroundTint="#FFF6F6"
-        android:background="@drawable/button_white"
+        android:background="@drawable/button_ywhite"
         app:layout_constraintTop_toBottomOf="@id/login_logo_tv" />
 
     <Button
