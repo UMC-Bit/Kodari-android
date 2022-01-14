@@ -34,7 +34,7 @@
                         android:id="@+id/home_main_container_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/main_color"
+                        android:background="@drawable/test"
                         android:paddingBottom="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -63,18 +63,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="70dp"
                             android:layout_marginEnd="20dp"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="20dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="4dp"
+                            android:paddingBottom="3dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/home_notification_none_iv">
+                            app:layout_constraintTop_toBottomOf="@id/home_notification_none_iv"
+                            app:layout_constraintBottom_toBottomOf="parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/home_my_info_container_cl"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:paddingBottom="3dp">
 
                                 <TextView
                                     android:id="@+id/home_my_asset_title_tv"
@@ -113,7 +116,7 @@
                                     android:id="@+id/home_my_asset_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="25dp"
+                                    android:layout_marginTop="20dp"
                                     android:text="999,999,999원"
                                     android:textColor="@color/black"
                                     android:textSize="30sp"
@@ -122,27 +125,20 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/home_my_asset_title_tv" />
 
-                                <androidx.cardview.widget.CardView
-                                    android:id="@+id/home_start_btn_container_cv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginBottom="20dp"
-                                    app:cardCornerRadius="20dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/home_my_asset_tv">
-
                                     <Button
                                         android:id="@+id/home_start_btn"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/main_color"
+                                        android:background="@drawable/btn_outline_yellow"
                                         android:padding="10dp"
                                         android:text="@string/start_btn"
-                                        android:textSize="15sp" />
-                                </androidx.cardview.widget.CardView>
+                                        android:textSize="15sp"
+                                        android:layout_marginTop="10dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/home_my_asset_tv"/>
+
 
                                 <TextView
                                     android:id="@+id/home_text_day_tv"
