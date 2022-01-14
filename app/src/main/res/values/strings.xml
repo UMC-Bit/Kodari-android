@@ -10,4 +10,7 @@
     <string name="upbit">업비트</string>
     <string name="binanace">바이낸스</string>
     <string name="kimchi">김치 프리미엄</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="debate">토론장</string>
 </resources>

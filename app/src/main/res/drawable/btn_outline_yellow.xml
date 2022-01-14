@@ -9,10 +9,10 @@
         android:color="#fdcc68" />
     <!--    테두리색-->
     <corners
-        android:topLeftRadius="10dp"
-        android:topRightRadius="10dp"
-        android:bottomLeftRadius="10dp"
-        android:bottomRightRadius="10dp"  />
+        android:topLeftRadius="12dp"
+        android:topRightRadius="12dp"
+        android:bottomLeftRadius="12dp"
+        android:bottomRightRadius="12dp"  />
     <!--    선 휘는각도-->
 
 </shape>
