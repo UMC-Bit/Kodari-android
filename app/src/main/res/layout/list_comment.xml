@@ -3,7 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list_comment_container_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
         android:id="@+id/list_comment_mask_iv"
@@ -27,7 +36,8 @@
         app:layout_constraintStart_toEndOf="@id/list_comment_mask_iv"
         app:layout_constraintTop_toTopOf="@id/list_comment_mask_iv"
         app:layout_constraintBottom_toBottomOf="@id/list_comment_mask_iv"
-        android:layout_marginStart="5dp"/>
+        android:layout_marginStart="5dp"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/list_item_content_tv"
@@ -71,4 +81,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/list_item_now_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="댓글 3개"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_item_re_comment_rv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_comment_container_cl"
+        tools:listitem="@layout/list_re_comment"
+        tools:itemCount="2"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

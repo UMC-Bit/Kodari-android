@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         setListener()
 
-        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
+        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, DebateMineFragment())
             .commitAllowingStateLoss()
 
     }

@@ -81,7 +81,7 @@
         android:layout_height="22dp"
         android:src="@drawable/down"
         android:layout_marginStart="34dp"
-        app:layout_constraintTop_toTopOf="list_item_comment_count_tv"
+        app:layout_constraintTop_toTopOf="@id/list_item_comment_count_tv"
         app:layout_constraintStart_toEndOf="@id/list_item_comment_count_num_tv"
         app:layout_constraintBottom_toBottomOf="@id/list_item_comment_count_tv"
         android:layout_marginTop="12dp"/>
