@@ -7,12 +7,13 @@
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/drawable/button_outline.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/activity_main.xml" value="0.325" />
+        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fdddf.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin.xml" value="0.33" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_add.xml" value="0.33" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_delete_dialog.xml" value="0.25" />
-        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_dialog.xml" value="0.4" />
-        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_management.xml" value="0.33" />
-        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_modify.xml" value="0.33" />
+        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_dialog.xml" value="0.25" />
+        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_management.xml" value="0.25" />
+        <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_modify.xml" value="0.25" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/fragment_possession_coin_search.xml" value="0.33" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/item_possession_coin_coin_list.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/item_possession_coin_management_coin_list.xml" value="0.5" />
@@ -26,5 +27,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.34087940792337834" />
+      </ProjectState>
+    </option>
   </component>
 </project>
