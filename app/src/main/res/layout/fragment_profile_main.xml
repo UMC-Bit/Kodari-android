@@ -141,14 +141,14 @@
 
             <ImageButton
                 android:id="@+id/profile_main_btn2_ib"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
                 android:layout_marginEnd="25dp"
-                android:src="@drawable/yellow_arrow"
                 android:background="@color/white"
+                android:src="@drawable/yellow_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/profile_main_bar2_vw"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/profile_main_bar1_vw"
-                app:layout_constraintBottom_toBottomOf="@id/profile_main_bar2_vw" />
+                app:layout_constraintTop_toTopOf="@id/profile_main_bar1_vw" />
 
             <TextView
                 android:id="@+id/profile_main_mytext_tv"
