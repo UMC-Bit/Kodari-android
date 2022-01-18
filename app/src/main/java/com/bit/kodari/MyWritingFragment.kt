@@ -5,15 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bit.kodari.databinding.FragmentMyWritingBinding
 
 class MyWritingFragment : Fragment() {
+
+    lateinit var binding: FragmentMyWritingBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_writing, container, false)
+        binding = FragmentMyWritingBinding.inflate(inflater, container, false)
+
+        binding.myWritingPreIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , ProfileMainFragment()).commitAllowingStateLoss()
+        }
+
+        return binding.root
+
     }
 
 

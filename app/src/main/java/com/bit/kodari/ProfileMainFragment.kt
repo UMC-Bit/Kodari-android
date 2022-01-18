@@ -19,6 +19,11 @@ class ProfileMainFragment: Fragment() {
     ): View? {
         binding = FragmentProfileMainBinding.inflate(inflater, container, false)
 
+        binding.profileMainBtn1Ib.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , EditProfileFragment()).commitAllowingStateLoss()
+        }
+
         binding.profileMainBtn2Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl , MyNewsFragment()).commitAllowingStateLoss()
@@ -32,6 +37,11 @@ class ProfileMainFragment: Fragment() {
         binding.profileMainBtn4Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl , MyCommentFragment()).commitAllowingStateLoss()
+        }
+
+        binding.profileMainBtn5Ib.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , EditPwFragment()).commitAllowingStateLoss()
         }
 
         return binding.root
