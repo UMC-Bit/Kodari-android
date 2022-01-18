@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_representative_coin_search_coin_list_image_CV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/item_representative_coin_search_coin_list_image_IV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/btc"
+            android:scaleType="fitCenter"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/item_representative_coin_search_coin_list_coin_name_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비트코인"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintTop_toTopOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintBottom_toTopOf="@id/item_representative_coin_search_coin_list_coin_symbol_TV"/>
+
+    <TextView
+        android:id="@+id/item_representative_coin_search_coin_list_coin_symbol_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BTC"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintBottom_toBottomOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintTop_toBottomOf="@id/item_representative_coin_search_coin_list_coin_name_TV"/>
+
+    <ImageView
+        android:id="@+id/item_representative_coin_search_coin_list_move_button_IV"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/move_button"
+        app:layout_constraintTop_toTopOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintBottom_toBottomOf="@id/item_representative_coin_search_coin_list_image_CV"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
