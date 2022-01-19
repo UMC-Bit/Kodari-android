@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bit.kodari.databinding.FragmentPossessionCoinDialogBinding
-import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
+import com.bit.kodari.databinding.FragmentPossessionCoinMemoDialogBinding
 
-class PossessionCoinDialogFragment : Fragment(){
-    lateinit var binding:FragmentPossessionCoinDialogBinding
+class PossessionCoinMemoDialogFragment : Fragment(){
+    lateinit var binding: FragmentPossessionCoinMemoDialogBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentPossessionCoinDialogBinding.inflate(inflater , container , false)
+        binding= FragmentPossessionCoinMemoDialogBinding.inflate(inflater , container , false)
 
         binding.possessionCoinDialogMemoOffTV.setOnClickListener {
             binding.possessionCoinDialogMemoOnTV.visibility=View.VISIBLE

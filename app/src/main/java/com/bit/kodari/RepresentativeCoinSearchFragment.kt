@@ -5,12 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bit.kodari.databinding.FragmentRepresentativeCoinAddBinding
-import com.bit.kodari.databinding.FragmentRepresentativeCoinMainBinding
+import com.bit.kodari.databinding.FragmentRepresentativeCoinSearchBinding
 
 class RepresentativeCoinSearchFragment : Fragment() {
 
-    lateinit var binding: FragmentRepresentativeCoinAddBinding
+    lateinit var binding: FragmentRepresentativeCoinSearchBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -26,6 +26,7 @@
                 android:textSize="15sp"
                 android:text="소유 코인을 삭제할까요?"
                 android:textColor="#000000"
+                android:bufferType="spannable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
