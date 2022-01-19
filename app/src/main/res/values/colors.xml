@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray_possession_coin">#00EDEDED</color>
     <color name="gray">#EDEDED</color>
+    <color name="main_color">#FDCC68</color>
 </resources>

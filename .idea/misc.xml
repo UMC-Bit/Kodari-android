@@ -45,6 +45,33 @@
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/item_possession_coin_management_coin_list.xml" value="0.5" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/item_possession_coin_management_coinlist.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudio_Project/Kodari-android/app/src/main/res/layout/item_possession_coin_search_coin_list.xml" value="0.36614583333333334" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline.xml" value="0.2365296803652968" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline_gray.xml" value="0.2365296803652968" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline_white.xml" value="0.23981481481481481" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline_yellow.xml" value="0.2365296803652968" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26979166666666665" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/test.xml" value="0.2365296803652968" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/font/font.xml" value="0.2523148148148148" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/activity_splash.xml" value="0.22546296296296298" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_delete.xml" value="0.2" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialoge_coin.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.4" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate.xml" value="0.22546296296296298" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate_main.xml" value="0.176" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate_mine.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_enroll_exchange.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_search_coin.xml" value="0.176" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_select.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_coin_item.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_comment.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_item_debate.xml" value="0.176" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_my_coin.xml" value="0.22546296296296298" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_re_comment_xml.xml" value="0.22546296296296298" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_represent_coin.xml" value="0.22237442922374429" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/menu/menu_bottomnavigationview.xml" value="0.25364583333333335" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26979166666666665" />
       </map>
     </option>
   </component>

@@ -10,8 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+
+    lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,26 +22,27 @@ class MainActivity : AppCompatActivity() {
 
         setListener()
 
-        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, ProfileMainFragment())
+
+        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, DebateMineFragment())
             .commitAllowingStateLoss()
 
     }
 
-    fun setListener() {
+    fun setListener(){
         binding.mainBottomnavigationBnv.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.myCoin -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_container_fl, HomeFragment())
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, HomeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.debate -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_container_fl, DebateMainFragment())
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, DebateMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.feed -> {
@@ -66,15 +69,5 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:elevation="8dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/home_first_container_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_main_container_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/main_background"
+                        android:paddingBottom="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/home_notification_none_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/ic_baseline_notifications_none_24"
+                            app:layout_constraintEnd_toStartOf="@id/home_timelapse_iv"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/home_timelapse_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/ic_baseline_timelapse_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/home_my_info_cv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="70dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="4dp"
+                            android:paddingBottom="3dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/home_notification_none_iv"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/home_my_info_container_cl"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="3dp">
+
+                                <TextView
+                                    android:id="@+id/home_my_asset_title_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/my_asset"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/home_restart_iv"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginStart="3dp"
+                                    android:src="@drawable/restart"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_my_asset_title_tv"
+                                    app:layout_constraintStart_toEndOf="@id/home_my_asset_title_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_my_asset_title_tv" />
+
+                                <ImageView
+                                    android:id="@+id/home_mark_on_iv"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:src="@drawable/mark_on"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_restart_iv"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="@id/home_restart_iv" />
+
+
+                                <TextView
+                                    android:id="@+id/home_my_asset_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="999,999,999원"
+                                    android:textColor="@color/black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/home_my_asset_title_tv" />
+
+                                    <Button
+                                        android:id="@+id/home_start_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/btn_outline_yellow"
+                                        android:padding="10dp"
+                                        android:text="@string/start_btn"
+                                        android:textSize="15sp"
+                                        android:layout_marginTop="10dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/home_my_asset_tv"/>
+
+
+                                <TextView
+                                    android:id="@+id/home_text_day_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="12월 28일 기준"
+                                    android:textSize="11sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_graph_container_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/home_main_container_cl">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/home_radio_container_cv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:elevation="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/home_radio_btn_container_cl"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white">
+
+                                <!--                백그라운드로 선택시와 둥글게 구현-->
+                                <TextView
+                                    android:id="@+id/home_income_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@drawable/btn_outline_yellow"
+                                    android:padding="5dp"
+                                    android:text="소득"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/home_yield_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@drawable/btn_outline_white"
+                                    android:padding="5dp"
+                                    android:text="수익률"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_income_tv"
+                                    app:layout_constraintStart_toEndOf="@id/home_income_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_income_tv" />
+
+                                <ImageView
+                                    android:id="@+id/home_line_iv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/home_line"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/home_day_tv"
+                                    app:layout_constraintStart_toEndOf="@id/home_yield_tv"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/home_month_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/btn_outline_white"
+                                    android:padding="5dp"
+                                    android:text="월"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/home_week_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/btn_outline_white"
+                                    android:padding="5dp"
+                                    android:text="주"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_month_tv"
+                                    app:layout_constraintEnd_toStartOf="@id/home_month_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_month_tv" />
+
+                                <TextView
+                                    android:id="@+id/home_day_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/btn_outline_yellow"
+                                    android:padding="5dp"
+                                    android:text="일"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_week_tv"
+                                    app:layout_constraintEnd_toStartOf="@id/home_week_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_week_tv" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/home_chart_lc"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/home_radio_container_cv" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_coin_container_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <TextView
+                    android:id="@+id/home_represent_coin_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="대표 코인"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/home_represent_container_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_represent_coin_tv"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_represent_container_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/home_next_btn_ib"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/next_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="@color/white"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:layout_margin="5dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/home_compare_list_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/home_next_btn_ib"
+                            app:layout_constraintEnd_toStartOf="@id/home_next_btn_ib"
+                            android:background="@drawable/btn_outline_white"
+                            android:orientation="horizontal"
+                            android:layout_marginEnd="20dp">
+
+                            <TextView
+                                android:id="@+id/home_upbit_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/upbit"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="11sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/home_binance_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/binanace"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="11sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/home_kimchi_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/kimchi"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="9sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/home_represent_coin_rv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/home_compare_list_ll"
+                            app:layout_constraintTop_toBottomOf="@id/home_compare_list_ll"
+                            android:layout_marginTop="5dp"
+                            tools:listitem="@layout/list_represent_coin"
+                            tools:itemCount="3"
+                            android:padding="10dp"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/home_my_coin_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="소유 코인"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_represent_container_cv"
+                    android:layout_marginTop="20dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/home_my_coin_container_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_my_coin_tv"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_my_coin_container_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/home_my_next_btn_ib"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/next_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="@color/white"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:layout_margin="5dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/home_my_compare_list_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/home_my_next_btn_ib"
+                            app:layout_constraintEnd_toStartOf="@id/home_my_next_btn_ib"
+                            android:background="@drawable/btn_outline_white"
+                            android:orientation="horizontal"
+                            android:layout_marginEnd="20dp">
+
+                            <TextView
+                                android:id="@+id/home_now_price_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="현재가"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="11sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/home_profit_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="평가 순익"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="11sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/home_unit_price_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="매수 평단가"
+                                android:padding="10dp"
+                                android:background="@drawable/btn_outline_white"
+                                android:textSize="9sp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/home_my_coin_rv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/home_my_compare_list_ll"
+                            app:layout_constraintTop_toBottomOf="@id/home_my_compare_list_ll"
+                            android:layout_marginTop="5dp"
+                            tools:listitem="@layout/list_my_coin"
+                            tools:itemCount="3"
+                            android:padding="10dp"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
