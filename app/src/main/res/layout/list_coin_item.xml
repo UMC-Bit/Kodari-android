@@ -43,11 +43,7 @@
             android:text="BTC"/>
 
     </LinearLayout>
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> feature_portfolio
     <ImageView
         android:id="@+id/coin_select_btn_iv"
         android:layout_width="20dp"
@@ -68,10 +64,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="3dp"/>
 
-<<<<<<< HEAD
 
-=======
-   
->>>>>>> feature_portfolio
 
 </androidx.constraintlayout.widget.ConstraintLayout>
