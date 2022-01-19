@@ -75,7 +75,7 @@
         app:layout_constraintStart_toEndOf="@id/list_item_comment_count_tv"
         app:layout_constraintTop_toTopOf="@id/list_item_up_btn" />
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <ImageView
         android:id="@+id/list_item_down_btn"
         android:layout_width="23dp"
         android:layout_height="22dp"
