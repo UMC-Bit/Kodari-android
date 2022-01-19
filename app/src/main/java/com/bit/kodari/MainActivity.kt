@@ -1,12 +1,17 @@
 package com.bit.kodari
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bit.kodari.databinding.ActivityMainBinding
+import android.text.TextUtils.replace
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setListener(){
+    fun setListener() {
         binding.mainBottomnavigationBnv.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.myCoin -> {
@@ -61,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-
 }
 
 
