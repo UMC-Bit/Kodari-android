@@ -16,6 +16,7 @@ class DebateMainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDebateMainBinding.inflate(inflater , container ,false)
+        val me = 0
         return binding.root
     }
 
