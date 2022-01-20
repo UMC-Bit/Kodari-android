@@ -5,7 +5,7 @@
     android:id="@+id/debate_mine_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Portfolio.DebateMineFragment">
+    tools:context=".Debate.DebateMineFragment">
 
     <ImageView
         android:id="@+id/mine_back_btn_tv"

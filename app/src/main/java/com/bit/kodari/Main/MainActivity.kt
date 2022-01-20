@@ -3,8 +3,7 @@ package com.bit.kodari.Main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bit.kodari.databinding.ActivityMainBinding
-import com.bit.kodari.Portfolio.DebateMainFragment
-import com.bit.kodari.Portfolio.DebateMineFragment
+import com.bit.kodari.Debate.DebateMainFragment
 import com.bit.kodari.Profile.ProfileMainFragment
 import com.bit.kodari.R
 

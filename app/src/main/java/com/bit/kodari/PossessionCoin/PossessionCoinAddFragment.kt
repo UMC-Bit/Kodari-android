@@ -14,7 +14,7 @@ class PossessionCoinAddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        binding = FragmentPossessionCoinAddBinding.inflate(inflater , container,false)
 
         return binding.root
     }

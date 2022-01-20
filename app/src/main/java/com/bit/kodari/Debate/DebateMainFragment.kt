@@ -1,4 +1,4 @@
-package com.bit.kodari.Portfolio
+package com.bit.kodari.Debate
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
