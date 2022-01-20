@@ -96,16 +96,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/temp_dialog_BT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="소유코인 dialog 버튼(임시)"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-
                 <ImageButton
                     android:id="@+id/possession_coin_management_select_all_IB"
                     android:layout_width="30dp"
@@ -258,15 +248,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/possession_coin_management_delete_on_button_IB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/delete_on_button"
-                    android:visibility="gone"
-                    android:layout_marginLeft="56dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <ImageButton
                     android:id="@+id/possession_coin_management_modify_off_button_IB"
@@ -277,15 +258,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <ImageButton
-                    android:id="@+id/possession_coin_management_modify_on_button_IB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/modify_on_button"
-                    android:layout_marginRight="50dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

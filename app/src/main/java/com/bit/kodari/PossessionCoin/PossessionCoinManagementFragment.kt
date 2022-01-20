@@ -23,9 +23,9 @@ class PossessionCoinManagementFragment : Fragment() {
                 .replace(R.id.temp, PossessionCoinSearchFragment()).commitAllowingStateLoss()
         }
 
-        binding.tempDialogBT.setOnClickListener {
+        binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.temp, PossessionCoinMemoDialogFragment()).commitAllowingStateLoss()
+                .replace(R.id.temp, PossessionCoinModifyFragment()).commitAllowingStateLoss()
         }
 
         return binding.root
