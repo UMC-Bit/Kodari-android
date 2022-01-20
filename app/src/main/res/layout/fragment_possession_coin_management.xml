@@ -100,7 +100,7 @@
                     android:id="@+id/temp_dialog_BT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="소유코인 dialog 버튼(임시)"
+                    android:text="메모, 트위터 dialog(임시)"
                     android:textColor="#000000"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -258,15 +258,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/possession_coin_management_delete_on_button_IB"
+                <TextView
+                    android:id="@+id/temp_delete_dialog_BT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/delete_on_button"
-                    android:visibility="gone"
-                    android:layout_marginLeft="56dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    android:text="삭제 dialog(임시)"
+                    android:textColor="#000000"
+                    app:layout_constraintStart_toStartOf="@id/possession_coin_management_delete_off_button_IB"
+                    app:layout_constraintEnd_toEndOf="@id/possession_coin_management_modify_off_button_IB"
+                    app:layout_constraintTop_toTopOf="@id/possession_coin_management_delete_off_button_IB"
+                    app:layout_constraintBottom_toBottomOf="@id/possession_coin_management_delete_off_button_IB"/>
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/possession_coin_management_delete_on_button_IB"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/delete_on_button"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:layout_marginLeft="56dp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"/>-->
 
                 <ImageButton
                     android:id="@+id/possession_coin_management_modify_off_button_IB"
@@ -277,15 +288,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <ImageButton
-                    android:id="@+id/possession_coin_management_modify_on_button_IB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/modify_on_button"
-                    android:layout_marginRight="50dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+<!--                <ImageButton-->
+<!--                    android:id="@+id/possession_coin_management_modify_on_button_IB"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/modify_on_button"-->
+<!--                    android:layout_marginRight="50dp"-->
+<!--                    android:visibility="gone"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"/>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
