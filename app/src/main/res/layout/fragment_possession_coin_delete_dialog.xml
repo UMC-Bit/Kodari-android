@@ -35,7 +35,7 @@
                 android:layout_marginRight="70dp"/>
 
             <TextView
-                android:id="@+id/possession_coin_delete_dialog_delete_confirm_off_TV"
+                android:id="@+id/possession_coin_delete_dialog_delete_confirm_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
                 android:text="삭제"
@@ -44,24 +44,25 @@
                 android:gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
+                android:background="@drawable/button_click_ripple"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_delete_dialog_ask_TV"
                 app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"/>
 
-            <TextView
-                android:id="@+id/possession_coin_delete_dialog_delte_confirm_on_TV"
-                android:layout_width="46dp"
-                android:layout_height="27dp"
-                android:text="삭제"
-                android:textSize="12dp"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/button_outline"
-                android:backgroundTint="#B3FDCC68"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_delete_dialog_cancel_TV"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_delete_dialog_cancel_TV" />
+<!--            <TextView-->
+<!--                android:id="@+id/possession_coin_delete_dialog_delte_confirm_on_TV"-->
+<!--                android:layout_width="46dp"-->
+<!--                android:layout_height="27dp"-->
+<!--                android:text="삭제"-->
+<!--                android:textSize="12dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:gravity="center"-->
+<!--                android:visibility="gone"-->
+<!--                android:background="@drawable/button_outline"-->
+<!--                android:backgroundTint="#B3FDCC68"-->
+<!--                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/possession_coin_delete_dialog_cancel_TV"-->
+<!--                app:layout_constraintTop_toTopOf="@id/possession_coin_delete_dialog_cancel_TV" />-->
 
             <TextView
                 android:id="@+id/possession_coin_delete_dialog_cancel_TV"

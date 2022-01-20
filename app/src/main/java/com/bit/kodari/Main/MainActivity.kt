@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Portfolio.DebateMainFragment
 import com.bit.kodari.Portfolio.DebateMineFragment
+import com.bit.kodari.Profile.ProfileMainFragment
 import com.bit.kodari.R
 
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setListener()
 
 
-        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, DebateMineFragment())
+        supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
             .commitAllowingStateLoss()
 
     }
@@ -56,15 +57,16 @@ class MainActivity : AppCompatActivity() {
 //                    return@setOnItemSelectedListener true
                 }
                 R.id.profile -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_container_fl, LockerFragment())
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, ProfileMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
             }
             false
         }
+
     }
 
 }

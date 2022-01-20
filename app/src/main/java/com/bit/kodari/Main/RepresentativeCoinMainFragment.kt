@@ -16,7 +16,7 @@ class RepresentativeCoinMainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        binding = FragmentRepresentativeCoinMainBinding.inflate(inflater , container , false)
         return binding.root
     }
 }

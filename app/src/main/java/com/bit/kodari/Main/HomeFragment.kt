@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
 import androidx.appcompat.content.res.AppCompatResources
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 
 class HomeFragment : Fragment() {
@@ -87,6 +88,17 @@ class HomeFragment : Fragment() {
             binding.homeMonthTv.background = AppCompatResources.getDrawable(context as MainActivity,
                 R.drawable.btn_outline_yellow
             )
+        }
+
+        binding.homeNextBtnIb.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , RepresentativeCoinMainFragment()).commitAllowingStateLoss()
+        }
+
+        binding.homeMyNextBtnIb.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , PossessionCoinManagementFragment())
+                .commitNowAllowingStateLoss()
         }
     }
 
