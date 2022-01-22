@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , RepresentativeCoinMainFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl , RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {

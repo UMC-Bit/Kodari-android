@@ -25,7 +25,7 @@
                 android:layout_width="28dp"
                 android:layout_height="31dp"
                 android:background="@drawable/before_button"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -39,7 +39,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:gravity="center"
-                android:layout_marginRight="18dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/button_outline"
                 android:backgroundTint="#B3FDCC68"
                 app:layout_constraintTop_toTopOf="@id/possession_coin_add_before_button_IV"
@@ -280,19 +280,18 @@
                 android:id="@+id/possession_coin_add_day_input_ET"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:drawablePadding="6dp"
-                android:textColorHint="#000000"
-                android:textStyle="bold"
-                android:hint="일자"
-                android:drawableRight="@drawable/move_button"
                 android:layout_marginRight="10dp"
-                android:textSize="15sp"
-                android:inputType="number"
                 android:background="#80D3D3D3"
+                android:drawableRight="@drawable/move_button"
+                android:drawablePadding="6dp"
+                android:hint="일자"
+                android:inputType="number"
                 android:paddingLeft="17dp"
+                android:textColorHint="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
+                app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textfield.TextInputEditText>
 
         </LinearLayout>
 

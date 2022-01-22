@@ -14,7 +14,7 @@
     android:src="@drawable/before_button"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginStart="20dp"
+    android:layout_marginStart="16dp"
     android:layout_marginTop="20dp"/>
 
     <TextView
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="@id/representative_coin_search_back_IV"/>
 
     <TextView
-        android:id="@+id/representative_coin_search_next_TV"
+        android:id="@+id/representative_coin_search_complete_TV"
         android:layout_width="56dp"
         android:layout_height="34dp"
         android:text="완료"
@@ -39,7 +39,7 @@
         android:textStyle="bold"
         android:textColor="#000000"
         android:gravity="center"
-        android:layout_marginRight="18dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/button_outline"
         android:backgroundTint="#B3FDCC68"
         app:layout_constraintEnd_toEndOf="parent"

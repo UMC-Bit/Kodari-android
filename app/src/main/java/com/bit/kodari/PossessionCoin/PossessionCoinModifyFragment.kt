@@ -25,10 +25,10 @@ class PossessionCoinModifyFragment : Fragment() {
                 .replace(R.id.temp, PossessionCoinManagementFragment()).commitAllowingStateLoss()
         }
 
-        binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.temp, PossessionCoinManagementFragment()).commitAllowingStateLoss()
-        }
+//        binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
+//            (context as MainActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.temp, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+//        }
 
 
         binding.possessionCoinModifyBuyOffTV.setOnClickListener {

@@ -13,7 +13,7 @@
         android:src="@drawable/before_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -28,6 +28,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/possession_coin_search_back_IV"
         app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_back_IV"/>
+
+    <TextView
+        android:id="@+id/temp_dialog_BT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소유 코인 추가(임시)"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/possession_coin_search_container_CV"

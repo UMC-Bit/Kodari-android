@@ -21,12 +21,12 @@ class PossessionCoinAddFragment : Fragment() {
 
         binding.possessionCoinAddCompleteButtonTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.temp, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
         }
 
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.temp, PossessionCoinSearchFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).commitAllowingStateLoss()
         }
 
         return binding.root

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
@@ -29,8 +30,15 @@ class PossessionCoinManagementFragment : Fragment() {
 
         binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.temp, PossessionCoinModifyFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
         }
+
+        binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+        }
+
+
 
         memoDialog()
 
@@ -77,7 +85,6 @@ class PossessionCoinManagementFragment : Fragment() {
 
             val deleteAlertDialog = deleteDialogBuilder.show()
 
-//
             val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
             val cancelButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
 
