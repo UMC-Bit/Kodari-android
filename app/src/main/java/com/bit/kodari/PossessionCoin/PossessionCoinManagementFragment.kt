@@ -1,16 +1,16 @@
 package com.bit.kodari.PossessionCoin
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
@@ -23,30 +23,26 @@ class PossessionCoinManagementFragment : Fragment() {
     ): View? {
         binding = FragmentPossessionCoinManagementBinding.inflate(inflater, container, false)
 
-        binding.possessionCoinManagementAddTV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).commitAllowingStateLoss()
-        }
-
-        binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
-        }
-
-        binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
-        }
-
-
-
+        moveLayout()
         memoDialog()
-
         deleteDialog()
 
 
         return binding.root
     }
+
+//    private fun initRecyclerview(){
+//        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//
+//        val managementRVAdater = PossessionCoinManagementRVAdapter()
+//        //리스너 객체 생성 및 전달
+//
+//        managementRVAdater.setMyItemClickListener(object : PossessionCoinManagementRVAdapter.MyItemClickListener{
+//
+//        })
+//
+//        binding.possessionCoinManagementRV.adapter = managementRVAdater
+//    }
 
     fun memoDialog()
     {
@@ -56,8 +52,6 @@ class PossessionCoinManagementFragment : Fragment() {
                 .setView(memoDialogView)
 
             memoDialogBuilder.show()
-
-//            val memoAlertDialog=memoDialogBuilder.show()
 
             val memoOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_off_TV)
             val memoOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_on_TV)
@@ -95,6 +89,24 @@ class PossessionCoinManagementFragment : Fragment() {
             cancelButton.setOnClickListener {
                 deleteAlertDialog.dismiss()
             }
+        }
+    }
+
+    fun moveLayout()
+    {
+        binding.possessionCoinManagementAddTV.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).commitAllowingStateLoss()
+        }
+
+        binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
+        }
+
+        binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
         }
     }
 }
