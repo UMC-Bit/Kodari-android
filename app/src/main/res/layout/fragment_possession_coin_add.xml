@@ -280,18 +280,18 @@
                 android:id="@+id/possession_coin_add_day_input_ET"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:layout_marginRight="10dp"
                 android:background="#80D3D3D3"
                 android:drawableRight="@drawable/move_button"
-                android:drawablePadding="6dp"
                 android:hint="일자"
-                android:inputType="number"
+                android:inputType="text"
                 android:paddingLeft="17dp"
+                android:paddingRight="17dp"
                 android:textColorHint="#000000"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textfield.TextInputEditText>
+                app:layout_constraintTop_toTopOf="parent">
+            </com.google.android.material.textfield.TextInputEditText>
 
         </LinearLayout>
 
@@ -319,18 +319,19 @@
                 android:id="@+id/possession_coin_add_fee_input_ET"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:drawablePadding="6dp"
-                android:textColorHint="#000000"
-                android:textStyle="bold"
-                android:hint="수수료"
-                android:drawableRight="@drawable/move_button"
-                android:layout_marginRight="10dp"
-                android:textSize="15sp"
-                android:inputType="number"
+
                 android:background="#80D3D3D3"
+                android:drawableRight="@drawable/move_button"
+                android:hint="수수료"
+                android:inputType="number"
                 android:paddingLeft="17dp"
+                android:paddingRight="17dp"
+                android:textColorHint="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
             </com.google.android.material.textfield.TextInputEditText>
 
         </LinearLayout>
@@ -393,7 +394,7 @@
                 android:textColorHint="#FF584E"
                 android:hint="기억하고 싶은 내용을 입력해주세요."
                 android:textSize="11sp"
-                android:inputType="number"
+                android:inputType="text"
                 android:background="#80D3D3D3"
                 android:paddingLeft="17dp"
                 app:layout_constraintStart_toStartOf="parent"
