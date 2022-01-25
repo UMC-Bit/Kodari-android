@@ -10,12 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
-import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
+import com.bit.kodari.PossessionCoin.Adapter.Data
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
+//import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class PossessionCoinManagementFragment : Fragment() {
     lateinit var binding: FragmentPossessionCoinManagementBinding
+
+    val coinList = arrayListOf(
+        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +36,9 @@ class PossessionCoinManagementFragment : Fragment() {
         moveLayout()
         memoDialog()
         deleteDialog()
+
+        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
+        binding.possessionCoinManagementRV.adapter=PossessionCoinManagementAdapter(coinList)
 
 
         return binding.root
