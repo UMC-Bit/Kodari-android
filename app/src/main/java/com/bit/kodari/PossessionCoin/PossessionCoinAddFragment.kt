@@ -43,7 +43,7 @@ class PossessionCoinAddFragment : Fragment() {
 
         val timePicker = TimePickerDialog(context as MainActivity,
             { view, hourOfDay, minute ->
-                val date = String.format("%02d:%02d", hourOfDay, minute)
+                val date = String.format("%02d:%02d:00", hourOfDay, minute)
                 tradeTime.append(date);
                 binding.possessionCoinAddDayInputET.setText(tradeTime.toString())
                 tradeTime.setLength(0)

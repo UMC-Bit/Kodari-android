@@ -10,22 +10,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
-import com.bit.kodari.PossessionCoin.Adapter.Data
+import com.bit.kodari.PossessionCoin.Adapter.coinData
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
 //import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
 class PossessionCoinManagementFragment : Fragment() {
     lateinit var binding: FragmentPossessionCoinManagementBinding
 
     val coinList = arrayListOf(
-        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        Data(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
     )
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,21 +42,8 @@ class PossessionCoinManagementFragment : Fragment() {
         binding.possessionCoinManagementRV.adapter=PossessionCoinManagementAdapter(coinList)
 
 
-        return binding.root
-    }
-
-//    private fun initRecyclerview(){
-//        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//
-//        val managementRVAdater = PossessionCoinManagementRVAdapter()
-//        //리스너 객체 생성 및 전달
-//
-//        managementRVAdater.setMyItemClickListener(object : PossessionCoinManagementRVAdapter.MyItemClickListener{
-//
-//        })
-//
-//        binding.possessionCoinManagementRV.adapter = managementRVAdater
-//    }
+            return binding.root
+        }
 
     fun memoDialog()
     {
@@ -85,7 +73,7 @@ class PossessionCoinManagementFragment : Fragment() {
 
     fun deleteDialog()
     {
-        binding.tempDeleteDialogBT.setOnClickListener {
+        binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_delete_dialog, null)
             val deleteDialogBuilder=AlertDialog.Builder(context as MainActivity)
                 .setView(deleteDialogView)
