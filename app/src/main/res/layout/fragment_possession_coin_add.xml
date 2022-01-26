@@ -319,11 +319,10 @@
                 android:id="@+id/possession_coin_add_fee_input_ET"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-
                 android:background="#80D3D3D3"
                 android:drawableRight="@drawable/move_button"
                 android:hint="수수료"
-                android:inputType="number"
+                android:inputType="text"
                 android:paddingLeft="17dp"
                 android:paddingRight="17dp"
                 android:textColorHint="#000000"

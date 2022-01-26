@@ -1,54 +1,60 @@
 package com.bit.kodari.PossessionCoin.Adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.databinding.ItemPossessionCoinManagementCoinListBinding
+import com.bit.kodari.R
 
-//class PossessionCoinManagementRVAdapter() : RecyclerView.Adapter<PossessionCoinManagementRVAdapter.ViewHolder>() {
-//    private val coins = ArrayList<Coin>()
-//
-//    interface MyItemClickListener{
-//        fun onRemoveSong(songId: Int)
-//    }
-//
-//    private lateinit var mItemClickListener: MyItemClickListener
-//
-//    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
-//        mItemClickListener = itemClickListener
-//    }
-//
-//    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PossessionCoinManagementRVAdapter.ViewHolder {
-//        val binding: ItemPossessionCoinManagementCoinListBinding = ItemPossessionCoinManagementCoinListBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-//
-//        return ViewHolder(binding)
-//    }
-//
-//    override fun onBindViewHolder(holder: PossessionCoinManagementRVAdapter.ViewHolder, position: Int) {
-//        holder.bind(coins[position])
-//        holder.binding.itemSongMoreIv.setOnClickListener {
-//            mItemClickListener.onRemoveSong(coins[position].id)
-//            removeSong(position)
-//        }
-//    }
-//
-//    override fun getItemCount(): Int = coins.size
-//
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun addSongs(coins: ArrayList<Coin>) {
-//        this.coins.clear()
-//        this.coins.addAll(coins)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun removeSong(position: Int){
-//        coins.removeAt(position)
-//        notifyDataSetChanged()
-//    }
-//
-//    inner class ViewHolder(val binding: ItemPossessionCoinManagementCoinListBinding) : RecyclerView.ViewHolder(binding.root){
-//        fun bind(coin: Coin){
-//        }
-//    }
-//}
+class coinData(val coinImage:Int, val coinName:String, val coinSymbol:String, val presentPrice:String, val profit:String, val averagePrice:String, val select:Int)
+
+class PossessionCoinManagementViewHolder(itemView : View) :  RecyclerView.ViewHolder(itemView){
+    val coinImage = itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_image_IV)
+    val coinName = itemView.findViewById<TextView>(R.id.item_possession_coin_management_coin_list_coin_name_TV)
+    val coinSymbol = itemView.findViewById<TextView>(R.id.item_possession_coin_management_coin_list_coin_symbol_TV)
+    val presentPrice = itemView.findViewById<TextView>(R.id.item_possession_coin_management_coin_list_price_TV)
+    val profit = itemView.findViewById<TextView>(R.id.item_possession_coin_management_coin_list_profit_plus_TV)
+    val averagePrice = itemView.findViewById<TextView>(R.id.item_possession_coin_management_coin_list_averageunit_price_TV)
+    val select = itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_off_IV)
+
+
+    init {
+        itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_off_IV).setOnClickListener {
+            itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_off_IV).visibility =
+                View.GONE
+            itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_on_IV).visibility =
+                View.VISIBLE
+        }
+
+        itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_on_IV).setOnClickListener {
+            itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_on_IV).visibility =
+                View.GONE
+            itemView.findViewById<ImageView>(R.id.item_possession_coin_management_coin_list_select_off_IV).visibility =
+                View.VISIBLE
+        }
+    }
+}
+
+class PossessionCoinManagementAdapter(val coinList:ArrayList<coinData>): RecyclerView.Adapter<PossessionCoinManagementViewHolder>(){
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PossessionCoinManagementViewHolder {
+
+        val cellForRow=LayoutInflater.from(parent.context).inflate(R.layout.item_possession_coin_management_coin_list, parent, false)
+
+        return PossessionCoinManagementViewHolder(cellForRow)
+    }
+
+    override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
+        holder.coinImage.setImageResource(coinList[position].coinImage)
+        holder.coinName.text = coinList[position].coinName
+        holder.coinSymbol.text = coinList[position].coinSymbol
+        holder.presentPrice.text = coinList[position].presentPrice
+        holder.profit.text = coinList[position].profit
+        holder.averagePrice.text = coinList[position].averagePrice
+        holder.select.setImageResource(coinList[position].select)
+    }
+
+    override fun getItemCount()=coinList.size
+}
