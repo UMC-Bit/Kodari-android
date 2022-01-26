@@ -6,18 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Profile.MyNewsFragment">
 
-    <TextView
-        android:id="@+id/my_news_text_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="서비스를 준비중입니다"
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webapp">
 
+
+
+
+    </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
