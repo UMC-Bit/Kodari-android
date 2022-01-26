@@ -13,4 +13,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="debate">토론장</string>
     <string name="enroll_exchange">거래소 등록</string>
+    <string name="Bitfinex">Bitfinex</string>
 </resources>

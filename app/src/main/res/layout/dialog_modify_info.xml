@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/btn_outline_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/info_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
+        android:paddingBottom="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_dialog_container_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+
+            <ImageView
+                android:id="@+id/info_dialog_exit_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/x_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/info_dialog_ask_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원하는 정보로 변경하려면\n수정 버튼을 눌러주세요."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_dialog_exit_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"/>
+
+
+            <TextView
+                android:id="@+id/info_dialog_account_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="계좌 이름"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_dialog_ask_tv"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"/>
+            
+            <EditText
+                android:id="@+id/info_dialog_input_account_et"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/btn_outline_gray"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_account_name_tv"
+                app:layout_constraintBottom_toBottomOf="@id/info_dialog_account_name_tv"
+                app:layout_constraintStart_toEndOf="@id/info_dialog_account_name_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/info_dialog_modify_name_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수정"
+                android:textSize="10sp"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_input_account_et"
+                app:layout_constraintBottom_toBottomOf="@id/info_dialog_input_account_et"
+                app:layout_constraintEnd_toEndOf="@id/info_dialog_input_account_et"
+                android:background="@drawable/btn_outline_yellow"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:id="@+id/info_dialog_cash_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="현금 자산"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_dialog_account_name_tv"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"/>
+
+            <EditText
+                android:id="@+id/info_dialog_input_cash_et"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/btn_outline_gray"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_cash_tv"
+                app:layout_constraintBottom_toBottomOf="@id/info_dialog_cash_tv"
+                app:layout_constraintStart_toEndOf="@id/info_dialog_cash_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/info_dialog_modify_cash_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수정"
+                android:textSize="10sp"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_input_cash_et"
+                app:layout_constraintBottom_toBottomOf="@id/info_dialog_input_cash_et"
+                app:layout_constraintEnd_toEndOf="@id/info_dialog_input_cash_et"
+                android:background="@drawable/btn_outline_yellow"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_marginEnd="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_cardView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        >
+
+        <TextView
+            android:id="@+id/info_dialog_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:textSize="15sp"
+            android:background="#FF6D64"
+            android:textColor="@color/black"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
