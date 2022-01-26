@@ -21,10 +21,6 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_enroll_exchange.xml" value="0.1" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_home.xml" value="0.264" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_possession_coin_management.xml" value="0.22546296296296298" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_possession_coin_memo_dialog.xml" value="0.22546296296296298" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_possession_coin_modify.xml" value="0.22546296296296298" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_possession_coin_search.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_profile_main.xml" value="0.11527777777777778" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_search_coin.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_select.xml" value="0.264" />
@@ -37,10 +33,27 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_represent_coin.xml" value="0.22237442922374429" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/menu/menu_bottomnavigationview.xml" value="0.25364583333333335" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/activity_main.xml" value="0.21388888888888888" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/activity_splash.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/dialoge_coin.xml" value="0.34692028985507245" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_login.xml" value="0.1766304347826087" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_memo.xml" value="0.22546296296296298" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_memo_and_twitter.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_add.xml" value="0.3574074074074074" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_management.xml" value="0.22870370370370371" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_memo.xml" value="0.49212962962962964" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_memo_dialog.xml" value="0.35289855072463766" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_twitter.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_twitter_dialog.xml" value="0.8" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/item_possession_coin_memo.xml" value="0.49212962962962964" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/item_possession_coin_search_coin_list.xml" value="0.22546296296296298" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/item_possession_coin_twitter.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/list_comment.xml" value="0.22546296296296298" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
-import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
@@ -47,26 +46,26 @@ class PossessionCoinManagementFragment : Fragment() {
     fun memoDialog()
     {
         binding.tempDialogBT.setOnClickListener {
-            val memoDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_memo_dialog, null)
+            val memoDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_memo_and_twitter, null)
             val memoDialogBuilder= AlertDialog.Builder(context as MainActivity)
                 .setView(memoDialogView)
 
             memoDialogBuilder.show()
 
-            val memoOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_off_TV)
-            val memoOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_on_TV)
-            val twitterOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_off_TV)
-            val twitterOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_on_TV)
-
-            memoOffButton.setOnClickListener {
-                memoOnButton.visibility=View.VISIBLE
-                twitterOnButton.visibility=View.GONE
-            }
-            twitterOffButton.setOnClickListener {
-                twitterOnButton.visibility=View.VISIBLE
-                memoOnButton.visibility=View.GONE
-                memoOffButton.visibility=View.VISIBLE
-            }
+//            val memoOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_off_TV)
+//            val memoOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_on_TV)
+//            val twitterOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_off_TV)
+//            val twitterOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_on_TV)
+//
+//            memoOffButton.setOnClickListener {
+//                memoOnButton.visibility=View.VISIBLE
+//                twitterOnButton.visibility=View.GONE
+//            }
+//            twitterOffButton.setOnClickListener {
+//                twitterOnButton.visibility=View.VISIBLE
+//                memoOnButton.visibility=View.GONE
+//                memoOffButton.visibility=View.VISIBLE
+//            }
         }
     }
 
