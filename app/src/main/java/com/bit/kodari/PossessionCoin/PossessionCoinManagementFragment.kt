@@ -1,5 +1,6 @@
 package com.bit.kodari.PossessionCoin
 
+//import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,23 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
-import com.bit.kodari.PossessionCoin.Adapter.coinData
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
-//import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinData
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
 class PossessionCoinManagementFragment : Fragment() {
     lateinit var binding: FragmentPossessionCoinManagementBinding
 
-    val coinList = arrayListOf(
-        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        coinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+    val PossessionCoinList = arrayListOf(
+        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
+        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
     )
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,27 +34,17 @@ class PossessionCoinManagementFragment : Fragment() {
 
         moveLayout()
         memoDialog()
-        deleteDialog()
 
         binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.possessionCoinManagementRV.adapter=PossessionCoinManagementAdapter(coinList)
+        binding.possessionCoinManagementRV.adapter=PossessionCoinManagementAdapter(PossessionCoinList)
 
-
-            return binding.root
+        binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
+            deleteDialog()
         }
 
-//    private fun initRecyclerview(){
-//        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//
-//        val managementRVAdater = PossessionCoinManagementRVAdapter()
-//        //리스너 객체 생성 및 전달
-//
-//        managementRVAdater.setMyItemClickListener(object : PossessionCoinManagementRVAdapter.MyItemClickListener{
-//
-//        })
-//
-//        binding.possessionCoinManagementRV.adapter = managementRVAdater
-//    }
+        return binding.root
+        }
+
 
     fun memoDialog()
     {
@@ -66,44 +54,28 @@ class PossessionCoinManagementFragment : Fragment() {
                 .setView(memoDialogView)
 
             memoDialogBuilder.show()
-
-//            val memoOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_off_TV)
-//            val memoOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_memo_on_TV)
-//            val twitterOffButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_off_TV)
-//            val twitterOnButton=memoDialogView.findViewById<TextView>(R.id.possession_coin_dialog_twitter_on_TV)
-//
-//            memoOffButton.setOnClickListener {
-//                memoOnButton.visibility=View.VISIBLE
-//                twitterOnButton.visibility=View.GONE
-//            }
-//            twitterOffButton.setOnClickListener {
-//                twitterOnButton.visibility=View.VISIBLE
-//                memoOnButton.visibility=View.GONE
-//                memoOffButton.visibility=View.VISIBLE
-//            }
         }
     }
 
-    fun deleteDialog()
-    {
-        binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
-            val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_delete_dialog, null)
-            val deleteDialogBuilder=AlertDialog.Builder(context as MainActivity)
-                .setView(deleteDialogView)
+                fun deleteDialog()
+                {
+                    val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_delete_dialog, null)
+                    val deleteDialogBuilder=AlertDialog.Builder(context as MainActivity)
+                        .setView(deleteDialogView)
 
-            val deleteAlertDialog = deleteDialogBuilder.show()
+                    val deleteAlertDialog = deleteDialogBuilder.show()
 
-            val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
-            val cancelButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
+                    val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
+                    val cancelButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
 
-            deleteConfirmButton.setOnClickListener {
-                deleteAlertDialog.dismiss()
+                    // 여기에 어댑터와 연결해서 삭제 기능 불러오기
+                    deleteConfirmButton.setOnClickListener {
+                        deleteAlertDialog.dismiss()
+                    }
+
+                    cancelButton.setOnClickListener {
+                        deleteAlertDialog.dismiss()
             }
-
-            cancelButton.setOnClickListener {
-                deleteAlertDialog.dismiss()
-            }
-        }
     }
 
     fun moveLayout()

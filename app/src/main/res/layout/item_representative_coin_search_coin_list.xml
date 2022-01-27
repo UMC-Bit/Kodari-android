@@ -19,7 +19,7 @@
             android:id="@+id/item_representative_coin_search_coin_list_image_IV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/btc"
+            android:background="@drawable/btc"
             android:scaleType="fitCenter"/>
 
     </androidx.cardview.widget.CardView>

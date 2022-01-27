@@ -136,7 +136,6 @@
                         android:textStyle="bold"
                         android:hint="암호화폐 검색"
                         android:drawableLeft="@drawable/magnifying_glass"
-                        android:drawableRight="@drawable/move_button"
                         android:paddingRight="10dp"
                         android:textSize="11sp"
                         android:inputType="text"

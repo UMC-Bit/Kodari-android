@@ -30,10 +30,9 @@ class MyNewsFragment : Fragment() {
         web.isHorizontalScrollBarEnabled = false
         web.isVerticalScrollBarEnabled = false
 
-        val source = "<a class=\"twitter-timeline\" href=\"https://twitter.com/wavesprotocol?ref_src=twsrc%5Etfw\">Tweets by AxieInfinity</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
+        val source = "<a class=\"twitter-timeline\" href=\"https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw\"></a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
 
         web.loadData(source, "text/html", "UTF-8")
 
     }
-
 }

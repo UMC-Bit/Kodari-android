@@ -7,12 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bit.kodari.Main.Adapter.ManagementCoinData
+import com.bit.kodari.Main.Adapter.SearchCoinData
+import com.bit.kodari.Main.Adapter.RepresentativeCoinManagementAdapter
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 
 class RepresentativeCoinManagementFragment : Fragment() {
 
     lateinit var binding: FragmentRepresentativeCoinManagementBinding
+
+    val ManagementCoinList = arrayListOf(
+        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button),
+        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button),
+        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button)
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +32,9 @@ class RepresentativeCoinManagementFragment : Fragment() {
         binding = FragmentRepresentativeCoinManagementBinding.inflate(inflater , container , false)
 
         deleteDialog()
+
+        binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
+        binding.representativeCoinManagementRV.adapter= RepresentativeCoinManagementAdapter(ManagementCoinList)
 
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
