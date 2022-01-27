@@ -459,6 +459,7 @@
                 android:textColorHint="#FF584E"
                 android:hint="기억하고 싶은 내용을 입력해주세요."
                 android:textSize="11sp"
+                android:maxLength="100"
                 android:inputType="number"
                 android:background="#80D3D3D3"
                 android:paddingLeft="17dp"
