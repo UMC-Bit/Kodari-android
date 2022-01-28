@@ -59,7 +59,6 @@ class PossessionCoinAddFragment : Fragment() {
         }
     }
 
-
     fun moveLayout()
     {
         binding.possessionCoinAddCompleteButtonTV.setOnClickListener {
