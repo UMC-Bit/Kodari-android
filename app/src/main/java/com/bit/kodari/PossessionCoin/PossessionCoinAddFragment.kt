@@ -22,11 +22,8 @@ class PossessionCoinAddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPossessionCoinAddBinding.inflate(inflater, container, false)
-
         moveLayout()
-
         datetimepicker()
-
         return binding.root
     }
 

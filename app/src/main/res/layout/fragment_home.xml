@@ -58,102 +58,61 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+
+                        <ImageView
+                            android:id="@+id/home_vp_preview_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/vp_preview_btn"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/home_my_info_cv"
+                            app:layout_constraintBottom_toBottomOf="@id/home_my_info_cv"
+                            app:layout_constraintEnd_toStartOf="@id/home_my_info_cv"/>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/home_my_info_cv"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="200dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="70dp"
+                            android:layout_marginTop="40dp"
                             android:layout_marginEnd="20dp"
                             app:cardCornerRadius="10dp"
-                            app:cardElevation="4dp"
+                            app:cardElevation="6dp"
                             android:paddingBottom="3dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_notification_none_iv"
                             app:layout_constraintBottom_toBottomOf="parent">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/home_my_info_container_cl"
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/home_viewpager_vp"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:paddingBottom="3dp">
-
-                                <TextView
-                                    android:id="@+id/home_my_asset_title_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="@string/my_asset"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/home_restart_iv"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_marginStart="3dp"
-                                    android:src="@drawable/restart"
-                                    app:layout_constraintBottom_toBottomOf="@id/home_my_asset_title_tv"
-                                    app:layout_constraintStart_toEndOf="@id/home_my_asset_title_tv"
-                                    app:layout_constraintTop_toTopOf="@id/home_my_asset_title_tv" />
-
-                                <ImageView
-                                    android:id="@+id/home_mark_on_iv"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_marginEnd="20dp"
-                                    android:src="@drawable/mark_on"
-                                    app:layout_constraintBottom_toBottomOf="@id/home_restart_iv"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="@id/home_restart_iv" />
-
-
-                                <TextView
-                                    android:id="@+id/home_my_asset_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:text="999,999,999원"
-                                    android:textColor="@color/black"
-                                    android:textSize="30sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/home_my_asset_title_tv" />
-
-                                    <Button
-                                        android:id="@+id/home_start_btn"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/btn_outline_yellow"
-                                        android:padding="10dp"
-                                        android:text="@string/start_btn"
-                                        android:textSize="15sp"
-                                        android:layout_marginTop="10dp"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@id/home_my_asset_tv"/>
-
-
-                                <TextView
-                                    android:id="@+id/home_text_day_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    android:text="12월 28일 기준"
-                                    android:textSize="11sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent" />
-
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                android:layout_height="match_parent" />
 
                         </androidx.cardview.widget.CardView>
+
+
+                        <ImageView
+                            android:id="@+id/home_vp_next_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/vp_next_btn"
+                            app:layout_constraintStart_toEndOf="@id/home_my_info_cv"
+                            app:layout_constraintTop_toTopOf="@id/home_my_info_cv"
+                            app:layout_constraintBottom_toBottomOf="@id/home_my_info_cv"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/my_record_indicators"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            app:ci_drawable="@drawable/white_radius_circle_indicator"
+                            app:ci_drawable_unselected="@drawable/black_radius_circle_indicator"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/home_my_info_cv" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -292,7 +251,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/btn_outline_yellow">
 
                 <TextView
                     android:id="@+id/home_represent_coin_tv"
@@ -356,7 +320,7 @@
                                 android:id="@+id/home_binance_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/binanace"
+                                android:text="@string/Bitfinex"
                                 android:padding="10dp"
                                 android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
@@ -383,7 +347,7 @@
                             app:layout_constraintEnd_toEndOf="@id/home_compare_list_ll"
                             app:layout_constraintTop_toBottomOf="@id/home_compare_list_ll"
                             android:layout_marginTop="5dp"
-                            tools:listitem="@layout/list_represent_coin"
+                            tools:listitem="@layout/list_item_represent_coin"
                             tools:itemCount="3"
                             android:padding="10dp"/>
 
@@ -491,11 +455,34 @@
 
                 </androidx.cardview.widget.CardView>
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/home_btn_container_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/home_question_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="문의"
+                    android:textColor="#8B8B8B"
+                    android:layout_marginEnd="20dp"
+                    android:drawableStart="@drawable/question_mark"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/btn_outline_gray"/>
+            </LinearLayout>
+
 
         </com.google.android.material.appbar.AppBarLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

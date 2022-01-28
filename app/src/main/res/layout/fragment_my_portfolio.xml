@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_my_info_container_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    tools:context=".Main.MyPortfolioFragment">
+
+    <TextView
+        android:id="@+id/my_portfolio_asset_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/my_asset"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/my_portfolio_restart_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_portfolio_asset_title_tv"
+        app:layout_constraintStart_toEndOf="@id/my_portfolio_asset_title_tv"
+        app:layout_constraintTop_toTopOf="@id/my_portfolio_asset_title_tv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="3dp"
+        android:src="@drawable/restart" />
+
+    <TextView
+        android:id="@+id/my_portfolio_modify_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_portfolio_restart_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/my_portfolio_restart_iv"
+        android:text="편집"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/btn_outline_yellow" />
+
+
+    <TextView
+        android:id="@+id/home_my_asset_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_portfolio_asset_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="1,020원"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/my_portfolio_percent_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(+13.5%)"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/home_my_asset_tv"
+        app:layout_constraintStart_toEndOf="@id/home_my_asset_tv"
+        app:layout_constraintTop_toTopOf="@id/home_my_asset_tv"/>
+
+
+    <TextView
+        android:id="@+id/home_text_day_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="30dp"
+        android:text="12월 28일 기준"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/my_portfolio_account_name_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:text="졸업 좀 하자"
+        android:textSize="11sp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

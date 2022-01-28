@@ -1,4 +1,4 @@
-package com.bit.kodari.Portfolio
+package com.bit.kodari.Debate
 
 import android.content.Context
 import android.graphics.Color
