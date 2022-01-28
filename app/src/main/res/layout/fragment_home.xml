@@ -347,7 +347,7 @@
                             app:layout_constraintEnd_toEndOf="@id/home_compare_list_ll"
                             app:layout_constraintTop_toBottomOf="@id/home_compare_list_ll"
                             android:layout_marginTop="5dp"
-                            tools:listitem="@layout/list_represent_coin"
+                            tools:listitem="@layout/list_item_represent_coin"
                             tools:itemCount="3"
                             android:padding="10dp"/>
 

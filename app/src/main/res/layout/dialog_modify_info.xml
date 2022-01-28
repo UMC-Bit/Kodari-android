@@ -68,6 +68,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_account_name_tv"
                 app:layout_constraintStart_toEndOf="@id/info_dialog_account_name_tv"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="15sp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="20dp"/>
 
@@ -106,6 +107,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_cash_tv"
                 app:layout_constraintStart_toEndOf="@id/info_dialog_cash_tv"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="15sp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="20dp"/>
 

@@ -32,7 +32,7 @@
         android:src="@drawable/restart" />
 
     <TextView
-        android:id="@+id/my_portfolio_mark_on_iv"
+        android:id="@+id/my_portfolio_modify_iv"
         app:layout_constraintBottom_toBottomOf="@id/my_portfolio_restart_iv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/my_portfolio_restart_iv"

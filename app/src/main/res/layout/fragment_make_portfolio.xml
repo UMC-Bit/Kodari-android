@@ -56,7 +56,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/maek_portfolio_start_btn"
+        android:id="@+id/make_portfolio_make_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

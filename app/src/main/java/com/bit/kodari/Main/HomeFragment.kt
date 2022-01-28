@@ -12,8 +12,13 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bit.kodari.Main.Adapter.HomePCRVAdapter
+import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
+import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 
@@ -21,7 +26,11 @@ class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
     lateinit var homeVPAdapter: HomeVPAdapter
+    lateinit var homeRCRVAdapter: HomeRCRVAdapter
+    lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
+    var representList = ArrayList<RepresentCoinResult>()
+    var possessionList = ArrayList<PossesionCoinResult>()
 
     //프래그먼트는 다시 돌아오면 onCreateView로 실행
     override fun onCreateView(
@@ -37,13 +46,10 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        initSetting()
-    }
-
-    fun initSetting() {
         setViewpager()
+        setRepresentRV()
+        setRepresentPV()
     }
-
 
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener() {
@@ -128,6 +134,7 @@ class HomeFragment : Fragment() {
                 .commitNowAllowingStateLoss()
         }
 
+        //화살표 관련 리스너
         binding.homeVpPreviewBtn.setOnClickListener {
             val current = binding.homeViewpagerVp.currentItem           //현재 뷰페이저 위치 받아오기
             binding.homeViewpagerVp.setCurrentItem(current-1,false) //위치 -1 페이지로 이동 -> 이동후 onPage~ 리스너로 인디케이터 변화
@@ -140,6 +147,8 @@ class HomeFragment : Fragment() {
 
     }
 
+    //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
+    //API 호출 이후 실행
     fun setViewpager() {
         portfolioList.add(MyPortfolioFragment())
         portfolioList.add(MyPortfolioFragment())
@@ -173,6 +182,26 @@ class HomeFragment : Fragment() {
                 binding.myRecordIndicators.animatePageSelected(position)
             }
         })
+    }
+
+    fun setRepresentRV(){
+        representList.add(RepresentCoinResult(1,"null","test1,",2,3,"active","AES"))
+        representList.add(RepresentCoinResult(1,"null","test2,",2,3,"active","ATE"))
+        representList.add(RepresentCoinResult(1,"null","test3,",2,3,"active","TES"))
+        homeRCRVAdapter = HomeRCRVAdapter(representList)
+        binding.homeRepresentCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
+        binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
+
+    }
+
+    fun setRepresentPV(){
+        possessionList.add(PossesionCoinResult(1,"test1",5000,"active",3))
+        possessionList.add(PossesionCoinResult(1,"test2",10000000,"active",3))
+        possessionList.add(PossesionCoinResult(1,"test3",42,"active",2))
+        homePCRVAdapter = HomePCRVAdapter(possessionList)
+        binding.homeMyCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
+        binding.homeMyCoinRv.adapter = homePCRVAdapter
+
     }
 
 
