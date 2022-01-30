@@ -27,3 +27,4 @@ class HomeRCRVAdapter(var list:ArrayList<RepresentCoinResult>) :RecyclerView.Ada
 
     override fun getItemCount(): Int = list.size
 }
+

@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,7 @@ class DialogCoin : DialogFragment(), DebateCoinView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogCoinBinding.inflate(inflater,container,false)
-        setListener()
+//        setListener()
         return binding.root
     }
 
@@ -74,12 +75,12 @@ class DialogCoin : DialogFragment(), DebateCoinView {
         Log.d("DebateCoin", "코인 목록 불러오기 실패 ,${message}")
     }
 
-    fun setListener(){
-        binding.dialogInputEt.doAfterTextChanged {
-            var searchText =  binding.dialogInputEt.text.toString()
-            searchFilter(searchText)
-        }
-    }
+//    fun setListener(){
+//        binding.dialogInputEt.doAfterTextChanged {
+//            var searchText =  binding.dialogInputEt.text.toString()
+//            searchFilter(searchText)
+//        }
+//    }
 
     fun searchFilter(searchText: String) {
         filteredList.clear()
