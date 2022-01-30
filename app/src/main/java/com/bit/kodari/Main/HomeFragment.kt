@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -22,9 +23,8 @@ import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    lateinit var binding: FragmentHomeBinding
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
@@ -32,24 +32,15 @@ class HomeFragment : Fragment() {
     var representList = ArrayList<RepresentCoinResult>()
     var possessionList = ArrayList<PossesionCoinResult>()
 
-    //프래그먼트는 다시 돌아오면 onCreateView로 실행
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+    //BaseFragment에서 onStart에서 실행시켜줌
+    override fun initAfterBinding() {
         setChartDummy()
         setListener()
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
         setViewpager()
         setRepresentRV()
         setRepresentPV()
     }
+
 
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener() {

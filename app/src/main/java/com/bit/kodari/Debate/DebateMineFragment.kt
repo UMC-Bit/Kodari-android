@@ -54,7 +54,7 @@ class DebateMineFragment : Fragment() {
 
             }
 
-            override fun afterTextChanged(editable: Editable?) {
+            override fun afterTextChanged(editable: Editable?) {        //답글 입력했을때만 버튼 클릭할 수 있게함
                 if (editable?.length!! > 0) {
                     binding.mineCommentSendBtn.setClickable(true);
                     binding.mineCommentSendBtn.setBackgroundColor(Color.BLUE);
@@ -64,6 +64,12 @@ class DebateMineFragment : Fragment() {
                 }
             }
         })
+
+        //삭제 버튼 눌렀을 때 , 다이얼로그 창 띄워줌
+        binding.mineRemoveTv.setOnClickListener {
+            val dialog = DeleteDialog(requireContext())
+            dialog.showDiaglog()            //만든 다이얼로그 띄워주기
+        }
     }
 
     //다른 곳 클릭시 올라온 키보드 내려가게함
