@@ -1,6 +1,7 @@
 package com.bit.kodari.Config
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 ) : Fragment() {
     private var _binding: VB? = null
     protected val binding get() = _binding!!
+    private lateinit var mLoadingDialog: LoadingDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +45,14 @@ abstract class BaseFragment<VB : ViewBinding>(
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    protected abstract fun showLoadingDialog()
+    fun showLoadingDialog(context:Context){
+        mLoadingDialog = LoadingDialog(context)
+        mLoadingDialog.show()
+    }
 
-    protected abstract fun dismissLoadingDialog()
+    fun dismissLoadingDialog(){
+        if(mLoadingDialog.isShowing){
+            mLoadingDialog.dismiss()
+        }
+    }
 }
