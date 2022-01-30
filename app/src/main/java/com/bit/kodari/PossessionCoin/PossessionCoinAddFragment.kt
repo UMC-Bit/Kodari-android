@@ -14,7 +14,7 @@ import java.lang.StringBuilder
 import java.util.*
 
 class PossessionCoinAddFragment : Fragment() {
-    val tradeTime = StringBuilder();
+    val tradeTime = StringBuilder()
     lateinit var binding:FragmentPossessionCoinAddBinding
 
     override fun onCreateView(

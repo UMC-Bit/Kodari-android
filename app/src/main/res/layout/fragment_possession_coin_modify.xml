@@ -455,17 +455,16 @@
                 android:id="@+id/possession_coin_modify_memo_input_ET"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:drawablePadding="6dp"
-                android:textColorHint="#FF584E"
-                android:hint="기억하고 싶은 내용을 입력해주세요."
-                android:textSize="11sp"
-                android:maxLength="100"
-                android:inputType="number"
                 android:background="#80D3D3D3"
+                android:drawablePadding="6dp"
+                android:hint="기억하고 싶은 내용을 입력해주세요."
+                android:inputType="number"
+                android:maxLength="100"
                 android:paddingLeft="17dp"
+                android:textColorHint="#FF584E"
+                android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
+                app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textfield.TextInputEditText>
 
         </LinearLayout>
 
