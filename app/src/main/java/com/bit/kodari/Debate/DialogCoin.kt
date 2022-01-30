@@ -1,6 +1,8 @@
 package com.bit.kodari.Debate
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +37,7 @@ class DialogCoin : DialogFragment(), DebateCoinView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogCoinBinding.inflate(inflater,container,false)
-//        setListener()
+        setListener()
         return binding.root
     }
 
@@ -75,12 +77,23 @@ class DialogCoin : DialogFragment(), DebateCoinView {
         Log.d("DebateCoin", "코인 목록 불러오기 실패 ,${message}")
     }
 
-//    fun setListener(){
-//        binding.dialogInputEt.doAfterTextChanged {
-//            var searchText =  binding.dialogInputEt.text.toString()
-//            searchFilter(searchText)
-//        }
-//    }
+    fun setListener(){
+        binding.dialogInputEt.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                    Log.d("setlistener", "실행")
+                    var searchText =  binding.dialogInputEt.text.toString()
+                    searchFilter(searchText)
+            }
+        })
+    }
 
     fun searchFilter(searchText: String) {
         filteredList.clear()
