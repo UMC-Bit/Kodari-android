@@ -26,6 +26,9 @@ class PsnCoinService(val context: Context) { // PsnCoinService의 매개변수�
                     1000 ->{
                         Toast.makeText(context,"소유 코인 등록 성공", Toast.LENGTH_SHORT).show()
                     }
+                    else->{
+                        Toast.makeText(context,"소유 코인 등록 실패", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
