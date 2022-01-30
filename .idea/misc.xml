@@ -16,10 +16,12 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/activity_splash.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_coin.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_delete.xml" value="0.536" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_loading.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_modify_info.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialoge_coin.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate.xml" value="0.22546296296296298" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate_coin_main.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate_main.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_debate_mine.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22546296296296298" />

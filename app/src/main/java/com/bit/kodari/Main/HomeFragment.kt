@@ -248,13 +248,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return LineData(set1)
     }
 
-    //프로그래스바 띄워주기
-    override fun showLoadingDialog() {
-
-    }
-
-    //프로그래스바 없애기 .
-    override fun dismissLoadingDialog() {
-
-    }
 }
