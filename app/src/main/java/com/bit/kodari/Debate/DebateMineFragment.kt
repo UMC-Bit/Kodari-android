@@ -13,23 +13,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.databinding.FragmentDebateMineBinding
 
 
-class DebateMineFragment : Fragment() {
+class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebateMineBinding::inflate){
 
-    lateinit var binding:FragmentDebateMineBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDebateMineBinding.inflate(inflater , container , false)
+    override fun initAfterBinding() {
         setListener()
         setInit()
-        return binding.root
     }
-
 
     //초기 기본 셋팅 값들 설정
     fun setInit(){

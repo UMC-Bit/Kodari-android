@@ -1,11 +1,8 @@
 package com.bit.kodari.Debate.Service
 
 import android.util.Log
-import com.bit.kodari.Debate.Data.DebateCoinResponse
-import com.bit.kodari.Debate.Data.DebatePostResponse
-import com.bit.kodari.Debate.Retrofit.DebateCoinView
-import com.bit.kodari.Debate.Retrofit.DebateMainView
-import com.bit.kodari.Debate.Retrofit.DebateRetrofitInterface
+import com.bit.kodari.Debate.Data.*
+import com.bit.kodari.Debate.Retrofit.*
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,6 +12,8 @@ class DebateService {
 
     private lateinit var debateCoinView: DebateCoinView
     private lateinit var debateMainView: DebateMainView
+    private lateinit var debateCoinPostView: DebateCoinPostView
+    private lateinit var debatePostWriteVIew: DebatePostWriteVIew
 
     fun setDebateCoinView(debateCoinView:DebateCoinView){
         this.debateCoinView = debateCoinView
@@ -22,6 +21,14 @@ class DebateService {
 
     fun setDebateMainView(debateMainView: DebateMainView){
         this.debateMainView = debateMainView
+    }
+
+    fun setDebateCoinPostView(debateCoinPostView: DebateCoinPostView){
+        this.debateCoinPostView = debateCoinPostView
+    }
+
+    fun setdebatePostWriteVIew(debatePostWriteVIew: DebatePostWriteVIew){
+        this.debatePostWriteVIew = debatePostWriteVIew
     }
 
 
@@ -58,5 +65,39 @@ class DebateService {
                 debateMainView.getPostsAllFailure("${t}")
             }
         })
+    }
+
+    fun getCoinPost(coinName:String){
+        val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
+        debateService.getCoinPost(coinName).enqueue(object :Callback<DebateCoinPostResponse>{
+            override fun onResponse(
+                call: Call<DebateCoinPostResponse>,
+                response: Response<DebateCoinPostResponse>
+            ) {
+                Log.d("Coinpost","${response.isSuccessful} , ${response.message()}")
+                debateCoinPostView.getCoinPostSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<DebateCoinPostResponse>, t: Throwable) {
+                debateCoinPostView.getCoinPostFailure("${t}")
+            }
+        })
+    }
+
+    fun updatePost(post:DebateUpdatePostRequest){
+        val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
+        debateService.updatePost(post).enqueue(object : Callback<DebateUpdatePostResponse>{
+            override fun onResponse(
+                call: Call<DebateUpdatePostResponse>,
+                response: Response<DebateUpdatePostResponse>
+            ) {
+                debatePostWriteVIew.updatePostSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<DebateUpdatePostResponse>, t: Throwable) {
+                debatePostWriteVIew.updatePostFailure("${t}")
+            }
+        })
+
     }
 }

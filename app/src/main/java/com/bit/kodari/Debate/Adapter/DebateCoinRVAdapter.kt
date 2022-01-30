@@ -46,9 +46,6 @@ class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView
         notifyDataSetChanged()
     }
 
-    fun getName(position: Int) : String{
-        return coinList[position].coinName
-    }
 
 
 }

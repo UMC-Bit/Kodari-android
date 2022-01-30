@@ -64,14 +64,8 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
     }
 
     override fun getPostsAllFailure(msg:String) {
+        dismissLoadingDialog()
         Log.d("getPost",msg)
     }
 
-//    override fun showLoadingDialog() {
-//        binding.debateMainProgress.visibility = View.VISIBLE
-//    }
-//
-//    override fun dismissLoadingDialog() {
-//        binding.debateMainProgress.visibility = View.GONE
-//    }
 }

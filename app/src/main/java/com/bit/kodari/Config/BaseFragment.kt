@@ -45,11 +45,13 @@ abstract class BaseFragment<VB : ViewBinding>(
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    //API 호출해서 데이터 불러오는 동안 로딩바 뜨는거
     fun showLoadingDialog(context:Context){
         mLoadingDialog = LoadingDialog(context)
         mLoadingDialog.show()
     }
 
+    //API 호출해서 데이터 불러오면 로딩바 없애는거
     fun dismissLoadingDialog(){
         if(mLoadingDialog.isShowing){
             mLoadingDialog.dismiss()

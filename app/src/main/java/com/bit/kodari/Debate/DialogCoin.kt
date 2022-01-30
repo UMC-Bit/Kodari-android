@@ -6,17 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
 import com.bit.kodari.Debate.Data.DebateCoinResponse
 import com.bit.kodari.Debate.Data.DebateCoinResult
 import com.bit.kodari.Debate.Retrofit.DebateCoinView
 import com.bit.kodari.Debate.Service.DebateService
+import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.R
 import com.bit.kodari.databinding.DialogCoinBinding
 
 //코인 클릭시 해당 코인 이름을 bundle에 담아서 넘겨줘야함.
@@ -50,7 +49,16 @@ class DialogCoin : DialogFragment(), DebateCoinView {
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         debateCoinRVAdapter.setMyItemClickListener(object :DebateCoinRVAdapter.MyItemClickListener{
             override fun onItemClick(item: DebateCoinResult) {      //이 아이템 클릭시 작동하게해야함
-                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, DebateCoinPostFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("coinName", item.coinName)
+                        }
+                    })
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+                //Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
+                dismiss()
             }
         })
         binding.dialogListRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
