@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Login.Retrofit.SignUpView
-import com.bit.kodari.Login.Service.LogInService
+import com.bit.kodari.Login.Service.ProfileServie
 import com.bit.kodari.Login.RetrofitData.SignUpInfo
 import com.bit.kodari.Login.RetrofitData.SignUpResponse
 import com.bit.kodari.R
@@ -28,7 +28,7 @@ class SignupPwFragment : Fragment() , SignUpView {
 
         binding.signupPwNextBtn.setOnClickListener {
 
-            val logInService = LogInService(requireActivity())
+            val logInService = ProfileServie(requireActivity())
             logInService.setSignUpView(this)
             logInService.getSignUp(test)
 

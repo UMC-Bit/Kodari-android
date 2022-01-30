@@ -2,9 +2,8 @@ package com.bit.kodari.Login.Service
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.bit.kodari.Debate.Retrofit.DebateCoinView
 import com.bit.kodari.Login.Retrofit.LoginRetrofitInterface
+import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
 import com.bit.kodari.Login.Retrofit.SignUpView
 import com.bit.kodari.Login.RetrofitData.LogInInfo
 import com.bit.kodari.Login.RetrofitData.LogInResponse

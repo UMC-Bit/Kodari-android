@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bit.kodari.Login.Service.LogInService
+import com.bit.kodari.Login.Service.ProfileServie
 import com.bit.kodari.Login.RetrofitData.LogInInfo
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.databinding.FragmentLoginPwBinding
@@ -24,7 +24,7 @@ class LoginPwFragment : Fragment() {
         var test = LogInInfo("test@naver.com" , "a1234@1234")
 
         binding.loginPwNextBtn.setOnClickListener {
-            val logInService = LogInService(requireContext())
+            val logInService = ProfileServie(requireContext())
             logInService.getLogIn(test)
 
             val intent = Intent(activity, MainActivity::class.java)
