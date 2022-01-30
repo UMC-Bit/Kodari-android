@@ -63,4 +63,12 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
     override fun getPostsAllFailure(msg:String) {
         Log.d("getPost",msg)
     }
+
+    override fun showLoadingDialog() {
+        TODO("Not yet implemented")
+    }
+
+    override fun dismissLoadingDialog() {
+        TODO("Not yet implemented")
+    }
 }
