@@ -18,7 +18,7 @@
         android:layout_marginStart="25dp"/>
 
     <TextView
-        android:id="@+id/list_item_my_writing_id_tv"
+        android:id="@+id/list_item_my_writing_nickname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
@@ -29,15 +29,22 @@
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_image_iv"
         app:layout_constraintStart_toEndOf="@id/list_item_my_writing_image_iv"/>
 
-    <ImageButton
-        android:id="@+id/list_item_my_writing_x_ib"
+    <TextView
+        android:id="@+id/list_item_my_writing_coin_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/gray_x_btn"
+        android:text="DOGE"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        android:background="@drawable/btn_outline_yellow"
         app:layout_constraintTop_toTopOf="@id/list_item_my_writing_image_iv"
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_image_iv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <TextView
         android:id="@+id/list_item_my_writing_content_tv"
@@ -54,7 +61,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"/>
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <ImageView
         android:id="@+id/list_item_my_writing_up_btn"
         android:layout_width="23dp"
         android:layout_height="22dp"
@@ -63,6 +70,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_content_tv"
         android:layout_marginTop="12dp"/>
+    
+    <TextView
+        android:id="@+id/list_item_my_writing_like_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_writing_up_btn"
+        app:layout_constraintEnd_toEndOf="@id/list_item_my_writing_up_btn"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_up_btn"/>
 
     <TextView
         android:id="@+id/list_item_my_writing_comment_count_tv"
@@ -95,5 +111,15 @@
         app:layout_constraintStart_toEndOf="@id/list_item_my_writing_comment_count_num_tv"
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_comment_count_tv"
         android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_dislike_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_writing_down_btn"
+        app:layout_constraintEnd_toEndOf="@id/list_item_my_writing_down_btn"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_down_btn"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
