@@ -6,52 +6,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Retrofit.SignUpView
-import com.bit.kodari.Login.Service.ProfileServie
 import com.bit.kodari.Login.RetrofitData.SignUpInfo
 import com.bit.kodari.Login.RetrofitData.SignUpResponse
+import com.bit.kodari.Login.Service.LogInService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentSignupPwBinding
 
-class SignupPwFragment : Fragment() , SignUpView {
+class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwBinding::inflate) {
 
-    lateinit var binding: FragmentSignupPwBinding
+    lateinit var email : String
+    lateinit var pw : String
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSignupPwBinding.inflate(inflater, container, false)
+    override fun initAfterBinding() {
+       if(!arguments?.isEmpty!!){
+           email = requireArguments().getString("email")!!
+       }
+        setListener()
+    }
 
-        var test = SignUpInfo("test2", "test3154@naver.com" , "a1234@1234")
+    fun setListener(){
 
         binding.signupPwNextBtn.setOnClickListener {
-
-            val logInService = ProfileServie(requireActivity())
-            logInService.setSignUpView(this)
-            logInService.getSignUp(test)
-
+            pw = binding.signupPwEt.text.toString()
+            (context as LoginActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.login_container_fl, SignupNicknameFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("email" , email)
+                        putString("pw",pw)
+                    }
+                }).addToBackStack(null).commitAllowingStateLoss()
         }
 
-        return binding.root
-    }
-
-    override fun signUpSuccess(resp: SignUpResponse) {
-        when(resp.code){
-            1000 -> {
-                Toast.makeText(context,"회원가입 성공" , Toast.LENGTH_SHORT).show()
-                (context as LoginActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.login_container_fl, SignupNicknameFragment()).commitAllowingStateLoss()
-            }
-            else -> {
-                binding.signupPwInfoTv.text = "${resp.message}"
-                Toast.makeText(context,"회원가입 실패 , ${resp.message}" , Toast.LENGTH_LONG).show()
-            }
+        binding.signupPwXIb.setOnClickListener{
+            (context as LoginActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
         }
     }
 
-    override fun signUpFailure(msg:String) {
-        binding.signupPwInfoTv.text = msg
-    }
+
 }

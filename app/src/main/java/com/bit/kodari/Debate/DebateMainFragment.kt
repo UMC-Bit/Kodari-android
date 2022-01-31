@@ -64,11 +64,11 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         Log.d("getPost",msg)
     }
 
-    override fun showLoadingDialog() {
-        TODO("Not yet implemented")
-    }
-
-    override fun dismissLoadingDialog() {
-        TODO("Not yet implemented")
-    }
+//    override fun showLoadingDialog() {
+//
+//    }
+//
+//    override fun dismissLoadingDialog() {
+//
+//    }
 }
