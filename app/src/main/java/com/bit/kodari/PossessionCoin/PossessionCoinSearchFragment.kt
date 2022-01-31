@@ -71,7 +71,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
         })
 
         binding.possessionCoinSearchCoinListRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.possessionCoinSearchCoinListRV.adapter= PossessionCoinSearchAdapter(coinList)
+        binding.possessionCoinSearchCoinListRV.adapter= possessionCoinSearchAdapter
     }
 
     fun setListeners(){
