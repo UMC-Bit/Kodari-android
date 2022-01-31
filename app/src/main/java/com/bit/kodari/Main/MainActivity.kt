@@ -6,6 +6,7 @@ import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Debate.DebateMainFragment
 import com.bit.kodari.Profile.ProfileMainFragment
 import com.bit.kodari.R
+import com.bit.kodari.Util.Upbit.UpbitService
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setListener()
-
+        // 업비트 Open API 테스트
+        UpbitService.getCurrentPrice()
 
         supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
             .commitAllowingStateLoss()
