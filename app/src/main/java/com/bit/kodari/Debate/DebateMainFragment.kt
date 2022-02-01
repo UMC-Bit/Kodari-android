@@ -1,21 +1,15 @@
 package com.bit.kodari.Debate
 
-import android.app.Dialog
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateMainRVAdapter
+import com.bit.kodari.Debate.Adapter.MyWritingRVAdapter
 import com.bit.kodari.Debate.Data.DebatePostResponse
 import com.bit.kodari.Debate.Data.DebatePostResult
 import com.bit.kodari.Debate.Retrofit.DebateMainView
 import com.bit.kodari.Debate.Service.DebateService
-import com.bit.kodari.Main.ModifyInfoDialog
 import com.bit.kodari.databinding.FragmentDebateMainBinding
 
 class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView{
