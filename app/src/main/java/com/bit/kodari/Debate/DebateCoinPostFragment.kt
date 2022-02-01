@@ -30,11 +30,12 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(Fragm
 //        val debateService = DebateService()
 //        debateService.setDebateCoinPostView(this)
 //        showLoadingDialog(requireContext())
-//        debateService.getCoinPost(coinName)
+//        debateService.getCoinPost(coinName) 코인 별 포스트 검색
+        setRecyclerView()           //더미 데이터로 셋팅
     }
 
     fun getCoinName(){
-        if(arguments?.isEmpty != null){
+        if(!arguments?.isEmpty!!){
             coinName = requireArguments().getString("coinName")!!
             showToast(coinName)
         }
@@ -47,6 +48,7 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(Fragm
                 .replace(R.id.main_container_fl, DebatePostWriteFragment().apply {
                     arguments = Bundle().apply {
                         putString("coinName", coinName)
+
                     }
                 })
                 .addToBackStack(null)
@@ -55,6 +57,9 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(Fragm
     }
 
     fun setRecyclerView(){
+        //더미 데이터 셋팅
+        coinPostList = ArrayList<DebateCoinPostResult>()
+        coinPostList.add(DebateCoinPostResult(3,"더미데이터입니다.",5,5,"wd78wg","","DOGE","1시간전"))
         debateCoinPostRVAdapter = DebateCoinPostRVAdapter(coinPostList)
         debateCoinPostRVAdapter.setMyItemClickListener(object :DebateCoinPostRVAdapter.MyItemClickListener{
             override fun onItemClick(item: DebateCoinPostResult) {
