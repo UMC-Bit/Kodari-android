@@ -32,7 +32,6 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
     override fun onStart() {
         super.onStart()
         getCoins()
-
     }
 
     override fun onCreateView(
@@ -41,13 +40,9 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
         savedInstanceState: Bundle?
     ): View? {
 
-
-
         binding= FragmentPossessionCoinSearchBinding.inflate(inflater , container , false)
 
         setListeners()
-
-
 
         binding.possessionCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -67,7 +62,8 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl, PossessionCoinAddFragment().apply {
                         arguments = Bundle().apply {
-                          putString("coinName", item.coinName)
+                            putString("coinImage",item.coinImg)
+                            putString("coinName", item.coinName)
                             putString("coinSymbol", item.symbol)
                         }
                     }).commitAllowingStateLoss()

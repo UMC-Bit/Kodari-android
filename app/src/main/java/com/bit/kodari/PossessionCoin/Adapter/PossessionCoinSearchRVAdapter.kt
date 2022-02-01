@@ -1,14 +1,15 @@
 package com.bit.kodari.PossessionCoin.Adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
-import com.bit.kodari.Debate.Data.DebateCoinResult
-import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
 import com.bit.kodari.databinding.ItemPossessionCoinSearchCoinListBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResult>): RecyclerView.Adapter<PossessionCoinSearchAdapter.PossessionCoinSearchViewHolder>() {
 
@@ -25,8 +26,11 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
 
     inner class PossessionCoinSearchViewHolder(val binding: ItemPossessionCoinSearchCoinListBinding): RecyclerView.ViewHolder(binding.root){
 
+        val imageView: ImageView=binding.itemPossessionCoinSearchCoinListImageIV
+
         fun bind(item : PsnCoinSearchResult){ // 서버에서 받아와서 보여줄 것만
-//            binding.itemPossessionCoinSearchCoinListImageIV.setImageResource()
+            Glide.with(imageView).load(item.coinImg)
+                .into(imageView)
             binding.itemPossessionCoinSearchCoinListCoinNameTV.text = item.coinName
             binding.itemPossessionCoinSearchCoinListCoinSymbolTV.text = item.symbol
 

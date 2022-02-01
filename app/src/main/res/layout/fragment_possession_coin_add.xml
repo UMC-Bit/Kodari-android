@@ -113,22 +113,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_add_first_dividing_line_IV" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_add_coin_image_CV"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_add_coin_name_TV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_add_coin_symbol_TV"
-                app:layout_constraintEnd_toStartOf="@id/possession_coin_add_coin_name_TV">
-
                 <ImageView
                     android:id="@+id/possession_coin_add_coin_image_IV"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/btc" />
-
-            </androidx.cardview.widget.CardView>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/btc"
+                    android:background="#FFFFFF"
+                    app:layout_constraintTop_toTopOf="@id/possession_coin_add_coin_name_TV"
+                    app:layout_constraintBottom_toBottomOf="@id/possession_coin_add_coin_symbol_TV"
+                    app:layout_constraintEnd_toStartOf="@id/possession_coin_add_coin_name_TV"/>
 
             <TextView
                 android:id="@+id/possession_coin_add_coin_name_TV"
@@ -371,7 +365,7 @@
                         android:background="#80D3D3D3"
                         android:drawableRight="@drawable/move_button"
                         android:hint="수수료"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:paddingLeft="17dp"
                         android:paddingRight="17dp"
                         android:textColorHint="#000000"

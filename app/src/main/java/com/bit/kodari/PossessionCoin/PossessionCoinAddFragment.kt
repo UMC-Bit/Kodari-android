@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinAddBinding
+import com.bumptech.glide.Glide
 import java.lang.StringBuilder
 import java.util.*
 
@@ -24,6 +26,13 @@ class PossessionCoinAddFragment : Fragment() {
         binding = FragmentPossessionCoinAddBinding.inflate(inflater, container, false)
         moveLayout()
         datetimepicker()
+
+        val imageView: ImageView=binding.possessionCoinAddCoinImageIV
+
+        if(requireArguments().containsKey("coinImage")){
+            Glide.with(imageView).load(requireArguments().getString("coinImage"))
+                .into(imageView)
+        }
 
         if(requireArguments().containsKey("coinName")){
             binding.possessionCoinAddCoinNameTV.text=requireArguments().getString("coinName")

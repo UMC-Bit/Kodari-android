@@ -58,11 +58,11 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_represent_coin.xml" value="0.22237442922374429" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/menu/menu_bottomnavigationview.xml" value="0.25364583333333335" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26979166666666665" />
->>>>>>> 9b7a5e0a554a1d8c4eda6e3a0066e9a355d90532
+        &gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b7a5e0a554a1d8c4eda6e3a0066e9a355d90532
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
