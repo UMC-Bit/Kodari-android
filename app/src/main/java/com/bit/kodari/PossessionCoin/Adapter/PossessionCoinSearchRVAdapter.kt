@@ -39,6 +39,7 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
 
     override fun onBindViewHolder(holder: PossessionCoinSearchViewHolder, position: Int) {
         holder.bind(searchcoinList[position])
+        holder.binding.itemPossessionCoinSearchCoinListMoveButtonIV.setOnClickListener { mItemClickListener.onItemClick(searchcoinList[position]) }
     }
 
     override fun getItemCount()=searchcoinList.size

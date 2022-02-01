@@ -66,7 +66,9 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         possessionCoinSearchAdapter.setMyItemClickListener(object :PossessionCoinSearchAdapter.MyItemClickListener{
             override fun onItemClick(item: PsnCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
-                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinAddFragment()).commitAllowingStateLoss()
             }
         })
 
