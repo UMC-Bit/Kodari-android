@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Debate.DebateMainFragment"
+    tools:context=".Debate.DebateCoinMainFragment"
     android:background="@drawable/btn_outline_gray">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -19,7 +18,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/debate_main_title_tv"
+            android:id="@+id/debate_coin_main_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/debate"
@@ -30,18 +29,44 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="20dp"/>
 
+        <TextView
+            android:id="@+id/debate_coin_main_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="도지 코인"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/debate_coin_main_title_tv"/>
+
+
+        <TextView
+            android:id="@+id/debate_coin_main_write_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글쓰기"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_outline_yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/debate_coin_main_name_tv"
+            android:layout_marginTop="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/debate_main_input_cl"
+            android:id="@+id/debate_coin_main_input_cl"
             android:layout_width="0dp"
             android:layout_height="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/debate_main_title_tv"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintEnd_toStartOf="@id/debate_coin_main_write_btn"
+            app:layout_constraintTop_toTopOf="@id/debate_coin_main_write_btn"
+            app:layout_constraintBottom_toBottomOf="@id/debate_coin_main_write_btn">
 
             <TextView
-                android:id="@+id/debate_main_find_coin"
+                android:id="@+id/debate_coin_main_find_coin"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:text="원하시는 코인을 검색하세요"
@@ -56,13 +81,13 @@
                 android:layout_marginEnd="10dp"/>
 
             <ImageView
-                android:id="@+id/debate_main_next_btn"
+                android:id="@+id/debate_coin_main_next_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/move_button"
-                app:layout_constraintEnd_toEndOf="@id/debate_main_find_coin"
-                app:layout_constraintTop_toTopOf="@id/debate_main_find_coin"
-                app:layout_constraintBottom_toBottomOf="@id/debate_main_find_coin"
+                app:layout_constraintEnd_toEndOf="@id/debate_coin_main_find_coin"
+                app:layout_constraintTop_toTopOf="@id/debate_coin_main_find_coin"
+                app:layout_constraintBottom_toBottomOf="@id/debate_coin_main_find_coin"
                 android:layout_marginEnd="10dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -71,29 +96,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/debate_main_container_cl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/debate_main_write_btn_tv"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:background="@drawable/btn_outline_gray"-->
-<!--        android:layout_marginTop="20dp">-->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/debate_main_list_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@id/container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/btn_outline_gray"
-            tools:listitem="@layout/list_item_debate" />
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/debate_coin_main_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/btn_outline_gray"
+        tools:listitem="@layout/list_item_debate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

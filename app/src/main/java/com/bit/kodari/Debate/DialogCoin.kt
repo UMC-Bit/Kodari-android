@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -18,7 +19,7 @@ import com.bit.kodari.Debate.Retrofit.DebateCoinView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.databinding.DialogCoinBinding
 
-
+//코인 클릭시 해당 코인 이름을 bundle에 담아서 넘겨줘야함.
 class DialogCoin : DialogFragment(), DebateCoinView {
 
     private var _binding : DialogCoinBinding? = null
@@ -45,8 +46,16 @@ class DialogCoin : DialogFragment(), DebateCoinView {
 
     fun setRecyclerView(){
         debateCoinRVAdapter = DebateCoinRVAdapter(coinList)
+        //아이템 클릭 리스너를 현재 뷰에서 처리
+        //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
+        debateCoinRVAdapter.setMyItemClickListener(object :DebateCoinRVAdapter.MyItemClickListener{
+            override fun onItemClick(item: DebateCoinResult) {      //이 아이템 클릭시 작동하게해야함
+                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
+            }
+        })
         binding.dialogListRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         binding.dialogListRv.adapter = debateCoinRVAdapter
+
     }
 
     fun getCoins(){

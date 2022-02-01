@@ -28,6 +28,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         Log.d("debate" , "onStart실행")
         val debateService = DebateService()
         debateService.setDebateMainView(this)
+        showLoadingDialog(requireContext())
         debateService.getPostsAll()
     }
 
@@ -48,6 +49,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
 
     override fun getPostsAllSuccess(response: DebatePostResponse) {
         Log.d("debate" , "호출 성공 2 ${response.code}")
+        dismissLoadingDialog()
         when(response.code){
           1000 -> {
               postList = response.result as ArrayList<DebatePostResult>
@@ -55,6 +57,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
               setRecyclerView()
           }
           else -> {
+              Log.d("getPost","${response.message}")
               Toast.makeText(requireContext(), "통신 실패" , Toast.LENGTH_SHORT).show()
           }
         }
@@ -64,11 +67,5 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         Log.d("getPost",msg)
     }
 
-//    override fun showLoadingDialog() {
-//
-//    }
-//
-//    override fun dismissLoadingDialog() {
-//
-//    }
+
 }
