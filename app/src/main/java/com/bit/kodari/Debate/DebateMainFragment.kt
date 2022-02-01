@@ -67,11 +67,5 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         Log.d("getPost",msg)
     }
 
-//    override fun showLoadingDialog() {
-//        binding.debateMainProgress.visibility = View.VISIBLE
-//    }
-//
-//    override fun dismissLoadingDialog() {
-//        binding.debateMainProgress.visibility = View.GONE
-//    }
+
 }

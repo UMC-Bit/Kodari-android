@@ -24,6 +24,11 @@ class SignupIdCheckFragment : Fragment() {
                 .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
         }
 
+        binding.signupIdCheckXIb.setOnClickListener{
+            (context as LoginActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 }
