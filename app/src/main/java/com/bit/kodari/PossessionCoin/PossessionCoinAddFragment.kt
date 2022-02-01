@@ -24,6 +24,14 @@ class PossessionCoinAddFragment : Fragment() {
         binding = FragmentPossessionCoinAddBinding.inflate(inflater, container, false)
         moveLayout()
         datetimepicker()
+
+        if(requireArguments().containsKey("coinName")){
+            binding.possessionCoinAddCoinNameTV.text=requireArguments().getString("coinName")
+        }
+
+        if(requireArguments().containsKey("coinSymbol")){
+            binding.possessionCoinAddCoinSymbolTV.text=requireArguments().getString("coinSymbol")
+        }
         return binding.root
     }
 

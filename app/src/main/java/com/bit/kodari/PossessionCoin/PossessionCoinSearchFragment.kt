@@ -48,6 +48,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
         setListeners()
 
 
+
         binding.possessionCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
@@ -64,7 +65,12 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
             override fun onItemClick(item: PsnCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
 //                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinAddFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinAddFragment().apply {
+                        arguments = Bundle().apply {
+                          putString("coinName", item.coinName)
+                            putString("coinSymbol", item.symbol)
+                        }
+                    }).commitAllowingStateLoss()
             }
         })
 

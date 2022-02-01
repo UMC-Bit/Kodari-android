@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
 import com.bit.kodari.Debate.Data.DebateCoinResult
+import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
 import com.bit.kodari.databinding.ItemPossessionCoinSearchCoinListBinding
 
@@ -28,6 +29,7 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
 //            binding.itemPossessionCoinSearchCoinListImageIV.setImageResource()
             binding.itemPossessionCoinSearchCoinListCoinNameTV.text = item.coinName
             binding.itemPossessionCoinSearchCoinListCoinSymbolTV.text = item.symbol
+
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }
     }
@@ -39,7 +41,9 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
 
     override fun onBindViewHolder(holder: PossessionCoinSearchViewHolder, position: Int) {
         holder.bind(searchcoinList[position])
-        holder.binding.itemPossessionCoinSearchCoinListMoveButtonIV.setOnClickListener { mItemClickListener.onItemClick(searchcoinList[position]) }
+        holder.binding.itemPossessionCoinSearchCoinListMoveButtonIV.setOnClickListener {
+            mItemClickListener.onItemClick(searchcoinList[position])
+        }
     }
 
     override fun getItemCount()=searchcoinList.size
