@@ -47,10 +47,6 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
 
         setListeners()
 
-        binding.tempDialogBT.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinAddFragment()).commitAllowingStateLoss()
-        }
 
         binding.possessionCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
