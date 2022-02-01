@@ -21,6 +21,12 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
     override fun initAfterBinding() {
         setListener()
 
+//        val editProfileFinishBListener = object : View.OnClickListener {
+//            override fun onClick(v: View?) {
+//                i
+//            }
+//        }
+
     }
 
     override fun updateNameSuccess(resp: UpdateNameResponse) {
@@ -55,6 +61,9 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
             profileService.setProfileEditView(this)
             profileService.updateName( nickName)
         }
+
+
+
 
 
     }
