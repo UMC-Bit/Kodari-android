@@ -1,26 +1,33 @@
 package com.bit.kodari.Profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.Profile.Retrofit.ProfileMainView
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
+import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentProfileMainBinding
 
-class ProfileMainFragment: Fragment() {
+class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
 
-    lateinit var binding: FragmentProfileMainBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun initAfterBinding() {
+        setListener()
+        val profileService = ProfileService()
+        profileService.setProfileMainView(this)
+        //showLoadingDialog 호출
+        profileService.getProfile(getUserIdx())
 
-    ): View? {
-        binding = FragmentProfileMainBinding.inflate(inflater, container, false)
+    }
 
+    fun setListener(){
         binding.profileMainBtn1Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, EditProfileFragment()).commitAllowingStateLoss()
@@ -45,7 +52,17 @@ class ProfileMainFragment: Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, EditPwFragment()).commitAllowingStateLoss()
         }
+    }
 
-        return binding.root
+    override fun getProfileSuccess(response: GetProfileResponse) {
+        val nickName = response.result[0].nickName
+        val email = response.result[0].email
+        binding.profileMainNameTv.text = nickName
+        binding.profileMainEmailTv.text = email
+        Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")
+    }
+
+    override fun getProfileFailure(message: String) {
+        Log.d("getProfile" , "호출 실패 , ${message}" )
     }
 }

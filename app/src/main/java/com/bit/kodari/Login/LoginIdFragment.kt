@@ -1,29 +1,35 @@
 package com.bit.kodari.Login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentLoginIdBinding
 
-class LoginIdFragment : Fragment() {
+class LoginIdFragment : BaseFragment<FragmentLoginIdBinding>(FragmentLoginIdBinding::inflate) {
 
-    lateinit var binding:FragmentLoginIdBinding
+    override fun initAfterBinding() {
+        setListener()
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentLoginIdBinding.inflate(inflater, container, false)
-
+    fun setListener(){
         binding.loginIdNextBtn.setOnClickListener {
-            (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, LoginPwFragment()).commitAllowingStateLoss()
-        }
+            if(binding.loginIdEt.text != null){
+                (context as LoginActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.login_container_fl, LoginPwFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("email", binding.loginIdEt.text.toString())
+                            Log.d("email", "${binding.loginIdEt.text.toString()}")
+                        }
+                    }).addToBackStack(null).commitAllowingStateLoss()
+            }else{
+                showToast("이메일을 입력해주세요.")
+            }
 
-        return binding.root
+        }
     }
 }
