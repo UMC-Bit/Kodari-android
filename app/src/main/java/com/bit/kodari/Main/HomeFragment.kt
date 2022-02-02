@@ -226,7 +226,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.homeChartLc.getAxisLeft().setSpaceTop(40f);
         binding.homeChartLc.getAxisLeft().setSpaceBottom(40f);
         binding.homeChartLc.getAxisRight().setEnabled(false);
-
         binding.homeChartLc.getXAxis().setEnabled(false);
 
     }
@@ -253,5 +252,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         return LineData(set1)
     }
-
 }

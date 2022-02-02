@@ -10,7 +10,7 @@ import retrofit2.http.POST
 
 interface PsnCoinRetrofitInterface {
     // get방식은 받는거라서 따로 만들어서 보내줄 필요가 없지만 post형식은 body를 보내줘야 response가 온다.
-    @POST("/post")
+    @POST("/userCoin/post")
     fun getPsnCoinAdd(@Body psnCoinAddInfo: PsnCoinAddInfo):Call<PsnCoinAddResponse> // psncoinaddinfo 객체를 보냄
 
     @GET("/coins")
