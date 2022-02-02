@@ -1,17 +1,12 @@
 package com.bit.kodari.PossessionCoin.Service
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.bit.kodari.Debate.Data.DebateCoinResponse
-import com.bit.kodari.Debate.Retrofit.DebateCoinView
-import com.bit.kodari.Debate.Retrofit.DebateRetrofitInterface
+import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
+import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinSearchView
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddResponse
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResponse
+import com.bit.kodari.PossessionCoin.RetrofitData.*
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,13 +17,38 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
 
     private lateinit var psnCoinSearchView: PsnCoinSearchView
     private lateinit var psnCoinAddView: PsnCoinAddView
+    private lateinit var psnCoinAddTradeView: PsnCoinAddTradeView
 
     fun setPsnCoinSearchView(psnCoinSearchView: PsnCoinSearchView){
         this.psnCoinSearchView = psnCoinSearchView
     }
 
-    fun setPsnCoinAdd(psnCoinAddView: PsnCoinAddView){
+    fun setPsnCoinAddView(psnCoinAddView: PsnCoinAddView){
         this.psnCoinAddView=psnCoinAddView
+    }
+
+    fun setPsnCoinAddTradeView(psnCoinAddTradeView: PossessionCoinAddFragment){
+        this.psnCoinAddTradeView=psnCoinAddTradeView
+    }
+
+
+
+    // 전체 코인 검색 창에서 모든 코인 목록 받아오기
+    fun getCoinsAll(){
+        val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
+
+        psnCoinService.getPsnSearchCoinAll().enqueue(object : Callback<PsnCoinSearchResponse>{
+            override fun onResponse(
+                call: Call<PsnCoinSearchResponse>,
+                response: Response<PsnCoinSearchResponse>
+            ) {
+                psnCoinSearchView.getCoinsAllSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<PsnCoinSearchResponse>, t: Throwable) {
+                psnCoinSearchView.getCoinsAllFailure("t")
+            }
+        })
     }
 
     // 소유코인 창에서 버튼을 눌렀을 때 psnCoinAddInfo 객체를 만들어서 아래 함수의 매개변수로 넣어줌
@@ -51,20 +71,21 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
         })
     }
 
-    // 전체 코인 검색 창에서 모든 코인 목록 받아오기
-    fun getCoinsAll(){
+    fun getPsnCoinAddTrade(psnCoinAddTradeInfo: PsnCoinAddTradeInfo){
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnSearchCoinAll().enqueue(object : Callback<PsnCoinSearchResponse>{
+        psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse>{
             override fun onResponse(
-                call: Call<PsnCoinSearchResponse>,
-                response: Response<PsnCoinSearchResponse>
+                call: Call<PsnCoinAddTradeResponse>,
+                response: Response<PsnCoinAddTradeResponse>
             ) {
-                psnCoinSearchView.getCoinsAllSuccess(response.body()!!)
+                Log.d("psnCoinAddTradeSuccess", "거래 내역 생성 성공")
+                psnCoinAddTradeView.psnCoinAddTradeSuccess(response.body()!!)
             }
 
-            override fun onFailure(call: Call<PsnCoinSearchResponse>, t: Throwable) {
-                psnCoinSearchView.getCoinsAllFailure("t")
+            override fun onFailure(call: Call<PsnCoinAddTradeResponse>, t: Throwable) {
+                Log.d("psnCoinAddTradeFailure", "거래 내역 생성 실패")
+                psnCoinAddTradeView.psnCoinAddTradeFailure("t")
             }
         })
     }

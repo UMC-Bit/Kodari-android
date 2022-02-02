@@ -320,7 +320,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/possession_coin_add_day_input_ET"
+                        android:id="@+id/possession_coin_add_date_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="#80D3D3D3"
