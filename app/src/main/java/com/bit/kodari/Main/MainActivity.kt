@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setListener()
-        // 업비트 Open API 테스트
-        UpbitService.getCurrentPrice()
 
         supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
             .commitAllowingStateLoss()
@@ -67,7 +65,6 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-
     }
 
 }

@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.PossesionCoinResult
-import com.bit.kodari.Main.Data.RepresentCoinResult
-import com.bit.kodari.databinding.ListItemRepresentCoinBinding
 import com.bit.kodari.databinding.ListMyCoinBinding
 
 class HomePCRVAdapter(var list:ArrayList<PossesionCoinResult>) :RecyclerView.Adapter<HomePCRVAdapter.MyViewHolder>(){

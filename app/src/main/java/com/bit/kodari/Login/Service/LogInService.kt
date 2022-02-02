@@ -43,18 +43,16 @@ class LogInService(val context: Context) {
 
 
     //로그인 API
-    fun getLogIn(logInInfo: LogInInfo){
+    fun getLogIn(logInInfo: LogInInfo) {
         val logInService = getRetorfit().create(LoginRetrofitInterface::class.java)
-        logInService.getLogIn(logInInfo).enqueue(object : Callback<LogInResponse>{
+        logInService.getLogIn(logInInfo).enqueue(object : Callback<LogInResponse> {
             override fun onResponse(call: Call<LogInResponse>, response: Response<LogInResponse>) {
 
             }
 
             override fun onFailure(call: Call<LogInResponse>, t: Throwable) {
-                Log.d("LogIn" ,"통신 실패 : ${t}")
+                Log.d("LogIn", "통신 실패 : ${t}")
             }
         })
     }
-
-
 }

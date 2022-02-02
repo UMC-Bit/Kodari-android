@@ -1,11 +1,8 @@
 package com.bit.kodari.Main
 
 import android.graphics.Color
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -20,8 +17,10 @@ import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
+import com.bit.kodari.Main.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
+import com.bit.kodari.Util.Upbit.UpbitService
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
@@ -39,6 +38,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setViewpager()
         setRepresentRV()
         setRepresentPV()
+        // 업비트 Open API 테스트
+        //UpbitService.getCurrentPrice()
+
+        // 사용자의 포트폴리오 리스트 가져오기
+        PortfolioService.getPortfolioList(4)
     }
 
 
@@ -187,9 +191,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentPV(){
-        possessionList.add(PossesionCoinResult(1,"test1",5000,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test2",10000000,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test3",42,"active",2))
+        possessionList.add(PossesionCoinResult(1,"test1",5000.0,"active",3))
+        possessionList.add(PossesionCoinResult(1,"test2",10000000.0,"active",3))
+        possessionList.add(PossesionCoinResult(1,"test3",42.0,"active",2))
         homePCRVAdapter = HomePCRVAdapter(possessionList)
         binding.homeMyCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
