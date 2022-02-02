@@ -1,9 +1,6 @@
 package com.bit.kodari.Login.Retrofit
 
-import com.bit.kodari.Profile.RetrofitData.GetMyPostResponse
-import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
-import com.bit.kodari.Profile.RetrofitData.UpdateNameResponse
-import com.bit.kodari.Profile.RetrofitData.UpdateProfileImgResponse
+import com.bit.kodari.Profile.RetrofitData.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -28,4 +25,8 @@ interface ProfileRetrofitInterface {
     // 토론장 유저 게시글 조회 (내 글 모아보기)
     @GET("/posts")
     fun getMyPost(@Query("userIdx") userIdx:Int) : Call<GetMyPostResponse>
+
+    // 토론장 게시글 유저별 댓글 조회 (내 댓글 모아보기)
+    @GET("/comments/user")
+    fun getMyComment(@Query("userIdx") userIdx: Int) : Call<GetMyCommentResponse>
 }

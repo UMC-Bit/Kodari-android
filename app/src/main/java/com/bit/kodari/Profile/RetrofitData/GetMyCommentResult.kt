@@ -1,7 +1,9 @@
 package com.bit.kodari.Profile.RetrofitData
 
+import com.google.gson.annotations.SerializedName
+
 data class GetMyCommentResult(
-    val content: String,
-    val postList: List<GetMyCommentPostResponse>,
-    val time: String
+    @SerializedName("content") val content: String,
+    @SerializedName("postList") val postList: ArrayList<GetMyCommentPostResponse>,
+    @SerializedName("time") val time: String
 )

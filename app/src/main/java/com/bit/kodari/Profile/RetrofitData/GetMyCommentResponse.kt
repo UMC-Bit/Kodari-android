@@ -1,8 +1,10 @@
 package com.bit.kodari.Profile.RetrofitData
 
+import com.google.gson.annotations.SerializedName
+
 data class GetMyCommentResponse(
-    val code: Int,
-    val isSuccess: Boolean,
-    val message: String,
-    val result: List<GetMyCommentResult>
+    @SerializedName("code") val code: Int,
+    @SerializedName("isSuccess") val isSuccess: Boolean,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: ArrayList<GetMyCommentResult>
 )

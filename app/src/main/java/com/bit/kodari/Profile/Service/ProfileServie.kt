@@ -2,13 +2,11 @@ package com.bit.kodari.Login.Service
 
 import android.util.Log
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
+import com.bit.kodari.Profile.Retrofit.MyCommentView
 import com.bit.kodari.Profile.Retrofit.MyPostView
 import com.bit.kodari.Profile.Retrofit.ProfileEditView
 import com.bit.kodari.Profile.Retrofit.ProfileMainView
-import com.bit.kodari.Profile.RetrofitData.GetMyPostResponse
-import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
-import com.bit.kodari.Profile.RetrofitData.UpdateNameResponse
-import com.bit.kodari.Profile.RetrofitData.UpdateProfileImgResponse
+import com.bit.kodari.Profile.RetrofitData.*
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
 import com.bit.kodari.Util.getUserIdx
@@ -21,6 +19,7 @@ class ProfileService() {
     private lateinit var profileEditView: ProfileEditView
     private lateinit var profileMainView: ProfileMainView
     private lateinit var myPostView: MyPostView
+    private lateinit var myCommentView: MyCommentView
 
     fun setProfileEditView(profileEditView: ProfileEditView){
         this.profileEditView = profileEditView
@@ -32,6 +31,10 @@ class ProfileService() {
 
     fun setMyPostView(myPostView: MyPostView){
         this.myPostView = myPostView
+    }
+
+    fun setMyCommentView(myCommentView: MyCommentView) {
+        this.myCommentView = myCommentView
     }
 
     // 닉네임 변경 API 호출
@@ -109,6 +112,23 @@ class ProfileService() {
 
             override fun onFailure(call: Call<GetMyPostResponse>, t: Throwable) {
                 myPostView.getMyPostFailure("${t}")
+            }
+        })
+    }
+
+    // 토론장 게시글 유저별 댓글 조회 API (내 댓글 모아보기)
+    fun getMyComment(userIdx: Int) {
+        val getMyCommentService = getRetorfit().create(ProfileRetrofitInterface::class.java)
+        getMyCommentService.getMyComment(userIdx).enqueue(object : Callback<GetMyCommentResponse>{
+            override fun onResponse(
+                call: Call<GetMyCommentResponse>,
+                response: Response<GetMyCommentResponse>
+            ) {
+                myCommentView.getMyCommentSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<GetMyCommentResponse>, t: Throwable) {
+                myCommentView.getMyCommentFailure("${t}")
             }
         })
     }

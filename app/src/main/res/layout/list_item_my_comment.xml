@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,7 +41,7 @@
         android:layout_marginTop="14dp" />
 
     <TextView
-        android:id="@+id/list_item_my_comment_id_tv"
+        android:id="@+id/list_item_my_comment_nickname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
@@ -53,13 +54,30 @@
 
     <ImageButton
         android:id="@+id/list_item_my_comment_x_ib"
+        android:layout_width="7dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/gray_x_btn"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_comment_image_iv" />
+
+    <TextView
+        android:id="@+id/list_item_my_comment_coin_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/gray_x_btn"
+        android:text="DOGE"
+        android:textColor="#000"
+        android:textSize="11sp"
+        android:background="@drawable/btn_outline_yellow"
         app:layout_constraintTop_toTopOf="@id/list_item_my_comment_image_iv"
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <TextView
         android:id="@+id/list_item_my_comment_content_tv"
