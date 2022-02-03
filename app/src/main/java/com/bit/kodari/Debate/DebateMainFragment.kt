@@ -16,6 +16,7 @@ import com.bit.kodari.Debate.Data.DebatePostResult
 import com.bit.kodari.Debate.Retrofit.DebateMainView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Main.ModifyInfoDialog
+import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentDebateMainBinding
 
 class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView{
@@ -43,6 +44,16 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
 
     fun setRecyclerView(){
         debateMainRVAdapter = DebateMainRVAdapter(postList)
+        debateMainRVAdapter.setMyItemClickListener(object : DebateMainRVAdapter.MyItemClickListener{
+            override fun onItemClick(item: DebatePostResult) {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, DebateMineFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("postIdx" , item.postIdx)
+                        }
+                    }).addToBackStack(null).commitAllowingStateLoss()
+            }
+        })
         binding.debateMainListRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL , false)
         binding.debateMainListRv.adapter = debateMainRVAdapter
     }

@@ -320,7 +320,7 @@
                                 android:id="@+id/home_binance_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/Bitfinex"
+                                android:text="@string/binanace"
                                 android:padding="10dp"
                                 android:background="@drawable/btn_outline_white"
                                 android:textSize="11sp"
@@ -466,6 +466,11 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="로그아웃"/>
                 <Button
                     android:id="@+id/home_question_btn"
                     android:layout_width="wrap_content"

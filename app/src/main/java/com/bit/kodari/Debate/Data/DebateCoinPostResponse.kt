@@ -1,8 +1,10 @@
 package com.bit.kodari.Debate.Data
 
+import com.google.gson.annotations.SerializedName
+
 data class DebateCoinPostResponse(
-    val code: Int,
-    val isSuccess: Boolean,
-    val message: String,
-    val result: ArrayList<DebateCoinPostResult>
+    @SerializedName("code") val code: Int,
+    @SerializedName("isSuccess") val isSuccess: Boolean,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: ArrayList<DebateCoinPostResult>
 )

@@ -1,5 +1,6 @@
 package com.bit.kodari.Main
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -23,10 +25,7 @@ import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
-import com.bit.kodari.Util.getEmail
-import com.bit.kodari.Util.getJwt
-import com.bit.kodari.Util.getPw
-import com.bit.kodari.Util.getUserIdx
+import com.bit.kodari.Util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
@@ -143,8 +142,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current+1,false)
         }
 
-    }
+        //임시 로그아웃 버튼
+        binding.logout.setOnClickListener {
+            saveLoginInfo(null,null,null,0)     //0이면 유저 없는거
+            saveAutoLogin(false)
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
 
+    }
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {

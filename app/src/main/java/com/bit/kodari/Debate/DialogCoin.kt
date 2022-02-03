@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,12 +54,14 @@ class DialogCoin : DialogFragment(), DebateCoinView {
                     .replace(R.id.main_container_fl, DebateCoinPostFragment().apply {
                         arguments = Bundle().apply {
                             putString("coinName", item.coinName)
+                            putInt("coinIdx" , item.coinIdx)
                         }
                     })
                     .addToBackStack(null)
                     .commitAllowingStateLoss()
                 //Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 dismiss()
+
             }
         })
         binding.dialogListRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)

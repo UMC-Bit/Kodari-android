@@ -3,7 +3,10 @@ package com.bit.kodari.Debate.Service
 import android.util.Log
 import com.bit.kodari.Debate.Data.*
 import com.bit.kodari.Debate.Retrofit.*
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
+import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
+import com.bit.kodari.Util.getUserIdx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,6 +17,7 @@ class DebateService {
     private lateinit var debateMainView: DebateMainView
     private lateinit var debateCoinPostView: DebateCoinPostView
     private lateinit var debatePostWriteVIew: DebatePostWriteVIew
+    private lateinit var debateMineView: DebateMineView
 
     fun setDebateCoinView(debateCoinView:DebateCoinView){
         this.debateCoinView = debateCoinView
@@ -27,10 +31,13 @@ class DebateService {
         this.debateCoinPostView = debateCoinPostView
     }
 
-    fun setdebatePostWriteVIew(debatePostWriteVIew: DebatePostWriteVIew){
+    fun setDebatePostWriteVIew(debatePostWriteVIew: DebatePostWriteVIew){
         this.debatePostWriteVIew = debatePostWriteVIew
     }
 
+    fun setDebateMineView(debateMineView: DebateMineView){
+        this.debateMineView = debateMineView
+    }
 
     fun getCoinsAll(){
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
@@ -74,7 +81,6 @@ class DebateService {
                 call: Call<DebateCoinPostResponse>,
                 response: Response<DebateCoinPostResponse>
             ) {
-                Log.d("Coinpost","${response.isSuccessful} , ${response.message()}")
                 debateCoinPostView.getCoinPostSuccess(response.body()!!)
             }
 
@@ -84,20 +90,54 @@ class DebateService {
         })
     }
 
-    fun updatePost(post:DebateUpdatePostRequest){
+    fun writePost(post:DebateWritePostRequest){
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
-        debateService.updatePost(post).enqueue(object : Callback<DebateUpdatePostResponse>{
+        debateService.writePost(getJwt()!!, post).enqueue(object : Callback<DebateWritePostResponse>{
             override fun onResponse(
-                call: Call<DebateUpdatePostResponse>,
-                response: Response<DebateUpdatePostResponse>
+                call: Call<DebateWritePostResponse>,
+                response: Response<DebateWritePostResponse>
             ) {
+                Log.d("post" , "${response.code()} ")
                 debatePostWriteVIew.updatePostSuccess(response.body()!!)
             }
 
-            override fun onFailure(call: Call<DebateUpdatePostResponse>, t: Throwable) {
+            override fun onFailure(call: Call<DebateWritePostResponse>, t: Throwable) {
                 debatePostWriteVIew.updatePostFailure("${t}")
             }
         })
+    }
 
+    fun selectPost(postIdx: Int){       //
+        val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
+        debateService.selectPost(getJwt()!!,postIdx).enqueue(object : Callback<DebateSelectPostResponse>{
+            override fun onResponse(
+                call: Call<DebateSelectPostResponse>,
+                response: Response<DebateSelectPostResponse>
+            ) {
+                Log.d("selectPost" , "코드 : ${response.body()!!.code}")
+                Log.d("selectPost" , "코드 : ${response.body()!!}")
+                debateMineView.selectPostSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<DebateSelectPostResponse>, t: Throwable) {
+                debateMineView.selectPostFailure("${t}")
+            }
+        })
+    }
+
+    fun getUserInfo(){
+        val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
+        debateService.getUserInfo(getUserIdx()).enqueue(object : Callback<GetProfileResponse>{
+            override fun onResponse(
+                call: Call<GetProfileResponse>,
+                response: Response<GetProfileResponse>
+            ) {
+                debatePostWriteVIew.getUserInfoSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
+                debatePostWriteVIew.getUserInfoFailure("${t}")
+            }
+        })
     }
 }

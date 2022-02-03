@@ -1,6 +1,7 @@
 package com.bit.kodari.Debate.Retrofit
 
 import com.bit.kodari.Debate.Data.*
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,6 +17,12 @@ interface DebateRetrofitInterface {
     fun getCoinPost(@Query("coinName") coinName: String) : Call<DebateCoinPostResponse>
 
     @POST("/posts/register")
-    fun updatePost(@Body updatePostRequest: DebateUpdatePostRequest) : Call<DebateUpdatePostResponse>
+    fun writePost(@Header("X-ACCESS-TOKEN") jwt:String, @Body updatePostRequest: DebateWritePostRequest) : Call<DebateWritePostResponse>
 
+    //해당 게시글 정보 가져오기 .
+    @GET("/posts/post")
+    fun selectPost(@Header("X-ACCESS-TOKEN") jwt:String ,@Query("postIdx") postIdx : Int) : Call<DebateSelectPostResponse>
+
+    @GET("/app/users/get")
+    fun getUserInfo(@Query("userIdx") userIdx: Int) : Call<GetProfileResponse>
 }

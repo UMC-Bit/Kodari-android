@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Debate.Data.DebateCoinResult
+import com.bit.kodari.R
 import com.bit.kodari.databinding.ListCoinItemBinding
 import com.bit.kodari.databinding.ListItemRepresentCoinBinding
+import com.bumptech.glide.Glide
 
 class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView.Adapter<DebateCoinRVAdapter.MyViewHolder>() {
 
@@ -23,7 +25,12 @@ class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView
     inner class MyViewHolder(val binding:ListCoinItemBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item : DebateCoinResult) {
-            //binding.coinIv.setImageBitmap(item.coinImg)   : 코인 이미지 추가
+            if(item.coinImg != ""){
+                Glide.with(binding.coinIv)
+                    .load(item.coinImg)
+                    .error(R.drawable.profile_image)
+                    .into(binding.coinIv)
+            }
             binding.coinSymbolTv.text = item.symbol
             binding.coinNameTv.text = item.coinName
         }

@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Debate.Data.DebateCoinPostResult
+import com.bit.kodari.R
 import com.bit.kodari.databinding.ListItemMyWritingBinding
+import com.bumptech.glide.Glide
 
+//코인별
 class DebateCoinPostRVAdapter(var coinPostList:ArrayList<DebateCoinPostResult>) : RecyclerView.Adapter<DebateCoinPostRVAdapter.MyViewHolder>() {
 
     interface MyItemClickListener {
@@ -28,7 +31,12 @@ class DebateCoinPostRVAdapter(var coinPostList:ArrayList<DebateCoinPostResult>) 
             binding.listItemMyWritingLikeCnt.text = item.like.toString()
             binding.listItemMyWritingDislikeCnt.text = item.dislike.toString()
             binding.listItemMyWritingContentTv.text = item.content
-            //binding.listItemMyWritingImageIv.setImageBitmap(item.profileImgUrl)
+            if(item.profileImgUrl != ""){       //값이 있으면
+                Glide.with(binding.listItemMyWritingImageIv)
+                    .load(item.profileImgUrl)
+                    .error(R.drawable.profile_image)
+                    .into(binding.listItemMyWritingImageIv)
+            }
             //Url로 프로필 그리기
 
         }

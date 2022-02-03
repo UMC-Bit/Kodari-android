@@ -11,34 +11,42 @@ import com.bit.kodari.Debate.Retrofit.DebateCoinPostView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
-import com.bit.kodari.databinding.FragmentDebateCoinMainBinding
+import com.bit.kodari.databinding.FragmentDebateCoinPostBinding
+import kotlin.properties.Delegates
 
 
-class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(FragmentDebateCoinMainBinding::inflate) , DebateCoinPostView {
+class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(FragmentDebateCoinPostBinding::inflate) , DebateCoinPostView {
 
     //argument로 데이터 받기
     private lateinit var coinName :String
+    private var coinIdx = 0             //초기값
     private lateinit var debateCoinPostRVAdapter: DebateCoinPostRVAdapter
     private lateinit var coinPostList : ArrayList<DebateCoinPostResult>
 
     override fun initAfterBinding() {
         getCoinName()       //이름 가져오기
+        getCoinIndex()      //코인 인덱스 가져오기
         //가져온 이름으로 API 호출 밑 View 셋팅
         setListener()
         binding.debateCoinMainNameTv.text = coinName
         //API 호출
-//        val debateService = DebateService()
-//        debateService.setDebateCoinPostView(this)
-//        showLoadingDialog(requireContext())
-//        debateService.getCoinPost(coinName) 코인 별 포스트 검색
-        setRecyclerView()           //더미 데이터로 셋팅
+        val debateService = DebateService()
+        debateService.setDebateCoinPostView(this)
+        showLoadingDialog(requireContext())
+        debateService.getCoinPost(coinName) //코인 별 포스트 검색
     }
 
     fun getCoinName(){
-        if(!arguments?.isEmpty!!){
+        if(requireArguments().containsKey("coinName")){
             coinName = requireArguments().getString("coinName")!!
-            showToast(coinName)
         }
+    }
+
+    fun getCoinIndex(){
+        if(requireArguments().containsKey("coinIdx")){
+            coinIdx = requireArguments().getInt("coinIdx")
+        }
+        Log.d("CoinPost" , "${coinIdx}")
     }
 
     fun setListener(){
@@ -48,22 +56,32 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(Fragm
                 .replace(R.id.main_container_fl, DebatePostWriteFragment().apply {
                     arguments = Bundle().apply {
                         putString("coinName", coinName)
-
+                        putInt("coinIdx" , coinIdx)
                     }
                 })
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
+
+        binding.debateCoinMainFindCoin.setOnClickListener {
+            val dialog = DialogCoin()
+            dialog.show(requireActivity().supportFragmentManager , "DialogCoin")
+        }
     }
 
     fun setRecyclerView(){
         //더미 데이터 셋팅
-        coinPostList = ArrayList<DebateCoinPostResult>()
-        coinPostList.add(DebateCoinPostResult(3,"더미데이터입니다.",5,5,"wd78wg","","DOGE","1시간전"))
+        //coinPostList = ArrayList<DebateCoinPostResult>()
+        //coinPostList.add(DebateCoinPostResult(3,"더미데이터입니다.",5,5,"wd78wg","","DOGE","1시간전"))
         debateCoinPostRVAdapter = DebateCoinPostRVAdapter(coinPostList)
         debateCoinPostRVAdapter.setMyItemClickListener(object :DebateCoinPostRVAdapter.MyItemClickListener{
             override fun onItemClick(item: DebateCoinPostResult) {
-                showToast("${item.symbol}")
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, DebateMineFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("postIdx" , item.postIdx)
+                        }
+                    }).addToBackStack(null).commitAllowingStateLoss()
             }
         })
         binding.debateCoinMainListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL , false)
@@ -71,12 +89,14 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinMainBinding>(Fragm
     }
 
     override fun getCoinPostSuccess(response: DebateCoinPostResponse) {
+        dismissLoadingDialog()
         coinPostList = response.result
         Log.d("coinPost" ,"성공 , ${response.result.size}")
         setRecyclerView()
     }
 
     override fun getCoinPostFailure(message: String) {
+        dismissLoadingDialog()
         Log.d("coinPost" ,"성공 ,${message}")
     }
 }
