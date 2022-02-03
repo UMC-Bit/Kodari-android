@@ -10,7 +10,6 @@ import com.bit.kodari.Util.Upbit.UpbitService
 
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

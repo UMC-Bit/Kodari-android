@@ -24,6 +24,8 @@ import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
+import com.bit.kodari.Util.BItfinex.BinanceService
+import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getPw
@@ -38,6 +40,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     var representList = ArrayList<RepresentCoinResult>()
     var possessionList = ArrayList<PossesionCoinResult>()
 
+    // 유저 코인 리스트
+    val userCoinNameList = mutableListOf<String>()
+    // 대표 코인 리스트
+    val representCoinNameList = mutableListOf<String>()
+    // 수익률 리스트
+    // val profitList = response.result.profitResultList
+
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
         setChartDummy()
@@ -45,13 +54,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setViewpager()
         setRepresentRV()
         setRepresentPV()
-        // 업비트 Open API 테스트
-        //UpbitService.getCurrentPrice()
 
         // 사용자의 포트폴리오 리스트 가져오기
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
         portFolioService.getPortfolioList(4)
+
 
         Log.d("info" , "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}")
 
@@ -275,6 +283,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 val representCoinList = response.result.representCoinList
                 // 수익률 리스트
                 val profitList = response.result.profitResultList
+                // 소유코인 이름 저장
+                for(i in 0 until userCoinList.size){
+                    this.userCoinNameList.add(userCoinList.get(i).coinName)
+                }
+                // 대표코인 이름 저장
+                for(i in 0 until representCoinList.size){
+                    this.representCoinNameList.add(representCoinList.get(i).coinName)
+                }
+                // 업비트 Open API 테스트
+                UpbitService.getCurrentPrice(userCoinNameList)
+
+                // 바이낸스 Open API 테스트
+                BinanceService.getCurrentPrice(representCoinNameList)
+
             }
             else -> {showToast(response.message)}
         }

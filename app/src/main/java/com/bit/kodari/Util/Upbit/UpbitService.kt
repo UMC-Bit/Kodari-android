@@ -1,7 +1,6 @@
 package com.bit.kodari.Util.Upbit
 
 import android.util.Log
-import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,6 +12,7 @@ object UpbitService {
     val BASE_URL_UPBIT_API = "https://api.upbit.com/"
 
     /*
+        업비트 현재 코인 시세
         코인 List를 받아서 현재 코인 가격 List를 반환하는 함수
      */
     fun getCurrentPrice(coinList: List<String>): List<Int> {
@@ -22,7 +22,7 @@ object UpbitService {
             .baseUrl(BASE_URL_UPBIT_API)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val api = retrofit.create(UpbitAPI::class.java)
+        val api = retrofit.create(UpbitInterface::class.java)
         // 코인 List 크기만큼 반복문 실행, 현재 가격을 List에 추가
         for(i in 1 until coinList.size){
             val callGetUpbitPrice = api.getCurrentPrice("application/json", "KRW-"+coinList[i])
@@ -35,6 +35,8 @@ object UpbitService {
                     val price: Int? = response.body()?.get(0)?.trade_price
                     if (price != null) {
                         currentPriceList.add(i, price)
+                    }else{
+                        currentPriceList.add(i, 0)
                     }
                     Log.d("결과", "성공: ${response.body()}")
                 }
