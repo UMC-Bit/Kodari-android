@@ -6,12 +6,19 @@ import com.bit.kodari.Main.Data.PortIdxResult
 import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Main.Data.PortfolioResult
 import com.bit.kodari.Main.Retrofit.PortfolioInterface
+import com.bit.kodari.Main.Retrofit.PortfolioView
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 object PortfolioService {
+
+    private lateinit var portfolioView: PortfolioView
+
+    fun setPortfolioView(portfolioView: PortfolioView){
+        this.portfolioView = portfolioView
+    }
 
     // 유저 인덱스로 포트폴리오 List 조회
     fun getPortfolioList(userIdx: Int){
@@ -29,7 +36,6 @@ object PortfolioService {
                 TODO("Not yet implemented")
                 Log.d("portIdx", "불러오기 실패")
             }
-
         })
     }
 
@@ -42,6 +48,7 @@ object PortfolioService {
                 response: Response<PortfolioResponse>
             ) {
                 Log.d("portFolio", response.body().toString())
+                portfolioView.portfolioSuccess(response.body()!!)
             }
 
             override fun onFailure(call: Call<PortfolioResponse>, t: Throwable) {
