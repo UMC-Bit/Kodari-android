@@ -49,6 +49,12 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     }
 
     override fun initAfterBinding() {
+
+        binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment())
+                .commitAllowingStateLoss()
+        }
         datetimepicker()
         getCoinInformation()
         setListener()
@@ -151,11 +157,6 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             psnCoinService.setPsnCoinAddTradeView(this)
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
 
-            binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinSearchFragment())
-                    .commitAllowingStateLoss()
-            }
         }
     }
 
@@ -176,7 +177,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
 
 
     override fun psnCoinAddFailure(message: String) {
-        showToast("소유코인 추가 실패 ,$message")
+        Log.d("failadd" ,"$message")
     }
 
     override fun psnCoinAddTradeSuccess(response: PsnCoinAddTradeResponse) {
@@ -193,6 +194,6 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     }
 
     override fun psnCoinAddTradeFailure(message: String) {
-        showToast("거래내역 추가 실패 ,$message")
+        Log.d("failaddtrade" ,"$message")
     }
 }
