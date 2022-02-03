@@ -9,14 +9,13 @@ import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Login.SignupPwFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinSearchAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddView
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddResponse
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeInfo
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeResponse
+import com.bit.kodari.PossessionCoin.RetrofitData.*
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
+import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentPossessionCoinAddBinding
 import com.bumptech.glide.Glide
 import java.lang.StringBuilder
@@ -26,6 +25,8 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     PsnCoinAddTradeView {
     val tradeTime = StringBuilder()
 
+    private lateinit var coinPosition: PossessionCoinSearchAdapter
+    private var coinList = ArrayList<PsnCoinSearchResult>()
 
     inner class psnCoinAddInfo()
     {
@@ -49,7 +50,6 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     }
 
     override fun initAfterBinding() {
-
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PossessionCoinSearchFragment())
@@ -75,7 +75,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
         val timePicker = TimePickerDialog(context as MainActivity,
             { view, hourOfDay, minute ->
                 val date = String.format("%02d:%02d:00", hourOfDay, minute)
-                tradeTime.append(date);
+                tradeTime.append(date)
                 binding.possessionCoinAddDateInputET.setText(tradeTime.toString())
                 tradeTime.setLength(0)
             }, hour, minute, false)
@@ -116,7 +116,10 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     {
         binding.possessionCoinAddCompleteButtonTV.setOnClickListener {
             // 소유 코인 추가 API
-            psnCoinAddInfo().priceAvg =
+            psnCoinAddInfo().userIdx= getUserIdx().toString()
+//            psnCoinAddInfo().coinIdx=PossessionCoinSearchAdapter.MyItemClickListener
+//                psnCoinAddInfo().accountIdx=
+//            psnCoinAddInfo().priceAvg =
                 binding.possessionCoinAddAverageunitPriceInputET.text.toString()
             psnCoinAddInfo().amount = binding.possessionCoinAddQuantityInputET.text.toString()
             val psnCoinAddinfo = PsnCoinAddInfo(

@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
-import com.bit.kodari.Debate.Data.DebateCoinResult
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinSearchAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinSearchView
@@ -37,15 +35,15 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+            savedInstanceState: Bundle?
+            ): View? {
 
-        binding= FragmentPossessionCoinSearchBinding.inflate(inflater , container , false)
+            binding= FragmentPossessionCoinSearchBinding.inflate(inflater , container , false)
 
-        setListeners()
+            setListeners()
 
-        binding.possessionCoinSearchBackIV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
+            binding.possessionCoinSearchBackIV.setOnClickListener {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
         }
 
