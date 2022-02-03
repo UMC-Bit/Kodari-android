@@ -1,11 +1,10 @@
-package com.bit.kodari.Main.Retrofit
+package com.bit.kodari.Portfolio.Retrofit
 
 import com.bit.kodari.Main.Data.PortIdxResponse
 import com.bit.kodari.Main.Data.PortfolioResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 public interface PortfolioInterface {
     // userId로 portIdx 받아오기

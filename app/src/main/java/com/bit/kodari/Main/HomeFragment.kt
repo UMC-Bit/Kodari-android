@@ -1,12 +1,9 @@
 package com.bit.kodari.Main
 
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,15 +20,14 @@ import com.bit.kodari.Main.Data.AccountResult
 import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
-import com.bit.kodari.Main.Retrofit.PortfolioView
-import com.bit.kodari.Main.Service.PortfolioService
+import com.bit.kodari.Portfolio.Retrofit.PortfolioView
+import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getPw
 import com.bit.kodari.Util.getUserIdx
-import com.bit.kodari.Util.Upbit.UpbitService
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView {
 
@@ -53,8 +49,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         //UpbitService.getCurrentPrice()
 
         // 사용자의 포트폴리오 리스트 가져오기
-        PortfolioService.getPortfolioList(4)
+        val portFolioService = PortfolioService()
+        portFolioService.setPortfolioView(this)
+        portFolioService.getPortfolioList(4)
+
         Log.d("info" , "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}")
+
     }
 
 
@@ -263,7 +263,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         return LineData(set1)
     }
-
     // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
     override fun portfolioSuccess(response: PortfolioResponse) {
         when(response.code){
@@ -287,7 +286,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun getAccountResult(response: PortfolioResponse): AccountResult{
-        val portIdx = response.result.portIdx
         val accountIdx = response.result.accountIdx
         val accountName = response.result.accountName
         val property = response.result.property
@@ -296,5 +294,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val marketName = response.result.marketName
         return AccountResult(accountIdx,accountName,property,totalProperty,userIdx,marketName)
     }
-
 }

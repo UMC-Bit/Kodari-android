@@ -1,4 +1,4 @@
-package com.bit.kodari.Main.Retrofit
+package com.bit.kodari.Portfolio.Retrofit
 
 import com.bit.kodari.Main.Data.PortfolioResponse
 

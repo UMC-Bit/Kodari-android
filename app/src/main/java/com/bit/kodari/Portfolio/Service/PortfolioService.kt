@@ -1,18 +1,16 @@
-package com.bit.kodari.Main.Service
+package com.bit.kodari.Portfolio.Service
 
 import android.util.Log
 import com.bit.kodari.Main.Data.PortIdxResponse
-import com.bit.kodari.Main.Data.PortIdxResult
 import com.bit.kodari.Main.Data.PortfolioResponse
-import com.bit.kodari.Main.Data.PortfolioResult
-import com.bit.kodari.Main.Retrofit.PortfolioInterface
-import com.bit.kodari.Main.Retrofit.PortfolioView
+import com.bit.kodari.Portfolio.Retrofit.PortfolioInterface
+import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object PortfolioService {
+class PortfolioService {
 
     private lateinit var portfolioView: PortfolioView
 
