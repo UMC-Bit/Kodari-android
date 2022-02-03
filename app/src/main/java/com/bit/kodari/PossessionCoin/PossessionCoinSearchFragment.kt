@@ -60,6 +60,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl, PossessionCoinAddFragment().apply {
                         arguments = Bundle().apply {
+                            putInt("coinIdx", item.coinIdx)
                             putString("coinImage",item.coinImg)
                             putString("coinName", item.coinName)
                             putString("coinSymbol", item.symbol)
