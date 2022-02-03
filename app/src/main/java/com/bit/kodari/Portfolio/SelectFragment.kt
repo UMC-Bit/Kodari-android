@@ -5,18 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
+import com.bit.kodari.databinding.FragmentSelectBinding
 
 
-class SelectFragment : Fragment() {
+class SelectFragment : BaseFragment<FragmentSelectBinding>(FragmentSelectBinding::inflate){
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select, container, false)
+    override fun initAfterBinding() {
+        setListener()
     }
+
+    fun setListener() {
+        binding.selectBackBtnIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, SelectFragment()).commitAllowingStateLoss()
+        }
+    }
+
+
+
 
 }
