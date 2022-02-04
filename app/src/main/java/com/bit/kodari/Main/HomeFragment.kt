@@ -24,7 +24,7 @@ import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
-import com.bit.kodari.Util.BItfinex.BinanceService
+import com.bit.kodari.Util.Binance.BinanceService
 import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
@@ -211,9 +211,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentPV(){
-        possessionList.add(PossesionCoinResult(1,"test1",5000.0,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test2",10000000.0,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test3",42.0,"active",2))
+        possessionList.add(PossesionCoinResult(1,"test1",5000.0,"active",3, "TES"))
+        possessionList.add(PossesionCoinResult(1,"test2",10000000.0,"active",3, "BTC"))
+        possessionList.add(PossesionCoinResult(1,"test3",42.0,"active",2, "AAVE"))
         homePCRVAdapter = HomePCRVAdapter(possessionList)
         binding.homeMyCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
@@ -285,11 +285,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 val profitList = response.result.profitResultList
                 // 소유코인 이름 저장
                 for(i in 0 until userCoinList.size){
-                    this.userCoinNameList.add(userCoinList.get(i).coinName)
+                    this.userCoinNameList.add(userCoinList[i].symbol)
                 }
                 // 대표코인 이름 저장
                 for(i in 0 until representCoinList.size){
-                    this.representCoinNameList.add(representCoinList.get(i).coinName)
+                    this.representCoinNameList.add(representCoinList[i].symbol+"USDT")
                 }
                 // 업비트 Open API 테스트
                 UpbitService.getCurrentPrice(userCoinNameList)
