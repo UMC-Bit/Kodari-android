@@ -2,6 +2,7 @@ package com.bit.kodari.RepresentativeCoin.Adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,13 @@ class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>):
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinSearchCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinSearchCoinListCoinSymbolTV.text = item.symbol
+            if(item.isCheck){
+                binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility = View.VISIBLE
+                binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility =View.GONE
+            }else{
+                binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility = View.GONE
+                binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility =View.VISIBLE
+            }
         }
     }
 
@@ -41,7 +49,15 @@ class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>):
         holder.bind(searchCoinList[position])
 //        var SearchCoinList = searchCoinList[position]
         holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.setOnClickListener {
+            val check = true
             mItemClickListener.onItemClick(searchCoinList[position])
+            holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.GONE
+            holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility= View.VISIBLE
+        }
+
+        holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.setOnClickListener {
+            holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility=View.GONE
+            holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.VISIBLE
         }
     }
 

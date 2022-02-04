@@ -1,13 +1,12 @@
 package com.bit.kodari.PossessionCoin.Service
 
 import android.util.Log
-import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
-import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
-import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddView
-import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
-import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinSearchView
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
+import com.bit.kodari.PossessionCoin.Retrofit.*
 import com.bit.kodari.PossessionCoin.RetrofitData.*
+import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
+import com.bit.kodari.Util.getUserIdx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +17,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     private lateinit var psnCoinSearchView: PsnCoinSearchView
     private lateinit var psnCoinAddView: PsnCoinAddView
     private lateinit var psnCoinAddTradeView: PsnCoinAddTradeView
+    private lateinit var psnCoinMgtInsquireView: PsnCoinMgtInsquireView
 
     fun setPsnCoinSearchView(psnCoinSearchView: PsnCoinSearchView){
         this.psnCoinSearchView = psnCoinSearchView
@@ -27,11 +27,13 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
         this.psnCoinAddView=psnCoinAddView
     }
 
-    fun setPsnCoinAddTradeView(psnCoinAddTradeView: PossessionCoinAddFragment){
+    fun setPsnCoinAddTradeView(psnCoinAddTradeView: PsnCoinAddTradeView){
         this.psnCoinAddTradeView=psnCoinAddTradeView
     }
 
-
+    fun setPsnCoinMgtInsquireView(psnCoinMgtInsquireView: PsnCoinMgtInsquireView){
+        this.psnCoinMgtInsquireView=psnCoinMgtInsquireView
+    }
 
     // 전체 코인 검색 창에서 모든 코인 목록 받아오기
     fun getCoinsAll(){
@@ -86,6 +88,27 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
             override fun onFailure(call: Call<PsnCoinAddTradeResponse>, t: Throwable) {
                 Log.d("psnCoinAddTradeFailure", "거래 내역 생성 실패")
                 psnCoinAddTradeView.psnCoinAddTradeFailure("t")
+            }
+        })
+    }
+
+    //소유 코인 조회
+    fun getPsnCoinMgtInsquire()
+    {
+        val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
+
+        psnCoinService.getPsnCoinInquire(getJwt()!! , getUserIdx()).enqueue(object : Callback<PsnCoinMgtInsquireResponse>{
+            override fun onResponse(
+                call: Call<PsnCoinMgtInsquireResponse>,
+                response: Response<PsnCoinMgtInsquireResponse>
+            ) {
+                Log.d("insquire success", "소유 코인 조회 성공")
+                psnCoinMgtInsquireView.psnCoinInsquireSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<PsnCoinMgtInsquireResponse>, t: Throwable) {
+                Log.d("insquire failure", "소유 코인 조회 실패")
+                psnCoinMgtInsquireView.psnCoinInsquireFailure("t")
             }
         })
     }

@@ -62,6 +62,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             datePicker.show()
         }
     }
+
     // 전체 코인 검색 창에서 선택한 코인 정보(코인 이름, 코인 심볼, 코인 이미지) 가져오기
     fun getCoinInformation()
     {

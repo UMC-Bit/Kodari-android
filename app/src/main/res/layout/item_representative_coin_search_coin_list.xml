@@ -51,6 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
+        android:id="@+id/item_representative_coin_search_coin_check_on_IV"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/check_on"

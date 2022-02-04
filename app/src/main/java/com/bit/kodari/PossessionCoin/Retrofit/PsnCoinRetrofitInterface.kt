@@ -2,9 +2,7 @@ package com.bit.kodari.PossessionCoin.Retrofit
 
 import com.bit.kodari.PossessionCoin.RetrofitData.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface PsnCoinRetrofitInterface {
 
@@ -18,4 +16,10 @@ interface PsnCoinRetrofitInterface {
     // 거래 내역 생성 API
     @POST("/trades/post")
     fun getPsnCoinAddTrade(@Body psnCoinAddTradeInfo: PsnCoinAddTradeInfo):Call<PsnCoinAddTradeResponse>
+
+    // 소유 코인 조회
+    @GET("/userCoin/{userIdx}")
+    fun getPsnCoinInquire(@Header("X-ACCESS-TOKEN") jwt :String , @Path("userIdx") userIdx : Int):Call<PsnCoinMgtInsquireResponse>
+
+    //fun getPsnCoinInquire(@Query("coinName") coinName : String):Call<PsnCoinMgtInsquireResponse> ? 일 때, 위에는 : 일 때
 }
