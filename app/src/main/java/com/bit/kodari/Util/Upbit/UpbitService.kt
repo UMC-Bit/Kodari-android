@@ -40,7 +40,6 @@ object UpbitService {
                     }
                     Log.d("결과", "성공: ${response.body()}")
                 }
-
                 override fun onFailure(call: Call<List<UpbitPrice>>, t: Throwable) {
                     Log.d("결과", "실패")
                 }

@@ -37,13 +37,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
-    var representList = ArrayList<RepresentCoinResult>()
-    var possessionList = ArrayList<PossesionCoinResult>()
 
+    // 업비트, 바이낸스 코인 가격 리스트
+    lateinit var upbitUserCoinPriceList: List<Int>
+    lateinit var binanceUserCoinPriceList: HashMap<String, Any>
+    lateinit var upbitRepresentCoinPriceList: List<Int>
+    lateinit var binanceRepresentCoinPriceList: HashMap<String, Any>
     // 유저 코인 리스트
-    val userCoinNameList = mutableListOf<String>()
-    // 대표 코인 리스트
-    val representCoinNameList = mutableListOf<String>()
+    lateinit var userCoinList: List<PossesionCoinResult>
+    // 대표 코인 심볼 리스트
+    lateinit var representCoinList: List<RepresentCoinResult>
     // 수익률 리스트
     // val profitList = response.result.profitResultList
 
@@ -58,7 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         // 사용자의 포트폴리오 리스트 가져오기
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
-        portFolioService.getPortfolioList(4)
+        portFolioService.getPortfolioList(getUserIdx())
 
 
         Log.d("info" , "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}")
@@ -201,20 +204,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentRV(){
-        representList.add(RepresentCoinResult(1,"null","test1,",2,3,"active","AES"))
-        representList.add(RepresentCoinResult(1,"null","test2,",2,3,"active","ATE"))
-        representList.add(RepresentCoinResult(1,"null","test3,",2,3,"active","TES"))
-        homeRCRVAdapter = HomeRCRVAdapter(representList)
+        homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
         binding.homeRepresentCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
 
     }
 
     fun setRepresentPV(){
-        possessionList.add(PossesionCoinResult(1,"test1",5000.0,"active",3, "TES"))
-        possessionList.add(PossesionCoinResult(1,"test2",10000000.0,"active",3, "BTC"))
-        possessionList.add(PossesionCoinResult(1,"test3",42.0,"active",2, "AAVE"))
-        homePCRVAdapter = HomePCRVAdapter(possessionList)
+        homePCRVAdapter = HomePCRVAdapter(userCoinList)
         binding.homeMyCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
 
@@ -275,28 +272,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun portfolioSuccess(response: PortfolioResponse) {
         when(response.code){
             1000->{
+                lateinit var userCoinNameList: ArrayList<String>
+                lateinit var representCoinNameList: ArrayList<String>
                 // 계좌
                 getAccountResult(response)
                 // 유저 코인 리스트
-                val userCoinList = response.result.userCoinList
+                this.userCoinList = response.result.userCoinList
                 // 대표 코인 리스트
-                val representCoinList = response.result.representCoinList
+                this.representCoinList = response.result.representCoinList
                 // 수익률 리스트
                 val profitList = response.result.profitResultList
                 // 소유코인 이름 저장
                 for(i in 0 until userCoinList.size){
-                    this.userCoinNameList.add(userCoinList[i].symbol)
+                    userCoinNameList.add(userCoinList[i].symbol)
                 }
                 // 대표코인 이름 저장
                 for(i in 0 until representCoinList.size){
-                    this.representCoinNameList.add(representCoinList[i].symbol+"USDT")
+                    representCoinNameList.add(representCoinList[i].symbol+"USDT")
                 }
-                // 업비트 Open API 테스트
-                UpbitService.getCurrentPrice(userCoinNameList)
-
-                // 바이낸스 Open API 테스트
-                BinanceService.getCurrentPrice(representCoinNameList)
-
+                // 소유코인 업비트 시세 받아오기
+                this.upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
+                // 소유코인 바이낸스 시세 받아오기
+                this.binanceUserCoinPriceList = BinanceService.getCurrentPrice(userCoinNameList)
+                // 대표코인 업비트 시세 받아오기
+                this.upbitRepresentCoinPriceList = UpbitService.getCurrentPrice(representCoinNameList)
             }
             else -> {showToast(response.message)}
         }

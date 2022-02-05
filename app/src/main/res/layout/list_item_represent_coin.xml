@@ -64,21 +64,21 @@
             android:id="@+id/represent_binanace_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50,000,000"
-            android:textSize="15sp"
-            android:textColor="@color/black"
             android:layout_marginStart="15dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="50,000,000"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/represent_kimchi_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4.5%"
-            android:textSize="15sp"
-            android:textColor="@color/black"
             android:layout_marginStart="15dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="4.5%"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

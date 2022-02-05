@@ -30,7 +30,7 @@ object BinanceService {
                 ) {
                     // 코인 리스트를 받아와서 coinList에 있는 Symbol이랑 비교하기 위한 for문
                     for(i in response.body()!!.indices){
-                        val coinSymbol = response.body()!![i].symbol
+                        val coinSymbol = response.body()!![i].symbol+"USDT"
                         if(coinList.contains(coinSymbol)){
                             val price = response.body()!![i].price
                             coinMap.put(coinSymbol, price)
