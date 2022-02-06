@@ -33,6 +33,5 @@ class RptCoinManagementAdapter(val managementCoinList:ArrayList<ManagementCoinDa
         holder.kimchiPremium.text=managementCoinList[position].kimchiPremium
         holder.select.setImageResource(managementCoinList[position].select)
     }
-
     override fun getItemCount()=managementCoinList.size
 }
