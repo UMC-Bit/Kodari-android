@@ -29,6 +29,7 @@ import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
+import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Binance.BinanceService
 import com.bit.kodari.Util.Upbit.UpbitService
