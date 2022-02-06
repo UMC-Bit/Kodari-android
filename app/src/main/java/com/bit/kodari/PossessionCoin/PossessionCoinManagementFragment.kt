@@ -123,7 +123,7 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView {
     override fun psnCoinInsquireSuccess(response: PsnCoinMgtInsquireResponse) {
         Log.d("InsquireSuccess" , "${response}")
         coinList = response.result
-        //Log.d("InsquireSuccess", "${coinList.size}")
+        Log.d("psnSuccesscoinSize", "${coinList.size}")
 
         setRecyclerView()
     }

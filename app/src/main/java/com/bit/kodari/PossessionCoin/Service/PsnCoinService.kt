@@ -53,11 +53,13 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
         })
     }
 
-    // 소유코인 창에서 버튼을 눌렀을 때 psnCoinAddInfo 객체를 만들어서 아래 함수의 매개변수로 넣어줌
+
+
+     // 소유코인 창에서 버튼을 눌렀을 때 psnCoinAddInfo 객체를 만들어서 아래 함수의 매개변수로 넣어줌
     fun getPsnCoinAdd(psnCoinAddInfo: PsnCoinAddInfo){
         val psnCoinService= getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnCoinAdd(psnCoinAddInfo).enqueue(object : Callback<PsnCoinAddResponse> {
+        psnCoinService.getPsnCoinAdd(getJwt()!!, psnCoinAddInfo).enqueue(object : Callback<PsnCoinAddResponse> {
             override fun onResponse( // 통신 성공
                 call: Call<PsnCoinAddResponse>,
                 response: Response<PsnCoinAddResponse>
@@ -73,10 +75,10 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
         })
     }
 
-    fun getPsnCoinAddTrade(psnCoinAddTradeInfo: PsnCoinAddTradeInfo){
+    fun getPsnCoinAddTrade(psnCoinAddTradeInfo : PsnCoinAddTradeInfo){
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse>{
+        psnCoinService.getPsnCoinAddTrade(getJwt()!!, psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse>{
             override fun onResponse(
                 call: Call<PsnCoinAddTradeResponse>,
                 response: Response<PsnCoinAddTradeResponse>
@@ -97,7 +99,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     {
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnCoinInquire(getJwt()!! , getUserIdx()).enqueue(object : Callback<PsnCoinMgtInsquireResponse>{
+        psnCoinService.getPsnCoinInquire(getJwt()!! , 25).enqueue(object : Callback<PsnCoinMgtInsquireResponse>{
             override fun onResponse(
                 call: Call<PsnCoinMgtInsquireResponse>,
                 response: Response<PsnCoinMgtInsquireResponse>
@@ -108,7 +110,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
 
             override fun onFailure(call: Call<PsnCoinMgtInsquireResponse>, t: Throwable) {
                 Log.d("insquire failure", "소유 코인 조회 실패")
-                psnCoinMgtInsquireView.psnCoinInsquireFailure("t")
+                psnCoinMgtInsquireView.psnCoinInsquireFailure("${t}")
             }
         })
     }
