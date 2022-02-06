@@ -3,7 +3,7 @@ package com.bit.kodari.Debate.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.Debate.Data.DebateCoinPostResult
+import com.bit.kodari.Debate.PostData.DebateCoinPostResult
 import com.bit.kodari.R
 import com.bit.kodari.databinding.ListItemMyWritingBinding
 import com.bumptech.glide.Glide

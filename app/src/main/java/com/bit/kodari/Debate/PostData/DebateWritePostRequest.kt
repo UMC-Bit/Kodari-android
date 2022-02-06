@@ -1,4 +1,4 @@
-package com.bit.kodari.Debate.Data
+package com.bit.kodari.Debate.PostData
 
 import com.google.gson.annotations.SerializedName
 

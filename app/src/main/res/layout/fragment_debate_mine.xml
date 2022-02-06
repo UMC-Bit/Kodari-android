@@ -234,19 +234,33 @@
                 android:id="@+id/mine_comment_input_message_et"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="pastgood으로 댓글 달기"
+                android:hint="해당 게시글에 댓글을 달아주세요."
+                android:textSize="13sp"
                 android:layout_weight="1"
                 android:layout_margin="7.5dp"
+                android:background="@color/white"
                 android:imeOptions="actionDone"/>
 
             <Button
                 android:id="@+id/mine_comment_send_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30sp"
                 android:text="게시"
                 android:layout_margin="7.5dp"
                 android:layout_weight="0"
                 android:background="@drawable/btn_outline_white"/>
+
+<!--            대댓다는 버튼-->
+            <Button
+                android:id="@+id/mine_re_comment_send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="답글게시"
+                android:layout_margin="7.5dp"
+                android:layout_weight="0"
+                android:background="@drawable/btn_outline_white"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

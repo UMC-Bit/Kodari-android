@@ -5,14 +5,13 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateCoinPostRVAdapter
-import com.bit.kodari.Debate.Data.DebateCoinPostResponse
-import com.bit.kodari.Debate.Data.DebateCoinPostResult
+import com.bit.kodari.Debate.PostData.DebateCoinPostResponse
+import com.bit.kodari.Debate.PostData.DebateCoinPostResult
 import com.bit.kodari.Debate.Retrofit.DebateCoinPostView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentDebateCoinPostBinding
-import kotlin.properties.Delegates
 
 
 class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(FragmentDebateCoinPostBinding::inflate) , DebateCoinPostView {
@@ -52,10 +51,11 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
     fun setListener(){
         //글쓰기 버튼 눌렀을 경우
         binding.debateCoinMainWriteBtn.setOnClickListener {
+            val tempCoinName = coinName
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, DebatePostWriteFragment().apply {
                     arguments = Bundle().apply {
-                        putString("coinName", coinName)
+                        putString("coinName", tempCoinName)
                         putInt("coinIdx" , coinIdx)
                     }
                 })
@@ -89,14 +89,14 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
     }
 
     override fun getCoinPostSuccess(response: DebateCoinPostResponse) {
-        dismissLoadingDialog()
         coinPostList = response.result
         Log.d("coinPost" ,"성공 , ${response.result.size}")
         setRecyclerView()
+        dismissLoadingDialog()
     }
 
     override fun getCoinPostFailure(message: String) {
-        dismissLoadingDialog()
         Log.d("coinPost" ,"성공 ,${message}")
+        dismissLoadingDialog()
     }
 }

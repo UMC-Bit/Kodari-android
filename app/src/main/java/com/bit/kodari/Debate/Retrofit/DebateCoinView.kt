@@ -1,6 +1,6 @@
 package com.bit.kodari.Debate.Retrofit
 
-import com.bit.kodari.Debate.Data.DebateCoinResponse
+import com.bit.kodari.Debate.PostData.DebateCoinResponse
 
 interface DebateCoinView {
 

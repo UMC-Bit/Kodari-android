@@ -1,6 +1,6 @@
 package com.bit.kodari.Debate.Retrofit
 
-import com.bit.kodari.Debate.Data.DebateWritePostResponse
+import com.bit.kodari.Debate.PostData.DebateWritePostResponse
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 
 interface DebatePostWriteVIew {

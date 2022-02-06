@@ -3,11 +3,8 @@ package com.bit.kodari.Debate.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.Debate.Data.DebateCoinResult
-import com.bit.kodari.Debate.Data.DebatePostResponse
-import com.bit.kodari.Debate.Data.DebatePostResult
+import com.bit.kodari.Debate.PostData.DebatePostResult
 import com.bit.kodari.R
-import com.bit.kodari.databinding.ListCoinItemBinding
 import com.bit.kodari.databinding.ListItemMyWritingBinding
 import com.bumptech.glide.Glide
 
@@ -56,5 +53,6 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(postList[position])
         holder.itemView.setOnClickListener { mItemClickListener.onItemClick(postList[position]) }
+
     }
 }

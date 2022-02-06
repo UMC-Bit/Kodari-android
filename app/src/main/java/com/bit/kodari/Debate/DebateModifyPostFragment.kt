@@ -1,15 +1,14 @@
 package com.bit.kodari.Debate
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Debate.Data.DebateSelectPostResponse
+import com.bit.kodari.Debate.PostData.DebateModifyRequest
+import com.bit.kodari.Debate.PostData.DebateModifyResponse
 import com.bit.kodari.Debate.Retrofit.DebateModifyPostView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.R
+import com.bit.kodari.Util.getJwt
 import com.bit.kodari.databinding.FragmentDebateModifyPostBinding
 import com.bumptech.glide.Glide
 
@@ -20,12 +19,16 @@ class DebateModifyPostFragment : BaseFragment<FragmentDebateModifyPostBinding>(F
 
     override fun initAfterBinding() {
         getPostInfo()                //게시글 Index가져오기
+        setListener()
+        Log.d("modifyPost" , "postIdx : ${postIdx}")
     }
 
     //작성되어 있는 게시글 정보 가져오기
     fun getPostInfo(){
         if(requireArguments().containsKey("postIdx")){
+            Log.d("postIdx" , "실행 ")
             postIdx = requireArguments().getInt("postIdx")
+            Log.d("postIdx" , "받아온 postIdx : ${postIdx}")
         }
         if(requireArguments().containsKey("imgUrl")){
             Glide.with(binding.modifyProfileIv)
@@ -42,11 +45,40 @@ class DebateModifyPostFragment : BaseFragment<FragmentDebateModifyPostBinding>(F
         }
     }
 
-    override fun updatePostSuccess() {
+    fun setListener(){
+        binding.modifyCompleteBtnTv.setOnClickListener {
+            val debateModifyRequest = DebateModifyRequest(binding.modifyContentEt.text.toString())
+            val debateService = DebateService()
+            debateService.setDebateModifyPostView(this)
+            showLoadingDialog(requireContext())
+            debateService.modifyPost(postIdx , debateModifyRequest)
 
+        }
     }
 
-    override fun updatePostFailure() {
+    override fun updatePostSuccess(response: DebateModifyResponse) {
+        Log.d("updatePost", "${getJwt()}")
+        Log.d("updatePost","${response}")
+        when(response.code){
+          1000 -> {
+              showToast("${response.result}")
+              requireActivity().supportFragmentManager.beginTransaction()
+                  .replace(R.id.main_container_fl , DebateMineFragment().apply {
+                      arguments = Bundle().apply {
+                          putInt("postIdx" , postIdx)
+                      }
+                  }).commitAllowingStateLoss()
+          }
+          else -> {
+              Log.d("updatePost" , "${response.code}")
+              showToast("${response.message}")
+          }
+        }
+        dismissLoadingDialog()
+    }
 
+    override fun updatePostFailure(message: String) {
+        Log.d("updatePost" , "통신 실패.")
+        dismissLoadingDialog()
     }
 }

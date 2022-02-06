@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
-import com.bit.kodari.Debate.Data.DebateCoinResponse
-import com.bit.kodari.Debate.Data.DebateCoinResult
+import com.bit.kodari.Debate.PostData.DebateCoinResponse
+import com.bit.kodari.Debate.PostData.DebateCoinResult
 import com.bit.kodari.Debate.Retrofit.DebateCoinView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Main.MainActivity

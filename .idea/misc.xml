@@ -15,7 +15,7 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/activity_splash.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_coin.xml" value="0.22546296296296298" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_delete.xml" value="0.2" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_delete.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_loading.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialog_modify_info.xml" value="0.264" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/dialoge_coin.xml" value="0.264" />
@@ -45,12 +45,12 @@
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/fragment_signup_pw.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/item_possession_coin_management_coin_list.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_coin_item.xml" value="0.264" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_comment.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_comment.xml" value="0.4421416234887737" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_item_debate.xml" value="0.176" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_item_my_comment.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_item_my_writing.xml" value="0.3755522827687776" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_my_coin.xml" value="0.264" />
-        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_re_comment.xml" value="0.264" />
+        <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_re_comment.xml" value="0.536" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_re_comment_xml.xml" value="0.22546296296296298" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/layout/list_represent_coin.xml" value="0.22237442922374429" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/menu/menu_bottomnavigationview.xml" value="0.25364583333333335" />

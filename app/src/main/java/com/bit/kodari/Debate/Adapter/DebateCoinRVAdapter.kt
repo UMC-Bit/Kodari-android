@@ -3,10 +3,9 @@ package com.bit.kodari.Debate.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.Debate.Data.DebateCoinResult
+import com.bit.kodari.Debate.PostData.DebateCoinResult
 import com.bit.kodari.R
 import com.bit.kodari.databinding.ListCoinItemBinding
-import com.bit.kodari.databinding.ListItemRepresentCoinBinding
 import com.bumptech.glide.Glide
 
 class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView.Adapter<DebateCoinRVAdapter.MyViewHolder>() {

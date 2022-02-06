@@ -41,15 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/modify_back_btn" />
 
-        <TextView
-            android:id="@+id/modify_symbol_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="도지코인"
-            android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="@id/modify_title_tv"
-            app:layout_constraintEnd_toEndOf="@id/modify_title_tv"
-            app:layout_constraintTop_toBottomOf="@id/modify_title_tv"/>
 
         <TextView
             android:id="@+id/modify_complete_btn_tv"

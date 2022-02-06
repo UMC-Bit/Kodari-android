@@ -1,9 +1,9 @@
 package com.bit.kodari.Debate.Retrofit
 
-import com.bit.kodari.Debate.Data.DebateSelectPostResponse
+import com.bit.kodari.Debate.PostData.DebateModifyResponse
 
 interface DebateModifyPostView {
-    fun updatePostSuccess()         //추후 구현
-    fun updatePostFailure()         //추후 구현
+    fun updatePostSuccess(response : DebateModifyResponse)         //추후 구현
+    fun updatePostFailure(message:String)         //추후 구현
 
 }

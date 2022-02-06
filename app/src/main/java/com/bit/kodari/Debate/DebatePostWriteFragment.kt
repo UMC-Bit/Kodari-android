@@ -1,13 +1,14 @@
 package com.bit.kodari.Debate
 
 import android.content.Context
+import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Debate.Data.DebateWritePostRequest
-import com.bit.kodari.Debate.Data.DebateWritePostResponse
+import com.bit.kodari.Debate.PostData.DebateWritePostRequest
+import com.bit.kodari.Debate.PostData.DebateWritePostResponse
 import com.bit.kodari.Debate.Retrofit.DebatePostWriteVIew
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
@@ -21,6 +22,7 @@ import kotlin.properties.Delegates
 //닉네임도 셋팅해야함
 class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(FragmentDebatePostWriteBinding::inflate) ,DebatePostWriteVIew {
     private var coinIdx by Delegates.notNull<Int>()         //어떤 코인 게시글에 쓸지
+    lateinit var coinName : String                          //코인 이름도 저장 -> 얘를 다시 돌려줘야함
 
     override fun initAfterBinding() {
         setInit()
@@ -43,8 +45,9 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
 
     fun getCoinName(){
         if(requireArguments().containsKey("coinName")){         //코인 이름 셋팅
-            var coinName = requireArguments().getString("coinName")!!
+            coinName = requireArguments().getString("coinName")!!
             binding.postWriteSymbolTv.text = coinName
+            Log.d("writeCoinName", coinName)
         }
     }
 
@@ -90,39 +93,46 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
 
     //글쓰기 API 정상적으로 호출됐을때.
     override fun updatePostSuccess(response: DebateWritePostResponse) {
-        dismissLoadingDialog()
         when(response.code){
-          1000 -> {
+          1000 -> {     //호출하고 이전 프래그먼트로가야함
               showToast("글쓰기에 성공하셨습니다.")
               Log.d("post" , "${response.result.userIdx}")
+              requireActivity().supportFragmentManager.beginTransaction()
+                  .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                      arguments = Bundle().apply {
+                          putInt("coinIdx" , coinIdx)
+                          putString("coinName",coinName)
+                      }
+                  }).commitAllowingStateLoss()
           }
           else -> {
               showToast(response.message)
               Log.d("post" , "글쓰기에 실패했습니다. ${response.code} , ${response.message} , ${response.isSuccess}")
           }
         }
+        dismissLoadingDialog()
     }
 
     //글쓰기 API 정상적으로 아닐떄떄
     override fun updatePostFailure(message: String) {
-        dismissLoadingDialog()
         showToast("통신실패")
+        dismissLoadingDialog()
     }
 
     //유저 정보 받아오기 성공
     override fun getUserInfoSuccess(response: GetProfileResponse) {
-        dismissLoadingDialog()
         Glide.with(binding.postWriteProfileIv)
             .load(response.result[0].profileImgUrl)                 //왜 리스트지 ?
             .error(R.drawable.profile_image)
             .into(binding.postWriteProfileIv)
 
         binding.postWriteNicknameTv.text = response.result[0].nickName  //닉네임 셋팅.
+        dismissLoadingDialog()
     }
 
     //유저 정보 받아오기 실패
     override fun getUserInfoFailure(message: String) {
-        dismissLoadingDialog()
         Log.d("WriteGetUserInfo" , "${message}")
+        dismissLoadingDialog()
     }
 }
