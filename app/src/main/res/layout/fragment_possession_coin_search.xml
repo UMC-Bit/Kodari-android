@@ -29,15 +29,6 @@
         app:layout_constraintTop_toTopOf="@id/possession_coin_search_back_IV"
         app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_back_IV"/>
 
-    <TextView
-        android:id="@+id/temp_dialog_BT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="소유 코인 추가(임시)"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/possession_coin_search_container_CV"
         android:layout_width="match_parent"
@@ -128,7 +119,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/possession_coin_search_search_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
@@ -142,8 +133,7 @@
                         android:background="#80D3D3D3"
                         android:paddingLeft="10dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                    </com.google.android.material.textfield.TextInputEditText>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 </LinearLayout>
 
@@ -153,13 +143,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/possession_coin_search_coin_list_SV"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_search_container_CV"
-        android:layout_marginBottom="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/possession_coin_search_coin_list_RV"
@@ -167,11 +150,8 @@
             android:layout_height="0dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/possession_coin_search_container_CV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_possession_coin_search_coin_list" />
-
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

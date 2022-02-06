@@ -181,294 +181,362 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/possession_coin_modify_type_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:textSize="15sp"
-        android:text="유형"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="14dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_CV"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/possession_coin_modify_type_select_CV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="24dp"
-        android:layout_marginLeft="43dp"
-        app:layout_constraintStart_toEndOf="@id/possession_coin_modify_type_TV"
-        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_TV"
-        app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_type_TV">
+        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_CV"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp">
 
             <TextView
-                android:id="@+id/possession_coin_modify_type_select_TV"
-                android:layout_width="106dp"
-                android:layout_height="34dp"
-                android:textStyle="bold"
+                android:id="@+id/possession_coin_modify_type_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
                 android:textSize="15sp"
-                android:background="#80D3D3D3"
+                android:text="유형"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="37dp"
+                android:layout_marginLeft="14dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center"/>
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_type_select_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                android:layout_marginLeft="43dp"
+                app:layout_constraintStart_toEndOf="@id/possession_coin_modify_type_TV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_TV"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_type_TV">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/possession_coin_modify_type_select_TV"
+                        android:layout_width="106dp"
+                        android:layout_height="34dp"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:background="#80D3D3D3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/possession_coin_modify_buy_on_TV"
+                        android:layout_width="53dp"
+                        android:layout_height="34dp"
+                        android:text="매수"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:background="@drawable/button_outline"
+                        android:backgroundTint="#B3FDCC68"
+                        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
+                        app:layout_constraintStart_toStartOf="@id/possession_coin_modify_type_select_TV"/>
+
+                    <TextView
+                        android:id="@+id/possession_coin_modify_buy_off_TV"
+                        android:layout_width="53dp"
+                        android:layout_height="34dp"
+                        android:text="매수"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
+                        app:layout_constraintStart_toStartOf="@id/possession_coin_modify_type_select_TV"/>
+
+                    <TextView
+                        android:id="@+id/possession_coin_modify_sell_on_TV"
+                        android:layout_width="53dp"
+                        android:layout_height="34dp"
+                        android:text="매도"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:background="@drawable/button_outline"
+                        android:backgroundTint="#B3FDCC68"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
+                        app:layout_constraintEnd_toEndOf="@id/possession_coin_modify_type_select_TV"/>
+
+                    <TextView
+                        android:id="@+id/possession_coin_modify_sell_off_TV"
+                        android:layout_width="53dp"
+                        android:layout_height="34dp"
+                        android:text="매도"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
+                        app:layout_constraintEnd_toEndOf="@id/possession_coin_modify_type_select_TV"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/possession_coin_modify_buy_on_TV"
-                android:layout_width="53dp"
-                android:layout_height="34dp"
-                android:text="매수"
-                android:textSize="11dp"
+                android:id="@+id/possession_coin_modify_price_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:textSize="15sp"
+                android:text="가격"
+                android:textStyle="bold"
                 android:textColor="#000000"
-                android:gravity="center"
-                android:background="@drawable/button_outline"
-                android:backgroundTint="#B3FDCC68"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_type_select_TV"/>
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_type_TV"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_price_input_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="28dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_price_TV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/possession_coin_modify_price_TV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_price_TV"
+                app:layout_constraintVertical_bias="0.7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/possession_coin_modify_price_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:drawablePadding="6dp"
+                        android:textColorHint="#FF584E"
+                        android:hint="ex) 20"
+                        android:textSize="11sp"
+                        android:inputType="number"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="17dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/possession_coin_modify_buy_off_TV"
-                android:layout_width="53dp"
-                android:layout_height="34dp"
-                android:text="매수"
-                android:textSize="11dp"
+                android:id="@+id/possession_coin_modify_quantity_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:textSize="15sp"
+                android:text="수량"
+                android:textStyle="bold"
                 android:textColor="#000000"
-                android:gravity="center"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_type_select_TV"/>
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="29dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_price_TV"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_quantity_input_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="28dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_quantity_TV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/possession_coin_modify_quantity_TV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_TV"
+                app:layout_constraintVertical_bias="0.7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/possession_coin_modify_quantity_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:drawablePadding="6dp"
+                        android:textColorHint="#FF584E"
+                        android:hint="ex) 7.32"
+                        android:textSize="11sp"
+                        android:inputType="number"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="17dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_date_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="21dp"
+                android:layout_marginRight="21dp"
+                app:cardCornerRadius="24dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_quantity_TV"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_quantity_TV"
+                app:layout_constraintVertical_bias="0.7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/possession_coin_modify_day_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:textColorHint="#000000"
+                        android:textStyle="bold"
+                        android:hint="일자"
+                        android:drawableRight="@drawable/move_button"
+                        android:textSize="15sp"
+                        android:inputType="number"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="17dp"
+                        android:paddingRight="17dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_fee_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="21dp"
+                app:cardCornerRadius="24dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_date_CV"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_date_CV"
+                app:layout_constraintVertical_bias="0.7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/possession_coin_modify_fee_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:textColorHint="#000000"
+                        android:textStyle="bold"
+                        android:hint="수수료"
+                        android:drawableRight="@drawable/move_button"
+                        android:textSize="15sp"
+                        android:inputType="number"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="17dp"
+                        android:paddingRight="17dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/possession_coin_modify_sell_on_TV"
-                android:layout_width="53dp"
-                android:layout_height="34dp"
-                android:text="매도"
-                android:textSize="11dp"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:background="@drawable/button_outline"
-                android:backgroundTint="#B3FDCC68"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
-                app:layout_constraintEnd_toEndOf="@id/possession_coin_modify_type_select_TV"/>
+                android:id="@+id/possession_coin_modify_can_modify_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수동으로 수정 가능합니다."
+                android:textColor="#FF584E"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_fee_CV"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_fee_CV"/>
+
 
             <TextView
-                android:id="@+id/possession_coin_modify_sell_off_TV"
-                android:layout_width="53dp"
-                android:layout_height="34dp"
-                android:text="매도"
-                android:textSize="11dp"
+                android:id="@+id/possession_coin_modify_memo_dividing_line_TV"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#B3D3D3D3"
+                android:layout_marginTop="27dp"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_can_modify_TV"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/possession_coin_modify_memo_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메모"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 android:textColor="#000000"
-                android:gravity="center"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_type_select_TV"
-                app:layout_constraintEnd_toEndOf="@id/possession_coin_modify_type_select_TV"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="17dp"
+                android:layout_marginTop="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_memo_dividing_line_TV" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_modify_memo_input_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="28dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintStart_toEndOf="@id/possession_coin_modify_memo_TV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_memo_TV"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_memo_TV"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/possession_coin_modify_memo_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:background="#80D3D3D3"
+                        android:drawablePadding="6dp"
+                        android:hint="기억하고 싶은 내용을 입력해주세요."
+                        android:inputType="number"
+                        android:maxLength="100"
+                        android:paddingLeft="17dp"
+                        android:textColorHint="#FF584E"
+                        android:textSize="11sp">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/possession_coin_modify_quantity_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:textSize="15sp"
-        android:text="수량"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_type_TV"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/possession_coin_modify_quantity_input_CV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="43dp"
-        android:layout_marginRight="28dp"
-        app:cardCornerRadius="24dp"
-        app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_quantity_TV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/possession_coin_modify_quantity_TV"
-        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_TV"
-        app:layout_constraintVertical_bias="0.7">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/possession_coin_modify_quantity_input_ET"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:drawablePadding="6dp"
-                android:textColorHint="#FF584E"
-                android:hint="ex) 7.32"
-                android:textSize="11sp"
-                android:inputType="number"
-                android:background="#80D3D3D3"
-                android:paddingLeft="17dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/possession_coin_modify_date_CV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="21dp"
-        app:cardCornerRadius="24dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_quantity_TV"
-        app:layout_constraintStart_toStartOf="@id/possession_coin_modify_quantity_TV"
-        app:layout_constraintVertical_bias="0.7">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/possession_coin_modify_day_input_ET"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:textColorHint="#000000"
-                android:textStyle="bold"
-                android:hint="일자"
-                android:drawableRight="@drawable/move_button"
-                android:textSize="15sp"
-                android:inputType="number"
-                android:background="#80D3D3D3"
-                android:paddingLeft="17dp"
-                android:paddingRight="17dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/possession_coin_modify_fee_CV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="21dp"
-        app:cardCornerRadius="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_date_CV"
-        app:layout_constraintStart_toStartOf="@id/possession_coin_modify_date_CV"
-        app:layout_constraintVertical_bias="0.7">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/possession_coin_modify_fee_input_ET"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:textColorHint="#000000"
-                android:textStyle="bold"
-                android:hint="수수료"
-                android:drawableRight="@drawable/move_button"
-                android:textSize="15sp"
-                android:inputType="number"
-                android:background="#80D3D3D3"
-                android:paddingLeft="17dp"
-                android:paddingRight="17dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="수동으로 수정 가능합니다."
-        android:textColor="#FF584E"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_fee_CV"
-        app:layout_constraintStart_toStartOf="@id/possession_coin_modify_fee_CV"/>
-
-
-    <TextView
-        android:id="@+id/possession_coin_modify_memo_dividing_line_TV"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="20dp"
-        android:background="#B3D3D3D3"
-        app:layout_constraintBottom_toTopOf="@id/possession_coin_modify_memo_input_CV"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/possession_coin_modify_memo_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="메모"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/possession_coin_modify_memo_input_CV"
-        app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_memo_input_CV"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/possession_coin_modify_memo_input_CV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="43dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="24dp"
-        app:layout_constraintStart_toEndOf="@id/possession_coin_modify_memo_TV"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/possession_coin_modify_memo_input_ET"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:drawablePadding="6dp"
-                android:textColorHint="#FF584E"
-                android:hint="기억하고 싶은 내용을 입력해주세요."
-                android:textSize="11sp"
-                android:maxLength="100"
-                android:inputType="number"
-                android:background="#80D3D3D3"
-                android:paddingLeft="17dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

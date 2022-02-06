@@ -3,6 +3,7 @@ package com.bit.kodari.PossessionCoin
 //import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
-import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinData
+import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtInsquireView
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResponse
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
+import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
-class PossessionCoinManagementFragment : Fragment() {
+class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView {
     lateinit var binding: FragmentPossessionCoinManagementBinding
+    private lateinit var possessionCoinManagementAdapter: PossessionCoinManagementAdapter
+    private var coinList = ArrayList<PsnCoinMgtInsquireResult>()
 
-    val PossessionCoinList = arrayListOf(
-        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-        PossessionCoinData(R.drawable.btc, "비트코인", "btc", "10000", "+1000", "10000", R.drawable.select_off_button),
-    )
+    override fun onStart() {
+        super.onStart()
+        getPossessionCoins()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +40,6 @@ class PossessionCoinManagementFragment : Fragment() {
         moveLayout()
         memoDialog()
 
-        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.possessionCoinManagementRV.adapter=PossessionCoinManagementAdapter(PossessionCoinList)
 
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             deleteDialog()
@@ -94,5 +97,38 @@ class PossessionCoinManagementFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
         }
+    }
+
+    fun setRecyclerView(){
+        possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
+        //아이템 클릭 리스너를 현재 뷰에서 처리
+        //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
+        possessionCoinManagementAdapter.setMyItemClickListener(object :PossessionCoinManagementAdapter.MyItemClickListener{
+
+            override fun onItemClick(item: PsnCoinMgtInsquireResult) {
+
+            }
+        })
+
+        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
+        binding.possessionCoinManagementRV.adapter=possessionCoinManagementAdapter
+    }
+
+    fun getPossessionCoins(){
+        val psnCoinService = PsnCoinService()
+        psnCoinService.setPsnCoinMgtInsquireView(this)
+        psnCoinService.getPsnCoinMgtInsquire()
+    }
+
+    override fun psnCoinInsquireSuccess(response: PsnCoinMgtInsquireResponse) {
+        Log.d("InsquireSuccess" , "${response}")
+        coinList = response.result
+        Log.d("psnSuccesscoinSize", "${coinList.size}")
+
+        setRecyclerView()
+    }
+
+    override fun psnCoinInsquireFailure(message: String) {
+        Log.d("InsquireFailure", "코인 목록 불러오기 실패, ${message}")
     }
 }

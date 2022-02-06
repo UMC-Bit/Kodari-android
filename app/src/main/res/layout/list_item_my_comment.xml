@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,18 +8,40 @@
     android:paddingBottom="13dp"
     android:layout_marginBottom="17dp">
 
+    <TextView
+        android:id="@+id/list_item_my_comment_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2022.2.15 14:55"
+        android:textColor="#807E7E"
+        android:textSize="10sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="25dp"/>
+
+    <TextView
+        android:id="@+id/list_item_my_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="그거참 안됐네요. 저는 계속 잘되는데... 파이팅^^"
+        android:textColor="#000"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_comment_time_tv"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_comment_time_tv"/>
+
+
     <ImageView
         android:id="@+id/list_item_my_comment_image_iv"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_comment_tv"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_comment_tv"
         android:src="@drawable/profile_image"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="25dp"/>
+        android:layout_marginTop="14dp" />
 
     <TextView
-        android:id="@+id/list_item_my_comment_id_tv"
+        android:id="@+id/list_item_my_comment_nickname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
@@ -31,13 +54,30 @@
 
     <ImageButton
         android:id="@+id/list_item_my_comment_x_ib"
+        android:layout_width="7dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/gray_x_btn"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_comment_image_iv" />
+
+    <TextView
+        android:id="@+id/list_item_my_comment_coin_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/gray_x_btn"
+        android:text="DOGE"
+        android:textColor="#000"
+        android:textSize="11sp"
+        android:background="@drawable/btn_outline_yellow"
         app:layout_constraintTop_toTopOf="@id/list_item_my_comment_image_iv"
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <TextView
         android:id="@+id/list_item_my_comment_content_tv"
@@ -59,20 +99,30 @@
         android:layout_width="23dp"
         android:layout_height="22dp"
         android:src="@drawable/up"
-        android:layout_marginStart="109dp"
+        android:layout_marginStart="115dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/list_item_my_comment_content_tv"
         android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/list_item_my_comment_up_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="169"
+        android:textColor="#000"
+        android:layout_marginStart="3dp"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_comment_up_btn"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_up_btn" />
 
     <TextView
         android:id="@+id/list_item_my_comment_comment_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="댓글"
-        app:layout_constraintStart_toEndOf="@id/list_item_my_comment_up_btn"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_comment_up_cnt_tv"
         app:layout_constraintTop_toTopOf="@id/list_item_my_comment_up_btn"
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_up_btn"
-        android:layout_marginStart="30dp"/>
+        android:layout_marginStart="15dp"/>
 
     <TextView
         android:id="@+id/list_item_my_comment_comment_count_num_tv"
@@ -90,10 +140,19 @@
         android:layout_width="23dp"
         android:layout_height="22dp"
         android:src="@drawable/down"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintTop_toTopOf="@id/list_item_my_comment_comment_count_tv"
         app:layout_constraintStart_toEndOf="@id/list_item_my_comment_comment_count_num_tv"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_comment_count_tv"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_comment_count_tv" />
+
+    <TextView
+        android:id="@+id/list_item_my_comment_down_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:textColor="#000"
+        android:layout_marginStart="3dp"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_comment_down_btn"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_comment_down_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

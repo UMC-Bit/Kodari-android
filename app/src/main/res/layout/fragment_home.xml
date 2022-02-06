@@ -339,17 +339,19 @@
                                 android:layout_weight="1"/>
 
                         </LinearLayout>
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/home_represent_coin_rv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="@id/home_compare_list_ll"
-                            app:layout_constraintTop_toBottomOf="@id/home_compare_list_ll"
                             android:layout_marginTop="5dp"
-                            tools:listitem="@layout/list_item_represent_coin"
+                            android:padding="10dp"
+                            app:layout_constraintEnd_toEndOf="@id/home_compare_list_ll"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/home_compare_list_ll"
                             tools:itemCount="3"
-                            android:padding="10dp"/>
+                            tools:listitem="@layout/list_item_represent_coin" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

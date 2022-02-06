@@ -21,11 +21,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
     override fun initAfterBinding() {
         setListener()
 
-//        val editProfileFinishBListener = object : View.OnClickListener {
-//            override fun onClick(v: View?) {
-//                i
-//            }
-//        }
 
     }
 

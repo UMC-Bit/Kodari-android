@@ -1,12 +1,15 @@
 package com.bit.kodari.Debate
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Debate.Adapter.DebateCoinRVAdapter
@@ -85,10 +88,21 @@ class DialogCoin : DialogFragment(), DebateCoinView {
     }
 
     fun setListener(){
-        binding.dialogInputEt.doAfterTextChanged {
-            var searchText =  binding.dialogInputEt.text.toString()
-            searchFilter(searchText)
-        }
+        binding.dialogInputEt.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                    Log.d("setlistener", "실행")
+                    var searchText =  binding.dialogInputEt.text.toString()
+                    searchFilter(searchText)
+            }
+        })
     }
 
     fun searchFilter(searchText: String) {

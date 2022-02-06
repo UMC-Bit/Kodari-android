@@ -7,21 +7,16 @@
     android:layout_marginTop="20dp"
     android:layout_marginRight="20dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item_possession_coin_search_coin_list_image_CV"
+    <ImageView
+        android:id="@+id/item_possession_coin_search_coin_list_image_IV"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/btc"
+        android:background="#FFFFFF"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/item_possession_coin_search_coin_list_image_IV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/btc"
-            android:scaleType="fitCenter"/>
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/item_possession_coin_search_coin_list_coin_name_TV"
@@ -32,8 +27,8 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/item_possession_coin_search_coin_list_image_CV"
-        app:layout_constraintTop_toTopOf="@id/item_possession_coin_search_coin_list_image_CV"
+        app:layout_constraintStart_toEndOf="@id/item_possession_coin_search_coin_list_image_IV"
+        app:layout_constraintTop_toTopOf="@id/item_possession_coin_search_coin_list_image_IV"
         app:layout_constraintBottom_toTopOf="@id/item_possession_coin_search_coin_list_coin_symbol_TV"/>
 
     <TextView
@@ -44,8 +39,8 @@
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/item_possession_coin_search_coin_list_image_CV"
-        app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_search_coin_list_image_CV"
+        app:layout_constraintStart_toEndOf="@id/item_possession_coin_search_coin_list_image_IV"
+        app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_search_coin_list_image_IV"
         app:layout_constraintTop_toBottomOf="@id/item_possession_coin_search_coin_list_coin_name_TV"/>
 
     <ImageView
@@ -53,8 +48,8 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/move_button"
-        app:layout_constraintTop_toTopOf="@id/item_possession_coin_search_coin_list_image_CV"
-        app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_search_coin_list_image_CV"
+        app:layout_constraintTop_toTopOf="@id/item_possession_coin_search_coin_list_image_IV"
+        app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_search_coin_list_image_IV"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

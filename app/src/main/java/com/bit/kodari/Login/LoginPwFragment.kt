@@ -65,7 +65,6 @@ class LoginPwFragment : BaseFragment<FragmentLoginPwBinding>(FragmentLoginPwBind
     }
 
     fun setListener(){
-
         binding.loginPwNextBtn.setOnClickListener {
             if(binding.loginPwEt.text.isEmpty()){
                 showToast("비밀번호를 설정해주세요.")

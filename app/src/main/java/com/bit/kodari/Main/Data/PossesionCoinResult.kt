@@ -1,9 +1,13 @@
 package com.bit.kodari.Main.Data
 
 data class PossesionCoinResult(
-    val amount: Int,
+    val userCoinIdx: Int,
+    var upbitPrice: Double,
+    var profit: Double,
+    var coinImg: Any,
     val coinName: String,
-    val priceAvg: Int,
+    val priceAvg: Double,
     val status: String,
-    val userIdx: Int
-)
+    val amount: Int,
+    val symbol: String
+    )

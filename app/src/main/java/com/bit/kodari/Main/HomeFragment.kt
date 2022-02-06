@@ -21,29 +21,64 @@ import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
+import com.bit.kodari.Main.Data.AccountResult
+import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
+import com.bit.kodari.Portfolio.Retrofit.PortfolioView
+import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.Util.*
+import com.bit.kodari.Util.Binance.BinanceService
+import com.bit.kodari.Util.Upbit.UpbitService
+import com.bit.kodari.Util.getEmail
+import com.bit.kodari.Util.getJwt
+import com.bit.kodari.Util.getPw
+import com.bit.kodari.Util.getUserIdx
+import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlin.concurrent.thread
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView {
 
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
-    var representList = ArrayList<RepresentCoinResult>()
-    var possessionList = ArrayList<PossesionCoinResult>()
+
+    // 업비트, 바이낸스 코인 가격 리스트
+    lateinit var upbitUserCoinPriceList: List<Int>
+    lateinit var binanceUserCoinPriceList: HashMap<String, Any>
+    lateinit var upbitRepresentCoinPriceList: List<Int>
+    lateinit var binanceRepresentCoinPriceList: HashMap<String, Any>
+
+    // 유저 코인 리스트
+    lateinit var userCoinList: List<PossesionCoinResult>
+
+    // 대표 코인 심볼 리스트
+    lateinit var representCoinList: List<RepresentCoinResult>
+    // 수익률 리스트
+    // val profitList = response.result.profitResultList
 
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
         setChartDummy()
         setListener()
         setViewpager()
-        setRepresentRV()
-        setRepresentPV()
-        Log.d("info" , "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}")
+
+
+        // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
+        val portFolioService = PortfolioService()
+        portFolioService.setPortfolioView(this)
+        portFolioService.getPortfolioList(getUserIdx())
+
+
+
+        Log.d(
+            "info",
+            "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
+        )
+
     }
 
 
@@ -120,7 +155,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , RepresentativeCoinManagementFragment())
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
                 .addToBackStack(null).commitAllowingStateLoss()
 
         }
@@ -134,12 +169,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         //화살표 관련 리스너
         binding.homeVpPreviewBtn.setOnClickListener {
             val current = binding.homeViewpagerVp.currentItem           //현재 뷰페이저 위치 받아오기
-            binding.homeViewpagerVp.setCurrentItem(current-1,false) //위치 -1 페이지로 이동 -> 이동후 onPage~ 리스너로 인디케이터 변화
+            binding.homeViewpagerVp.setCurrentItem(
+                current - 1,
+                false
+            ) //위치 -1 페이지로 이동 -> 이동후 onPage~ 리스너로 인디케이터 변화
         }
 
         binding.homeVpNextBtn.setOnClickListener {
             val current = binding.homeViewpagerVp.currentItem
-            binding.homeViewpagerVp.setCurrentItem(current+1,false)
+            binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
         //임시 로그아웃 버튼
@@ -188,22 +226,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
     }
 
-    fun setRepresentRV(){
-        representList.add(RepresentCoinResult(1,"null","test1,",2,3,"active","AES"))
-        representList.add(RepresentCoinResult(1,"null","test2,",2,3,"active","ATE"))
-        representList.add(RepresentCoinResult(1,"null","test3,",2,3,"active","TES"))
-        homeRCRVAdapter = HomeRCRVAdapter(representList)
-        binding.homeRepresentCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
+    fun setRepresentRV() {
+        homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
+        binding.homeRepresentCoinRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
 
     }
 
-    fun setRepresentPV(){
-        possessionList.add(PossesionCoinResult(1,"test1",5000,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test2",10000000,"active",3))
-        possessionList.add(PossesionCoinResult(1,"test3",42,"active",2))
-        homePCRVAdapter = HomePCRVAdapter(possessionList)
-        binding.homeMyCoinRv.layoutManager =  LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
+    fun setRepresentPV() {
+        homePCRVAdapter = HomePCRVAdapter(userCoinList)
+        binding.homeMyCoinRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
 
     }
@@ -258,6 +292,67 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         set1.setDrawValues(false)
 
         return LineData(set1)
+    }
+
+    // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
+    override fun portfolioSuccess(response: PortfolioResponse) {
+        when (response.code) {
+            1000 -> {
+                val userCoinNameList = ArrayList<String>()
+                val representCoinNameList = ArrayList<String>()
+                // 계좌
+                getAccountResult(response)
+                // 유저 코인 리스트
+                this.userCoinList = response.result.userCoinList
+                // 대표 코인 리스트
+                this.representCoinList = response.result.representCoinList
+                // 수익률 리스트
+                val profitList = response.result.profitResultList
+                // 소유코인 이름 저장
+                for (i in 0 until userCoinList.size) {
+                    userCoinNameList.add(userCoinList[i].symbol)
+                }
+                // 대표코인 이름 저장
+                for (i in 0 until representCoinList.size) {
+                    representCoinNameList.add(representCoinList[i].symbol + "USDT")
+                }
+                // 소유코인 업비트 시세 받아오기
+                this.upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
+                // 소유코인 바이낸스 시세 받아오기
+                this.binanceUserCoinPriceList = BinanceService.getCurrentPrice(userCoinNameList)
+                // 대표코인 업비트 시세 받아오기
+                this.upbitRepresentCoinPriceList =
+                    UpbitService.getCurrentPrice(representCoinNameList)
+
+                // 대표코인, 소유코인 뷰 바인딩
+                setRepresentRV()
+                setRepresentPV()
+            }
+            else -> {
+                showToast(response.message)
+            }
+        }
+    }
+
+    // 포트폴리오 API 호출 실패
+    override fun portfolioFailure(message: String) {
+        showToast("포트폴리오 불러오기 실패")
+    }
+
+    fun getAccountResult(response: PortfolioResponse): AccountResult {
+        val accountIdx = response.result.accountIdx
+        val accountName = response.result.accountName
+        val property = response.result.property
+        val totalProperty = response.result.totalProperty
+        val userIdx = response.result.userIdx
+        val marketName = response.result.marketName
+        return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
+    }
+    // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
+    fun coinPriceThread(){
+        Thread(Runnable {
+
+        })
     }
 
 }
