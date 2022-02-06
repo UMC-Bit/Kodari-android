@@ -1,6 +1,7 @@
 package com.bit.kodari.Util.Upbit
 
 import android.util.Log
+import com.bit.kodari.Main.HomeFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +39,11 @@ object UpbitService {
                     }else{
                         currentPriceList.add(0)
                     }
+                    val homeFragment = HomeFragment()
+                    homeFragment.setRepresentPV()
+                    homeFragment.setRepresentRV()
                     Log.d("결과", "성공: ${response.body()}")
+
                 }
                 override fun onFailure(call: Call<List<UpbitPrice>>, t: Throwable) {
                     Log.d("결과", "실패")

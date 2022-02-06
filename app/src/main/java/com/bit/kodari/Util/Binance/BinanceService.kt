@@ -1,6 +1,7 @@
 package com.bit.kodari.Util.Binance
 
 import android.util.Log
+import com.bit.kodari.Main.HomeFragment
 import retrofit2.*
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,6 +36,9 @@ object BinanceService {
                             val price = response.body()!![i].price
                             coinMap.put(coinSymbol, price)
                             Log.d("결과", "성공: ${coinSymbol}: ${price}")
+                            val homeFragment = HomeFragment()
+                            homeFragment.setRepresentPV()
+                            homeFragment.setRepresentRV()
                         }
                     }
                     Log.d("결과", "성공:")
