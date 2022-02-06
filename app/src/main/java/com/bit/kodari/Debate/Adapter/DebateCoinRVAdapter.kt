@@ -52,3 +52,4 @@ class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView
 
 
 }
+

@@ -56,7 +56,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:background="@drawable/input_outline"
+                android:background="@drawable/finish_btn_click"
                 app:layout_constraintTop_toTopOf="@id/edit_profile_main_title_tv"
                 app:layout_constraintEnd_toEndOf="parent" />
 
