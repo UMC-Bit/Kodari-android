@@ -2,6 +2,7 @@ package com.bit.kodari.Portfolio.Retrofit
 
 import com.bit.kodari.Main.Data.PortIdxResponse
 import com.bit.kodari.Main.Data.PortfolioResponse
+import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -21,4 +22,8 @@ public interface PortfolioInterface {
         @Path("portIdx") portIdx: Int,
         @Header("x-access-token") jwt: String?
     ): Call<PortfolioResponse>
+
+    // 코인 목록 조회
+    @GET("/coins")
+    fun getSearchCoinAll():Call<SearchCoinResponse>
 }

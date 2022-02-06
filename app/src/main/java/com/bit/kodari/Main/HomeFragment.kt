@@ -1,7 +1,6 @@
 package com.bit.kodari.Main
 
 import android.graphics.Color
-import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -254,7 +253,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.homeChartLc.getAxisLeft().setSpaceTop(40f);
         binding.homeChartLc.getAxisLeft().setSpaceBottom(40f);
         binding.homeChartLc.getAxisRight().setEnabled(false);
-
         binding.homeChartLc.getXAxis().setEnabled(false);
 
     }
@@ -336,11 +334,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val marketName = response.result.marketName
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
-
     // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
     fun coinPriceThread(){
         Thread(Runnable {
 
         })
     }
+
 }

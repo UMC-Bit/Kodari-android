@@ -1,4 +1,4 @@
-package com.bit.kodari.Main
+package com.bit.kodari.RepresentativeCoin
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Main.Adapter.ManagementCoinData
-import com.bit.kodari.Main.Adapter.SearchCoinData
-import com.bit.kodari.Main.Adapter.RepresentativeCoinManagementAdapter
+import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
+import com.bit.kodari.Main.HomeFragment
+import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 
@@ -34,7 +35,7 @@ class RepresentativeCoinManagementFragment : Fragment() {
         deleteDialog()
 
         binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.representativeCoinManagementRV.adapter= RepresentativeCoinManagementAdapter(ManagementCoinList)
+        binding.representativeCoinManagementRV.adapter= RptCoinManagementAdapter(ManagementCoinList)
 
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()

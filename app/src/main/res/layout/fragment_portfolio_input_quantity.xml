@@ -182,13 +182,15 @@
         android:id="@+id/input_unit_price_input_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_outline_gray"
-        app:layout_constraintTop_toTopOf="@id/input_unit_price_tv"
-        app:layout_constraintBottom_toBottomOf="@id/input_unit_price_tv"
-        app:layout_constraintStart_toEndOf="@id/input_unit_price_tv"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/btn_outline_gray"
+        app:layout_constraintBottom_toBottomOf="@id/input_unit_price_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/input_unit_price_tv"
+        app:layout_constraintTop_toTopOf="@id/input_unit_price_tv"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/input_count_tv"

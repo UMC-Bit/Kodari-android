@@ -3,37 +3,36 @@ package com.bit.kodari.PossessionCoin.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.databinding.ItemPossessionCoinManagementCoinListBinding
+import com.bumptech.glide.Glide
 
-class PossessionCoinData(val coinImage:Int, val coinName:String, val coinSymbol:String, val presentPrice:String, val profit:String, val averagePrice:String, val select:Int)
 
-class PossessionCoinManagementAdapter(val possessionCoinList:ArrayList<PossessionCoinData>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
+class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMgtInsquireResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
+
+    interface MyItemClickListener {
+        fun onItemClick(item: PsnCoinMgtInsquireResult)
+    }
+
+    //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
+    private lateinit var mItemClickListener : MyItemClickListener       //리스너 객체 저장할 변수
+
+    fun setMyItemClickListener(itemClickLister: MyItemClickListener){
+        mItemClickListener = itemClickLister                            //리스너 객체를 전달받아서 리스너 객체 변수에 저장
+    }
 
     inner class PossessionCoinManagementViewHolder(val binding: ItemPossessionCoinManagementCoinListBinding) :  RecyclerView.ViewHolder(binding.root){
-        val coinImage = binding.itemPossessionCoinManagementCoinListImageIV
-        val coinName = binding.itemPossessionCoinManagementCoinListCoinNameTV
-        val coinSymbol = binding.itemPossessionCoinManagementCoinListCoinSymbolTV
-        val presentPrice = binding.itemPossessionCoinManagementCoinListPriceTV
-        val profit = binding.itemPossessionCoinManagementCoinListProfitPlusTV
-        val averagePrice = binding.itemPossessionCoinManagementCoinListAverageunitPriceTV
-        val select = binding.itemPossessionCoinManagementCoinListSelectOffIV
 
+        val imageView: ImageView =binding.itemPossessionCoinManagementCoinListImageIV
 
-        init {
-            binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
-                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
-                    View.GONE
-                binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
-                    View.VISIBLE
-            }
-
-            binding.itemPossessionCoinManagementCoinListSelectOnIV.setOnClickListener {
-                binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
-                    View.GONE
-                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
-                    View.VISIBLE
-            }
+        fun bind(item : PsnCoinMgtInsquireResult){ // 서버에서 받아와서 보여줄 것만
+            // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
+            Glide.with(imageView).load(item.coinImg).into(imageView)
+            binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
+            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text=item.priceAvg
+            binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
         }
     }
 
@@ -45,13 +44,22 @@ class PossessionCoinManagementAdapter(val possessionCoinList:ArrayList<Possessio
 
 
     override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
-        holder.coinImage.setImageResource(possessionCoinList[position].coinImage)
-        holder.coinName.text = possessionCoinList[position].coinName
-        holder.coinSymbol.text = possessionCoinList[position].coinSymbol
-        holder.presentPrice.text = possessionCoinList[position].presentPrice
-        holder.profit.text = possessionCoinList[position].profit
-        holder.averagePrice.text = possessionCoinList[position].averagePrice
-        holder.select.setImageResource(possessionCoinList[position].select)
+        holder.bind(possessionCoinList[position])
+//        var SearchCoinList = searchcoinList[position]
+//        holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
+//            mItemClickListener.onItemClick(possessionCoinList[position])
+//            holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
+//                View.GONE
+//            holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
+//                View.VISIBLE
+//        }
+//
+//        holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.setOnClickListener {
+//            holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
+//                View.GONE
+//            holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
+//                View.VISIBLE
+//        }
     }
 
     override fun getItemCount()=possessionCoinList.size

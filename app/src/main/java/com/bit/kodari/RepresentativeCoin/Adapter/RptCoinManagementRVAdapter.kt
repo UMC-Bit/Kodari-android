@@ -7,7 +7,7 @@ import com.bit.kodari.databinding.ItemRepresentativeCoinManagementCoinListBindin
 
 class ManagementCoinData(val coinImage:Int, val coinName:String, val coinSymbol:String, val upbitPrice:String, val bitfinexPrice:String, val kimchiPremium:String, val select:Int)
 
-class RepresentativeCoinManagementAdapter(val managementCoinList:ArrayList<ManagementCoinData>): RecyclerView.Adapter<RepresentativeCoinManagementAdapter.RepresentativeCoinManagementViewHolder>() {
+class RptCoinManagementAdapter(val managementCoinList:ArrayList<ManagementCoinData>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>() {
 
     inner class RepresentativeCoinManagementViewHolder(val binding: ItemRepresentativeCoinManagementCoinListBinding): RecyclerView.ViewHolder(binding.root){
         val coinImage=binding.itemRepresentativeCoinManagementCoinListImageIV
@@ -19,7 +19,7 @@ class RepresentativeCoinManagementAdapter(val managementCoinList:ArrayList<Manag
         val select=binding.itemRepresentativeCoinManagementCoinListSelectOffIV
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeCoinManagementAdapter.RepresentativeCoinManagementViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder {
         val binding = ItemRepresentativeCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepresentativeCoinManagementViewHolder(binding)
     }

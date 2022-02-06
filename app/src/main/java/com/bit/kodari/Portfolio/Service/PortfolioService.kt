@@ -3,6 +3,8 @@ package com.bit.kodari.Portfolio.Service
 import android.util.Log
 import com.bit.kodari.Main.Data.PortIdxResponse
 import com.bit.kodari.Main.Data.PortfolioResponse
+import com.bit.kodari.Portfolio.Adapter.SearchCoinView
+import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 import com.bit.kodari.Portfolio.Retrofit.PortfolioInterface
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Util.getJwt
@@ -14,9 +16,14 @@ import retrofit2.Response
 class PortfolioService {
 
     private lateinit var portfolioView: PortfolioView
+    private lateinit var searchCoinView: SearchCoinView
 
     fun setPortfolioView(portfolioView: PortfolioView){
         this.portfolioView = portfolioView
+    }
+
+    fun setSearchCoinView(searchCoinView: SearchCoinView){
+        this.searchCoinView = searchCoinView
     }
 
     // 유저 인덱스로 포트폴리오 List 조회
@@ -57,6 +64,24 @@ class PortfolioService {
                 Log.d("portIdx", "불러오기 실패")
             }
 
+        })
+    }
+
+    // 코인 목록 불러오기
+    fun getCoinsAll(){
+        val portfolioService = getRetorfit().create(PortfolioInterface::class.java)
+
+        portfolioService.getSearchCoinAll().enqueue(object : Callback<SearchCoinResponse> {
+            override fun onResponse(
+                call: Call<SearchCoinResponse>,
+                response: Response<SearchCoinResponse>
+            ) {
+                searchCoinView.getSearchCoinAllSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<SearchCoinResponse>, t: Throwable) {
+                searchCoinView.getSearchCoinAllFailure("t")
+            }
         })
     }
 }

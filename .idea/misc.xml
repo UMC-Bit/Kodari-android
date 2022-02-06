@@ -3,6 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/drawable/btn_outline_yellow.xml" value="0.5697916666666667" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/drawable/button_click_ripple.xml" value="0.26927083333333335" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/drawable/button_ywhite.xml" value="0.3194444444444444" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/drawable/finish_btn_click.xml" value="0.31197916666666664" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/drawable/input_outline.xml" value="0.3194444444444444" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_debate_main.xml" value="0.2692502532928065" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_edit_profile.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_edit_pw.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_enroll_exchange.xml" value="0.1" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_login_id.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_login_pw.xml" value="0.12310030395136778" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_make_portfolio.xml" value="0.1" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_my_comment.xml" value="0.2692502532928065" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_my_portfolio.xml" value="0.1" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_my_writing.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_portfolio_input_quantity.xml" value="0.1" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_portfolio_management.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_portfolio_search.xml" value="0.536" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_add.xml" value="0.15625" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_delete_dialog.xml" value="0.253125" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_possession_coin_management.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_profile_main.xml" value="0.2948557089084065" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_search_coin.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_select.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_signup_id.xml" value="0.4" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_signup_nickname.xml" value="0.12916666666666668" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/black_radius_circle_indicator.xml" value="0.23981481481481481" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline.xml" value="0.2365296803652968" />
         <entry key="..\:/And/Kodari-android/app/src/main/res/drawable/btn_outline_gray.xml" value="0.2365296803652968" />
@@ -68,6 +94,9 @@
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_profile_main.xml" value="0.2948557089084065" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_signup_id.xml" value="0.12310030395136778" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_signup_nickname.xml" value="0.12916666666666668" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/list_coin_item.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/list_item_my_comment.xml" value="0.264" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/list_item_my_writing.xml" value="0.2692502532928065" />
       </map>
     </option>
   </component>
