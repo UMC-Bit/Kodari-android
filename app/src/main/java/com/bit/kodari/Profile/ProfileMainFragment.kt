@@ -18,19 +18,31 @@ import com.bit.kodari.databinding.FragmentProfileMainBinding
 class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
 
 
+    lateinit var nickName:String
+    lateinit var email:String
+
     override fun initAfterBinding() {
-        setListener()
+
         val profileService = ProfileService()
         profileService.setProfileMainView(this)
         showLoadingDialog(requireContext())
         profileService.getProfile(getUserIdx())
 
+        setListener()
+
     }
 
     fun setListener(){
         binding.profileMainBtn1Ib.setOnClickListener {
+            val tempNickName = nickName
+            val tempEmail = email
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, EditProfileFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, EditProfileFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("nickName", tempNickName)
+                        putString("email",tempEmail)
+                    }
+                }).commitAllowingStateLoss()
         }
 
         binding.profileMainBtn2Ib.setOnClickListener {
@@ -55,8 +67,8 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
     }
 
     override fun getProfileSuccess(response: GetProfileResponse) {
-        val nickName = response.result[0].nickName
-        val email = response.result[0].email
+        nickName = response.result[0].nickName
+        email = response.result[0].email
         binding.profileMainNameTv.text = nickName
         binding.profileMainEmailTv.text = email
         Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")

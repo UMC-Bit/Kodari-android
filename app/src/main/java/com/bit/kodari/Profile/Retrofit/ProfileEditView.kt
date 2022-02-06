@@ -1,5 +1,6 @@
 package com.bit.kodari.Profile.Retrofit
 
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateNameResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateProfileImgResponse
 

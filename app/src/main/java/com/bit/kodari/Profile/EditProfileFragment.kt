@@ -10,6 +10,7 @@ import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Retrofit.ProfileEditView
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateNameResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateProfileImgResponse
 import com.bit.kodari.R
@@ -18,9 +19,19 @@ import com.bit.kodari.databinding.FragmentEditProfileBinding
 
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEditProfileBinding::inflate) , ProfileEditView {
 
+    lateinit var nickName:String
+
     override fun initAfterBinding() {
+        setInit()
         setListener()
 
+    }
+
+    fun setInit(){
+        if(requireArguments().containsKey("nickName")){
+            nickName = requireArguments().getString("nickName")!!
+            binding.editProfileInputNicknameEt.setText(nickName)
+        }
 
     }
 
@@ -42,6 +53,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
     override fun updateProfileImgFailure(message: String) {
 
     }
+
 
     fun setListener(){
         binding.editProfilePreIv.setOnClickListener {
