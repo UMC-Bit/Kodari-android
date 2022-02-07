@@ -86,7 +86,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
         binding.possessionCoinAddCompleteButtonTV.setOnClickListener {
             // 소유 코인 추가 API
             var userIdx = getUserIdx()
-            var accountIdx=1
+            var accountIdx=32
             var priceAvg = binding.possessionCoinAddAverageunitPriceInputET.text.toString()
             var amount = binding.possessionCoinAddQuantityInputET.text.toString()
             val psnCoinAddinfo = PsnCoinAddInfo(userIdx, coinIdx, accountIdx, priceAvg, amount)
@@ -99,7 +99,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             psnCoinService.setPsnCoinAddView(this)
             psnCoinService.getPsnCoinAdd(psnCoinAddinfo)
             // 거래 내역 생성 API
-            var portIdx=1
+            var portIdx=25
             var fee = binding.possessionCoinAddFeeInputET.text.toString()
             var category = "buy"
             var memo=binding.possessionCoinAddMemoInputET.text.toString()

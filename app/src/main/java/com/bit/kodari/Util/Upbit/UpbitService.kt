@@ -40,8 +40,8 @@ object UpbitService {
                         currentPriceList.add(0)
                     }
                     val homeFragment = HomeFragment()
-                    homeFragment.setRepresentPV()
-                    homeFragment.setRepresentRV()
+                    //homeFragment.setRepresentPV()
+                    //homeFragment.setRepresentRV()
                     Log.d("결과", "성공: ${response.body()}")
 
                 }
@@ -53,4 +53,3 @@ object UpbitService {
         return currentPriceList
     }
 }
-
