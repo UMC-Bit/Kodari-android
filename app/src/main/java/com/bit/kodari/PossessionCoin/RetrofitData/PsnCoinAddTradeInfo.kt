@@ -6,7 +6,7 @@ data class PsnCoinAddTradeInfo(
     var coinIdx : Int,
     var price : String,
     var amount : String,
-    var fee : String,
+    var fee : Double,
     var category : String,
     var memo : String,
     var date: String

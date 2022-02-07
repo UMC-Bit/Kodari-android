@@ -1,6 +1,7 @@
 package com.bit.kodari.PossessionCoin
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.icu.number.IntegerWidth
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
@@ -87,20 +88,23 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             // 소유 코인 추가 API
             var userIdx = getUserIdx()
             var accountIdx=32
+            var fee: Double = 0.05
             var priceAvg = binding.possessionCoinAddAverageunitPriceInputET.text.toString()
             var amount = binding.possessionCoinAddQuantityInputET.text.toString()
-            val psnCoinAddinfo = PsnCoinAddInfo(userIdx, coinIdx, accountIdx, priceAvg, amount)
-            Log.d(
-                "psnCoinAdd",
-                "소유 코인 정보 : ${userIdx} , ${coinIdx} , " +
-                        "${accountIdx}, ${priceAvg}, ${amount}"
-            )
+//            val psnCoinAddinfo = PsnCoinAddInfo(userIdx, coinIdx, accountIdx, priceAvg, amount)
+//            Log.d(
+//                "psnCoinAdd",
+//                "소유 코인 정보 : ${userIdx} , ${coinIdx} , " +
+//                        "${accountIdx}, ${priceAvg}, ${amount}"
+//            )
             val psnCoinService = PsnCoinService()
-            psnCoinService.setPsnCoinAddView(this)
-            psnCoinService.getPsnCoinAdd(psnCoinAddinfo)
+//            psnCoinService.setPsnCoinAddView(this)
+//            psnCoinService.getPsnCoinAdd(psnCoinAddinfo)
             // 거래 내역 생성 API
             var portIdx=25
-            var fee = binding.possessionCoinAddFeeInputET.text.toString()
+            var feeText = binding.possessionCoinAddFeeInputET.text.toString()
+            if(feeText.isNotEmpty())
+                fee = feeText.toDouble()
             var category = "buy"
             var memo=binding.possessionCoinAddMemoInputET.text.toString()
             var date=binding.possessionCoinAddDateInputET.text.toString()

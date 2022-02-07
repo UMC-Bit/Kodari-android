@@ -12,6 +12,12 @@ import com.bumptech.glide.Glide
 
 class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMgtInsquireResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
 
+    companion object{
+        var isClick=false
+        var clickPosition: Int = -1
+        var isClickMap = HashMap<Int, Boolean>()
+    }
+
     interface MyItemClickListener {
         fun onItemClick(item: PsnCoinMgtInsquireResult)
     }
@@ -45,21 +51,32 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
 
     override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
         holder.bind(possessionCoinList[position])
+        isClickMap[position] = false
 //        var SearchCoinList = searchcoinList[position]
-//        holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
-//            mItemClickListener.onItemClick(possessionCoinList[position])
-//            holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
-//                View.GONE
-//            holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
-//                View.VISIBLE
-//        }
-//
-//        holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.setOnClickListener {
-//            holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
-//                View.GONE
-//            holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =
-//                View.VISIBLE
-//        }
+
+
+            holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
+                if(!isClick)
+                {
+                    isClick=true
+                    isClickMap[position] = true
+                    clickPosition = position
+                    mItemClickListener.onItemClick(possessionCoinList[position])
+                    holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
+                        View.VISIBLE
+                }
+            }
+
+            holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.setOnClickListener {
+                if(isClick && isClickMap[position] == true)
+                {
+                    isClick=false
+                    holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
+                        View.GONE
+                }
+            }
+
+
     }
 
     override fun getItemCount()=possessionCoinList.size
