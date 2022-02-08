@@ -14,8 +14,8 @@ object BinanceService {
         바이낸스 현재 코인 시세
        코인 리스트를 받아서 현재 코인 가격의 리스트를 반환하는 함수
      */
-    fun getCurrentPrice(coinList: List<String>): HashMap<String, Any>{
-        val coinMap = HashMap<String, Any>()
+    fun getCurrentPrice(coinList: List<String>): HashMap<String, Double>{
+        val coinMap = HashMap<String, Double>()
         // Retrofit 초기 설정
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL_BINANCE_API)
@@ -36,9 +36,6 @@ object BinanceService {
                             val price = response.body()!![i].price
                             coinMap.put(coinSymbol, price)
                             Log.d("결과", "성공: ${coinSymbol}: ${price}")
-                            val homeFragment = HomeFragment()
-                            homeFragment.setRepresentPV()
-                            homeFragment.setRepresentRV()
                         }
                     }
                     Log.d("결과", "성공:")

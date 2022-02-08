@@ -24,27 +24,35 @@ import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
+import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.Binance.BinanceService
 import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getPw
 import com.bit.kodari.Util.getUserIdx
-import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.*
 import kotlin.concurrent.thread
+import kotlin.coroutines.CoroutineContext
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView, CoroutineScope {
 
+    lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
 
+    // 코루틴 job
+
+
     // 업비트, 바이낸스 코인 가격 리스트
-    lateinit var upbitUserCoinPriceList: List<Int>
-    lateinit var binanceUserCoinPriceList: HashMap<String, Any>
-    lateinit var upbitRepresentCoinPriceList: List<Int>
-    lateinit var binanceRepresentCoinPriceList: HashMap<String, Any>
+    lateinit var upbitUserCoinPriceList: List<Double>
+    lateinit var binanceUserCoinPriceMap: HashMap<String, Double>
+    lateinit var upbitRepresentCoinPriceList: List<Double>
+    lateinit var binanceRepresentCoinPriceMap: HashMap<String, Double>
 
     // 유저 코인 리스트
     lateinit var userCoinList: List<PossesionCoinResult>
@@ -284,40 +292,46 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun portfolioSuccess(response: PortfolioResponse) {
         when (response.code) {
             1000 -> {
-                val userCoinNameList = ArrayList<String>()
-                val representCoinNameList = ArrayList<String>()
-                // 계좌
-                getAccountResult(response)
-                // 유저 코인 리스트
-                this.userCoinList = response.result.userCoinList
-                // 대표 코인 리스트
-                this.representCoinList = response.result.representCoinList
-                // 수익률 리스트
-                val profitList = response.result.profitResultList
-                // 소유코인 이름 저장
-                for (i in 0 until userCoinList.size) {
-                    userCoinNameList.add(userCoinList[i].symbol)
-                }
-                // 대표코인 이름 저장
-                for (i in 0 until representCoinList.size) {
-                    representCoinNameList.add(representCoinList[i].symbol + "USDT")
-                }
-                // 소유코인 업비트 시세 받아오기
-                this.upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
-                // 소유코인 바이낸스 시세 받아오기
-                this.binanceUserCoinPriceList = BinanceService.getCurrentPrice(userCoinNameList)
-                // 대표코인 업비트 시세 받아오기
-                this.upbitRepresentCoinPriceList =
-                    UpbitService.getCurrentPrice(representCoinNameList)
-
-                // 대표코인, 소유코인 뷰 바인딩
-                setRepresentRV()
-                setRepresentPV()
+                getCoinPrice(response)
             }
             else -> {
                 showToast(response.message)
             }
         }
+    }
+    // 코루틴 시세 적용 및 뷰바인딩
+    suspend fun setCoinPrice(response: PortfolioResponse){
+        getCoinPrice(response)
+        setPortViewBinding()
+    }
+    // 시세 받아오기
+    fun getCoinPrice(response: PortfolioResponse){
+        val userCoinNameList = ArrayList<String>()
+        val representCoinNameList = ArrayList<String>()
+        // 계좌
+        getAccountResult(response)
+        // 유저 코인 리스트
+        this.userCoinList = response.result.userCoinList
+        // 대표 코인 리스트
+        this.representCoinList = response.result.representCoinList
+        // 수익률 리스트
+        val profitList = response.result.profitResultList
+        // 소유코인 이름 저장
+        for (i in 0 until userCoinList.size) {
+            userCoinNameList.add(userCoinList[i].symbol)
+        }
+        // 대표코인 이름 저장
+        for (i in 0 until representCoinList.size) {
+            representCoinNameList.add(representCoinList[i].symbol + "USDT")
+        }
+        // 업비트, 바이낸스 코인 시세 받아오기
+        getCoinPrice(userCoinNameList, representCoinNameList)
+    }
+    // 뷰 바인딩 해주기
+    fun setPortViewBinding(){
+        // 대표코인, 소유코인 뷰 바인딩
+        setRepresentRV()
+        setRepresentPV()
     }
 
     // 포트폴리오 API 호출 실패
@@ -335,10 +349,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
     // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
-    fun coinPriceThread(){
-        Thread(Runnable {
+    fun getCoinPrice(userCoinNameList: List<String>, representCoinNameList: List<String>){
+        GlobalScope.launch {
+            // 소유코인 업비트 시세 받아오기
+            val getUpbitUserCoinPrice = GlobalScope.async(Dispatchers.IO) {
+                UpbitService.getCurrentPrice(userCoinNameList)
+            }
+            // 소유코인 바이낸스 시세 받아오기
+            val binanceUserCoinPrice = GlobalScope.async(Dispatchers.IO) {
+                BinanceService.getCurrentPrice(userCoinNameList)
+            }
+            // 대표코인 업비트 시세 받아오기
+            val getUpbitRepresentCoinPrice = GlobalScope.async(Dispatchers.IO) {
+                UpbitService.getCurrentPrice(representCoinNameList)
+            }
+            // 대표코인 바이낸스 시세 받아오기
+            val getBinanceRepresentCoinPrice = GlobalScope.async(Dispatchers.IO) {
+                BinanceService.getCurrentPrice(representCoinNameList)
+            }
+            upbitUserCoinPriceList = getUpbitUserCoinPrice.await()
+            binanceUserCoinPriceMap = binanceUserCoinPrice.await()
+            upbitRepresentCoinPriceList = getUpbitRepresentCoinPrice.await()
+            binanceRepresentCoinPriceMap = getBinanceRepresentCoinPrice.await()
+            for(i in userCoinList.indices){
+                userCoinList[i].upbitPrice = upbitUserCoinPriceList[i]
+                representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
+                    userCoinList[i].coinName+"USDT"){0.0}
+            }
+            for(i in representCoinList.indices){
+                representCoinList[i].upbitPrice = upbitRepresentCoinPriceList[i]
+                representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
+                    representCoinList[i].coinName+"USDT"){0.0}
+            }
 
-        })
+            GlobalScope.launch(Dispatchers.Main) {
+                // 대표코인, 소유코인 뷰 바인딩
+                setRepresentRV()
+                setRepresentPV()
+            }
+        }
     }
-
 }
