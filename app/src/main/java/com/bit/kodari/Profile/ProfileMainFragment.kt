@@ -22,7 +22,7 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         setListener()
         val profileService = ProfileService()
         profileService.setProfileMainView(this)
-        //showLoadingDialog 호출
+        showLoadingDialog(requireContext())
         profileService.getProfile(getUserIdx())
 
     }
@@ -60,9 +60,11 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         binding.profileMainNameTv.text = nickName
         binding.profileMainEmailTv.text = email
         Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")
+        dismissLoadingDialog()
     }
 
     override fun getProfileFailure(message: String) {
         Log.d("getProfile" , "호출 실패 , ${message}" )
+        dismissLoadingDialog()
     }
 }

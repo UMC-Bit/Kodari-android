@@ -1,9 +1,13 @@
 package com.bit.kodari.Main
 
+import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -13,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -25,6 +30,8 @@ import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
+import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
+import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Binance.BinanceService
 import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
@@ -182,8 +189,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
-    }
+        //임시 로그아웃 버튼
+        binding.logout.setOnClickListener {
+            saveLoginInfo(null,null,null,0)     //0이면 유저 없는거
+            saveAutoLogin(false)
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
 
+    }
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
@@ -212,7 +226,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         binding.homeVpNextBtn.visibility = View.GONE
                     }
                     else -> {
-                        binding.homeVpNextBtn.visibility = View.VISIBLE
+                        binding.homeVpNextBtn.visibility =View.VISIBLE
                         binding.homeVpPreviewBtn.visibility = View.VISIBLE
                     }
                 }
@@ -261,6 +275,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.homeChartLc.getAxisLeft().setSpaceTop(40f);
         binding.homeChartLc.getAxisLeft().setSpaceBottom(40f);
         binding.homeChartLc.getAxisRight().setEnabled(false);
+
         binding.homeChartLc.getXAxis().setEnabled(false);
 
     }

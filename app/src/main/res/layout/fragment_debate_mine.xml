@@ -30,7 +30,7 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
-        android:id="@+id/mine_coin_name_tv"
+        android:id="@+id/mine_coin_symbol_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="도지 코인"
@@ -42,12 +42,12 @@
 
 <!--    내 게시글 아니면 안뜨기 해야함-->
     <LinearLayout
-        android:id="@+id/mine_work_container_ll"
+        android:id="@+id/mine_btn_container_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mine_coin_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/mine_coin_symbol_tv"
         android:layout_marginEnd="10dp"
         android:background="@drawable/btn_outline_white">
 
@@ -82,7 +82,7 @@
         android:background="@drawable/btn_outline_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mine_work_container_ll"
+        app:layout_constraintTop_toBottomOf="@id/mine_btn_container_ll"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="7dp">
 
@@ -109,7 +109,7 @@
                 android:layout_marginStart="25dp"/>
 
             <TextView
-                android:id="@+id/mine_id_tv"
+                android:id="@+id/mine_nickname_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
@@ -135,8 +135,8 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"/>
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/mine_up_btn"
+            <ImageView
+                android:id="@+id/mine_like_btn"
                 android:layout_width="23dp"
                 android:layout_height="22dp"
                 android:src="@drawable/up"
@@ -145,15 +145,27 @@
                 app:layout_constraintTop_toBottomOf="@id/mine_content_tv"
                 android:layout_marginTop="12dp"/>
 
+
+            <TextView
+                android:id="@+id/mine_like_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="9sp"
+                app:layout_constraintStart_toStartOf="@id/mine_like_btn"
+                app:layout_constraintEnd_toEndOf="@id/mine_like_btn"
+                app:layout_constraintTop_toBottomOf="@id/mine_like_btn"/>
+
             <TextView
                 android:id="@+id/mine_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="댓글"
-                app:layout_constraintStart_toEndOf="@id/mine_up_btn"
-                app:layout_constraintTop_toTopOf="@id/mine_up_btn"
-                app:layout_constraintBottom_toBottomOf="@id/mine_up_btn"
+                app:layout_constraintStart_toEndOf="@id/mine_like_btn"
+                app:layout_constraintTop_toTopOf="@id/mine_like_btn"
+                app:layout_constraintBottom_toBottomOf="@id/mine_like_btn"
                 android:layout_marginStart="30dp"/>
+
 
             <TextView
                 android:id="@+id/mine_comment_count_num_tv"
@@ -162,12 +174,12 @@
                 android:layout_marginStart="3dp"
                 android:text="38"
                 android:textColor="#FD0606"
-                app:layout_constraintBottom_toBottomOf="@id/mine_up_btn"
+                app:layout_constraintBottom_toBottomOf="@id/mine_like_btn"
                 app:layout_constraintStart_toEndOf="@id/mine_count_tv"
-                app:layout_constraintTop_toTopOf="@id/mine_up_btn" />
+                app:layout_constraintTop_toTopOf="@id/mine_like_btn" />
 
             <ImageView
-                android:id="@+id/mine_down_btn"
+                android:id="@+id/mine_no_like_btn"
                 android:layout_width="23dp"
                 android:layout_height="22dp"
                 android:src="@drawable/down"
@@ -175,6 +187,16 @@
                 app:layout_constraintTop_toTopOf="@id/mine_comment_count_num_tv"
                 app:layout_constraintStart_toEndOf="@id/mine_comment_count_num_tv"
                 app:layout_constraintBottom_toBottomOf="@id/mine_comment_count_num_tv" />
+
+            <TextView
+                android:id="@+id/mine_no_like_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="9sp"
+                app:layout_constraintStart_toStartOf="@id/mine_no_like_btn"
+                app:layout_constraintEnd_toEndOf="@id/mine_no_like_btn"
+                app:layout_constraintTop_toBottomOf="@id/mine_no_like_btn"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,19 +234,33 @@
                 android:id="@+id/mine_comment_input_message_et"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="pastgood으로 댓글 달기"
+                android:hint="해당 게시글에 댓글을 달아주세요."
+                android:textSize="13sp"
                 android:layout_weight="1"
                 android:layout_margin="7.5dp"
+                android:background="@color/white"
                 android:imeOptions="actionDone"/>
 
             <Button
                 android:id="@+id/mine_comment_send_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30sp"
                 android:text="게시"
                 android:layout_margin="7.5dp"
                 android:layout_weight="0"
                 android:background="@drawable/btn_outline_white"/>
+
+<!--            대댓다는 버튼-->
+            <Button
+                android:id="@+id/mine_re_comment_send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="답글게시"
+                android:layout_margin="7.5dp"
+                android:layout_weight="0"
+                android:background="@drawable/btn_outline_white"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

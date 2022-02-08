@@ -82,6 +82,28 @@
         android:background="@drawable/button_ywhite"
         app:layout_constraintTop_toBottomOf="@id/login_pw_forget_pw_tv" />
 
+    <CheckBox
+        android:id="@+id/login_pw_auto_login_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/login_pw_auto_login_tv"
+        app:layout_constraintTop_toTopOf="@id/login_pw_auto_login_tv"
+        app:layout_constraintBottom_toBottomOf="@id/login_pw_auto_login_tv"
+        android:buttonTint="@color/white" />
+
+    <TextView
+        android:id="@+id/login_pw_auto_login_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="자동 로그인"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_pw_next_btn"
+        android:layout_marginTop="10dp"/>
+
     <TextView
         android:id="@+id/login_pw_name_tv"
         android:layout_width="wrap_content"

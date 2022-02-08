@@ -1,5 +1,6 @@
 package com.bit.kodari.Util
 
+import com.MyApplicationClass.Companion.AUTO_LOGIN
 import com.MyApplicationClass.Companion.EMAIL
 import com.MyApplicationClass.Companion.PASSWORD
 import com.MyApplicationClass.Companion.USER_IDX
@@ -13,10 +14,17 @@ fun saveJwt(jwtToken: String) {
     editor.apply()
 }
 
+fun saveAutoLogin(autoLogin: Boolean){
+    val editor = mSharedPreferences.edit()
+    editor.putBoolean(AUTO_LOGIN , autoLogin)
+
+    editor.apply()
+}
+
 fun getJwt(): String? = mSharedPreferences.getString(X_ACCESS_TOKEN, null)
 
 
-fun saveLoginInfo(jwtToken: String , email: String , pw:String , userIdx:Int){
+fun saveLoginInfo(jwtToken: String? , email: String? , pw:String? , userIdx:Int){
     val editor = mSharedPreferences.edit()
     editor.putString(X_ACCESS_TOKEN, jwtToken)
     editor.putString(EMAIL , email)
@@ -32,3 +40,5 @@ fun getEmail() :String? = mSharedPreferences.getString(EMAIL,null)
 fun getPw() : String? = mSharedPreferences.getString(PASSWORD , null)
 
 fun getUserIdx() : Int = mSharedPreferences.getInt(USER_IDX, 0)
+
+fun getAutoLogin(): Boolean = mSharedPreferences.getBoolean(AUTO_LOGIN , false)

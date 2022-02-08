@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 class MyApplicationClass : Application() {
     companion object{
@@ -15,6 +16,7 @@ class MyApplicationClass : Application() {
         const val PASSWORD: String = "PASSWORD"
         const val USER_IDX :String = "USER_IDX"
         const val TAG: String = "TEMPLATE-APP"                      // Log, SharedPreference
+        const val AUTO_LOGIN : String = "AUTO_LOGIN"
 
         lateinit var mSharedPreferences: SharedPreferences
     }

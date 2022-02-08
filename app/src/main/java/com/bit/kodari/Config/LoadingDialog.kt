@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
+import android.view.WindowManager
 import com.bit.kodari.databinding.DialogLoadingBinding
 
 class LoadingDialog(context: Context) : Dialog(context) {
@@ -19,6 +20,8 @@ class LoadingDialog(context: Context) : Dialog(context) {
         setCancelable(false)
         window!!.setBackgroundDrawable(ColorDrawable())
         window!!.setDimAmount(0.2f)
+        window!!.setLayout( WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT)
     }
 
     override fun show() {

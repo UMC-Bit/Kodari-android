@@ -3,11 +3,10 @@ package com.bit.kodari.Debate.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.Debate.Data.DebateCoinResult
-import com.bit.kodari.Debate.Data.DebatePostResponse
-import com.bit.kodari.Debate.Data.DebatePostResult
-import com.bit.kodari.databinding.ListCoinItemBinding
+import com.bit.kodari.Debate.PostData.DebatePostResult
+import com.bit.kodari.R
 import com.bit.kodari.databinding.ListItemMyWritingBinding
+import com.bumptech.glide.Glide
 
 class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerView.Adapter<DebateMainRVAdapter.MyViewHolder>() {
 
@@ -32,6 +31,12 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
             binding.listItemMyWritingLikeCnt.text = item.like.toString()
             binding.listItemMyWritingDislikeCnt.text = item.dislike.toString()
             binding.listItemMyWritingContentTv.text = item.content
+            if(item.profileImgUrl != ""){
+                Glide.with(binding.listItemMyWritingImageIv)
+                    .load(item.profileImgUrl)
+                    .error(R.drawable.profile_image)
+                    .into(binding.listItemMyWritingImageIv)
+            }
             //binding.listItemMyWritingImageIv.setImageBitmap(item.profileImgUrl)
             //Url로 프로필 그리기
 
@@ -48,14 +53,6 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(postList[position])
         holder.itemView.setOnClickListener { mItemClickListener.onItemClick(postList[position]) }
+
     }
 }
-
-
-
-
-
-
-
-
-
