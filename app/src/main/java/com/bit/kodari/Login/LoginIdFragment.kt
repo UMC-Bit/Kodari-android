@@ -28,7 +28,6 @@ class LoginIdFragment : BaseFragment<FragmentLoginIdBinding>(FragmentLoginIdBind
                     .replace(R.id.login_container_fl, LoginPwFragment().apply {
                         arguments = Bundle().apply {
                             putString("email", binding.loginIdEt.text.toString())
-                            Log.d("email", "${binding.loginIdEt.text.toString()}")
                         }
                     }).addToBackStack(null).commitAllowingStateLoss()
             }else{

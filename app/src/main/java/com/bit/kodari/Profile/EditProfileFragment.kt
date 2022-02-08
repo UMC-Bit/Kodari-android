@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.LoginActivity
+import com.bit.kodari.Login.RetrofitData.NicknameInfo
+import com.bit.kodari.Login.RetrofitData.NicknameResponse
 import com.bit.kodari.Login.Service.ProfileService
+import com.bit.kodari.Login.SignupPwFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Retrofit.ProfileEditView
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
@@ -66,12 +71,30 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
             val nickName = binding.editProfileInputNicknameEt.text.toString()
             val profileService = ProfileService()
             profileService.setProfileEditView(this)
-            profileService.updateName( nickName)
+            profileService.updateName(nickName)
         }
 
+        binding.editProfileDoubleCheckB.setOnClickListener {
+            val profileService = ProfileService()
+            profileService.setProfileEditView(this)
+            profileService.getCheckNickname(NicknameInfo(binding.editProfileInputNicknameEt.text.toString()))
+        }
 
+    }
 
+    override fun getCheckNicknameSuccess(response: NicknameResponse) {
+        when(response.code){
+            1000-> {
+                Toast.makeText(context, "닉네임 입력 성공", Toast.LENGTH_SHORT).show()
+                binding.editProfileErrorTv.text = response.result
+            }
+            else -> {
+                binding.editProfileErrorTv.text = response.message
+            }
+        }
+    }
 
-
+    override fun getCheckNicknameFailure(message: String) {
+        showToast("Nickname Check 실패 ,$message")
     }
 }

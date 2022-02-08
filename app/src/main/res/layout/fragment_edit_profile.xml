@@ -113,7 +113,7 @@
             android:id="@+id/edit_profile_email_address_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="13dp"
             android:text="sdoaqe@ads.com"
             android:textColor="#000"
             android:textSize="16sp"
@@ -134,7 +134,7 @@
 
         <EditText
             android:id="@+id/edit_profile_input_nickname_et"
-            android:layout_width="236dp"
+            android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginTop="-7dp"
             android:paddingStart="10dp"
@@ -145,67 +145,31 @@
             app:layout_constraintStart_toStartOf="@id/edit_profile_email_address_tv"
             app:layout_constraintTop_toTopOf="@id/edit_profile_nickname_tv" />
 
-        <ImageView
-            android:id="@+id/edit_profile_check_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/check"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/edit_profile_nickname_tv"
-            app:layout_constraintEnd_toEndOf="@id/edit_profile_input_nickname_et" />
-
-        <ImageView
-            android:id="@+id/edit_profile_x_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/red_x"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/edit_profile_nickname_tv"
-            app:layout_constraintEnd_toEndOf="@id/edit_profile_input_nickname_et" />
-
 
         <TextView
-            android:id="@+id/edit_profile_wc_limit_tv"
+            android:id="@+id/edit_profile_error_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:paddingStart="10dp"
-            android:text="2~10 자 이내"
             android:textColor="#FF584E"
             android:textSize="11sp"
             app:layout_constraintTop_toBottomOf="@id/edit_profile_input_nickname_et"
             app:layout_constraintStart_toStartOf="@id/edit_profile_input_nickname_et" />
 
-        <TextView
-            android:id="@+id/edit_profile_wc_dup_no_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingStart="10dp"
-            android:text="사용 불가능한 아이디입니다 :("
-            android:textColor="#FF584E"
-            android:textSize="11sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/edit_profile_input_nickname_et"
-            app:layout_constraintStart_toStartOf="@id/edit_profile_input_nickname_et" />
-
-        <TextView
-            android:id="@+id/edit_profile_wc_dup_ok_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingStart="10dp"
-            android:text="사용 가능한 아이디입니다 :)"
-            android:textColor="#391B1B"
-            android:textSize="11sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/edit_profile_input_nickname_et"
-            app:layout_constraintStart_toStartOf="@id/edit_profile_input_nickname_et" />
-
+        <Button
+            android:id="@+id/edit_profile_double_check_b"
+            android:layout_width="50dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="14dp"
+            android:text="중복 확인"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:background="@drawable/finish_btn_click"
+            app:layout_constraintTop_toTopOf="@id/edit_profile_input_nickname_et"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_input_nickname_et"
+            app:layout_constraintStart_toEndOf="@id/edit_profile_input_nickname_et" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,10 @@
 package com.bit.kodari.Login.Service
 
 import android.util.Log
+import com.bit.kodari.Login.Retrofit.LoginRetrofitInterface
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
+import com.bit.kodari.Login.RetrofitData.NicknameInfo
+import com.bit.kodari.Login.RetrofitData.NicknameResponse
 import com.bit.kodari.Profile.Retrofit.MyCommentView
 import com.bit.kodari.Profile.Retrofit.MyPostView
 import com.bit.kodari.Profile.Retrofit.ProfileEditView
@@ -129,6 +132,23 @@ class ProfileService() {
 
             override fun onFailure(call: Call<GetMyCommentResponse>, t: Throwable) {
                 myCommentView.getMyCommentFailure("${t}")
+            }
+        })
+    }
+
+    // 닉네임 validation API
+    fun getCheckNickname(nicknameInfo: NicknameInfo) {
+        val  checkNicknameService = getRetorfit().create(ProfileRetrofitInterface::class.java)
+        checkNicknameService.getCheckNickname(nicknameInfo).enqueue(object : Callback<NicknameResponse> {
+            override fun onResponse(
+                call: Call<NicknameResponse>,
+                response: Response<NicknameResponse>
+            ) {
+                profileEditView.getCheckNicknameSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<NicknameResponse>, t: Throwable) {
+                profileEditView.getCheckNicknameFailure("${t}")
             }
         })
     }
