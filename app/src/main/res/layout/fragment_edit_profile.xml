@@ -160,13 +160,13 @@
         <Button
             android:id="@+id/edit_profile_double_check_b"
             android:layout_width="50dp"
-            android:layout_height="27dp"
+            android:layout_height="25dp"
             android:layout_marginStart="14dp"
             android:text="중복 확인"
             android:textSize="10sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:background="@drawable/finish_btn_click"
+            android:background="@drawable/check_btn_click"
             app:layout_constraintTop_toTopOf="@id/edit_profile_input_nickname_et"
             app:layout_constraintBottom_toBottomOf="@id/edit_profile_input_nickname_et"
             app:layout_constraintStart_toEndOf="@id/edit_profile_input_nickname_et" />

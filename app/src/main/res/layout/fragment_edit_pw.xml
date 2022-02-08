@@ -82,9 +82,9 @@
 
             <EditText
                 android:id="@+id/edit_pw_input_current_pw_et"
-                android:layout_width="236dp"
+                android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="-10dp"
                 android:paddingStart="10dp"
                 android:background="@drawable/input_outline"
@@ -93,6 +93,21 @@
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@id/edit_pw_current_pw_tv"
                 app:layout_constraintTop_toTopOf="@id/edit_pw_current_pw_tv" />
+
+            <Button
+                android:id="@+id/edit_pw_current_check_b"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="14dp"
+                android:text="확인"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@drawable/check_btn_click"
+                app:layout_constraintTop_toTopOf="@id/edit_pw_input_current_pw_et"
+                app:layout_constraintBottom_toBottomOf="@id/edit_pw_input_current_pw_et"
+                app:layout_constraintStart_toEndOf="@id/edit_pw_input_current_pw_et" />
+
 
 
             <TextView
@@ -109,20 +124,20 @@
 
             <EditText
                 android:id="@+id/edit_pw_input_new_pw_et"
-                android:layout_width="236dp"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="-10dp"
                 android:paddingStart="10dp"
                 android:background="@drawable/input_outline"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_input_current_pw_et"
-                app:layout_constraintTop_toTopOf="@id/edit_pw_new_pw_tv" />
+                app:layout_constraintTop_toTopOf="@id/edit_pw_new_pw_tv"
+                app:layout_constraintEnd_toEndOf="@id/edit_pw_current_check_b"/>
 
             <TextView
-                android:id="@+id/edit_pw_condition_tv"
+                android:id="@+id/edit_pw_new_pw_check_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="특수 문자를 포함하여 8자 이상 입력해주세요"
                 android:textColor="#FF584E"
                 android:textSize="11sp"
                 app:layout_constraintTop_toBottomOf="@id/edit_pw_input_new_pw_et"
@@ -143,20 +158,20 @@
 
             <EditText
                 android:id="@+id/edit_pw_input_check_pw_et"
-                android:layout_width="236dp"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="-10dp"
                 android:paddingStart="10dp"
                 android:background="@drawable/input_outline"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_input_new_pw_et"
+                app:layout_constraintEnd_toEndOf="@id/edit_pw_input_new_pw_et"
                app:layout_constraintTop_toTopOf="@id/edit_pw_check_pw_tv" />
 
             <TextView
-                android:id="@+id/edit_pw_correct_tv"
+                android:id="@+id/edit_pw_correct_check_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="비밀번호가 올바른지 확인해주세요"
                 android:textColor="#FF584E"
                 android:textSize="11sp"
                 app:layout_constraintTop_toBottomOf="@id/edit_pw_input_check_pw_et"
