@@ -62,22 +62,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_before_button_IV"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_coin_image_CV"
+            <ImageView
+                android:id="@+id/possession_coin_modify_coin_image_IV"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
+                android:src="@drawable/btc"
                 app:layout_constraintEnd_toStartOf="@id/possession_coin_modify_coin_name_TV"
                 app:layout_constraintTop_toTopOf="@id/possession_coin_modify_coin_name_TV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_coin_symbol_TV">
-
-                <ImageView
-                    android:id="@+id/possession_coin_modify_coin_image_IV"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/btc" />
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_coin_symbol_TV"/>
 
             <TextView
                 android:id="@+id/possession_coin_modify_coin_name_TV"

@@ -26,11 +26,8 @@ class PossessionCoinModifyFragment : Fragment() {
         binding = FragmentPossessionCoinModifyBinding.inflate(inflater, container, false)
 
         moveLayout()
-
         datetimepicker()
-
         BuyAndSellButton()
-
 
         return binding.root
     }

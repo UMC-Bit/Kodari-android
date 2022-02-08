@@ -91,7 +91,7 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         }
 
         cancelButton.setOnClickListener {
-            var abc = deleteAlertDialog.dismiss()
+            deleteAlertDialog.dismiss()
         }
     }
 
@@ -117,7 +117,8 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
         //아이템 클릭 리스너를 현재 뷰에서 처리
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
-        possessionCoinManagementAdapter.setMyItemClickListener(object :PossessionCoinManagementAdapter.MyItemClickListener{
+        possessionCoinManagementAdapter.setMyItemClickListener(object :
+            PossessionCoinManagementAdapter.MyItemClickListener{
 
             override fun onItemClick(item: PsnCoinMgtInsquireResult) {
 

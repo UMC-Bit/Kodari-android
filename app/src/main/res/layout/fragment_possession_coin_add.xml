@@ -364,7 +364,7 @@
                         android:layout_height="38dp"
                         android:background="#80D3D3D3"
                         android:drawableRight="@drawable/move_button"
-
+                        android:hint="수수료"
                         android:inputType="number"
                         android:paddingLeft="17dp"
                         android:paddingRight="17dp"

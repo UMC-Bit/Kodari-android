@@ -37,11 +37,6 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
     override fun initAfterBinding() {
         getCoins()
         setListeners()
-
-        binding.representativeCoinSearchBackIV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
-        }
     }
 
     fun setRecyclerView(){
@@ -51,16 +46,26 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         rptCoinSearchRVAdapter.setMyItemClickListener(object : RptCoinSearchRVAdapter.MyItemClickListener{
             override fun onItemClick(item: RptCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
                 coinList[item.coinIdx-1].isCheck =true
+//                (context as MainActivity).supportFragmentManager.beginTransaction()
+//                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment().apply {
+//                        arguments = Bundle().apply {
+//                            putInt("coinIdx", item.coinIdx)
+//                            putString("coinImage",item.coinImg)
+//                            putString("coinName", item.coinName)
+//                            putString("coinSymbol", item.symbol)
+//                        }
+//                    }).commitAllowingStateLoss()
             }
         })
         binding.representativeCoinSearchCoinListRV.layoutManager = LinearLayoutManager(context as MainActivity)
         binding.representativeCoinSearchCoinListRV.adapter= rptCoinSearchRVAdapter
     }
 
-    fun setListeners(){
-        // 대표 코인 추가 API
+    fun setListeners()
+    {
         binding.representativeCoinSearchCompleteTV.setOnClickListener {
-            var portIdx = 1 // 포트폴리오 인덱스 연결 필요
+            // 대표 코인 추가 API
+            var portIdx = 25 // 포트폴리오 인덱스 연결 필요
             val rptCoinAddInfo=RptCoinAddInfo(portIdx, coinIdx)
             Log.d("rptCoinAdd", "대표 코인 추가 정보 : ${portIdx}, ${coinIdx}")
             val rptCoinService=RptCoinService()
@@ -69,6 +74,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         }
 
         binding.representativeCoinSearchSearchInputET.addTextChangedListener(object: TextWatcher {
+            // 검색 기능
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
