@@ -49,15 +49,33 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         memoDialog()
 
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
+            // 선택 버튼 클릭 시에만 삭제 다이얼로그가 띄워짐
             val isClick = PossessionCoinManagementAdapter.isClick
             val position = PossessionCoinManagementAdapter.clickPosition
-            if(isClick && position != -1){
-                // TODO 유저코인 인덱스 적용해야 함
-                deleteDialog(0)
+            if (isClick && position != -1) {
+                val deleteDialogView = LayoutInflater.from(context as MainActivity)
+                    .inflate(R.layout.fragment_possession_coin_delete_dialog, null)
+                val deleteDialogBuilder = AlertDialog.Builder(context as MainActivity)
+                    .setView(deleteDialogView)
+                val deleteAlertDialog = deleteDialogBuilder.show()
+                val position = PossessionCoinManagementAdapter.clickPosition
+                deleteDialog(coinList[position].userCoinIdx)
+                deleteAlertDialog.dismiss()
             }
         }
 
 
+        binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
+            // 선택 버튼 클릭 시에만 수정 fragement로 이동 가능
+            val isClick = PossessionCoinManagementAdapter.isClick
+            val position = PossessionCoinManagementAdapter.clickPosition
+            if(isClick && position != -1)
+            {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
+            }
+
+        }
         return binding.root
     }
 
@@ -84,12 +102,12 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
 
         // 여기에 어댑터와 연결해서 삭제 기능 불러오기
         deleteConfirmButton.setOnClickListener {
-            // 소유코인 삭제 API 호출 ->
-            val psnCoinService = PsnCoinService()
-            psnCoinService.setPsnCoinMgtDeleteView(this)
-            psnCoinService.deletePsnCoin(userCoinIdx)
-        }
-
+                // 소유코인 삭제 API 호출 ->
+                val psnCoinService = PsnCoinService()
+                psnCoinService.setPsnCoinMgtDeleteView(this)
+                psnCoinService.deletePsnCoin(userCoinIdx)
+                deleteAlertDialog.dismiss()
+            }
         cancelButton.setOnClickListener {
             deleteAlertDialog.dismiss()
         }
@@ -100,11 +118,6 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         binding.possessionCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).commitAllowingStateLoss()
-        }
-
-        binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
         }
 
         binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
@@ -119,9 +132,18 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         possessionCoinManagementAdapter.setMyItemClickListener(object :
             PossessionCoinManagementAdapter.MyItemClickListener{
-
             override fun onItemClick(item: PsnCoinMgtInsquireResult) {
-
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("coinIdx", item.coinIdx)
+                            putString("coinImage",item.coinImg)
+                            putString("coinName", item.coinName)
+                            putString("coinSymbol", item.symbol)
+                            putString("priceAvg", item.priceAvg)
+                            putString("amount", item.amount)
+                      }
+                    }).commitAllowingStateLoss()
             }
         })
 
@@ -150,7 +172,8 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
     override fun deletePsnCoinSuccess(response: PsnCoinMgtDeleteResponse) {
         when(response.code){
             1000 -> {
-
+                PossessionCoinManagementAdapter.isClick=false
+                PossessionCoinManagementAdapter.clickPosition=-1
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl , PossessionCoinManagementFragment()).commitAllowingStateLoss()
 

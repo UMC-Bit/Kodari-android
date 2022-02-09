@@ -43,7 +43,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder {
-
+        isClick=false
         val binding = ItemPossessionCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return PossessionCoinManagementViewHolder(binding)
     }

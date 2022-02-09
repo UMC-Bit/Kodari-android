@@ -123,7 +123,7 @@
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_first_dividing_line_IV"/>
 
             <TextView
-                android:id="@+id/possession_coin_modify_account_name_TV"
+                android:id="@+id/possession_coin_modify_averageunit_price_number_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:text="1920"
@@ -160,15 +160,15 @@
 
             <TextView
                 android:id="@+id/possession_coin_modify_quantity_number_TV"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:text="200개"
-                android:textSize="13sp"
-                android:textColor="#FF584E"
+                android:layout_width="28dp"
+                android:layout_height="19dp"
                 android:layout_marginRight="40dp"
+                android:text="200개"
+                android:textColor="#FF584E"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_quantity_text_TV"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_text_TV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_quantity_text_TV"/>
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_text_TV" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -398,7 +398,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/possession_coin_modify_day_input_ET"
+                        android:id="@+id/possession_coin_modify_date_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:textColorHint="#000000"
