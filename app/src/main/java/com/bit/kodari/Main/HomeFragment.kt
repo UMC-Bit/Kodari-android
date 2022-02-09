@@ -30,7 +30,6 @@ import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
-import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Binance.BinanceService
 import com.bit.kodari.Util.Upbit.UpbitService
@@ -42,7 +41,8 @@ import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView, CoroutineScope {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
+    CoroutineScope {
 
     lateinit var job: Job
     override val coroutineContext: CoroutineContext
@@ -191,13 +191,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         //임시 로그아웃 버튼
         binding.logout.setOnClickListener {
-            saveLoginInfo(null,null,null,0)     //0이면 유저 없는거
+            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
             saveAutoLogin(false)
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
 
     }
+
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
@@ -226,7 +227,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         binding.homeVpNextBtn.visibility = View.GONE
                     }
                     else -> {
-                        binding.homeVpNextBtn.visibility =View.VISIBLE
+                        binding.homeVpNextBtn.visibility = View.VISIBLE
                         binding.homeVpPreviewBtn.visibility = View.VISIBLE
                     }
                 }
@@ -314,13 +315,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     }
+
     // 코루틴 시세 적용 및 뷰바인딩
-    suspend fun setCoinPrice(response: PortfolioResponse){
+    suspend fun setCoinPrice(response: PortfolioResponse) {
         getCoinPrice(response)
         setPortViewBinding()
     }
+
     // 시세 받아오기
-    fun getCoinPrice(response: PortfolioResponse){
+    fun getCoinPrice(response: PortfolioResponse) {
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
         // 계좌
@@ -342,8 +345,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         // 업비트, 바이낸스 코인 시세 받아오기
         getCoinPrice(userCoinNameList, representCoinNameList)
     }
+
     // 뷰 바인딩 해주기
-    fun setPortViewBinding(){
+    fun setPortViewBinding() {
         // 대표코인, 소유코인 뷰 바인딩
         setRepresentRV()
         setRepresentPV()
@@ -363,41 +367,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val marketName = response.result.marketName
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
-    // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
-    fun getCoinPrice(userCoinNameList: List<String>, representCoinNameList: List<String>){
-        GlobalScope.launch {
-            // 소유코인 업비트 시세 받아오기
-            val getUpbitUserCoinPrice = GlobalScope.async(Dispatchers.IO) {
-                UpbitService.getCurrentPrice(userCoinNameList)
-            }
-            // 소유코인 바이낸스 시세 받아오기
-            val binanceUserCoinPrice = GlobalScope.async(Dispatchers.IO) {
-                BinanceService.getCurrentPrice(userCoinNameList)
-            }
-            // 대표코인 업비트 시세 받아오기
-            val getUpbitRepresentCoinPrice = GlobalScope.async(Dispatchers.IO) {
-                UpbitService.getCurrentPrice(representCoinNameList)
-            }
-            // 대표코인 바이낸스 시세 받아오기
-            val getBinanceRepresentCoinPrice = GlobalScope.async(Dispatchers.IO) {
-                BinanceService.getCurrentPrice(representCoinNameList)
-            }
-            upbitUserCoinPriceList = getUpbitUserCoinPrice.await()
-            binanceUserCoinPriceMap = binanceUserCoinPrice.await()
-            upbitRepresentCoinPriceList = getUpbitRepresentCoinPrice.await()
-            binanceRepresentCoinPriceMap = getBinanceRepresentCoinPrice.await()
-            for(i in userCoinList.indices){
-                userCoinList[i].upbitPrice = upbitUserCoinPriceList[i]
-                representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
-                    userCoinList[i].coinName+"USDT"){0.0}
-            }
-            for(i in representCoinList.indices){
-                representCoinList[i].upbitPrice = upbitRepresentCoinPriceList[i]
-                representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
-                    representCoinList[i].coinName+"USDT"){0.0}
-            }
 
-            GlobalScope.launch(Dispatchers.Main) {
+    // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
+    fun getCoinPrice(userCoinNameList: List<String>, representCoinNameList: List<String>) {
+        GlobalScope.launch(Dispatchers.Main) {
+            launch(Dispatchers.IO){
+                upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
+                binanceUserCoinPriceMap = BinanceService.getCurrentPrice(userCoinNameList)
+                upbitRepresentCoinPriceList = UpbitService.getCurrentPrice(representCoinNameList)
+                binanceRepresentCoinPriceMap = BinanceService.getCurrentPrice(representCoinNameList)
+            }.join()
+
+            launch(Dispatchers.Default) {
+//            upbitUserCoinPriceList = getUpbitUserCoinPrice.await()
+//            binanceUserCoinPriceMap = binanceUserCoinPrice.await()
+//            upbitRepresentCoinPriceList = getUpbitRepresentCoinPrice.await()
+//            binanceRepresentCoinPriceMap = getBinanceRepresentCoinPrice.await()
+                for (i in userCoinList.indices) {
+                    userCoinList[i].upbitPrice = upbitUserCoinPriceList[i]
+                    representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
+                        userCoinList[i].coinName + "USDT"
+                    ) { 0.0 }
+                }
+                for (i in representCoinList.indices) {
+                    representCoinList[i].upbitPrice = upbitRepresentCoinPriceList[i]
+                    representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
+                        representCoinList[i].coinName + "USDT"
+                    ) { 0.0 }
+                }
+            }
+            launch(Dispatchers.Main) {
                 // 대표코인, 소유코인 뷰 바인딩
                 setRepresentRV()
                 setRepresentPV()

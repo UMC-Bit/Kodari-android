@@ -16,7 +16,7 @@ object UpbitService {
         업비트 현재 코인 시세
         코인 List를 받아서 현재 코인 가격 List를 반환하는 함수
      */
-    fun getCurrentPrice(coinList: List<String>): List<Double> {
+    suspend fun getCurrentPrice(coinList: List<String>): List<Double> {
         val currentPriceList = ArrayList<Double>()
         // Retrofit 초기 설정
         val retrofit = Retrofit.Builder()
