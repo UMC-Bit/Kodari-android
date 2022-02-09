@@ -79,7 +79,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
             profileService.setProfileEditView(this)
             profileService.getCheckNickname(NicknameInfo(binding.editProfileInputNicknameEt.text.toString()))
         }
-
     }
 
     override fun getCheckNicknameSuccess(response: NicknameResponse) {

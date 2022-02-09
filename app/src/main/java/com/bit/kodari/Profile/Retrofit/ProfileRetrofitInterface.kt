@@ -35,4 +35,15 @@ interface ProfileRetrofitInterface {
     // 닉네임 validation 확인
     @POST("/app/users/get/getCheckNickName")
     fun getCheckNickname(@Body nicknameInfo: NicknameInfo) : Call<NicknameResponse>
+
+    // 현재 비밀번호 일치 확인
+    @POST("/app/users/get/checkPassword/{userIdx}")
+    fun checkPassword(@Header("X-ACCESS-TOKEN") jwt: String, @Path("userIdx") userIdx: Int,
+                      @Body checkPasswordInfo: CheckPasswordInfo) : Call<CheckPasswordResponse>
+
+    // 비밀번호 변경
+    @PATCH("/app/users/update/password/{userIdx}")
+    fun changePassword(@Header("X-ACCESS-TOKEN") jwt:String, @Path("userIdx") userIdx:Int,
+                        @Body changePasswordInfo: ChangePasswordInfo) : Call<ChangePasswordResponse>
+
 }

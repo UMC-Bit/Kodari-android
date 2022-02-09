@@ -90,9 +90,21 @@
                 android:background="@drawable/input_outline"
                 android:hint="현재 비밀번호를 입력해주세요"
                 android:textColorHint="#B6B3B3"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 app:layout_constraintStart_toEndOf="@id/edit_pw_current_pw_tv"
                 app:layout_constraintTop_toTopOf="@id/edit_pw_current_pw_tv" />
+
+            <TextView
+                android:id="@+id/edit_pw_current_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
+                android:textColor="#FF584E"
+                android:textSize="11sp"
+                app:layout_constraintTop_toBottomOf="@id/edit_pw_input_current_pw_et"
+                app:layout_constraintStart_toStartOf="@id/edit_pw_input_current_pw_et" />
+
 
             <Button
                 android:id="@+id/edit_pw_current_check_b"
@@ -119,6 +131,7 @@
                 android:textColor="#000"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_current_pw_tv"
                 app:layout_constraintTop_toBottomOf="@id/edit_pw_current_pw_tv" />
 
@@ -129,17 +142,21 @@
                 android:layout_marginTop="-10dp"
                 android:paddingStart="10dp"
                 android:background="@drawable/input_outline"
+                android:textSize="13sp"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_input_current_pw_et"
                 app:layout_constraintTop_toTopOf="@id/edit_pw_new_pw_tv"
                 app:layout_constraintEnd_toEndOf="@id/edit_pw_current_check_b"/>
 
             <TextView
-                android:id="@+id/edit_pw_new_pw_check_tv"
+                android:id="@+id/edit_pw_new_pw_error_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
                 android:textColor="#FF584E"
                 android:textSize="11sp"
+                android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/edit_pw_input_new_pw_et"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_input_new_pw_et" />
 
@@ -153,6 +170,7 @@
                 android:textColor="#000"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_new_pw_tv"
                 app:layout_constraintTop_toBottomOf="@id/edit_pw_new_pw_tv" />
 
@@ -163,19 +181,23 @@
                 android:layout_marginTop="-10dp"
                 android:paddingStart="10dp"
                 android:background="@drawable/input_outline"
+                android:textSize="13sp"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/edit_pw_input_new_pw_et"
                 app:layout_constraintEnd_toEndOf="@id/edit_pw_input_new_pw_et"
                app:layout_constraintTop_toTopOf="@id/edit_pw_check_pw_tv" />
 
             <TextView
-                android:id="@+id/edit_pw_correct_check_tv"
+                android:id="@+id/edit_pw_correct_check_error_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
                 android:textColor="#FF584E"
                 android:textSize="11sp"
-                app:layout_constraintTop_toBottomOf="@id/edit_pw_input_check_pw_et"
-                app:layout_constraintStart_toStartOf="@id/edit_pw_input_check_pw_et" />
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/edit_pw_input_check_pw_et"
+                app:layout_constraintTop_toBottomOf="@id/edit_pw_input_check_pw_et" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
