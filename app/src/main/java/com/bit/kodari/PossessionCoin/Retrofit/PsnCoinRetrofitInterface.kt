@@ -1,5 +1,6 @@
 package com.bit.kodari.PossessionCoin.Retrofit
 
+import com.bit.kodari.Debate.PostData.DebateDeletePostResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -22,6 +23,11 @@ interface PsnCoinRetrofitInterface {
     // 소유 코인 조회
     @GET("/userCoin/{portIdx}")
     fun getPsnCoinInquire(@Header("X-ACCESS-TOKEN") jwt :String , @Path("portIdx") portIdx : Int):Call<PsnCoinMgtInsquireResponse>
+
+    // 소유 코인 삭제
+    @PATCH("/userCoin/del/{userCoinIdx}")
+    fun deletePsnCoin(@Header("X-ACCESS-TOKEN") jwt:String , @Path("userCoinIdx") userCoinIdx:Int) : Call<PsnCoinMgtDeleteResponse>
+
 
     //fun getPsnCoinInquire(@Query("coinName") coinName : String):Call<PsnCoinMgtInsquireResponse> ? 일 때, 위에는 : 일 때
 }
