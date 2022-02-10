@@ -46,7 +46,6 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         binding = FragmentPossessionCoinManagementBinding.inflate(inflater, container, false)
 
         moveLayout()
-        memoDialog()
 
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 삭제 다이얼로그가 띄워짐
@@ -87,17 +86,6 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         return binding.root
     }
 
-
-    fun memoDialog()
-    {
-        binding.tempDialogBT.setOnClickListener {
-            val memoDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_memo_and_twitter, null)
-            val memoDialogBuilder= AlertDialog.Builder(context as MainActivity)
-                .setView(memoDialogView)
-
-            memoDialogBuilder.show()
-        }
-    }
 
     fun deleteDialog(userCoinIdx: Int) {
         val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_delete_dialog, null)

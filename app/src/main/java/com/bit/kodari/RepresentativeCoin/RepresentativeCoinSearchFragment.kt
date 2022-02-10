@@ -40,7 +40,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
 
         binding.representativeCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment().commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
         }
     }
 
