@@ -11,6 +11,7 @@ import com.bit.kodari.databinding.ItemRepresentativeCoinSearchCoinListBinding
 import com.bumptech.glide.Glide
 
 class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>): RecyclerView.Adapter<RptCoinSearchRVAdapter.RptCoinSearchViewHolder>()  {
+
     interface MyItemClickListener {
         fun onItemClick(item:RptCoinSearchResult)
     }

@@ -92,6 +92,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
                 response: Response<PsnCoinAddTradeResponse>
             ) {
                 Log.d("psnCoinAddTradeSuccess", "거래 내역 생성 성공")
+                // Nullpointer
                 psnCoinAddTradeView.psnCoinAddTradeSuccess(response.body()!!)
             }
 

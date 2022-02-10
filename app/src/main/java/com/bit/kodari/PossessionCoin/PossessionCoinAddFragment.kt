@@ -89,7 +89,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             var userIdx = getUserIdx()
             var accountIdx=32
             var fee: Double = 0.05
-            var priceAvg = binding.possessionCoinAddAverageunitPriceInputET.text.toString()
+            var price = binding.possessionCoinAddPriceInputET.text.toString()
             var amount = binding.possessionCoinAddQuantityInputET.text.toString()
 //            val psnCoinAddinfo = PsnCoinAddInfo(userIdx, coinIdx, accountIdx, priceAvg, amount)
 //            Log.d(
@@ -109,13 +109,13 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
             var memo=binding.possessionCoinAddMemoInputET.text.toString()
             var date=binding.possessionCoinAddDateInputET.text.toString()
             val psnCoinAddTradeInfo = PsnCoinAddTradeInfo(
-                portIdx, coinIdx, priceAvg,
+                portIdx, coinIdx, price,
                 amount, fee, category,
                 memo, date
             )
             Log.d(
                 "psnCoinTradeAdd",
-                "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${priceAvg}, " +
+                "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${price}, " +
                         "${psnCoinAddTradeInfo.amount}, ${psnCoinAddTradeInfo.fee}, ${psnCoinAddTradeInfo.category}, ${psnCoinAddTradeInfo.memo}, ${psnCoinAddTradeInfo.date}"
             )
             psnCoinService.setPsnCoinAddTradeView(this)

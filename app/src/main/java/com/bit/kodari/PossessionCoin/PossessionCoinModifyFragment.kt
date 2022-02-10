@@ -40,6 +40,7 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
         datetimepicker()
         BuyAndSellButton()
         getCoinInformation()
+        setListener()
 
         return binding.root
     }
@@ -95,11 +96,6 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
 
     fun moveLayout()
     {
-        binding.possessionCoinModifyCompleteButtonTV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
-        }
-
         binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
@@ -147,19 +143,19 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
             var fee: Double = 0.05
             if(feeText.isNotEmpty())
                 fee = feeText.toDouble()
-            var priceAvg = binding.possessionCoinModifyAverageunitPriceTV.text.toString()
+            var price = binding.possessionCoinModifyPriceInputET.text.toString()
             var amount = binding.possessionCoinModifyQuantityInputET.text.toString()
             var category = "buy"
             var memo=binding.possessionCoinModifyMemoInputET.text.toString()
             var date=binding.possessionCoinModifyDateInputET.text.toString()
             val psnCoinAddTradeInfo = PsnCoinAddTradeInfo(
-                portIdx, coinIdx, priceAvg,
+                portIdx, coinIdx, price,
                 amount, fee, category,
                 memo, date
             )
             Log.d(
                 "psnCoinTradeAdd",
-                "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${priceAvg}, " +
+                "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${price}, " +
                         "${psnCoinAddTradeInfo.amount}, ${psnCoinAddTradeInfo.fee}, ${psnCoinAddTradeInfo.category}, ${psnCoinAddTradeInfo.memo}, ${psnCoinAddTradeInfo.date}"
             )
             psnCoinService.setPsnCoinAddTradeView(this)
@@ -173,9 +169,11 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                Log.d("psncoinaddtradesuccess", "거래내역 추가 성공, ${response}")
             }
             else -> {
                 Toast.makeText(context,"거래내역 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
+                Log.d("psncoinaddtradefailure", "거래내역 추가 실패, ${response}")
             }
         }
     }

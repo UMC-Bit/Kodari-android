@@ -69,12 +69,20 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
             // 선택 버튼 클릭 시에만 수정 fragement로 이동 가능
             val isClick = PossessionCoinManagementAdapter.isClick
             val position = PossessionCoinManagementAdapter.clickPosition
-            if(isClick && position != -1)
-            {
+            if (isClick && position != -1) {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("coinIdx", coinList[position].coinIdx)
+                            Log.d("checkcoinidx", "${coinList[position]}")
+                            putString("coinImage", coinList[position].coinImg)
+                            putString("coinName", coinList[position].coinName)
+                            putString("coinSymbol", coinList[position].symbol)
+                            putString("priceAvg", coinList[position].priceAvg)
+                            putString("amount", coinList[position].amount)
+                        }
+                    }).commitAllowingStateLoss()
             }
-
         }
         return binding.root
     }
@@ -133,17 +141,7 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView, Psn
         possessionCoinManagementAdapter.setMyItemClickListener(object :
             PossessionCoinManagementAdapter.MyItemClickListener{
             override fun onItemClick(item: PsnCoinMgtInsquireResult) {
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment().apply {
-                        arguments = Bundle().apply {
-                            putInt("coinIdx", item.coinIdx)
-                            putString("coinImage",item.coinImg)
-                            putString("coinName", item.coinName)
-                            putString("coinSymbol", item.symbol)
-                            putString("priceAvg", item.priceAvg)
-                            putString("amount", item.amount)
-                      }
-                    }).commitAllowingStateLoss()
+
             }
         })
 
