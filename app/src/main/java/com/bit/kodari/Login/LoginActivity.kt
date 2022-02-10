@@ -19,6 +19,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
     }
 }

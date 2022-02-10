@@ -38,7 +38,7 @@
         app:layout_constraintStart_toEndOf="@id/list_comment_mask_iv"
         app:layout_constraintTop_toTopOf="@id/list_comment_mask_iv"
         app:layout_constraintBottom_toBottomOf="@id/list_comment_mask_iv"
-        android:layout_marginStart="2dp" />
+        android:layout_marginStart="3dp" />
 
     <TextView
         android:id="@+id/list_item_content_tv"
@@ -54,8 +54,8 @@
 
     <ImageView
         android:id="@+id/list_item_like_on_iv"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/like_on"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/list_item_content_tv"
@@ -64,8 +64,8 @@
 
     <ImageView
         android:id="@+id/list_item_like_off_iv"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/like_off"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/list_item_content_tv"

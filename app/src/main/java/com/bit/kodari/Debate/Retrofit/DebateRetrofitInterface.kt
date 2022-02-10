@@ -1,6 +1,8 @@
 package com.bit.kodari.Debate.Retrofit
 
 import com.bit.kodari.Debate.CommentData.*
+import com.bit.kodari.Debate.LikeData.CommentLikeRequest
+import com.bit.kodari.Debate.LikeData.CommentLikeResponse
 import com.bit.kodari.Debate.LikeData.PostLikeRequest
 import com.bit.kodari.Debate.LikeData.PostLikeResponse
 import com.bit.kodari.Debate.PostData.*
@@ -60,6 +62,11 @@ interface DebateRetrofitInterface {
     fun regReComment(@Header("X-ACCESS-TOKEN") jwt:String , @Body regReCommentRequest: RegReCommentRequest) : Call<RegReCommentResponse>
 
     //토론장 대댓 삭제
-    @POST("/reply/status/{postReplyIdx}")
+    @PATCH("/reply/status/{postReplyIdx}")
     fun deleteReComment(@Header("X-ACCESS-TOKEN") jwt:String ,@Path("postReplyIdx") postReplyIdx: Int):Call<DeleteReCommentResponse>
+
+    //댓글 좋아요 싫어요 API
+    @POST("/comment/likes/choose")
+    fun pressCommentLike(@Header("X-ACCESS-TOKEN") jwt : String ,@Body commentLikeRequest: CommentLikeRequest ) : Call<CommentLikeResponse>
+
 }

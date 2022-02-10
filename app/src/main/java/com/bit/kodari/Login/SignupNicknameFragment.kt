@@ -42,7 +42,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
         binding.signupNicknameXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupPwFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 
@@ -51,7 +51,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
             1000 -> {
                 Toast.makeText(context,"회원가입 성공" , Toast.LENGTH_SHORT).show()
                 (context as LoginActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+                    .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
             }
             else -> {
                 Toast.makeText(context,"회원가입 실패 , ${resp.message}" , Toast.LENGTH_LONG).show()

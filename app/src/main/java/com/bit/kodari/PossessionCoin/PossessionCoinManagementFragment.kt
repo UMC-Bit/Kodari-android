@@ -16,7 +16,6 @@ import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtInsquireView
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
@@ -52,7 +51,7 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView {
     fun memoDialog()
     {
         binding.tempDialogBT.setOnClickListener {
-            val memoDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_memo_and_twitter, null)
+            val memoDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.dialog_memo_and_twitter, null)
             val memoDialogBuilder= AlertDialog.Builder(context as MainActivity)
                 .setView(memoDialogView)
 
@@ -85,17 +84,17 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView {
     {
         binding.possessionCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinModifyFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 
@@ -123,7 +122,7 @@ class PossessionCoinManagementFragment : Fragment(), PsnCoinMgtInsquireView {
     override fun psnCoinInsquireSuccess(response: PsnCoinMgtInsquireResponse) {
         Log.d("InsquireSuccess" , "${response}")
         coinList = response.result
-        Log.d("psnSuccesscoinSize", "${coinList.size}")
+        Log.d("psnSuccesscoinSize", "${coinList.size}")         //리스트가 없다 ..?
 
         setRecyclerView()
     }

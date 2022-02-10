@@ -22,7 +22,7 @@ class EditPwFragment : Fragment() {
 
         binding.editPwPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         return binding.root

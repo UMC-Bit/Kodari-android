@@ -39,12 +39,12 @@ class RepresentativeCoinManagementFragment : Fragment() {
 
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.representativeCoinManagementBeforeButtonBT.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         return binding.root

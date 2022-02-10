@@ -17,16 +17,15 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Debate.DialogCoin
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
-import com.bit.kodari.Main.Data.AccountResult
-import com.bit.kodari.Main.Data.PortfolioResponse
-import com.bit.kodari.Main.Data.PossesionCoinResult
-import com.bit.kodari.Main.Data.RepresentCoinResult
+import com.bit.kodari.Main.Data.*
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
+import com.bit.kodari.PossessionCoin.DialogMemoAndTwitter
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
@@ -54,8 +53,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var binanceRepresentCoinPriceList: HashMap<String, Any>
 
     // 유저 코인 리스트
-    lateinit var userCoinList: List<PossesionCoinResult>
-
+//    lateinit var userCoinList: List<PossesionCoinResult>
+    lateinit var userCoinList: ArrayList<PossesionCoinResult>
     // 대표 코인 심볼 리스트
     lateinit var representCoinList: List<RepresentCoinResult>
     // 수익률 리스트
@@ -63,17 +62,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
-        setChartDummy()
-        setListener()
-        setViewpager()
-
 
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
+        showLoadingDialog(requireContext())
         portFolioService.getPortfolioList(getUserIdx())
 
+        setChartDummy()
+        setListener()
 
+
+
+        //setRepresentPV()            //테스트 위해 추가
 
         Log.d(
             "info",
@@ -193,9 +194,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
-        portfolioList.add(MyPortfolioFragment())
-        portfolioList.add(MyPortfolioFragment())
-        portfolioList.add(MyPortfolioFragment())
+        Log.d("setViewpager" , "뷰페이저 크ㅡ기 : ${portfolioList.size}")
         homeVPAdapter = HomeVPAdapter(this, portfolioList)
         //homeVPAdapter.addFragment(MyPortfolioFragment())
         binding.homeViewpagerVp.adapter = homeVPAdapter
@@ -236,7 +235,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentPV() {
+        //userCoinList = ArrayList()
+        //userCoinList.add(PossesionCoinResult(10,10.0,10.0,"","test",10.0,"active",10,"BTC"))
         homePCRVAdapter = HomePCRVAdapter(userCoinList)
+        homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener{
+            override fun onClickItem(item: PossesionCoinResult) {
+                val dialog = DialogMemoAndTwitter()
+                dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
+            }
+        })
         binding.homeMyCoinRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
@@ -294,9 +301,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         return LineData(set1)
     }
+    //포토폴리오 IDX 조회 성공
+    override fun getPortIdxSuccess(resp: PortIdxResponse) {
+        Log.d("getPortIdx" , "성공")
+        for(idx in resp.result){
+            portfolioList.add(MyPortfolioFragment(idx.portIdx))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
+        }
+        setViewpager()      //여기에 실행 안하면 이게 너무 늦게 실행되서 안됨 , 포폴 목록 조회해서 뷰페이저에 셋팅.
+    }
+    //포토폴리오 IDX 조회 실패
+    override fun getPortIdxFailure(message: String) {
+        Log.d("getPortIdx" , "실패")
+    }
 
     // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
     override fun portfolioSuccess(response: PortfolioResponse) {
+        dismissLoadingDialog()
         when (response.code) {
             1000 -> {
                 val userCoinNameList = ArrayList<String>()
@@ -304,7 +324,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 계좌
                 getAccountResult(response)
                 // 유저 코인 리스트
-                this.userCoinList = response.result.userCoinList
+                this.userCoinList = response.result.userCoinList as ArrayList<PossesionCoinResult>  //ArrayList로 바꾸면서 추가
                 // 대표 코인 리스트
                 this.representCoinList = response.result.representCoinList
                 // 수익률 리스트

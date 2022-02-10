@@ -44,7 +44,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
 
             binding.possessionCoinSearchBackIV.setOnClickListener {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         return binding.root
@@ -65,7 +65,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
                             putString("coinName", item.coinName)
                             putString("coinSymbol", item.symbol)
                         }
-                    }).commitAllowingStateLoss()
+                    }).addToBackStack(null).commitAllowingStateLoss()
             }
         })
 

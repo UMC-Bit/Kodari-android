@@ -40,7 +40,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
 
         binding.representativeCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 
@@ -120,7 +120,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         when(response.code){
             1000 -> {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
             }
             else ->{
                 Toast.makeText(context, "대표코인 추가 실패, &{response.message}", Toast.LENGTH_LONG).show()

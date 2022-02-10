@@ -18,16 +18,24 @@ import com.bit.kodari.databinding.FragmentEditProfileBinding
 
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEditProfileBinding::inflate) , ProfileEditView {
 
+    lateinit var nickName:String
+
     override fun initAfterBinding() {
+        setInit()
         setListener()
+    }
 
-
+    fun setInit(){
+        if(requireArguments().containsKey("nickName")){
+            nickName = requireArguments().getString("nickName")!!
+        }
+        binding.editProfileInputNicknameEt.setText(nickName)
     }
 
     override fun updateNameSuccess(resp: UpdateNameResponse) {
         showToast("닉네임 변경 성공")
         (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+            .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
 
     }
 
@@ -46,7 +54,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(FragmentEdi
     fun setListener(){
         binding.editProfilePreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.editProfileFinishB.setOnClickListener {

@@ -88,12 +88,12 @@ class PossessionCoinModifyFragment : Fragment() {
     {
         binding.possessionCoinModifyCompleteButtonTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 }

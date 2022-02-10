@@ -28,7 +28,7 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     override fun initAfterBinding() {
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment())
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).addToBackStack(null)
                 .commitAllowingStateLoss()
         }
         datetimepicker()

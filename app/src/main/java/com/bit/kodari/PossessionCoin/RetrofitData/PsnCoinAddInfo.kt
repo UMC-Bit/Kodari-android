@@ -1,9 +1,11 @@
 package com.bit.kodari.PossessionCoin.RetrofitData
 
+import com.google.gson.annotations.SerializedName
+
 data class PsnCoinAddInfo( // 보낼 객체
-    var userIdx:Int,
-    var coinIdx:Int,
-    var accountIdx:Int,
-    var priceAvg:String,
-    var amount:String
+    @SerializedName("userIdx") var userIdx:Int,
+    @SerializedName("coinIdx") var coinIdx:Int,
+    @SerializedName("accountIdx") var accountIdx:Int,
+    @SerializedName("priceAvg") var priceAvg:String,
+    @SerializedName("amount") var amount:String
 )

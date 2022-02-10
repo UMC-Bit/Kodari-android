@@ -21,12 +21,12 @@ class SignupIdCheckFragment : Fragment() {
 
         binding.signupIdCheckNextBtn.setOnClickListener {
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupPwFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         binding.signupIdCheckXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
 
         return binding.root

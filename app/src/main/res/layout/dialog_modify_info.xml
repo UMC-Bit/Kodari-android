@@ -70,7 +70,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="15sp"
                 android:layout_marginStart="30dp"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/info_dialog_modify_name_btn"
@@ -82,8 +83,10 @@
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_input_account_et"
                 app:layout_constraintEnd_toEndOf="@id/info_dialog_input_account_et"
                 android:background="@drawable/btn_outline_yellow"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
                 android:layout_marginEnd="10dp"/>
 
             <TextView
@@ -109,7 +112,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="15sp"
                 android:layout_marginStart="30dp"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/info_dialog_modify_cash_btn"

@@ -54,7 +54,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     }
 
 
-
+    //소유 추가 API
      // 소유코인 창에서 버튼을 눌렀을 때 psnCoinAddInfo 객체를 만들어서 아래 함수의 매개변수로 넣어줌
     fun getPsnCoinAdd(psnCoinAddInfo: PsnCoinAddInfo){
         val psnCoinService= getRetorfit().create(PsnCoinRetrofitInterface::class.java)

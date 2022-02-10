@@ -33,7 +33,7 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(FragmentMyWriti
     fun setListener() {
         binding.myWritingPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 

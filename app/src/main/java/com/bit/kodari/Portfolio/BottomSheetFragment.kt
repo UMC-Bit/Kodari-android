@@ -26,7 +26,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        binding.bottomSheetSelfNextBtn.setOnClickListener {
+        binding.bottomSheetSelfContainerCv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl , EnrollExchangeFragment()).addToBackStack(null).commit()
             dismiss()

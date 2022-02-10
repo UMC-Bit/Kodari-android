@@ -41,7 +41,7 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
 
         binding.signupPwXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 

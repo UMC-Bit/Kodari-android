@@ -37,8 +37,8 @@ object BinanceService {
                             coinMap.put(coinSymbol, price)
                             Log.d("결과", "성공: ${coinSymbol}: ${price}")
                             val homeFragment = HomeFragment()
-                            homeFragment.setRepresentPV()
-                            homeFragment.setRepresentRV()
+                           // homeFragment.setRepresentPV()
+                           // homeFragment.setRepresentRV()
                         }
                     }
                     Log.d("결과", "성공:")

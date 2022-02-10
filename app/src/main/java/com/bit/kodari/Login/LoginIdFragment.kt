@@ -33,3 +33,4 @@ class LoginIdFragment : BaseFragment<FragmentLoginIdBinding>(FragmentLoginIdBind
         }
     }
 }
+

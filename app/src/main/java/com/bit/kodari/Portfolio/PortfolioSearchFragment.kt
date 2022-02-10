@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Portfolio.Adapter.SearchCoinRVAdapter
-import com.bit.kodari.Portfolio.Adapter.SearchCoinView
+import com.bit.kodari.Portfolio.Retrofit.SearchCoinView
 import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 import com.bit.kodari.Portfolio.Data.SearchCoinResult
 import com.bit.kodari.Portfolio.Service.PortfolioService
-import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPortfolioSearchBinding
 
@@ -30,7 +29,7 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
 
         binding.portfolioSearchBackBtnIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PortfolioManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 
@@ -42,13 +41,14 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
             override fun onItemClick(item: SearchCoinResult) {      //이 아이템 클릭시 작동하게해야함
 //                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
+                    .replace(R.id.main_container_fl, PortfolioInputQuantityFragment().apply {
                         arguments = Bundle().apply {
                             putString("coinImage",item.coinImg)
                             putString("coinName", item.coinName)
                             putString("coinSymbol", item.symbol)
+                            putInt("coinIdx" , item.coinIdx)
                         }
-                    }).commitAllowingStateLoss()
+                    }).addToBackStack(null).commitAllowingStateLoss()
             }
         })
 

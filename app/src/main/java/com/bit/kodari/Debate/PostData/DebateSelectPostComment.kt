@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DebateSelectPostComment(
     @SerializedName("checkCommentWriter") val checkCommentWriter: Boolean,
+    @SerializedName("checkCommentLike") val checkCommentLike : Boolean,
     @SerializedName("comment_status") val comment_status: String,
     @SerializedName("content") val content: String,
     @SerializedName("like") val like: Int,
@@ -13,4 +14,5 @@ data class DebateSelectPostComment(
     @SerializedName("replyList") val replyList: ArrayList<DebateSelectPostReply>,
     @SerializedName("time") val time: String,
     @SerializedName("userIdx") val userIdx: Int
+
 )

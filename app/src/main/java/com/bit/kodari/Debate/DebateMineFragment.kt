@@ -16,6 +16,8 @@ import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateCommentRVAdapter
 import com.bit.kodari.Debate.Adapter.DebateReCommentRVAdapter
 import com.bit.kodari.Debate.CommentData.*
+import com.bit.kodari.Debate.LikeData.CommentLikeRequest
+import com.bit.kodari.Debate.LikeData.CommentLikeResponse
 import com.bit.kodari.Debate.LikeData.PostLikeRequest
 import com.bit.kodari.Debate.LikeData.PostLikeResponse
 import com.bit.kodari.Debate.PostData.DebateSelectPostComment
@@ -203,6 +205,16 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
                 commentIdx = item.postCommentIdx
                 Log.d("commentIdx" , "commentIdx 는  ${commentIdx}")
             }
+
+            override fun onClickReComment(postReplyIdx: Int) {      //ReComment에서 Delete 눌렀을떄 작동
+                callDeleteReComment(postReplyIdx)
+            }
+
+            override fun onLikeClick(item: DebateSelectPostComment) {       //좋아요 눌렀을시 API 호출
+                val commentLikeRequest = CommentLikeRequest( item.postCommentIdx , getUserIdx())
+                Log.d("like", "댓글 index : ${item.postCommentIdx} , 유저인덱스 : ${getUserIdx()}")
+                callPressCommentLike(commentLikeRequest)
+            }
         })
 
         binding.mineCommentRv.layoutManager = LinearLayoutManager(context ,LinearLayoutManager.VERTICAL ,false)
@@ -276,7 +288,7 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         Log.d("regComment" , "$message")
     }
 
-    //댓글 수정 성공 시에 호출 호 출 이후 다시 재저으이
+    //댓글 수정 성공 시에 호출 호 출 이후 다시 재정의
     override fun modifyCommentSuccess(response: ModifyCommentResponse) {
         showToast("${response.message}")
         callSelectPost()
@@ -330,15 +342,27 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         when(response.code){
           1000 -> {
               showToast(response.result)
+              callSelectPost()
           }
           else -> {
               showToast(response.message)
+              callSelectPost()
           }
         }
     }
 
     //대댓 삭제 실패
     override fun deleteReCommentFailure(message: String) {
+        showToast(message)
+    }
+
+    //좋아요 버튼 누르기 성공
+    override fun pressCommentLikeSuccess(response: CommentLikeResponse) {
+        //코드 1004면 좋아요 1003이면 해제
+        showToast(response.message)
+    }
+    //좋아요 버튼 누르기 실패
+    override fun pressCommentLikeFailure(message: String) {
         showToast(message)
     }
 
@@ -397,14 +421,6 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         })
     }
 
-//    fun callModifyComment(postCommentIdx: Int){
-//        //수정 글귀를 어디서 작성하지 ?? ? ?
-//        val modifyCommentResponse = ModifyCommentRequest()
-//        val debateService = DebateService()
-//        debateService.setDebateMineView(this)
-//        debateService.modifyComment(postCommentIdx , modifyCommentResponse)
-//    }
-
     //답글 삭제하는 함수
     fun callDeleteComment(postCommentIdx: Int){
         val debateService = DebateService()
@@ -422,10 +438,19 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         debateService.regReComment(regRecommentRequest)
     }
 
+    //대댓 삭제 호출 함수
     fun callDeleteReComment(postReplyIdx: Int){
         val debateService = DebateService()
         debateService.setDebateMineView(this)
         debateService.deleteReComment(postReplyIdx)
+    }
+
+    //댓글 좋아요 누르기
+    fun callPressCommentLike(commentLikeRequest: CommentLikeRequest){
+        Log.d("like", "${commentLikeRequest}")
+        val debateService = DebateService()
+        debateService.setDebateMineView(this)
+        debateService.pressCommentLike(commentLikeRequest)
     }
 
 }
