@@ -17,10 +17,12 @@ import com.bit.kodari.databinding.FragmentProfileMainBinding
 
 class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
 
+
     lateinit var nickName:String
     lateinit var email:String
 
     override fun initAfterBinding() {
+
         val profileService = ProfileService()
         profileService.setProfileMainView(this)
         showLoadingDialog(requireContext())
@@ -40,27 +42,27 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
                         putString("nickName", tempNickName)
                         putString("email",tempEmail)
                     }
-                }).addToBackStack(null).commitAllowingStateLoss()
+                }).commitAllowingStateLoss()
         }
 
         binding.profileMainBtn2Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, MyNewsFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, MyNewsFragment()).commitAllowingStateLoss()
         }
 
         binding.profileMainBtn3Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, MyWritingFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, MyWritingFragment()).commitAllowingStateLoss()
         }
 
         binding.profileMainBtn4Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, MyCommentFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, MyCommentFragment()).commitAllowingStateLoss()
         }
 
         binding.profileMainBtn5Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, EditPwFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, EditPwFragment()).commitAllowingStateLoss()
         }
     }
 

@@ -2,10 +2,9 @@ package com.bit.kodari.Login.Service
 
 import android.util.Log
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
-import com.bit.kodari.Profile.Retrofit.MyCommentView
-import com.bit.kodari.Profile.Retrofit.MyPostView
-import com.bit.kodari.Profile.Retrofit.ProfileEditView
-import com.bit.kodari.Profile.Retrofit.ProfileMainView
+import com.bit.kodari.Login.RetrofitData.NicknameInfo
+import com.bit.kodari.Login.RetrofitData.NicknameResponse
+import com.bit.kodari.Profile.Retrofit.*
 import com.bit.kodari.Profile.RetrofitData.*
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
@@ -20,6 +19,7 @@ class ProfileService() {
     private lateinit var profileMainView: ProfileMainView
     private lateinit var myPostView: MyPostView
     private lateinit var myCommentView: MyCommentView
+    private lateinit var pwEditView: PwEditView
 
     fun setProfileEditView(profileEditView: ProfileEditView){
         this.profileEditView = profileEditView
@@ -35,6 +35,10 @@ class ProfileService() {
 
     fun setMyCommentView(myCommentView: MyCommentView) {
         this.myCommentView = myCommentView
+    }
+
+    fun setPwEditView(pwEditView: PwEditView) {
+        this.pwEditView = pwEditView
     }
 
     // 닉네임 변경 API 호출
@@ -129,6 +133,58 @@ class ProfileService() {
 
             override fun onFailure(call: Call<GetMyCommentResponse>, t: Throwable) {
                 myCommentView.getMyCommentFailure("${t}")
+            }
+        })
+    }
+
+    // 닉네임 validation API
+    fun getCheckNickname(nicknameInfo: NicknameInfo) {
+        val checkNicknameService = getRetorfit().create(ProfileRetrofitInterface::class.java)
+        checkNicknameService.getCheckNickname(nicknameInfo).enqueue(object : Callback<NicknameResponse> {
+            override fun onResponse(
+                call: Call<NicknameResponse>,
+                response: Response<NicknameResponse>
+            ) {
+                profileEditView.getCheckNicknameSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<NicknameResponse>, t: Throwable) {
+                profileEditView.getCheckNicknameFailure("${t}")
+            }
+        })
+    }
+
+    // 현재 비밀번호 일치 확인 API
+    fun checkPassword(checkPasswordInfo: CheckPasswordInfo) {
+        val checkPasswordService = getRetorfit().create(ProfileRetrofitInterface::class.java)
+        checkPasswordService.checkPassword(getJwt()!!, getUserIdx(),checkPasswordInfo).enqueue(object : Callback<CheckPasswordResponse> {
+            override fun onResponse(
+                call: Call<CheckPasswordResponse>,
+                response: Response<CheckPasswordResponse>
+            ) {
+                pwEditView.checkPasswordSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<CheckPasswordResponse>, t: Throwable) {
+                pwEditView.checkPasswordFailure("${t}")
+            }
+
+        })
+    }
+
+    // 비밀번호 변경 API
+    fun changePassword(changePasswordInfo: ChangePasswordInfo) {
+        val changePasswordService = getRetorfit().create(ProfileRetrofitInterface::class.java)
+        changePasswordService.changePassword(getJwt()!!, getUserIdx(), changePasswordInfo).enqueue(object : Callback<ChangePasswordResponse>{
+            override fun onResponse(
+                call: Call<ChangePasswordResponse>,
+                response: Response<ChangePasswordResponse>
+            ) {
+                pwEditView.changePasswordSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
+                pwEditView.changePasswordFailure("${t}")
             }
         })
     }

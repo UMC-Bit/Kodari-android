@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true"
-        android:drawable="@drawable/btn_outline_yellow"/>
+        android:drawable="@drawable/finish_gtn_outline_yellow"/>
 
-    <item android:drawable="@drawable/input_outline" />
+    <item android:drawable="@drawable/finish_btn_outline_gray" />
 </selector>

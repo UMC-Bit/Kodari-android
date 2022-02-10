@@ -2,28 +2,37 @@ package com.bit.kodari.RepresentativeCoin
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bit.kodari.Main.Adapter.ManagementCoinData
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.R
+import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
+import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
+import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
+import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
+import com.bumptech.glide.Glide
 
-class RepresentativeCoinManagementFragment : Fragment() {
+class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView {
 
     lateinit var binding: FragmentRepresentativeCoinManagementBinding
+    private lateinit var rptCoinManagementAdapter: RptCoinManagementAdapter
+    private var coinList = ArrayList<RptCoinMgtInsquireResult>()
 
-    val ManagementCoinList = arrayListOf(
-        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button),
-        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button),
-        ManagementCoinData(R.drawable.btc, "비트코인", "btc", "56,000,000", "56,000,000", "4.6%", R.drawable.select_off_button)
-    )
+    override fun onStart() {
+        super.onStart()
+        getRptCoins()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +42,6 @@ class RepresentativeCoinManagementFragment : Fragment() {
         binding = FragmentRepresentativeCoinManagementBinding.inflate(inflater , container , false)
 
         deleteDialog()
-
-        binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.representativeCoinManagementRV.adapter= RptCoinManagementAdapter(ManagementCoinList)
 
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -48,6 +54,29 @@ class RepresentativeCoinManagementFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun setRecyclerView(){
+        rptCoinManagementAdapter= RptCoinManagementAdapter(coinList)
+        //아이템 클릭 리스너를 현재 뷰에서 처리
+        //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
+        rptCoinManagementAdapter.setMyItemClickListener(object :
+            RptCoinManagementAdapter.MyItemClickListener{
+
+            override fun onItemClick(item: RptCoinMgtInsquireResult) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
+        binding.representativeCoinManagementRV.adapter= rptCoinManagementAdapter
+    }
+
+
+    fun getRptCoins(){
+        val rptCoinService = RptCoinService()
+        rptCoinService.setRptCoinMgtInsquireView(this)
+        rptCoinService.getRptCoinMgtInsquire()
     }
 
     fun deleteDialog()
@@ -70,5 +99,19 @@ class RepresentativeCoinManagementFragment : Fragment() {
                 deleteAlertDialog.dismiss()
             }
         }
+    }
+
+
+
+    override fun rptCoinInsquireSuccess(response: RptCoinMgtInsquireResponse) {
+        Log.d("InsquireSuccess" , "${response}")
+        coinList = response.result
+        Log.d("psnSuccesscoinSize", "${coinList.size}")
+
+        setRecyclerView()
+    }
+
+    override fun rptCoinInsquireFailure(message: String) {
+        Log.d("InsquireFailure", "코인 목록 불러오기 실패, ${message}")
     }
 }

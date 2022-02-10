@@ -55,17 +55,6 @@
         app:layout_constraintEnd_toEndOf="@id/login_id_et"
         app:layout_constraintTop_toBottomOf="@id/login_id_et" />
 
-    <TextView
-        android:id="@+id/login_id_forget_id_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="아이디를 잊으셨나요?"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/login_id_underscore_view"
-        app:layout_constraintStart_toStartOf="@id/login_id_underscore_view" />
 
     <Button
         android:id="@+id/login_id_next_btn"
@@ -80,7 +69,7 @@
         android:textColor="#FDCC68"
         android:backgroundTint="#FFF6F6"
         android:background="@drawable/button_ywhite"
-        app:layout_constraintTop_toBottomOf="@id/login_id_forget_id_tv" />
+        app:layout_constraintTop_toBottomOf="@id/login_id_underscore_view" />
 
     <TextView
         android:id="@+id/login_id_name_tv"

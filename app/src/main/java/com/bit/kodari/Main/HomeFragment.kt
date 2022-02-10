@@ -333,6 +333,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 for (i in 0 until userCoinList.size) {
                     userCoinNameList.add(userCoinList[i].symbol)
                 }
+
                 // 대표코인 이름 저장
                 for (i in 0 until representCoinList.size) {
                     representCoinNameList.add(representCoinList[i].symbol + "USDT")
