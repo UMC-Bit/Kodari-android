@@ -48,7 +48,7 @@
 
 
     <TextView
-        android:id="@+id/home_my_asset_tv"
+        android:id="@+id/my_portfolio_asset_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_portfolio_asset_title_tv"
@@ -66,13 +66,13 @@
         android:layout_height="wrap_content"
         android:text="(+13.5%)"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/home_my_asset_tv"
-        app:layout_constraintStart_toEndOf="@id/home_my_asset_tv"
-        app:layout_constraintTop_toTopOf="@id/home_my_asset_tv"/>
+        app:layout_constraintBottom_toBottomOf="@id/my_portfolio_asset_tv"
+        app:layout_constraintStart_toEndOf="@id/my_portfolio_asset_tv"
+        app:layout_constraintTop_toTopOf="@id/my_portfolio_asset_tv"/>
 
 
     <TextView
-        android:id="@+id/home_text_day_tv"
+        android:id="@+id/my_portfolio_text_day_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"

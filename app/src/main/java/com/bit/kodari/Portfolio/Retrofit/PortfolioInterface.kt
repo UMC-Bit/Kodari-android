@@ -2,11 +2,9 @@ package com.bit.kodari.Portfolio.Retrofit
 
 import com.bit.kodari.Main.Data.PortIdxResponse
 import com.bit.kodari.Main.Data.PortfolioResponse
-import com.bit.kodari.Portfolio.Data.SearchCoinResponse
+import com.bit.kodari.Portfolio.Data.*
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
+import retrofit2.http.*
 
 public interface PortfolioInterface {
     // userId로 portIdx 받아오기
@@ -26,4 +24,14 @@ public interface PortfolioInterface {
     // 코인 목록 조회
     @GET("/coins")
     fun getSearchCoinAll():Call<SearchCoinResponse>
+
+    //계좌 등록 API
+    @POST("/account/post")
+    fun postAccount(@Header("X-ACCESS-TOKEN") jwt:String , @Body postAccountRequest: PostAccountRequest) : Call<PostAccountResponse>
+
+    //포토폴리오 생성 API
+    @POST("/portfolio/post")
+    fun postPortFolio(@Header("X-ACCESS-TOKEN") jwt:String , @Body postPortFolioRequest: PostPortFolioRequest) : Call<PostPortFolioResponse>
+
+    //소유 코인 등록 API 새로만들어야하나 ? ?
 }

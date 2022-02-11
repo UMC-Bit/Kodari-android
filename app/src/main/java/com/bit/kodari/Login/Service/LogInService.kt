@@ -1,13 +1,8 @@
 package com.bit.kodari.Login.Service
 
 import android.util.Log
-import com.bit.kodari.Login.Retrofit.LoginRetrofitInterface
-import com.bit.kodari.Login.Retrofit.LogInView
-import com.bit.kodari.Login.Retrofit.SignUpView
-import com.bit.kodari.Login.RetrofitData.LogInInfo
-import com.bit.kodari.Login.RetrofitData.LogInResponse
-import com.bit.kodari.Login.RetrofitData.SignUpInfo
-import com.bit.kodari.Login.RetrofitData.SignUpResponse
+import com.bit.kodari.Login.Retrofit.*
+import com.bit.kodari.Login.RetrofitData.*
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +12,9 @@ class LogInService() {
 
     private lateinit var signUpView: SignUpView
     private lateinit var logInView: LogInView
+    private lateinit var emailView: EmailView
+    private lateinit var passwordView: PasswordView
+    private lateinit var nicknameView: NicknameView
 
     fun setSignUpView(signUpView: SignUpView){
         this.signUpView = signUpView
@@ -24,6 +22,18 @@ class LogInService() {
 
     fun setLogInView(logInView : LogInView){
         this.logInView = logInView
+    }
+
+    fun setEmailView(emailView: EmailView) {
+        this.emailView = emailView
+    }
+
+    fun setPasswordView(passwordView: PasswordView) {
+        this.passwordView = passwordView
+    }
+
+    fun setNicknameView(nicknameView: NicknameView) {
+        this.nicknameView = nicknameView
     }
 
     //회원가입 API 호출
@@ -60,6 +70,58 @@ class LogInService() {
                 Log.d("LogIn" ,"통신 실패 : ${t}")
                 logInView.logInFailure("${t}")
                 Log.d("LogIn", "통신 실패 : ${t}")
+            }
+        })
+    }
+
+    // Email validation API
+    fun getCheckEmail(emailInfo: EmailInfo) {
+        val logInService = getRetorfit().create(LoginRetrofitInterface::class.java)
+        logInService.getCheckEmail(emailInfo).enqueue(object : Callback<EmailResponse> {
+            override fun onResponse(call: Call<EmailResponse>, response: Response<EmailResponse>) {
+                emailView.getEmailSuccess(response.body()!!)
+                Log.d("checkEmailSuccess", "${response}")
+
+            }
+
+            override fun onFailure(call: Call<EmailResponse>, t: Throwable) {
+                emailView.getEmailFailure("${t}")
+                Log.d("checkEmailFailure", "${t}")
+            }
+        })
+    }
+
+    // Password validation API
+    fun getCheckPassword(passwordInfo: PasswordInfo) {
+        val logInService = getRetorfit().create(LoginRetrofitInterface::class.java)
+        logInService.getCheckPassword(passwordInfo).enqueue(object : Callback<PasswordResponse> {
+            override fun onResponse(
+                call: Call<PasswordResponse>,
+                response: Response<PasswordResponse>
+            ) {
+                passwordView.getPasswordSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<PasswordResponse>, t: Throwable) {
+                passwordView.getPasswordFailure("${t}")
+            }
+        })
+    }
+
+    // Nickname validation API
+    fun getCheckNickname(nicknameInfo: NicknameInfo) {
+        val logInService = getRetorfit().create(LoginRetrofitInterface::class.java)
+        logInService.getCheckNickname(nicknameInfo).enqueue(object : Callback<NicknameResponse> {
+            override fun onResponse(
+                call: Call<NicknameResponse>,
+                response: Response<NicknameResponse>
+            ) {
+                nicknameView.getNicknameSuccess(response.body()!!)
+
+            }
+
+            override fun onFailure(call: Call<NicknameResponse>, t: Throwable) {
+                nicknameView.getNicknameFailure("${t}")
             }
         })
     }

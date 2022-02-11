@@ -37,7 +37,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(FragmentMyComme
     fun setListener() {
         binding.myCommentPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 

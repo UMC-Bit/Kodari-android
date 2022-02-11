@@ -1,5 +1,6 @@
 package com.bit.kodari.Main.Adapter
 
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,16 @@ import com.bit.kodari.databinding.ListMyCoinBinding
 import com.bumptech.glide.Glide
 
 class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<HomePCRVAdapter.MyViewHolder>(){
+
+    interface MyItemClickListener{
+        fun onClickItem(item:PossesionCoinResult)
+    }
+
+    private lateinit var mItemClickListener: MyItemClickListener
+
+    fun setMyItemClickListener(myItemClickListener: MyItemClickListener){
+        this.mItemClickListener= myItemClickListener
+    }
 
     inner class MyViewHolder(val binding:ListMyCoinBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : PossesionCoinResult){
@@ -31,6 +42,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: HomePCRVAdapter.MyViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener { mItemClickListener.onClickItem(list[position]) }
     }
 
     override fun getItemCount(): Int = list.size

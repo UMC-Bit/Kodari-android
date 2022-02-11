@@ -1,5 +1,6 @@
 package com.bit.kodari.Debate.Adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +24,9 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
         fun onModifyClick(item:DebateSelectPostComment)
         fun onDeleteClick(item:DebateSelectPostComment)
         fun onRegReComment(item:DebateSelectPostComment)
+        fun onLikeClick(item:DebateSelectPostComment)
+        fun onClickReComment(postReplyIdx: Int)
     }
-
-    private var postReplyIndx = 0
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
     private lateinit var mItemClickListener : MyItemClickListener       //리스너 객체 저장할 변수
@@ -63,16 +64,22 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
                 binding.listItemDeleteTv.visibility = View.GONE
             }
 
+            //내가 좋아요 눌렀던 댓글이면 하트 채워지게
+            if(item.checkCommentLike){          //좋아요 누른글이면
+                binding.listItemLikeOnIv.visibility = View.VISIBLE
+                binding.listItemLikeOffIv.visibility = View.GONE
+            } else{
+                binding.listItemLikeOnIv.visibility = View.GONE
+                binding.listItemLikeOffIv.visibility = View.VISIBLE
+            }
+
+            //삭제된 상태면 글자 색 그레이로.
+            if(item.comment_status == "inactive"){
+                binding.listItemContentTv.setTextColor(Color.GRAY)
+            }
 
             //대댓 어댑터도 사용해야함.
-            val debateReCommentRVAdapter = DebateReCommentRVAdapter(item.replyList)
-            //context로 최상단 레이아웃의 context 전달
-            debateReCommentRVAdapter.setMyItemClickListener(object : DebateReCommentRVAdapter.MyItemClickListener{
-                override fun onDeleteClick(item: DebateSelectPostReply) {
-                    postReplyIndx = item.postReplyIdx
-                    Log.d("postReplyIdx" , "현재 선택한 postReplyidx 는 ${postReplyIndx}")
-                }
-            })
+            val debateReCommentRVAdapter = DebateReCommentRVAdapter(item.replyList , mItemClickListener)
             binding.listItemReCommentRv.layoutManager = LinearLayoutManager(binding.commentRoot.context,LinearLayoutManager.VERTICAL , false)
             binding.listItemReCommentRv.adapter = debateReCommentRVAdapter
         }
@@ -100,6 +107,37 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
                 rvFlage = true
                 holder.binding.listItemNowCommentTv.text = "답글 숨기기"
             }
+        }
+
+        //채워진 하트 누르면 하트 없애주기
+        holder.binding.listItemLikeOnIv.setOnClickListener {
+            holder.binding.listItemLikeOnIv.visibility = View.GONE
+            holder.binding.listItemLikeOffIv.visibility = View.VISIBLE
+            var tempCnt = commentList[position].like
+            Log.d("likeCnt" ,"${tempCnt}")
+            mItemClickListener.onLikeClick(commentList[position])
+            if(commentList[position].checkCommentLike){     //체크되어있으면
+                holder.binding.listItemCommentLikeCntTv.text = "좋아요 ${tempCnt-1}개"
+            }else{
+                holder.binding.listItemCommentLikeCntTv.text = "좋아요 ${tempCnt}개"
+            }
+
+        }
+
+        //빈 하트 누르면 하트 채우기.
+        holder.binding.listItemLikeOffIv.setOnClickListener {
+            holder.binding.listItemLikeOnIv.visibility = View.VISIBLE
+            holder.binding.listItemLikeOffIv.visibility = View.GONE
+            var tempCnt = commentList[position].like
+            Log.d("likeCnt" ,"${tempCnt}")
+            mItemClickListener.onLikeClick(commentList[position])
+            if(commentList[position].checkCommentLike){
+                holder.binding.listItemCommentLikeCntTv.text = "좋아요 ${tempCnt}개"
+            }else{
+                holder.binding.listItemCommentLikeCntTv.text = "좋아요 ${tempCnt+1}개"
+            }
+
+
         }
 
         holder.binding.listItemModifyTv.setOnClickListener { mItemClickListener.onModifyClick(commentList[position])}

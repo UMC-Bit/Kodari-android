@@ -35,7 +35,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="150dp"
         android:text="사용할 닉네임을 정해주세요 :)"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textColor="#B35C5C5C"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signup_nickname_title_tv" />
@@ -66,6 +66,17 @@
         app:layout_constraintStart_toStartOf="@id/signup_nickname_et"
         app:layout_constraintEnd_toEndOf="@id/signup_nickname_et"
         app:layout_constraintTop_toBottomOf="@id/signup_nickname_et" />
+
+    <TextView
+        android:id="@+id/signup_nickname_check_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#FF0000"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/signup_nickname_underscore_view"
+        app:layout_constraintStart_toStartOf="@id/signup_nickname_underscore_view" />
 
     <Button
         android:id="@+id/signup_nickname_next_btn"

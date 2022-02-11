@@ -2,6 +2,8 @@ package com.bit.kodari.Debate.Service
 
 import android.util.Log
 import com.bit.kodari.Debate.CommentData.*
+import com.bit.kodari.Debate.LikeData.CommentLikeRequest
+import com.bit.kodari.Debate.LikeData.CommentLikeResponse
 import com.bit.kodari.Debate.LikeData.PostLikeRequest
 import com.bit.kodari.Debate.LikeData.PostLikeResponse
 import com.bit.kodari.Debate.PostData.*
@@ -189,6 +191,7 @@ class DebateService {
         })
     }
 
+    //게시글 좋아요 누르기.
     fun postLike(postLikeRequest: PostLikeRequest, like:Int){   //like 가 0이면 좋아요 눌렀을 때 , 1이면 싫어요 눌렀을때
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
         debateService.postLike(getJwt()!!, postLikeRequest).enqueue(object : Callback<PostLikeResponse>{
@@ -281,11 +284,32 @@ class DebateService {
                 call: Call<DeleteReCommentResponse>,
                 response: Response<DeleteReCommentResponse>
             ) {
+                Log.d("deletRe" , "${response.body()!!}")
                 debateMineView.deleteReCommentSuccess(response.body()!!)
             }
 
             override fun onFailure(call: Call<DeleteReCommentResponse>, t: Throwable) {
                 debateMineView.deleteReCommentFailure("${t}")
+            }
+        })
+    }
+
+    //좋아요 버튼 눌렀을 때.
+    fun pressCommentLike(commentLikeRequest: CommentLikeRequest){
+        val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
+        Log.d("like" , "보내는 값 : ${commentLikeRequest}")
+        debateService.pressCommentLike(getJwt()!!, commentLikeRequest).enqueue(object : Callback<CommentLikeResponse>{
+            override fun onResponse(
+                call: Call<CommentLikeResponse>,
+                response: Response<CommentLikeResponse>
+            ) {
+                Log.d("like", "jwt : ${getJwt()}")
+                Log.d("like" , "${response.body()}")
+                debateMineView.pressCommentLikeSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<CommentLikeResponse>, t: Throwable) {
+                debateMineView.pressCommentLikeFailure("${t}")
             }
         })
     }

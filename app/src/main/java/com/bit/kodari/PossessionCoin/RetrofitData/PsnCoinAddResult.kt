@@ -1,6 +1,8 @@
 package com.bit.kodari.PossessionCoin.RetrofitData
 
+import com.google.gson.annotations.SerializedName
+
 data class PsnCoinAddResult(
-    val coinIdx: Int,
-    val userCoinIdx: Int
+    @SerializedName("coinIdx") val coinIdx: Int,
+    @SerializedName("userCoinIdx") val userCoinIdx: Int
 )

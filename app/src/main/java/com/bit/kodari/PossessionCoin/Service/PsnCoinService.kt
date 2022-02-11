@@ -1,6 +1,9 @@
 package com.bit.kodari.PossessionCoin.Service
 
 import android.util.Log
+import com.bit.kodari.Debate.PostData.DebateDeletePostResponse
+import com.bit.kodari.Debate.Retrofit.DebateDeletePostView
+import com.bit.kodari.Debate.Retrofit.DebateRetrofitInterface
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.PossessionCoin.Retrofit.*
 import com.bit.kodari.PossessionCoin.RetrofitData.*
@@ -18,6 +21,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     private lateinit var psnCoinAddView: PsnCoinAddView
     private lateinit var psnCoinAddTradeView: PsnCoinAddTradeView
     private lateinit var psnCoinMgtInsquireView: PsnCoinMgtInsquireView
+    private lateinit var psnCoinMgtDeleteView: PsnCoinMgtDeleteView
 
     fun setPsnCoinSearchView(psnCoinSearchView: PsnCoinSearchView){
         this.psnCoinSearchView = psnCoinSearchView
@@ -33,6 +37,10 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
 
     fun setPsnCoinMgtInsquireView(psnCoinMgtInsquireView: PsnCoinMgtInsquireView){
         this.psnCoinMgtInsquireView=psnCoinMgtInsquireView
+    }
+
+    fun setPsnCoinMgtDeleteView(psnCoinMgtDeleteView: PsnCoinMgtDeleteView){
+        this.psnCoinMgtDeleteView = psnCoinMgtDeleteView
     }
 
     // 전체 코인 검색 창에서 모든 코인 목록 받아오기
@@ -54,7 +62,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     }
 
 
-
+    //소유 추가 API
      // 소유코인 창에서 버튼을 눌렀을 때 psnCoinAddInfo 객체를 만들어서 아래 함수의 매개변수로 넣어줌
     fun getPsnCoinAdd(psnCoinAddInfo: PsnCoinAddInfo){
         val psnCoinService= getRetorfit().create(PsnCoinRetrofitInterface::class.java)
@@ -84,6 +92,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
                 response: Response<PsnCoinAddTradeResponse>
             ) {
                 Log.d("psnCoinAddTradeSuccess", "거래 내역 생성 성공")
+                // Nullpointer
                 psnCoinAddTradeView.psnCoinAddTradeSuccess(response.body()!!)
             }
 
@@ -112,6 +121,24 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
                 Log.d("insquire failure", "소유 코인 조회 실패")
                 psnCoinMgtInsquireView.psnCoinInsquireFailure("${t}")
             }
+        })
+    }
+
+    fun deletePsnCoin(userCoinIdx:Int){
+        val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
+        Log.d("deletePsnCoin" ,"${getJwt()}")
+        psnCoinService.deletePsnCoin(getJwt()!!,userCoinIdx).enqueue(object : Callback<PsnCoinMgtDeleteResponse>{
+            override fun onResponse(
+                call: Call<PsnCoinMgtDeleteResponse>,
+                response: Response<PsnCoinMgtDeleteResponse>
+            ) {
+                psnCoinMgtDeleteView.deletePsnCoinSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<PsnCoinMgtDeleteResponse>, t: Throwable) {
+                psnCoinMgtDeleteView.deletePsnCoinFailure("${t}")
+            }
+
         })
     }
 }

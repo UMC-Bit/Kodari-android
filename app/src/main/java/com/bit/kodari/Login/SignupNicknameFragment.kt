@@ -8,41 +8,40 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.Retrofit.NicknameView
 import com.bit.kodari.Login.Retrofit.SignUpView
+import com.bit.kodari.Login.RetrofitData.NicknameInfo
+import com.bit.kodari.Login.RetrofitData.NicknameResponse
 import com.bit.kodari.Login.RetrofitData.SignUpInfo
 import com.bit.kodari.Login.RetrofitData.SignUpResponse
 import com.bit.kodari.Login.Service.LogInService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentSignupNicknameBinding
 
-class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(FragmentSignupNicknameBinding::inflate) ,SignUpView {
+class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(FragmentSignupNicknameBinding::inflate) ,SignUpView, NicknameView {
 
     private lateinit var email :String
     private lateinit var pw: String
     private lateinit var nickName: String
-
+    private var logInService = LogInService()
     override fun initAfterBinding() {
-        if(!arguments?.isEmpty!!){
-            //이전 프래그먼트에서 값 없으면 못 넘어오게해야함
-            email = requireArguments().getString("email")!!
-            pw = requireArguments().getString("pw")!!
-        }
+
         setListener()
     }
 
     fun setListener(){
         binding.signupNicknameNextBtn.setOnClickListener {
+            email = requireArguments().getString("email")!!
+            pw = requireArguments().getString("pw")!!
             nickName = binding.signupNicknameEt.text.toString()
-            val signUpInfo = SignUpInfo(nickName,email,pw)
-            Log.d("signup " ,"정보 : ${nickName} , ${email} , ${pw}")
-            val logInService = LogInService()
-            logInService.setSignUpView(this)
-            logInService.getSignUp(signUpInfo)
+            val nickNameInfo = NicknameInfo(nickName)
+            logInService.setNicknameView(this)
+            logInService.getCheckNickname(nickNameInfo)
         }
 
         binding.signupNicknameXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupPwFragment()).addToBackStack(null).commitAllowingStateLoss()
         }
     }
 
@@ -51,7 +50,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
             1000 -> {
                 Toast.makeText(context,"회원가입 성공" , Toast.LENGTH_SHORT).show()
                 (context as LoginActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.login_container_fl, LoginFragment()).commitAllowingStateLoss()
+                    .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
             }
             else -> {
                 Toast.makeText(context,"회원가입 실패 , ${resp.message}" , Toast.LENGTH_LONG).show()
@@ -61,5 +60,25 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
     override fun signUpFailure(msg:String) {
         showToast("회원가입 실패 ,$msg")
+    }
+
+    override fun getNicknameSuccess(response: NicknameResponse) {
+
+
+        when(response.code){
+            1000-> {
+                Toast.makeText(context, "Nickname 입력 성공", Toast.LENGTH_SHORT).show()
+                val signUpInfo = SignUpInfo(nickName,email,pw)
+                logInService.setSignUpView(this)
+                logInService.getSignUp(signUpInfo)
+            }
+            else -> {
+                binding.signupNicknameCheckTv.text = response.message
+            }
+        }
+    }
+
+    override fun getNicknameFailure(message: String) {
+        showToast("Nickname Check 실패 ,$message")
     }
 }

@@ -1,18 +1,20 @@
 package com.bit.kodari.Main.Data
 
+import com.google.gson.annotations.SerializedName
+
 data class PortfolioResult (
-    val accountIdx: Int,
-    val accountName: String,
-    val marketName: String,
-    val portIdx: Int,
-    val profitResultList: List<ProfitResult>,
-    val property: Double,
-    val representCoinList: List<RepresentCoinResult>,
-    val totalProperty: Double,
-    val userCoinList: List<PossesionCoinResult>,
-    val userIdx: Int
+    @SerializedName("accountIdx") val accountIdx: Int,
+    @SerializedName("accountName") val accountName: String,
+    @SerializedName("marketName") val marketName: String,
+    @SerializedName("portIdx") val portIdx: Int,
+    @SerializedName("profitResultList") val profitResultList: List<ProfitResult>,
+    @SerializedName("property") val property: Double,
+    @SerializedName("representCoinList") val representCoinList: List<RepresentCoinResult>,
+    @SerializedName("totalProperty") val totalProperty: Double,
+    @SerializedName("userCoinList") val userCoinList: List<PossesionCoinResult>,
+    @SerializedName("userIdx")  val userIdx: Int
 )
 
 data class PortIdxResult(
-    val portIdx: Int
+    @SerializedName("portIdx") val portIdx: Int
 )

@@ -1,4 +1,4 @@
-package com.bit.kodari.Portfolio.Adapter
+package com.bit.kodari.Portfolio.Retrofit
 
 import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 

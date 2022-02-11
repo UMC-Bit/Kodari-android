@@ -1,15 +1,17 @@
 package com.bit.kodari.Main.Data
 
+import com.google.gson.annotations.SerializedName
+
 data class PortfolioResponse (
-    val code: Int,
-    val isSuccess: Boolean,
-    val message: String,
-    val result: PortfolioResult
+    @SerializedName("code") val code: Int,
+    @SerializedName("isSuccess")  val isSuccess: Boolean,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: PortfolioResult
 )
 
 data class PortIdxResponse(
-    val code: Int,
-    val isSuccess: Boolean,
-    val message: String,
-    val result: List<PortIdxResult>
+    @SerializedName("code") val code: Int,
+    @SerializedName("isSuccess")  val isSuccess: Boolean,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: List<PortIdxResult>
 )

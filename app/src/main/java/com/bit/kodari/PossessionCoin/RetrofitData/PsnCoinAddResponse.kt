@@ -6,5 +6,5 @@ data class PsnCoinAddResponse(
     @SerializedName("code")val code: Int,
     @SerializedName("isSuccess")val isSuccess: Boolean,
     @SerializedName("message")val message: String,
-    @SerializedName("result")val result: List<PsnCoinAddResult>
+    @SerializedName("result")val result: PsnCoinAddResult       //List로 하니까 오류났었음 고치니까 됨
 )

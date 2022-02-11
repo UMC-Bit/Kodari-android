@@ -25,7 +25,11 @@ class EnrollExchangeFragment : Fragment() {
     fun setListener(){
         binding.enrollUpbitIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioManagementFragment()).addToBackStack(null).commit()
+                .replace(R.id.main_container_fl , PortfolioManagementFragment().apply {
+                    arguments = Bundle().apply {
+                        //처음에 오류 없이 실행되게하기 위해서
+                    }
+                }).addToBackStack(null).commit()
         }
     }
 
