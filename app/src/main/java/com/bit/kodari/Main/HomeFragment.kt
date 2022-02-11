@@ -322,12 +322,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     // 코인 조회 API 호출 성공
-    override fun coinPriceSuccess(
-        userCoinList: List<PossesionCoinResult>,
-        representCoin: List<RepresentCoinResult>
-    ) {
-        this.userCoinList = userCoinList
-        this.representCoinList = representCoinList
+    override fun coinPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        // 소유 코인
+        for(i in userCoinList.indices){
+            val symbol = userCoinList[i].symbol
+            if(upbitCoinPriceMap.containsKey(symbol)){
+                userCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+            }
+        }
+        // 대표 코인
+        for(i in representCoinList.indices){
+            val symbol = representCoinList[i].symbol
+            if(upbitCoinPriceMap.containsKey(symbol)){
+                representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+            }
+        }
         // 뷰 바인딩
         setRepresentRV()
         setRepresentPV()
@@ -369,7 +378,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         //coinService.setCoinView(this)
         // coinService.getCurrentPrice(userCoinList, representCoinList)
         val upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket.start()
+        upbitWebSocket.setCoinView(this)
+        upbitWebSocket.start() // 업비트 웹 소켓 실행
+        // upbitWebSocket.webSocket.close(1000, null) // 웹 소켓 닫기
+
     }
 
     // 뷰 바인딩 해주기
@@ -392,6 +404,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val marketName = response.result.marketName
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
-}
-
 }

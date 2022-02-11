@@ -1,5 +1,6 @@
 package com.bit.kodari.Util.Coin
 
+import android.os.Handler
 import android.util.Log
 import okhttp3.*
 import okio.ByteString
@@ -8,20 +9,24 @@ import org.json.JSONObject
 /*
     업비트 시세 받아오는 소켓 리스너
  */
-class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener() {
+class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(){
+    private lateinit var coinView: CoinView
+
+    fun setCoinView(coinView: CoinView) {
+        this.coinView = coinView
+    }
+
+    lateinit var webSocket: WebSocket
     private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
+
     override fun onOpen(webSocket: WebSocket, response: Response) {
         val text = "[{\"ticket\":\"kodari\"},{\"type\":\"ticker\",\"codes\":[${symbols}]}]"
         webSocket.send(text)
+        this.webSocket = webSocket
         //webSocket.close(NORMAL_CLOSURE_STATUS, null) //없을 경우 끊임없이 서버와 통신함
     }
-
-    override fun onMessage(webSocket: WebSocket, text: String) {
-        Log.d("Socket","Receiving : $text")
-    }
-
 
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         val message = bytes.utf8()
@@ -31,6 +36,8 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         coinPriceMap.put(symbol, price)
         Log.d("Socket", "Receiving bytes : ${bytes.utf8()}")
         // TODO HomeFragment livedata 처리
+        coinView.coinPriceSuccess(coinPriceMap)
+
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
@@ -66,4 +73,5 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         sb.deleteCharAt(sb.length-1) // "," 제거
         return sb.toString()
     }
+
 }

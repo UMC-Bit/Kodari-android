@@ -4,7 +4,6 @@ import android.util.Log
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
-import com.bit.kodari.Portfolio.Adapter.SearchCoinView
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Util.Binance.BinanceResult
 import com.bit.kodari.Util.Coin.CoinInterface
@@ -131,7 +130,7 @@ class CoinService {
                                 val price = it[j].price
                                 representCoinList[i].binancePrice = price
                                 Log.d("결과", "성공: ${coinSymbol}: ${price}")
-                                coinView.coinPriceSuccess(userCoinList, representCoinList)
+                                //coinView.coinPriceSuccess(userCoinList, representCoinList)
                             }
                         }
                     },
