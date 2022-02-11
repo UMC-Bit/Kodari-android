@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
@@ -23,26 +24,18 @@ import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.bumptech.glide.Glide
 
-class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView {
+class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView {
 
-    lateinit var binding: FragmentRepresentativeCoinManagementBinding
     private lateinit var rptCoinManagementAdapter: RptCoinManagementAdapter
     private var coinList = ArrayList<RptCoinMgtInsquireResult>()
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun initAfterBinding() {
+        deleteDialog()
+        setListener()
         getRptCoins()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentRepresentativeCoinManagementBinding.inflate(inflater , container , false)
-
-        deleteDialog()
-
+    fun setListener(){
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).addToBackStack(null).commitAllowingStateLoss()
@@ -50,10 +43,8 @@ class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView 
 
         binding.representativeCoinManagementBeforeButtonBT.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
         }
-
-        return binding.root
     }
 
     fun setRecyclerView(){
@@ -62,9 +53,8 @@ class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView 
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         rptCoinManagementAdapter.setMyItemClickListener(object :
             RptCoinManagementAdapter.MyItemClickListener{
-
             override fun onItemClick(item: RptCoinMgtInsquireResult) {
-                TODO("Not yet implemented")
+
             }
         })
 
@@ -76,6 +66,7 @@ class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView 
     fun getRptCoins(){
         val rptCoinService = RptCoinService()
         rptCoinService.setRptCoinMgtInsquireView(this)
+        showLoadingDialog(requireContext())
         rptCoinService.getRptCoinMgtInsquire()
     }
 
@@ -104,14 +95,17 @@ class RepresentativeCoinManagementFragment : Fragment(), RptCoinMgtInsquireView 
 
 
     override fun rptCoinInsquireSuccess(response: RptCoinMgtInsquireResponse) {
+        dismissLoadingDialog()
         Log.d("InsquireSuccess" , "${response}")
         coinList = response.result
-        Log.d("psnSuccesscoinSize", "${coinList.size}")
+        //널값 넘어오면서 오류
+        //Log.d("psnSuccesscoinSize", "${coinList.size}")
 
         setRecyclerView()
     }
 
     override fun rptCoinInsquireFailure(message: String) {
+        dismissLoadingDialog()
         Log.d("InsquireFailure", "코인 목록 불러오기 실패, ${message}")
     }
 }

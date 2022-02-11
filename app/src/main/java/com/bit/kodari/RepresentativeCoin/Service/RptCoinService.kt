@@ -1,6 +1,7 @@
 package com.bit.kodari.RepresentativeCoin.Service
 
 import android.util.Log
+import com.MyApplicationClass
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtInsquireView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
@@ -56,6 +57,7 @@ class RptCoinService {
         })
     }
 
+    //대표 코인 추가
     fun getRptCoinAdd(rptCoinAddInfo: RptCoinAddInfo){
         val rptCoinService= getRetorfit().create(RptCoinRetrofitInterface::class.java)
 
@@ -64,7 +66,7 @@ class RptCoinService {
                 call: Call<RptCoinAddResponse>,
                 response: Response<RptCoinAddResponse>
             ) {
-                Log.d("rptCoinAddAllSuccess", "소유 코인 추가 성공")
+                Log.d("rptCoinAddAllSuccess", "대표 코인 추가 성공")
                 rptCoinAddView.rptCoinAddAllSuccess(response.body()!!)
             }
 
@@ -80,7 +82,7 @@ class RptCoinService {
     {
         val rptCoinService = getRetorfit().create(RptCoinRetrofitInterface::class.java)
 
-        rptCoinService.getRptCoinInquire(getJwt()!! , 25).enqueue(object : Callback<RptCoinMgtInsquireResponse>{
+        rptCoinService.getRptCoinInquire(getJwt()!! , MyApplicationClass.myPortIdx).enqueue(object : Callback<RptCoinMgtInsquireResponse>{
             override fun onResponse(
                 call: Call<RptCoinMgtInsquireResponse>,
                 response: Response<RptCoinMgtInsquireResponse>
@@ -96,23 +98,6 @@ class RptCoinService {
 
         })
     }
+    //대표 코인 선택 해서 삭제 , 여러개 추가 ->모두 구현해야함
 
-//    fun getPsnCoinAdd(psnCoinAddInfo: PsnCoinAddInfo){
-//        val psnCoinService= getRetorfit().create(PsnCoinRetrofitInterface::class.java)
-//
-//        psnCoinService.getPsnCoinAdd(psnCoinAddInfo).enqueue(object : Callback<PsnCoinAddResponse> {
-//            override fun onResponse( // 통신 성공
-//                call: Call<PsnCoinAddResponse>,
-//                response: Response<PsnCoinAddResponse>
-//            ) {
-//                Log.d("psnCoinAddSuccess", "소유 코인 추가 성공")
-//                psnCoinAddView.psnCoinAddSuccess(response.body()!!)
-//            }
-//
-//            override fun onFailure(call: Call<PsnCoinAddResponse>, t: Throwable) { // 통신 실패
-//                Log.d("psnCoinAddFailure", "소유 코인 추가 실패")
-//                psnCoinAddView.psnCoinAddFailure("t")
-//            }
-//        })
-//    }
 }

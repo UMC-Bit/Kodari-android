@@ -190,7 +190,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/input_unit_price_tv"
         app:layout_constraintTop_toTopOf="@id/input_unit_price_tv"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/input_count_tv"
@@ -213,7 +214,8 @@
         app:layout_constraintBottom_toBottomOf="@id/input_count_tv"
         app:layout_constraintStart_toStartOf="@id/input_unit_price_input_et"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        android:gravity="center"/>
 
 
 

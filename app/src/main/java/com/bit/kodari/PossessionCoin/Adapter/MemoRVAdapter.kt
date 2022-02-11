@@ -4,19 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bit.kodari.Main.Data.GetTradeListResult
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinGetTradeResult
 import com.bit.kodari.databinding.ItemPossessionCoinMemoBinding
 
-class MemoRVAdapter (var memoList : ArrayList<PsnCoinGetTradeResult>):
+class MemoRVAdapter (var memoList : ArrayList<GetTradeListResult>):
     RecyclerView.Adapter<MemoRVAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val binding:ItemPossessionCoinMemoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item : PsnCoinGetTradeResult){
+        fun bind(item : GetTradeListResult){
             binding.itemPossessionCoinMemoDateTV.text = item.date.toString()
             binding.itemPossessionCoinMemoCoinNameTV.text = item.coinName
-            binding.itemPossessionCoinMemoAverageunitPriceTV.text = item.price.toString()
-            binding.itemPossessionCoinMemoQuantityTV.text = item.amount.toString()
-            binding.itemPossessionCoinMemoProfitTV.text = item.fee.toString()
+            binding.itemPossessionCoinMemoAverageunitPriceTV.text ="${item.price} 원"
+            binding.itemPossessionCoinMemoQuantityTV.text ="${item.amount} 개"
+            binding.itemPossessionCoinMemoProfitTV.text = String.format("%.2f", item.price * item.amount)+" 원"
             binding.itemPossessionCoinMemoBuyMemoInputTV.text = item.memo
             if(item.category == "buy"){
                 binding.itemPossessionCoinMemoBuyImageIV.visibility = View.VISIBLE

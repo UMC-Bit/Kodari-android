@@ -1,13 +1,16 @@
 package com.bit.kodari.Main.Data
 
+import com.google.gson.annotations.SerializedName
+
 data class PossesionCoinResult(
-    val userCoinIdx: Int,
-    var upbitPrice: Double,
-    var profit: Double,
-    var coinImg: Any,
-    val coinName: String,
-    val priceAvg: Double,
-    val status: String,
-    val amount: Int,
-    val symbol: String
+    @SerializedName("userCoinIdx") val userCoinIdx: Int,
+    @SerializedName("upbitPrice") var upbitPrice: Double,
+    @SerializedName("profit") var profit: Double,
+    @SerializedName("coinImg") var coinImg: Any,
+    @SerializedName("coinName") val coinName: String,
+    @SerializedName("priceAvg") val priceAvg: Double,
+    @SerializedName("status") val status: String,
+    @SerializedName("amount")  val amount: Double,
+    @SerializedName("symbol") val symbol: String,
+    @SerializedName("coinIdx") val coinIdx: Int
     )

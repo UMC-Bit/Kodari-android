@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.DialogCoin
 import com.bit.kodari.Login.LoginActivity
@@ -23,6 +24,7 @@ import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
 import com.bit.kodari.Main.Data.*
+import com.bit.kodari.Portfolio.Retrofit.PortfolioInterface
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.DialogMemoAndTwitter
@@ -45,6 +47,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
+    var portIdxList = ArrayList<Int>()
+    lateinit var accounName: String
 
     // 업비트, 바이낸스 코인 가격 리스트
     lateinit var upbitUserCoinPriceList: List<Int>
@@ -164,7 +168,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment())
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
                 .commitNowAllowingStateLoss()
         }
 
@@ -207,21 +211,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeViewpagerVp.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
+            override fun onPageSelected(position: Int) {        //page변경됐을떄
                 super.onPageSelected(position)
                 when (position) {
-                    0 -> {
+                    0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
+                        callPortfolioInfo(portIdxList[position])
+                        Log.d("callIdx" ,portfolioList.size.toString())
                     }
-                    portfolioList.size - 1 -> {
+                    portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
                     }
                     else -> {
                         binding.homeVpNextBtn.visibility =View.VISIBLE
                         binding.homeVpPreviewBtn.visibility = View.VISIBLE
+                        callPortfolioInfo(portIdxList[position].toInt())
                     }
                 }
                 binding.myRecordIndicators.animatePageSelected(position)
+
             }
         })
     }
@@ -240,7 +248,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         homePCRVAdapter = HomePCRVAdapter(userCoinList)
         homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener{
             override fun onClickItem(item: PossesionCoinResult) {
-                val dialog = DialogMemoAndTwitter()
+                val dialog = DialogMemoAndTwitter(item.coinIdx)
                 dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
             }
         })
@@ -306,7 +314,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         Log.d("getPortIdx" , "성공")
         for(idx in resp.result){
             portfolioList.add(MyPortfolioFragment(idx.portIdx))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
+            portIdxList.add(idx.portIdx)                                //포토폴리오 인덱스 저장
         }
+        Log.d("portIdx" , "사이즈 : ${portIdxList.size} , ${portIdxList}")
         setViewpager()      //여기에 실행 안하면 이게 너무 늦게 실행되서 안됨 , 포폴 목록 조회해서 뷰페이저에 셋팅.
     }
     //포토폴리오 IDX 조회 실패
@@ -345,7 +355,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 대표코인 업비트 시세 받아오기
                 this.upbitRepresentCoinPriceList =
                     UpbitService.getCurrentPrice(representCoinNameList)
+                //AccountIdx 와 PortIdx 싱글톤에 셋팅
 
+                MyApplicationClass.myAccountIdx = response.result.accountIdx
+                MyApplicationClass.myPortIdx = response.result.portIdx
+                accounName = response.result.accountName                //계좌이름
+                Log.d("Callidx" , "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}")
                 // 대표코인, 소유코인 뷰 바인딩
                 setRepresentRV()
                 setRepresentPV()
@@ -375,6 +390,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         Thread(Runnable {
 
         })
+    }
+
+    fun callPortfolioInfo(portIdx:Int){
+        val portfolioService = PortfolioService()
+        portfolioService.setPortfolioView(this)
+        portfolioService.getPortfolioInfo(portIdx)
     }
 
 }

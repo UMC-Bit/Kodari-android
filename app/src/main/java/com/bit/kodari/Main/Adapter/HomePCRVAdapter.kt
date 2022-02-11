@@ -29,7 +29,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
                 .into(binding.myCoinIv)
             binding.myNowPriceTv.text = item.upbitPrice.toString()
             binding.myProfitTv.text = item.profit.toString()
-            binding.myUnitPriceTv.text = item.priceAvg.toString()
+            binding.myUnitPriceTv.text = String.format("%.2f", item.priceAvg)
         //binding.representCoinSymbolTv.text = item.symbol
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }

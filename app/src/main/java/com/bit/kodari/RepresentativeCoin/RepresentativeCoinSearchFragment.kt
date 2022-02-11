@@ -51,15 +51,6 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         rptCoinSearchRVAdapter.setMyItemClickListener(object : RptCoinSearchRVAdapter.MyItemClickListener{
             override fun onItemClick(item: RptCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
                 coinList[item.coinIdx-1].isCheck =true
-//                (context as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment().apply {
-//                        arguments = Bundle().apply {
-//                            putInt("coinIdx", item.coinIdx)
-//                            putString("coinImage",item.coinImg)
-//                            putString("coinName", item.coinName)
-//                            putString("coinSymbol", item.symbol)
-//                        }
-//                    }).commitAllowingStateLoss()
             }
         })
         binding.representativeCoinSearchCoinListRV.layoutManager = LinearLayoutManager(context as MainActivity)

@@ -37,7 +37,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
-            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text=item.priceAvg
+            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = String.format("%.2f", item.priceAvg.toDouble())
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
         }
     }
@@ -52,8 +52,6 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
     override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
         holder.bind(possessionCoinList[position])
         isClickMap[position] = false
-//        var SearchCoinList = searchcoinList[position]
-
 
             holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
                 if(!isClick)

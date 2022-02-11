@@ -21,7 +21,7 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
 
     fun setMyItemClickListener(itemClickLister:MyItemClickListener){
         mItemClickListener = itemClickLister                            //리스너 객체를 전달받아서 리스너 객체 변수에 저장
-                }
+    }
 
     inner class PossessionCoinSearchViewHolder(val binding: ItemPossessionCoinSearchCoinListBinding): RecyclerView.ViewHolder(binding.root){
 
