@@ -2,12 +2,9 @@ package com.bit.kodari.Main
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -31,7 +28,8 @@ import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.*
-import com.bit.kodari.Util.Binance.BinanceService
+import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.UpbitWebSocketListener
 import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
@@ -42,32 +40,21 @@ import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
-    CoroutineScope {
+    CoinView{
 
-    lateinit var job: Job
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
     var portfolioList = ArrayList<Fragment>()
 
-    // 코루틴 job
-
-
-    // 업비트, 바이낸스 코인 가격 리스트
-    lateinit var upbitUserCoinPriceList: List<Double>
-    lateinit var binanceUserCoinPriceMap: HashMap<String, Double>
-    lateinit var upbitRepresentCoinPriceList: List<Double>
-    lateinit var binanceRepresentCoinPriceMap: HashMap<String, Double>
-
     // 유저 코인 리스트
     lateinit var userCoinList: List<PossesionCoinResult>
-
-    // 대표 코인 심볼 리스트
+    // 대표 코인 리스트
     lateinit var representCoinList: List<RepresentCoinResult>
     // 수익률 리스트
     // val profitList = response.result.profitResultList
+    // 유저 코인, 대표 코인 심볼 저장
+    var coinSymbolSet = HashSet<String>()
 
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
@@ -75,22 +62,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setListener()
         setViewpager()
 
-
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
         portFolioService.getPortfolioList(getUserIdx())
-
-
-
         Log.d(
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
         )
 
     }
-
-
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener() {
         //소득 클릭시 변경
@@ -236,7 +217,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
     }
 
-    fun setRepresentRV(representCoinList: List<RepresentCoinResult>) {
+    fun setRepresentRV() {
         homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
         binding.homeRepresentCoinRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -244,14 +225,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     }
 
-    fun setRepresentPV(userCoinList: List<PossesionCoinResult>) {
+    fun setRepresentPV() {
         homePCRVAdapter = HomePCRVAdapter(userCoinList)
         binding.homeMyCoinRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.homeMyCoinRv.adapter = homePCRVAdapter
 
     }
-
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
     fun setChartDummy() {
@@ -316,6 +296,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    // 코인 조회 API 호출 성공
+    override fun coinPriceSuccess(
+        userCoinList: List<PossesionCoinResult>,
+        representCoin: List<RepresentCoinResult>
+    ) {
+        this.userCoinList = userCoinList
+        this.representCoinList = representCoinList
+        // 뷰 바인딩
+        setRepresentRV()
+        setRepresentPV()
+
+    }
+
+    override fun coinPriceFailure(message: String) {
+        TODO("Not yet implemented")
+    }
+
     // 코루틴 시세 적용 및 뷰바인딩
     suspend fun setCoinPrice(response: PortfolioResponse) {
         getCoinPrice(response)
@@ -336,21 +333,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val profitList = response.result.profitResultList
         // 소유코인 이름 저장
         for (i in 0 until userCoinList.size) {
-            userCoinNameList.add(userCoinList[i].symbol)
+            coinSymbolSet.add(userCoinList[i].symbol)
         }
         // 대표코인 이름 저장
         for (i in 0 until representCoinList.size) {
-            representCoinNameList.add(representCoinList[i].symbol + "USDT")
+            coinSymbolSet.add(representCoinList[i].symbol)
         }
-        // 업비트, 바이낸스 코인 시세 받아오기
-        getCoinPrice(userCoinNameList, representCoinNameList)
+        // 코인 인터페이스 연결
+        //val coinService = CoinService()
+        //coinService.setCoinView(this)
+        // coinService.getCurrentPrice(userCoinList, representCoinList)
+        val upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+        upbitWebSocket.start()
     }
 
     // 뷰 바인딩 해주기
     fun setPortViewBinding() {
         // 대표코인, 소유코인 뷰 바인딩
-        setRepresentRV()
-        setRepresentPV()
+
     }
 
     // 포트폴리오 API 호출 실패
@@ -367,49 +367,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val marketName = response.result.marketName
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
-    fun getCoinPrice(userCoinNameList: List<String>, representCoinNameList: List<String>) {
-        upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
-        binanceUserCoinPriceMap = BinanceService.getCurrentPrice(userCoinNameList)
-        upbitRepresentCoinPriceList = UpbitService.getCurrentPrice(representCoinNameList)
-        binanceRepresentCoinPriceMap = BinanceService.getCurrentPrice(representCoinNameList)
-    }
-
-
-        /*
-        // 주기적으로 시세를 가져오고 뷰 바인딩 해주는 스레드
-        fun getCoinPrice(userCoinNameList: List<String>, representCoinNameList: List<String>) {
-            GlobalScope.launch(Dispatchers.Main) {
-                launch(Dispatchers.IO){
-                    upbitUserCoinPriceList = UpbitService.getCurrentPrice(userCoinNameList)
-                    binanceUserCoinPriceMap = BinanceService.getCurrentPrice(userCoinNameList)
-                    upbitRepresentCoinPriceList = UpbitService.getCurrentPrice(representCoinNameList)
-                    binanceRepresentCoinPriceMap = BinanceService.getCurrentPrice(representCoinNameList)
-                }.join()
-
-                launch(Dispatchers.Default) {
-    //            upbitUserCoinPriceList = getUpbitUserCoinPrice.await()
-    //            binanceUserCoinPriceMap = binanceUserCoinPrice.await()
-    //            upbitRepresentCoinPriceList = getUpbitRepresentCoinPrice.await()
-    //            binanceRepresentCoinPriceMap = getBinanceRepresentCoinPrice.await()
-                    for (i in userCoinList.indices) {
-                        userCoinList[i].upbitPrice = upbitUserCoinPriceList[i]
-                        representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
-                            userCoinList[i].coinName + "USDT"
-                        ) { 0.0 }
-                    }
-                    for (i in representCoinList.indices) {
-                        representCoinList[i].upbitPrice = upbitRepresentCoinPriceList[i]
-                        representCoinList[i].binancePrice = binanceUserCoinPriceMap.getOrElse(
-                            representCoinList[i].coinName + "USDT"
-                        ) { 0.0 }
-                    }
-                }.join()
-
-                launch(Dispatchers.Main) {
-                    // 대표코인, 소유코인 뷰 바인딩
-                    setRepresentRV()
-                    setRepresentPV()
-                }
-            }
-        }*/
 }
