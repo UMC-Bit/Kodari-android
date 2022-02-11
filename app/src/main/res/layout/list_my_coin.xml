@@ -1,89 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="10dp">
 
     <ImageView
         android:id="@+id/my_coin_iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:src="@drawable/btc"
+        android:scaleType="fitCenter"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/my_info_container_ll"
+    <TextView
+        android:id="@+id/my_coin_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/my_coin_iv">
-        <TextView
-            android:id="@+id/my_coin_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="@color/black"
-            android:text="Name"/>
+        android:layout_marginLeft="10dp"
+        android:text="Name"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="7sp"
+        app:layout_constraintStart_toEndOf="@id/my_coin_iv"
+        app:layout_constraintTop_toTopOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toTopOf="@id/my_coin_symbol_tv"
+       />
 
-        <TextView
-            android:id="@+id/my_coin_symbol_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:text="BTC"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/my_price_container_ll"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/my_coin_symbol_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/my_info_container_ll"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        android:layout_marginLeft="10dp"
+        android:text="비트코인"
+        android:textStyle="bold"
+        android:textSize="6sp"
+        app:layout_constraintStart_toEndOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"
+        app:layout_constraintTop_toBottomOf="@id/my_coin_name_tv"/>
 
-        <TextView
-            android:id="@+id/my_now_price_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="50,000,000"
-            android:textSize="10sp"
-            android:textColor="@color/black"
-            android:ellipsize="marquee"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/my_now_price_tv"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:text="50,000,000"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@id/my_profit_plus_tv"
+        app:layout_constraintTop_toTopOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 
 
-        <TextView
-            android:id="@+id/my_profit_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-35,000,000"
-            android:textSize="10sp"
-            android:textColor="@color/black"
-            android:ellipsize="marquee"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1" />
+    <TextView
+        android:id="@+id/my_profit_plus_tv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="+66,100,100"
+        android:gravity="center"
+        android:textColor="#FF493E"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 
-        <TextView
-            android:id="@+id/my_unit_price_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="51,000,000"
-            android:textSize="10sp"
-            android:ellipsize="marquee"
-            android:textColor="@color/black"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/my_profit_minus_tv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="-66,100,100"
+        android:gravity="center"
+        android:textColor="#0DB1F0"
+        android:visibility="gone"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 
-    </LinearLayout>
 
+    <TextView
+        android:id="@+id/my_unit_price_tv"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:text="51,000,000"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/my_profit_plus_tv"
+        app:layout_constraintTop_toTopOf="@id/my_coin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
