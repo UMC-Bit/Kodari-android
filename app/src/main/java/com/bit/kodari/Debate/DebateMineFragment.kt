@@ -26,6 +26,8 @@ import com.bit.kodari.Debate.PostData.DebateSelectPostResponse
 import com.bit.kodari.Debate.Retrofit.DebateMineView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
+import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getRetorfit
@@ -55,6 +57,12 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         setListener()
         callSelectPost()
         callMyProfile()
+
+//        binding.mineBackBtnTv.setOnClickListener {
+//            (context as MainActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_container_fl, ).commitAllowingStateLoss()
+//        }
+
         Log.d("nowPostIdx" , "지금 게시판의 postIdx : ${postIdx}")
     }
 
