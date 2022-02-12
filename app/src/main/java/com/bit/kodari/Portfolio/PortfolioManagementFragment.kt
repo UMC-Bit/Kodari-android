@@ -79,12 +79,14 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
             val accountName = binding.portfolioManagementInputAccountEt.text.toString()
             val property = binding.portfolioManagementInputAssetEt.text.toString()
             val postAccountRequest = PostAccountRequest(accountName,"1",property,getUserIdx())
-            val addCoinList = ArrayList<PsnCoinAddTradeInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
+            //val addCoinList = ArrayList<PsnCoinAddTradeInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
+            val addCoinList = ArrayList<PsnCoinAddInfo>()
             for( cur in psnCoinList){       //여기서 거래 생성으로 바꿔야함
                 //LocalDateTime 이 현재시간 가져오는것
-                val addCoin = PsnCoinAddTradeInfo(0,cur.coinIdx,cur.priceAvg,cur.amount,0.05,"buy","첫 등록",
-                    LocalDateTime.now().toString())
-                //var addCoin = PsnCoinAddInfo(getUserIdx(), cur.coinIdx,0,cur.priceAvg ,cur.amount)  //accountIdx는 다시 추가해야함
+                //val addCoin = PsnCoinAddInfo(getUserIdx(),cur.coinIdx,MyApplicationClass.myAccountIdx,cur.priceAvg,cur.amount)
+               //val addCoin = PsnCoinAddTradeInfo(0,cur.coinIdx,cur.priceAvg,cur.amount,0.05,"buy","첫 등록",
+                //    LocalDateTime.now().toString())
+                var addCoin = PsnCoinAddInfo(getUserIdx(), cur.coinIdx,0,cur.priceAvg ,cur.amount)  //accountIdx는 다시 추가해야함
                 addCoinList.add(addCoin)
             }
             Log.d("버튼 클릭" , "${psnCoinList.size}")
@@ -102,7 +104,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
     }
 
 
-    override fun makePortSuccess(response: PsnCoinAddTradeResponse) {
+    override fun makePortSuccess(response: PsnCoinAddResponse) {
         //생성 완료 됐을 때
         cnt++
         if(cnt == psnCoinList.size){            //넣은 코인만큼 호출되면 Home으로 돌아가자.

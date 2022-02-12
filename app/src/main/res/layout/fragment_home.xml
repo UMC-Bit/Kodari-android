@@ -147,7 +147,7 @@
 
                                 <!--                백그라운드로 선택시와 둥글게 구현-->
                                 <TextView
-                                    android:id="@+id/home_income_tv"
+                                    android:id="@+id/home_income_on_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
@@ -161,7 +161,22 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/home_yield_tv"
+                                    android:id="@+id/home_income_off_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@drawable/btn_outline_white"
+                                    android:padding="5dp"
+                                    android:text="소득"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/home_yield_off_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
@@ -170,61 +185,118 @@
                                     android:text="수익률"
                                     android:textColor="@color/black"
                                     android:textSize="20sp"
-                                    app:layout_constraintBottom_toBottomOf="@id/home_income_tv"
-                                    app:layout_constraintStart_toEndOf="@id/home_income_tv"
-                                    app:layout_constraintTop_toTopOf="@id/home_income_tv" />
+                                    app:layout_constraintBottom_toBottomOf="@id/home_income_on_tv"
+                                    app:layout_constraintStart_toEndOf="@id/home_income_on_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_income_on_tv" />
+
+                                <TextView
+                                    android:id="@+id/home_yield_on_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@drawable/btn_outline_yellow"
+                                    android:padding="5dp"
+                                    android:text="수익률"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="@id/home_income_off_tv"
+                                    app:layout_constraintStart_toEndOf="@id/home_income_off_tv"
+                                    app:layout_constraintTop_toTopOf="@id/home_income_off_tv" />
 
                                 <ImageView
-                                    android:id="@+id/home_line_iv"
+                                    android:id="@+id/home_line_on_iv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/home_line"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/home_day_tv"
-                                    app:layout_constraintStart_toEndOf="@id/home_yield_tv"
+                                    app:layout_constraintEnd_toStartOf="@id/day_container"
+                                    app:layout_constraintStart_toEndOf="@id/home_yield_off_tv"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <TextView
-                                    android:id="@+id/home_month_tv"
+                                <LinearLayout
+                                    android:id="@+id/day_container"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="5dp"
-                                    android:background="@drawable/btn_outline_white"
-                                    android:padding="5dp"
-                                    android:text="월"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent">
 
-                                <TextView
-                                    android:id="@+id/home_week_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="5dp"
-                                    android:background="@drawable/btn_outline_white"
-                                    android:padding="5dp"
-                                    android:text="주"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp"
-                                    app:layout_constraintBottom_toBottomOf="@id/home_month_tv"
-                                    app:layout_constraintEnd_toStartOf="@id/home_month_tv"
-                                    app:layout_constraintTop_toTopOf="@id/home_month_tv" />
+                                    <TextView
+                                        android:id="@+id/home_day_on_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_yellow"
+                                        android:padding="5dp"
+                                        android:text="일"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:visibility="visible" />
 
-                                <TextView
-                                    android:id="@+id/home_day_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="5dp"
-                                    android:background="@drawable/btn_outline_yellow"
-                                    android:padding="5dp"
-                                    android:text="일"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp"
-                                    app:layout_constraintBottom_toBottomOf="@id/home_week_tv"
-                                    app:layout_constraintEnd_toStartOf="@id/home_week_tv"
-                                    app:layout_constraintTop_toTopOf="@id/home_week_tv" />
+                                    <TextView
+                                        android:id="@+id/home_day_off_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_white"
+                                        android:padding="5dp"
+                                        android:text="일"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:visibility="gone" />
+
+
+                                    <TextView
+                                        android:id="@+id/home_week_off_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_white"
+                                        android:padding="5dp"
+                                        android:text="주"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp" />
+
+                                    <TextView
+                                        android:id="@+id/home_week_on_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_yellow"
+                                        android:padding="5dp"
+                                        android:text="주"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:visibility="gone" />
+
+                                    <TextView
+                                        android:id="@+id/home_month_off_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_white"
+                                        android:padding="5dp"
+                                        android:text="월"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp" />
+
+                                    <TextView
+                                        android:id="@+id/home_month_on_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:background="@drawable/btn_outline_yellow"
+                                        android:padding="5dp"
+                                        android:text="월"
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:visibility="gone" />
+
+                                </LinearLayout>
+
+
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
