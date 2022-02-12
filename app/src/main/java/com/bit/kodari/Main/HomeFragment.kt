@@ -312,6 +312,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //포토폴리오 IDX 조회 성공
     override fun getPortIdxSuccess(resp: PortIdxResponse) {
         Log.d("getPortIdx" , "성공")
+//        portIdxList.clear()               데이터 자동 추가가 왜됌?
+//        portfolioList.clear()
         for(idx in resp.result){
             portfolioList.add(MyPortfolioFragment(idx.portIdx))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
             portIdxList.add(idx.portIdx)                                //포토폴리오 인덱스 저장

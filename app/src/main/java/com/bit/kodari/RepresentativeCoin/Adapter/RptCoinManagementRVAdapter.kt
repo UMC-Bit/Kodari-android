@@ -1,6 +1,8 @@
 package com.bit.kodari.Main.Adapter
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +14,8 @@ import com.bumptech.glide.Glide
 class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResult>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>(){
 
     interface MyItemClickListener {
-        fun onItemClick(item: RptCoinMgtInsquireResult)
+        fun onItemCheck(item: RptCoinMgtInsquireResult)
+        fun onItemUnCheck(item:RptCoinMgtInsquireResult)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -30,6 +33,19 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResul
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
+
+            //업비트, 바이낸스 가격 추가하기.
+
+
+            //클릭했을때 체크 활성화하기.
+            if(item.isChecked){
+                binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.VISIBLE
+                binding.itemRepresentativeCoinManagementCoinListSelectOffIV.visibility = View.GONE
+            } else{
+                binding.itemRepresentativeCoinManagementCoinListSelectOffIV.visibility = View.VISIBLE
+                binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.GONE
+            }
+
         }
     }
 
@@ -40,6 +56,18 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResul
 
     override fun onBindViewHolder(holder: RepresentativeCoinManagementViewHolder, position: Int) {
         holder.bind(rptCoinList[position])
+        holder.binding.itemRepresentativeCoinManagementCoinListSelectOnIV.setOnClickListener {
+            holder.binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.GONE
+            holder.binding.itemRepresentativeCoinManagementCoinListSelectOffIV.visibility =View.VISIBLE
+            mItemClickListener.onItemUnCheck(rptCoinList[position])
+        }
+
+        holder.binding.itemRepresentativeCoinManagementCoinListSelectOffIV.setOnClickListener {
+            holder.binding.itemRepresentativeCoinManagementCoinListSelectOffIV.visibility = View.GONE
+            holder.binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.VISIBLE
+            mItemClickListener.onItemCheck(rptCoinList[position])
+        }
+
     }
-    override fun getItemCount()=rptCoinList.size
+    override fun getItemCount() = rptCoinList.size
 }
