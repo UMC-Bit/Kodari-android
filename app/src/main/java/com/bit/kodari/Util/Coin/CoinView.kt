@@ -7,6 +7,6 @@ import com.bit.kodari.Main.Data.RepresentCoinResult
 interface CoinView {
     fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>)
     fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>)
-    fun usdtPriceSuccess()
+    fun usdtPriceSuccess(usdtPrice: Int)
     fun coinPriceFailure(message: String)
 }

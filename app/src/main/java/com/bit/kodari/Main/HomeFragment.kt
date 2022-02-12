@@ -2,6 +2,7 @@ package com.bit.kodari.Main
 
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.GLES31
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -39,6 +40,8 @@ import com.bit.kodari.Util.getUserIdx
 import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView{
@@ -46,6 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
+    var usdtPrice: Int = 1
     var portfolioList = ArrayList<Fragment>()
 
     // 유저 코인 리스트
@@ -327,51 +331,66 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        requireActivity().runOnUiThread() {
-            // 소유 코인
-            for (i in userCoinList.indices) {
-                val symbol = userCoinList[i].symbol
-                if (upbitCoinPriceMap.containsKey(symbol)) {
-                    userCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+        if(requireActivity() != null) {
+            requireActivity().runOnUiThread() {
+                // 소유 코인
+                for (i in userCoinList.indices) {
+                    val symbol = userCoinList[i].symbol
+                    if (upbitCoinPriceMap.containsKey(symbol)) {
+                        userCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    }
+                }
+                // 대표 코인
+                for (i in representCoinList.indices) {
+                    val symbol = representCoinList[i].symbol
+                    if (upbitCoinPriceMap.containsKey(symbol)) {
+                        representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    }
+                }
+                // 뷰 바인딩
+                if (binding != null) {
+                    setRepresentRV()
+                    setRepresentPV()
                 }
             }
-            // 대표 코인
-            for (i in representCoinList.indices) {
-                val symbol = representCoinList[i].symbol
-                if (upbitCoinPriceMap.containsKey(symbol)) {
-                    representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
-                }
-            }
-            // 뷰 바인딩
-            setRepresentRV()
-            setRepresentPV()
         }
     }
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
-        requireActivity().runOnUiThread() {
-            // 소유 코인
-            for (i in userCoinList.indices) {
-                val symbol = userCoinList[i].symbol
-                if (binanceCoinPriceMap.containsKey(symbol)) {
-                    userCoinList[i].binancePrice = binanceCoinPriceMap.get(symbol)!!
+        if(requireActivity() != null) {
+            requireActivity().runOnUiThread() {
+                // 소유 코인
+                for (i in userCoinList.indices) {
+                    val symbol = userCoinList[i].symbol
+                    if (binanceCoinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = userCoinList[i].upbitPrice
+                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
+                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
+                        userCoinList[i].binancePrice = binancePrice
+                        userCoinList[i].kimchi = kimchi
+                    }
+                }
+                // 대표 코인
+                for (i in representCoinList.indices) {
+                    val symbol = representCoinList[i].symbol
+                    if (binanceCoinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = representCoinList[i].upbitPrice
+                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
+                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
+                        representCoinList[i].binancePrice = binancePrice
+                        representCoinList[i].kimchi = kimchi
+                    }
+                }
+                // 뷰 바인딩
+                if (binding != null) {
+                    setRepresentRV()
+                    setRepresentPV()
                 }
             }
-            // 대표 코인
-            for (i in representCoinList.indices) {
-                val symbol = representCoinList[i].symbol
-                if (binanceCoinPriceMap.containsKey(symbol)) {
-                    representCoinList[i].binancePrice = binanceCoinPriceMap.get(symbol)!!
-                }
-            }
-            // 뷰 바인딩
-            setRepresentRV()
-            setRepresentPV()
         }
     }
-
-    override fun usdtPriceSuccess() {
-        TODO("Not yet implemented")
+    override fun usdtPriceSuccess(usdtPrice: Int) {
+        this.usdtPrice = usdtPrice
     }
 
     override fun coinPriceFailure(message: String) {
@@ -404,9 +423,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         for (i in 0 until representCoinList.size) {
             coinSymbolSet.add(representCoinList[i].symbol)
         }
-        // KRW-USDT API
+        // Usdt 환율 받아옴
         val usdtService = UsdtService()
         usdtService.setCoinView(this)
+        usdtService.getFirsUsdtPrice()
         usdtService.getUsdtPrice()
         // 웹 소켓 연결
         upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
@@ -439,9 +459,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
     }
 
+    override fun onDestroy() {
+        upbitWebSocket.webSocket.cancel() // 웹 소켓 닫기
+        binanceWebSocket.webSocket.cancel()
+        super.onDestroy()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
-        upbitWebSocket.webSocket.close(1000, null) // 웹 소켓 닫기
-        binanceWebSocket.webSocket.close(1000,null)
+        upbitWebSocket.webSocket.cancel() // 웹 소켓 닫기
+        binanceWebSocket.webSocket.cancel()
+        //upbitWebSocket.webSocket.close(1000, null) // 웹 소켓 닫기
+
     }
 }

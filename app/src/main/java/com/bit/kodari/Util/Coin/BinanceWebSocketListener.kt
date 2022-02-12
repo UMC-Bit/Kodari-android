@@ -4,10 +4,10 @@ import android.util.Log
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener() {
     private lateinit var coinView: CoinView
-
     fun setCoinView(coinView: CoinView) {
         this.coinView = coinView
     }

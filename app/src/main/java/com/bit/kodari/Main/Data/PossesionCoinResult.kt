@@ -4,6 +4,7 @@ data class PossesionCoinResult(
     val userCoinIdx: Int,
     var upbitPrice: Double,
     var binancePrice: Double,
+    var kimchi: Double,
     var profit: Double,
     var coinImg: Any,
     val coinName: String,
