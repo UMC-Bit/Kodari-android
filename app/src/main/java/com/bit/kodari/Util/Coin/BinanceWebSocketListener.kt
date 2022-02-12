@@ -1,15 +1,11 @@
 package com.bit.kodari.Util.Coin
 
-import android.os.Handler
 import android.util.Log
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
 
-/*
-    업비트 시세 받아오는 소켓 리스너
- */
-class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(){
+class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener() {
     private lateinit var coinView: CoinView
 
     fun setCoinView(coinView: CoinView) {
@@ -22,31 +18,28 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     private val symbols = getCodes()
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
-        val text = "[{\"ticket\":\"kodari\"},{\"type\":\"ticker\",\"codes\":[${symbols}]}]"
-        webSocket.send(text)
         this.webSocket = webSocket
         //webSocket.close(NORMAL_CLOSURE_STATUS, null) //없을 경우 끊임없이 서버와 통신함
     }
 
-    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-        val message = bytes.utf8()
-        var symbol = JSONObject(message).getString("code")
-        symbol = symbol.replace("KRW-","") // KRW- 제거
-        val price = JSONObject(message).getDouble("trade_price")
-        coinPriceMap.put(symbol, price)
-        Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
-        // TODO HomeFragment livedata 처리
-        coinView.upbitPriceSuccess(coinPriceMap)
 
+    override fun onMessage(webSocket: WebSocket, message: String) {
+        var symbol = JSONObject(message).getString("s")
+        symbol = symbol.replace("USDT","") // KRW- 제거
+        val price = JSONObject(message).getDouble("c")
+        coinPriceMap.put(symbol, price)
+        Log.d("Binance_Socket", "Receiving bytes : ${message}")
+        // TODO HomeFragment livedata 처리
+        coinView.binancePriceSuccess(coinPriceMap)
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        Log.d("Upbit_Socket","Closing : $code / $reason")
+        Log.d("Binance_Socket","Closing : $code / $reason")
         webSocket.close(NORMAL_CLOSURE_STATUS, null)
         webSocket.cancel()
     }
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        Log.d("Upbit_Socket","Error : " + t.message)
+        Log.d("Binance_Socket","Error : " + t.message)
     }
 
     companion object {
@@ -55,7 +48,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     // Web socket 시작
     fun start(){
         val request: Request = Request.Builder()
-            .url("wss://api.upbit.com/websocket/v1")
+            .url("wss://stream.binance.com:9443/ws${symbols}")
             .build()
         var client: OkHttpClient = OkHttpClient()
         client.newWebSocket(request, this)
@@ -65,13 +58,11 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     private fun getCodes(): String{
         val sb = StringBuilder()
         coinSymbol.forEach {
-            it -> sb.append("\"")
-            sb.append("KRW-")
+                it -> sb.append("/")
             sb.append(it.toString())
-            sb.append("\",")
+            sb.append("usdt@ticker")
         }
-        sb.deleteCharAt(sb.length-1) // "," 제거
-        return sb.toString()
+        return sb.toString().lowercase()
     }
 
 }
