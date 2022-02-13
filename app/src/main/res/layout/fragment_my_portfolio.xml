@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="29dp"
         android:text="@string/my_asset"
         android:textColor="@color/black"
         android:textSize="20sp" />
@@ -33,18 +33,19 @@
 
     <TextView
         android:id="@+id/my_portfolio_modify_iv"
-        app:layout_constraintBottom_toBottomOf="@id/my_portfolio_restart_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/my_portfolio_restart_iv"
         android:text="편집"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="17dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:background="@drawable/btn_outline_yellow" />
+        android:background="@drawable/btn_outline_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <TextView
@@ -78,8 +79,9 @@
         app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="38dp"
+        android:textColor="@color/black"
         android:text="12월 28일 기준"
         android:textSize="11sp" />
 
@@ -90,8 +92,9 @@
         app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="30dp"
+        android:textColor="@color/black"
         android:text="졸업 좀 하자"
         android:textSize="11sp" />
 
