@@ -6,5 +6,5 @@ data class RptCoinAddResponse(
     @SerializedName("code")val code: Int,
     @SerializedName("isSuccess")val isSuccess: Boolean,
     @SerializedName("message")val message: String,
-    @SerializedName("result")val result: List<RptCoinAddResult>
+    @SerializedName("result")val result: RptCoinAddResult
 )

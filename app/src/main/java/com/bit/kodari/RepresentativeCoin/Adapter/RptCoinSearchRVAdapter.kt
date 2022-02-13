@@ -13,7 +13,8 @@ import com.bumptech.glide.Glide
 class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>): RecyclerView.Adapter<RptCoinSearchRVAdapter.RptCoinSearchViewHolder>()  {
 
     interface MyItemClickListener {
-        fun onItemClick(item:RptCoinSearchResult)
+        fun onItemCheck(item:RptCoinSearchResult)
+        fun onItemUnCheck(item:RptCoinSearchResult)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -48,15 +49,15 @@ class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>):
 
     override fun onBindViewHolder(holder: RptCoinSearchViewHolder, position: Int) {
         holder.bind(searchCoinList[position])
-//        var SearchCoinList = searchCoinList[position]
+
         holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.setOnClickListener {
-            val check = true
-            mItemClickListener.onItemClick(searchCoinList[position])
+            mItemClickListener.onItemCheck(searchCoinList[position])
             holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.GONE
             holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility= View.VISIBLE
         }
 
         holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.setOnClickListener {
+            mItemClickListener.onItemUnCheck(searchCoinList[position])
             holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility=View.GONE
             holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.VISIBLE
         }

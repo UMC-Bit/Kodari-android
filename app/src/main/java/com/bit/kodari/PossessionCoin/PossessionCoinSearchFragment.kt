@@ -21,7 +21,7 @@ import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinSearchBinding
 
 
-class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
+class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoinSearchView {
     lateinit var binding:FragmentPossessionCoinSearchBinding
     private var coinList = ArrayList<PsnCoinSearchResult>()
     private var filteredList  = ArrayList<PsnCoinSearchResult>()
@@ -44,7 +44,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
 
             binding.possessionCoinSearchBackIV.setOnClickListener {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).addToBackStack(null).commitAllowingStateLoss()
         }
 
         return binding.root
@@ -58,7 +58,7 @@ class PossessionCoinSearchFragment : Fragment(), PsnCoinSearchView {
             override fun onItemClick(item: PsnCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
 //                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinAddFragment().apply {
+                    .replace(R.id.main_container_fl, PossessionCoinAddFragment(accountName).apply {
                         arguments = Bundle().apply {
                             putInt("coinIdx", item.coinIdx)
                             putString("coinImage",item.coinImg)

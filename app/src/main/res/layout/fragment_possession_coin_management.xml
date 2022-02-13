@@ -97,15 +97,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/temp_dialog_BT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="메모, 트위터 dialog(임시)"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
                     android:id="@+id/possession_coin_management_outline_TV"
                     android:layout_width="187dp"
                     android:layout_height="23dp"

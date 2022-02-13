@@ -1,12 +1,15 @@
 package com.bit.kodari.Portfolio
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Portfolio.Adapter.ManagementRVAdapter
@@ -16,9 +19,14 @@ import com.bit.kodari.Portfolio.Retrofit.PortManagementView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddResponse
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeInfo
+import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentPortfolioManagementBinding
+import java.time.LocalDate
+import java.time.LocalDateTime
+
 //뒤로가기 눌렀을때 Home으로 가게 구현해야함 , 또 기존 정보 다 날라가게 해야함..
 class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBinding>(FragmentPortfolioManagementBinding::inflate) , PortManagementView{
 
@@ -29,6 +37,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initAfterBinding() {
         setInit()
         setRecyclerView()                   //리싸이클러뷰 우선 셋팅
@@ -52,6 +61,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setListener(){
         binding.portfolioManagementCoinBackBtnIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
@@ -69,8 +79,13 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
             val accountName = binding.portfolioManagementInputAccountEt.text.toString()
             val property = binding.portfolioManagementInputAssetEt.text.toString()
             val postAccountRequest = PostAccountRequest(accountName,"1",property,getUserIdx())
-            val addCoinList = ArrayList<PsnCoinAddInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
-            for( cur in psnCoinList){
+            //val addCoinList = ArrayList<PsnCoinAddTradeInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
+            val addCoinList = ArrayList<PsnCoinAddInfo>()
+            for( cur in psnCoinList){       //여기서 거래 생성으로 바꿔야함
+                //LocalDateTime 이 현재시간 가져오는것
+                //val addCoin = PsnCoinAddInfo(getUserIdx(),cur.coinIdx,MyApplicationClass.myAccountIdx,cur.priceAvg,cur.amount)
+               //val addCoin = PsnCoinAddTradeInfo(0,cur.coinIdx,cur.priceAvg,cur.amount,0.05,"buy","첫 등록",
+                //    LocalDateTime.now().toString())
                 var addCoin = PsnCoinAddInfo(getUserIdx(), cur.coinIdx,0,cur.priceAvg ,cur.amount)  //accountIdx는 다시 추가해야함
                 addCoinList.add(addCoin)
             }

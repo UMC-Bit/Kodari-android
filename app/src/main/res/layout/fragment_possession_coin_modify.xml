@@ -516,7 +516,6 @@
                         android:background="#80D3D3D3"
                         android:drawablePadding="6dp"
                         android:hint="기억하고 싶은 내용을 입력해주세요."
-                        android:inputType="number"
                         android:maxLength="100"
                         android:paddingLeft="17dp"
                         android:textColorHint="#FF584E"

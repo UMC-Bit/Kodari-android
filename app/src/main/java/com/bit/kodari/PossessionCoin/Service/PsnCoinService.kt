@@ -104,11 +104,11 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
     }
 
     //소유 코인 조회
-    fun getPsnCoinMgtInsquire()
+    fun getPsnCoinMgtInsquire(portIdx:Int)
     {
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
-
-        psnCoinService.getPsnCoinInquire(getJwt()!! , 25).enqueue(object : Callback<PsnCoinMgtInsquireResponse>{
+        //portIdx 저장하기
+        psnCoinService.getPsnCoinInquire(getJwt()!! , portIdx).enqueue(object : Callback<PsnCoinMgtInsquireResponse>{
             override fun onResponse(
                 call: Call<PsnCoinMgtInsquireResponse>,
                 response: Response<PsnCoinMgtInsquireResponse>
