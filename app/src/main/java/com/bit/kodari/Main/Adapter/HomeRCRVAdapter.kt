@@ -34,9 +34,11 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
+
     public fun formatD(number:Double): String {
         return df.format(number)
     }
+
     fun formatPrice(number: Double): String{
         lateinit var price: String
         if(number>=1 && number < 10){
