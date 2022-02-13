@@ -57,12 +57,6 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         setListener()
         callSelectPost()
         callMyProfile()
-
-//        binding.mineBackBtnTv.setOnClickListener {
-//            (context as MainActivity).supportFragmentManager.beginTransaction()
-//                .replace(R.id.main_container_fl, ).commitAllowingStateLoss()
-//        }
-
         Log.d("nowPostIdx" , "지금 게시판의 postIdx : ${postIdx}")
     }
 
@@ -238,7 +232,9 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         binding.mineNoLikeNumTv.text = post.dislike.toString()
         binding.mineCoinSymbolTv.text = post.symbol
         if(!post.checkWriter){                                  //체크 writer가 false 면 버튼 안보이게해야함
-            binding.mineBtnContainerLl.visibility = View.GONE
+            binding.mineOutlineTV.visibility = View.GONE
+            binding.mineModifyTv.visibility = View.GONE
+            binding.mineRemoveTv.visibility = View.GONE
         }
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)

@@ -11,6 +11,8 @@ import com.bit.kodari.Debate.PostData.DebateWritePostRequest
 import com.bit.kodari.Debate.PostData.DebateWritePostResponse
 import com.bit.kodari.Debate.Retrofit.DebatePostWriteVIew
 import com.bit.kodari.Debate.Service.DebateService
+import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getUserIdx

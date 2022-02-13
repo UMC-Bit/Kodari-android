@@ -33,7 +33,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="19dp"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/debate_main_find_coin_Cl"
