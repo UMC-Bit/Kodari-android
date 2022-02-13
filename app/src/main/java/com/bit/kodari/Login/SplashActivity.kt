@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bit.kodari.Config.BaseActivity
+import com.bit.kodari.Intro.IntroActivity
 import com.bit.kodari.Login.Retrofit.LogInView
 import com.bit.kodari.Login.RetrofitData.LogInInfo
 import com.bit.kodari.Login.RetrofitData.LogInResponse
@@ -41,7 +42,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         Handler(Looper.getMainLooper()).postDelayed({
             if(getAutoLogin()){             //자동 로그인 활성화 됐을때
                 if(getEmail() == null || getPw() == null){          //저장된 아이디와 패스워드가 없으면
-                    startNextActivity(LoginActivity::class.java)
+                    startNextActivity(IntroActivity::class.java)
                     finish()
                 } else if(getEmail() != null && getPw() != null){                                             //로그인 정보가 있으면
                     val loginInfo = LogInInfo(getEmail()!! , getPw()!!)
@@ -50,7 +51,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     logInService.getLogIn(loginInfo)            //로그인 정보로 로그인 시도
                 }
             } else{                        //자동 로그인 활성화 안되어있으면
-                startNextActivity(LoginActivity::class.java)
+                startNextActivity(IntroActivity::class.java)
                 finish()
             }
 
