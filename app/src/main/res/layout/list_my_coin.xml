@@ -46,19 +46,19 @@
 
     <TextView
         android:id="@+id/my_now_price_tv"
-        android:layout_width="55dp"
+        android:layout_width="57dp"
         android:layout_height="wrap_content"
         android:text="50,000,000"
         android:textColor="@color/black"
         android:textSize="10sp"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@id/my_profit_plus_tv"
+        app:layout_constraintEnd_toStartOf="@id/myProfitTv"
         app:layout_constraintTop_toTopOf="@id/my_coin_iv"
         app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 
 
     <TextView
-        android:id="@+id/my_profit_plus_tv"
+        android:id="@+id/myProfitTv"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -96,7 +96,7 @@
         android:textColor="@color/black"
         android:textSize="10sp"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@id/my_profit_plus_tv"
+        app:layout_constraintStart_toEndOf="@id/myProfitTv"
         app:layout_constraintTop_toTopOf="@id/my_coin_iv"
         app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
 

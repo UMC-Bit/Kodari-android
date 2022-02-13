@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/represent_upbit_price_tv"
-            android:layout_width="55dp"
+            android:layout_width="57dp"
             android:layout_height="wrap_content"
             android:text="50,000,000"
             android:textSize="10sp"
