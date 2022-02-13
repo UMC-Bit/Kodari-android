@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import com.MyApplicationClass
+import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeInfo
@@ -24,25 +26,15 @@ import java.lang.StringBuilder
 import java.util.*
 import kotlin.properties.Delegates
 
-class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
-    lateinit var binding:FragmentPossessionCoinModifyBinding
+class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinModifyBinding>(FragmentPossessionCoinModifyBinding::inflate), PsnCoinAddTradeView {
     val tradeTime = StringBuilder()
     var coinIdx by Delegates.notNull<Int>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentPossessionCoinModifyBinding.inflate(inflater, container, false)
-
-        moveLayout()
+    override fun initAfterBinding() {
         datetimepicker()
-        BuyAndSellButton()
-        getCoinInformation()
         setListener()
 
-        return binding.root
+        getCoinInformation()
     }
 
     fun datetimepicker()
@@ -77,31 +69,6 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
         }
     }
 
-    fun BuyAndSellButton()
-    {
-        binding.possessionCoinModifyBuyOffTV.setOnClickListener {
-            binding.possessionCoinModifyBuyOffTV.visibility=View.GONE
-            binding.possessionCoinModifyBuyOnTV.visibility=View.VISIBLE
-            binding.possessionCoinModifySellOnTV.visibility=View.GONE
-            binding.possessionCoinModifySellOffTV.visibility=View.VISIBLE
-        }
-
-        binding.possessionCoinModifySellOffTV.setOnClickListener {
-            binding.possessionCoinModifySellOffTV.visibility=View.GONE
-            binding.possessionCoinModifySellOnTV.visibility=View.VISIBLE
-            binding.possessionCoinModifyBuyOnTV.visibility=View.GONE
-            binding.possessionCoinModifyBuyOffTV.visibility=View.VISIBLE
-        }
-    }
-
-    fun moveLayout()
-    {
-        binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
-        }
-    }
-
     // 소유 코인 관리 fragement에서 선택한 코인 정보(코인 이름, 코인 심볼, 코인 이미지)를 수정 fragment로 가져오기
     fun getCoinInformation()
     {
@@ -129,25 +96,26 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
         }
 
         if(requireArguments().containsKey("priceAvg")){
-            binding.possessionCoinModifyAverageunitPriceNumberTV.text=requireArguments().getString("priceAvg")
+            val value = requireArguments().getString("priceAvg")!!.toDouble()
+            binding.possessionCoinModifyAverageunitPriceNumberTV.text=String.format("%.2f", value)
         }
     }
 
     fun setListener()
     {
         binding.possessionCoinModifyCompleteButtonTV.setOnClickListener {
-            val psnCoinService = PsnCoinService()
             // 거래 내역 생성 API
-            var portIdx=25
-            var feeText = binding.possessionCoinModifyFeeInputET.text.toString()
-            var fee: Double = 0.05
-            if(feeText.isNotEmpty())
-                fee = feeText.toDouble()
-            var price = binding.possessionCoinModifyPriceInputET.text.toString()
-            var amount = binding.possessionCoinModifyQuantityInputET.text.toString()
-            var category = "buy"
-            var memo=binding.possessionCoinModifyMemoInputET.text.toString()
-            var date=binding.possessionCoinModifyDateInputET.text.toString()
+            val portIdx= MyApplicationClass.myPortIdx
+            var fee = 0.05
+            if(binding.possessionCoinModifyFeeInputET.text.toString().isNotEmpty()) fee = binding.possessionCoinModifyFeeInputET.text.toString().toDouble()
+            val price = binding.possessionCoinModifyPriceInputET.text.toString()
+            val amount = binding.possessionCoinModifyQuantityInputET.text.toString()
+            var category = "buy"                                                    //기본값이 매수
+            if(binding.possessionCoinModifySellOnTV.visibility == View.VISIBLE){ //매도가 활성화되어있으면
+                category = "sell"
+            }
+            val memo=binding.possessionCoinModifyMemoInputET.text.toString()
+            val date=binding.possessionCoinModifyDateInputET.text.toString()
             val psnCoinAddTradeInfo = PsnCoinAddTradeInfo(
                 portIdx, coinIdx, price,
                 amount, fee, category,
@@ -158,17 +126,41 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
                 "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${price}, " +
                         "${psnCoinAddTradeInfo.amount}, ${psnCoinAddTradeInfo.fee}, ${psnCoinAddTradeInfo.category}, ${psnCoinAddTradeInfo.memo}, ${psnCoinAddTradeInfo.date}"
             )
+            val psnCoinService = PsnCoinService()
             psnCoinService.setPsnCoinAddTradeView(this)
+            showLoadingDialog(requireContext())
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
+        }
+
+        //매수 눌렀을때
+        binding.possessionCoinModifyBuyOffTV.setOnClickListener {
+            binding.possessionCoinModifyBuyOffTV.visibility=View.GONE
+            binding.possessionCoinModifyBuyOnTV.visibility=View.VISIBLE
+            binding.possessionCoinModifySellOnTV.visibility=View.GONE
+            binding.possessionCoinModifySellOffTV.visibility=View.VISIBLE
+        }
+        //매도 눌렀을때
+        binding.possessionCoinModifySellOffTV.setOnClickListener {
+            binding.possessionCoinModifySellOffTV.visibility=View.GONE
+            binding.possessionCoinModifySellOnTV.visibility=View.VISIBLE
+            binding.possessionCoinModifyBuyOnTV.visibility=View.GONE
+            binding.possessionCoinModifyBuyOffTV.visibility=View.VISIBLE
+        }
+
+        //프래그먼트 뒤로가기
+        binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
         }
     }
 
     override fun psnCoinAddTradeSuccess(response: PsnCoinAddTradeResponse) {
+        dismissLoadingDialog()
         when(response.code){
             1000 -> {
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
                 Log.d("psncoinaddtradesuccess", "거래내역 추가 성공, ${response}")
             }
             else -> {
@@ -179,6 +171,7 @@ class PossessionCoinModifyFragment : Fragment(), PsnCoinAddTradeView {
     }
 
     override fun psnCoinAddTradeFailure(message: String) {
+        dismissLoadingDialog()
         Log.d("failaddtrade" ,"$message")
     }
 }

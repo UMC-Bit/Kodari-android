@@ -4,7 +4,7 @@ data class RepresentCoinResult(
     var coinIdx: Int,
     var binancePrice: Double,
     var upbitPrice: Double,
-    var kimchiPremium: Double,
+    var kimchi: Double,
     var coinImg: Any,
     var coinName: String,
     var portIdx: Int,

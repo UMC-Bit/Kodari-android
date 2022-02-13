@@ -74,8 +74,9 @@
                 android:layout_height="wrap_content"
                 android:text="30,000원"
                 android:textSize="12dp"
+                android:layout_marginTop="35dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/item_possession_coin_memo_date_TV"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/item_possession_coin_memo_quantity_TV"
@@ -120,7 +121,8 @@
                         android:drawablePadding="6dp"
                         android:hint="전일 종가로 무조건 팔기 (흔들리지 않고)"
                         android:inputType="text"
-                        android:textSize="10sp">
+                        android:textSize="10sp"
+                        android:gravity="center">
 
                     </TextView>
 

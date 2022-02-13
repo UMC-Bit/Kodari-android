@@ -5,6 +5,7 @@ import android.icu.number.IntegerWidth
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Login.SignupPwFragment
@@ -21,21 +22,23 @@ import com.bumptech.glide.Glide
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.properties.Delegates
-class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>(FragmentPossessionCoinAddBinding::inflate) , PsnCoinAddView,
-    PsnCoinAddTradeView {
+class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinAddBinding>(FragmentPossessionCoinAddBinding::inflate) , PsnCoinAddTradeView {
     val tradeTime = StringBuilder()
     var coinIdx by Delegates.notNull<Int>()
 
     override fun initAfterBinding() {
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment()).addToBackStack(null)
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).addToBackStack(null)
                 .commitAllowingStateLoss()
         }
         datetimepicker()
         getCoinInformation()
         setListener()
+        //포토폴리오 이름 ...
+        binding.possessionCoinAddAccountNameTV.text = accountName
     }
+
     fun datetimepicker()
     {
         val mcurrentTime = Calendar.getInstance()
@@ -86,28 +89,17 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
     {
         binding.possessionCoinAddCompleteButtonTV.setOnClickListener {
             // 소유 코인 추가 API
-            var userIdx = getUserIdx()
-            var accountIdx=32
-            var fee: Double = 0.05
-            var price = binding.possessionCoinAddPriceInputET.text.toString()
-            var amount = binding.possessionCoinAddQuantityInputET.text.toString()
-//            val psnCoinAddinfo = PsnCoinAddInfo(userIdx, coinIdx, accountIdx, priceAvg, amount)
-//            Log.d(
-//                "psnCoinAdd",
-//                "소유 코인 정보 : ${userIdx} , ${coinIdx} , " +
-//                        "${accountIdx}, ${priceAvg}, ${amount}"
-//            )
-            val psnCoinService = PsnCoinService()
-//            psnCoinService.setPsnCoinAddView(this)
-//            psnCoinService.getPsnCoinAdd(psnCoinAddinfo)
+            var fee = 0.05
+            val price = binding.possessionCoinAddPriceInputET.text.toString()
+            val amount = binding.possessionCoinAddQuantityInputET.text.toString()
             // 거래 내역 생성 API
-            var portIdx=25
-            var feeText = binding.possessionCoinAddFeeInputET.text.toString()
+            val portIdx=MyApplicationClass.myPortIdx
+            val feeText = binding.possessionCoinAddFeeInputET.text.toString()
             if(feeText.isNotEmpty())
                 fee = feeText.toDouble()
-            var category = "buy"
-            var memo=binding.possessionCoinAddMemoInputET.text.toString()
-            var date=binding.possessionCoinAddDateInputET.text.toString()
+            val category = "buy"
+            val memo=binding.possessionCoinAddMemoInputET.text.toString()
+            val date=binding.possessionCoinAddDateInputET.text.toString()
             val psnCoinAddTradeInfo = PsnCoinAddTradeInfo(
                 portIdx, coinIdx, price,
                 amount, fee, category,
@@ -118,38 +110,48 @@ class PossessionCoinAddFragment : BaseFragment<FragmentPossessionCoinAddBinding>
                 "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${price}, " +
                         "${psnCoinAddTradeInfo.amount}, ${psnCoinAddTradeInfo.fee}, ${psnCoinAddTradeInfo.category}, ${psnCoinAddTradeInfo.memo}, ${psnCoinAddTradeInfo.date}"
             )
+            val psnCoinService = PsnCoinService()
             psnCoinService.setPsnCoinAddTradeView(this)
+            showLoadingDialog(requireContext())
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
         }
     }
-    override fun psnCoinAddSuccess(response: PsnCoinAddResponse) {
-        when(response.code){
-            1000 -> {
-                Toast.makeText(context,"소유코인 추가 성공" , Toast.LENGTH_SHORT).show()
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
-            }
-            else -> {
-                Toast.makeText(context,"소유코인 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-    override fun psnCoinAddFailure(message: String) {
-        Log.d("failadd" ,"$message")
-    }
+
+//    override fun psnCoinAddSuccess(response: PsnCoinAddResponse) {
+//        dismissLoadingDialog()
+//        when(response.code){
+//            1000 -> {
+//                Toast.makeText(context,"소유코인 추가 성공" , Toast.LENGTH_SHORT).show()
+//                (context as MainActivity).supportFragmentManager.beginTransaction()
+//                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
+//            }
+//            else -> {
+//                Toast.makeText(context,"소유코인 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
+//            }
+//        }
+//    }
+//
+//    override fun psnCoinAddFailure(message: String) {
+//        dismissLoadingDialog()
+//        Log.d("failadd" ,"$message")
+//    }
+
     override fun psnCoinAddTradeSuccess(response: PsnCoinAddTradeResponse) {
+        dismissLoadingDialog()
         when(response.code){
             1000 -> {
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
             }
             else -> {
                 Toast.makeText(context,"거래내역 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
             }
         }
     }
+
     override fun psnCoinAddTradeFailure(message: String) {
+        dismissLoadingDialog()
         Log.d("failaddtrade" ,"$message")
     }
 }

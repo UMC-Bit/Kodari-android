@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
@@ -32,8 +33,11 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
     private var coinList = ArrayList<RptCoinSearchResult>()
     private var filteredList  = ArrayList<RptCoinSearchResult>()
     private lateinit var rptCoinSearchRVAdapter: RptCoinSearchRVAdapter
-    var coinIdx by Delegates.notNull<Int>()
+    private var addList = HashSet<Int>()          //추가할 코인 리스트
 
+    companion object{
+        var cnt = 0
+    }
     override fun initAfterBinding() {
         getCoins()
         setListeners()
@@ -49,17 +53,18 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         //아이템 클릭 리스너를 현재 뷰에서 처리
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         rptCoinSearchRVAdapter.setMyItemClickListener(object : RptCoinSearchRVAdapter.MyItemClickListener{
-            override fun onItemClick(item: RptCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
+            override fun onItemCheck(item: RptCoinSearchResult) {
                 coinList[item.coinIdx-1].isCheck =true
-//                (context as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment().apply {
-//                        arguments = Bundle().apply {
-//                            putInt("coinIdx", item.coinIdx)
-//                            putString("coinImage",item.coinImg)
-//                            putString("coinName", item.coinName)
-//                            putString("coinSymbol", item.symbol)
-//                        }
-//                    }).commitAllowingStateLoss()
+                if(!addList.contains(item.coinIdx)){
+                    addList.add(item.coinIdx)
+                }
+            }
+
+            override fun onItemUnCheck(item: RptCoinSearchResult) {
+                coinList[item.coinIdx-1].isCheck =false
+                if(addList.contains(item.coinIdx)){
+                    addList.remove(item.coinIdx)
+                }
             }
         })
         binding.representativeCoinSearchCoinListRV.layoutManager = LinearLayoutManager(context as MainActivity)
@@ -70,12 +75,11 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
     {
         binding.representativeCoinSearchCompleteTV.setOnClickListener {
             // 대표 코인 추가 API
-            var portIdx = 25 // 포트폴리오 인덱스 연결 필요
-            val rptCoinAddInfo=RptCoinAddInfo(portIdx, coinIdx)
-            Log.d("rptCoinAdd", "대표 코인 추가 정보 : ${portIdx}, ${coinIdx}")
+            val portIdx = MyApplicationClass.myPortIdx // 포트폴리오 인덱스 연결 필요
             val rptCoinService=RptCoinService()
             rptCoinService.setRptCoinAddView(this)
-            rptCoinService.getRptCoinAdd(rptCoinAddInfo)
+            showLoadingDialog(requireContext())
+            rptCoinService.getRptCoinAdd(addList)
         }
 
         binding.representativeCoinSearchSearchInputET.addTextChangedListener(object: TextWatcher {
@@ -128,19 +132,20 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
 
     // 대표 코인 추가 성공
     override fun rptCoinAddAllSuccess(response: RptCoinAddResponse) {
-        when(response.code){
-            1000 -> {
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
-            }
-            else ->{
-                Toast.makeText(context, "대표코인 추가 실패, &{response.message}", Toast.LENGTH_LONG).show()
-            }
+        Log.d("addRpt ", "실행 , 사이즈 : ${addList.size}" )
+
+        cnt++
+        if(cnt == addList.size){        //추가 성공
+            dismissLoadingDialog()
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
+            Log.d("addRpt ", "추가 성공")
         }
     }
 
     // 대표 코인 추가 실패
     override fun rptCoinAddAllFailure(message: String) {
-        Log.d("rptCoinAddFail", "$message")
+        dismissLoadingDialog()
+        showToast(message)
     }
 }

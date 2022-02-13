@@ -13,7 +13,7 @@ import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinViewpagerAdapter
 import com.bit.kodari.databinding.DialogMemoAndTwitterBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class DialogMemoAndTwitter : DialogFragment(){
+class DialogMemoAndTwitter(val coinIdx:Int) : DialogFragment(){
 
     lateinit var binding: DialogMemoAndTwitterBinding
     private val information = arrayListOf("메모", "트위터")
@@ -26,7 +26,7 @@ class DialogMemoAndTwitter : DialogFragment(){
         binding= DialogMemoAndTwitterBinding.inflate(inflater , container , false)
 
         //뷰페이저와 탭 레이아웃 연결
-        val possessionCoinAdapter = PossessionCoinViewpagerAdapter(this)
+        val possessionCoinAdapter = PossessionCoinViewpagerAdapter(this,coinIdx)
         binding.memoAndTwitterVp.adapter = possessionCoinAdapter
         TabLayoutMediator(binding.memoAndTwitterTb, binding.memoAndTwitterVp) {
             tab, position ->

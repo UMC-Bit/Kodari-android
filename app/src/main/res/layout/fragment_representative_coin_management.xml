@@ -144,16 +144,6 @@
 
                     </androidx.core.widget.NestedScrollView>
 
-                    <TextView
-                        android:id="@+id/temp_delete_dialog_BT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="삭제 dialog(임시)"
-                        android:textColor="#000000"
-                        app:layout_constraintEnd_toStartOf="@id/representative_coin_management_delete_button_IB"
-                        app:layout_constraintTop_toTopOf="@id/representative_coin_management_delete_button_IB"
-                        app:layout_constraintBottom_toBottomOf="@id/representative_coin_management_delete_button_IB"/>
-
                     <ImageButton
                         android:id="@+id/representative_coin_management_delete_button_IB"
                         android:layout_width="wrap_content"

@@ -1,6 +1,8 @@
 package com.bit.kodari.RepresentativeCoin.RetrofitData
 
+import com.google.gson.annotations.SerializedName
+
 data class RptCoinAddInfo(
-    var portIdx: Int,
-    var coinIdx: Int
+    @SerializedName("portIdx") var portIdx: Int,
+    @SerializedName("coinIdx") var coinIdx: Int
 )

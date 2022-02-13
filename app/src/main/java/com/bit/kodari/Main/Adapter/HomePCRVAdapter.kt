@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.databinding.ListMyCoinBinding
 import com.bumptech.glide.Glide
+import java.text.DecimalFormat
 
 class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<HomePCRVAdapter.MyViewHolder>(){
+    private var df: DecimalFormat = DecimalFormat("#.##")
 
     interface MyItemClickListener{
         fun onClickItem(item:PossesionCoinResult)
@@ -27,9 +29,9 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
             Glide.with(binding.myCoinIv)
                 .load(item.coinImg)
                 .into(binding.myCoinIv)
-            binding.myNowPriceTv.text = item.upbitPrice.toString()
-            binding.myProfitPlusTv.text = item.profit.toString()
-            binding.myUnitPriceTv.text = item.priceAvg.toString()
+            binding.myNowPriceTv.text = formatPrice(item.upbitPrice) +"원"
+            binding.myProfitTv.text = item.profit.toString()
+            binding.myUnitPriceTv.text = String.format("%.2f", item.priceAvg)
         //binding.representCoinSymbolTv.text = item.symbol
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }
@@ -46,4 +48,23 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
+
+    public fun formatD(number:Double): String {
+        return df.format(number)
+    }
+
+    fun formatPrice(number: Double): String{
+        lateinit var price: String
+        if(number>=1 && number < 10){
+            price = String.format("%.2f", number)
+        }else if(number>=10 && number < 100){
+            price = String.format("%.1f", number)
+        }else if(number>=100){
+            val price_ = String.format("%.0f", number).toDouble()
+            price = formatD(price_)
+        }else{
+            price = String.format("%.5f", number)
+        }
+        return price;
+    }
 }
