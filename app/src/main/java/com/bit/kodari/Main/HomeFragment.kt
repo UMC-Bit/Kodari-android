@@ -82,9 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var binanceWebSocket: BinanceWebSocketListener
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
-        setChartDummy()
-        setListener()
-        setViewpager()
 
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
@@ -438,8 +435,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 accounName = response.result.accountName                //계좌이름
                 Log.d("인덱스 정보" , "account : ${MyApplicationClass.myAccountIdx} , Port : ${MyApplicationClass.myPortIdx}")
                 Log.d("Callidx" , "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}")
-                }//계좌 인덱스 셋팅 됐을때 차트 호출
+                //계좌 인덱스 셋팅 됐을때 차트 호출
                 callGetProfit()
+            }
             else -> {
                 showToast(response.message)
             }
@@ -568,10 +566,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //일별 데이터 성공
     override fun getDayProfitSuccess(response: GetProfitResponse) {
+        if(response.result[0].profitIdx == 0)
+            return
         val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-        for(cur in response.result){
-            cur.createAt = cur.createAt.substring(5,10)         //월-일만 저장
-            profitList.add(cur)             //정보들 저장
+            for (cur in response.result) {
+                cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
+                profitList.add(cur)             //정보들 저장
         }
         setChartDummy(profitList)
     }
@@ -583,11 +583,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //주별 데이터 성공
     override fun getWeekProfitSuccess(response: GetProfitResponse) {
+        if(response.result[0].profitIdx == 0)
+            return
         val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-        for(cur in response.result){
-            cur.createAt = cur.createAt.substring(5,10)         //월-일만 저장
-            profitList.add(cur)             //정보들 저장
-        }
+
+            for (cur in response.result) {
+                cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
+                profitList.add(cur)             //정보들 저장
+            }
         setChartDummy(profitList)
     }
     //주별 데이터 실패
@@ -597,6 +600,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //월별 데이터 성공
     override fun getMonthProfitSuccess(response: GetProfitResponse) {
+        if(response.result[0].profitIdx == 0)
+            return
         val profitList : ArrayList<GetProfitResult> = ArrayList()
         for(cur in response.result){
             cur.createAt = cur.createAt.substring(5,10)         //월-일만 저장
