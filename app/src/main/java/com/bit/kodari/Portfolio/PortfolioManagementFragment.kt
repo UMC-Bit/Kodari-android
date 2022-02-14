@@ -1,5 +1,6 @@
 package com.bit.kodari.Portfolio
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MyApplicationClass
@@ -63,9 +65,16 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setListener(){
+
+        binding.root.setOnTouchListener { view, motionEvent ->
+            hideKeyboard()
+            false
+        }
+
+
         binding.portfolioManagementCoinBackBtnIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , EnrollExchangeFragment()).addToBackStack(null).commit()
+                .replace(R.id.main_container_fl , EnrollExchangeFragment()).commit()
         }
 
         binding.portfolioManagementSearchCoinBtn.setOnClickListener {
@@ -116,6 +125,19 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
             //홈 화면으로 되돌리기
         }
 
+    }
+
+    //다른 곳 클릭시 올라온 키보드 내려가게함
+    fun hideKeyboard() {
+        if (activity != null && requireActivity().currentFocus != null) {
+            // 프래그먼트기 때문에 getActivity() 사용
+            val inputManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                requireActivity().currentFocus!!.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
     }
 
     override fun makePortFailure(message: String) {

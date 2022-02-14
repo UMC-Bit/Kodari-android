@@ -44,7 +44,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         debateMainRVAdapter.setMyItemClickListener(object : DebateMainRVAdapter.MyItemClickListener{
             override fun onItemClick(item: DebatePostResult) {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, DebateMineFragment().apply {
+                    .replace(R.id.main_container_fl, DebateMineFragment(1).apply {
                         arguments = Bundle().apply {
                             putInt("postIdx" , item.postIdx)
                         }

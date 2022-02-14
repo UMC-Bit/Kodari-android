@@ -13,7 +13,7 @@ import com.bit.kodari.databinding.FragmentDebateModifyPostBinding
 import com.bumptech.glide.Glide
 
 
-class DebateModifyPostFragment : BaseFragment<FragmentDebateModifyPostBinding>(FragmentDebateModifyPostBinding::inflate) , DebateModifyPostView {
+class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFragment<FragmentDebateModifyPostBinding>(FragmentDebateModifyPostBinding::inflate) , DebateModifyPostView {
 
     var postIdx = 0
 
@@ -63,9 +63,10 @@ class DebateModifyPostFragment : BaseFragment<FragmentDebateModifyPostBinding>(F
           1000 -> {
               showToast("${response.result}")
               requireActivity().supportFragmentManager.beginTransaction()
-                  .replace(R.id.main_container_fl , DebateMineFragment().apply {
+                  .replace(R.id.main_container_fl , DebateMineFragment(2,coinName).apply {
                       arguments = Bundle().apply {
                           putInt("postIdx" , postIdx)
+                          putInt("coinIdx" , coinIdx)
                       }
                   }).commitAllowingStateLoss()
           }
