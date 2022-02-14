@@ -435,6 +435,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null && checkView) {
@@ -627,7 +628,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun callGetProfit(){
-        showToast("호출")
         if(binding.homeDayOnTv.visibility == View.VISIBLE){
             val homeService = HomeService()
             homeService.setHomeView(this)

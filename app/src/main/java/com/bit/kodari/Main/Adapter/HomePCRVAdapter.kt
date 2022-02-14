@@ -31,7 +31,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
                 .into(binding.myCoinIv)
             binding.myNowPriceTv.text = formatPrice(item.upbitPrice) +"원"
             binding.myProfitTv.text = formatPrice(item.profit) + "원"
-            binding.myUnitPriceTv.text = String.format("%.2f", item.priceAvg)
+            binding.myUnitPriceTv.text = formatPrice(item.priceAvg) + "원"
         //binding.representCoinSymbolTv.text = item.symbol
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }
@@ -60,6 +60,13 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
         }else if(number>=10 && number < 100){
             price = String.format("%.1f", number)
         }else if(number>=100){
+            val price_ = String.format("%.0f", number).toDouble()
+            price = formatD(price_)
+        }else if(number<=-1 && number>-10){
+            price = String.format("%.2f", number)
+        }else if(number<=-10 && number>-100){
+            price = String.format("%.1f", number)
+        }else if(number <=-100){
             val price_ = String.format("%.0f", number).toDouble()
             price = formatD(price_)
         }else{
