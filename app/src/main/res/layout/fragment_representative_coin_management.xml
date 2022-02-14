@@ -94,13 +94,13 @@
                         android:id="@+id/representative_coin_management_Bitfinex_TV"
                         android:layout_width="61dp"
                         android:layout_height="23dp"
-                        android:text="Bitfinex"
-                        android:textSize="11dp"
-                        android:textColor="#000000"
                         android:gravity="center"
-                        app:layout_constraintTop_toTopOf="@id/representative_coin_management_outline_TV"
+                        android:text="바이낸스"
+                        android:textColor="#000000"
+                        android:textSize="11dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toTopOf="@id/representative_coin_management_outline_TV" />
 
                     <TextView
                         android:id="@+id/representative_coin_management_kimchi_premium_TV"

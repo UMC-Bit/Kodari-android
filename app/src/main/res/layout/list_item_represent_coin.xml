@@ -46,18 +46,17 @@
 
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/represent_upbit_price_tv"
-            android:layout_width="57dp"
-            android:layout_height="wrap_content"
-            android:text="50,000,000"
-            android:textSize="10sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="15dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@id/represent_binanace_price_tv"
-            app:layout_constraintTop_toTopOf="@id/represent_coin_iv"
-            app:layout_constraintBottom_toBottomOf="@id/represent_coin_iv"/>
+    <TextView
+        android:id="@+id/represent_upbit_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="50,000,000"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/represent_coin_iv"
+        app:layout_constraintEnd_toStartOf="@id/represent_binanace_price_tv"
+        app:layout_constraintTop_toTopOf="@id/represent_coin_iv" />
 
 
         <TextView
