@@ -1,10 +1,9 @@
 package com.bit.kodari.Intro
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class IntroViewpagerAdapter (fragment : FragmentActivity) : FragmentStateAdapter(fragment) {
+class IntroViewpagerAdapter(fragment: IntroActivity) : FragmentStateAdapter(fragment) {
 
 
     override fun getItemCount(): Int  = 4
@@ -17,5 +16,4 @@ class IntroViewpagerAdapter (fragment : FragmentActivity) : FragmentStateAdapter
             else -> IntroPageFourFragment()
         }
     }
-
 }

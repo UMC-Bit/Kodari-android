@@ -12,7 +12,6 @@ import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentIntroPageFourBinding
 
 class IntroPageFourFragment : Fragment() {
-
     lateinit var binding : FragmentIntroPageFourBinding
 
     override fun onCreateView(
@@ -21,7 +20,6 @@ class IntroPageFourFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentIntroPageFourBinding.inflate(inflater, container, false)
-
         binding.introPageFourStartIv.setOnClickListener{
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)

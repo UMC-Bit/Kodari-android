@@ -10,15 +10,12 @@ import com.bit.kodari.databinding.FragmentIntroPageTwoBinding
 class IntroPageTwoFragment : Fragment() {
 
     lateinit var binding : FragmentIntroPageTwoBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentIntroPageTwoBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 }
