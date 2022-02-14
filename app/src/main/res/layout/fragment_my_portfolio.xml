@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/my_portfolio_asset_title_tv"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="3dp"
+        android:layout_marginStart="4dp"
         android:src="@drawable/restart" />
 
     <TextView
@@ -65,6 +65,7 @@
         android:id="@+id/my_portfolio_percent_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:text="(+13.5%)"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/my_portfolio_asset_tv"
