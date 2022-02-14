@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/my_coin_iv"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/btc"
         android:scaleType="fitCenter"
         android:background="#FFFFFF"
@@ -26,7 +26,7 @@
         android:text="Name"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="10sp"
+        android:textSize="7sp"
         app:layout_constraintStart_toEndOf="@id/my_coin_iv"
         app:layout_constraintTop_toTopOf="@id/my_coin_iv"
         app:layout_constraintBottom_toTopOf="@id/my_coin_symbol_tv"
@@ -39,7 +39,7 @@
         android:layout_marginLeft="10dp"
         android:text="비트코인"
         android:textStyle="bold"
-        android:textSize="10sp"
+        android:textSize="6sp"
         app:layout_constraintStart_toEndOf="@id/my_coin_iv"
         app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"
         app:layout_constraintTop_toBottomOf="@id/my_coin_name_tv"/>
