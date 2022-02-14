@@ -460,7 +460,7 @@
                             android:gravity="center"
                             android:text="김치 프리미엄"
                             android:textColor="@color/black"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             app:layout_constraintStart_toEndOf="@id/home_binance_tv"
                             app:layout_constraintTop_toTopOf="@id/home_rpt_coin_outline_TV" />
 

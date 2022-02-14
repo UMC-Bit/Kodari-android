@@ -91,7 +91,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         usdtService.setCoinView(this)
         usdtService.getFirsUsdtPrice()
         usdtService.getUsdtPrice()
-
     }
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener() {
@@ -447,6 +446,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null && checkView) {
             var profitSum = 0.0
+            var sumBuyCoin = 0.0
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in userCoinList.indices) {
@@ -455,6 +455,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         val upbitPrice = upbitCoinPriceMap.get(symbol)!!
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
+                        sumBuyCoin += amount * priceAvg
                         userCoinList[i].upbitPrice = upbitPrice
                         userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
                         profitSum += getProfit(upbitPrice, amount, priceAvg)
@@ -471,7 +472,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 setRepresentRV()
                 setRepresentPV()
                 // 계좌 수익률 보내주기
-                portFolioView.getAccountProfit(profitSum)
+                portFolioView.getAccountProfit(profitSum, sumBuyCoin)
             }
         }
     }
@@ -563,7 +564,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         showToast("포트폴리오 불러오기 실패")
     }
 
-    override fun getAccountProfit(profit: Double) {
+    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
         TODO("Not yet implemented")
     }
 

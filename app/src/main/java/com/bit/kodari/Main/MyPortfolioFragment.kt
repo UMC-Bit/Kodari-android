@@ -71,11 +71,12 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
         binding.myPortfolioAccountNameTv.text = "정보를 불러오는데 실패했습니다."
     }
 
-    override fun getAccountProfit(profit: Double) {
+    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
         this.profit = profit.toInt()
+        val profitRate = ((property + profit) / (property + sumBuyCoin))* 100 - 100
         val f = NumberFormat.getInstance()
         f.isGroupingUsed=false
         binding.myPortfolioAssetTv.text = f.format(property.toInt() + profit).toString() + "원"
-        binding.myPortfolioPercentTv
+        binding.myPortfolioPercentTv.text = f.format(profitRate) + "%"
     }
 }
