@@ -1,6 +1,7 @@
 package com.bit.kodari.Util.Coin
 
 import android.util.Log
+import com.bit.kodari.Main.HomeFragment
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
@@ -12,12 +13,12 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         this.coinView = coinView
     }
 
-    lateinit var webSocket: WebSocket
+    var webSocket: WebSocket? = null
     private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
 
-    override fun onOpen(webSocket: WebSocket, response: Response) {
+    override fun onOpen(webSocket: WebSocket?, response: Response) {
         this.webSocket = webSocket
         //webSocket.close(NORMAL_CLOSURE_STATUS, null) //없을 경우 끊임없이 서버와 통신함
     }
@@ -31,6 +32,7 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         Log.d("Binance_Socket", "Receiving bytes : ${message}")
         // TODO HomeFragment livedata 처리
         coinView.binancePriceSuccess(coinPriceMap)
+
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
@@ -40,6 +42,7 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
     }
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         Log.d("Binance_Socket","Error : " + t.message)
+        webSocket.cancel()
     }
 
     companion object {

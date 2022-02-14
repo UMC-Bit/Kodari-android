@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
+import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
@@ -22,11 +23,19 @@ import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
+import com.bit.kodari.Util.Coin.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.UpbitWebSocketListener
+import com.bit.kodari.Util.Coin.UsdtService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.bumptech.glide.Glide
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
-class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView {
-
+class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
+    CoinView {
+    var usdtPrice: Int = 1 // usdt 가격
+    private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
+    var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
+    var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private lateinit var rptCoinManagementAdapter: RptCoinManagementAdapter
     private var coinList = ArrayList<RptCoinMgtInsquireResult>()
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
@@ -34,9 +43,15 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         private var cnt = 0
     }
     override fun initAfterBinding() {
+        // Usdt 환율 받아옴
+        val usdtService = UsdtService()
+        usdtService.setCoinView(this)
+        usdtService.getFirsUsdtPrice()
+        usdtService.getUsdtPrice()
         deleteDialog()
         setListener()
         getRptCoins()
+
     }
     fun setListener(){
         binding.representativeCoinManagementAddTV.setOnClickListener {
@@ -74,7 +89,6 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 }
             }
         })
-
         binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
         binding.representativeCoinManagementRV.adapter= rptCoinManagementAdapter
     }
@@ -124,7 +138,8 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         coinList = response.result
         //널값 넘어오면서 오류
         //Log.d("psnSuccesscoinSize", "${coinList.size}")
-
+        // 코인 시세 받아오기
+        getCoinPrice()
         setRecyclerView()
     }
 
@@ -149,5 +164,61 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     override fun deleteRptCoinFailure(message: String) {
         dismissLoadingDialog()
         showToast(message)
+    }
+    // 시세 받아오기
+    fun getCoinPrice() {
+        // 대표코인 이름 저장
+        for (i in 0 until coinList.size) {
+            coinSymbolSet.add(coinList[i].symbol)
+        }
+
+        // 웹 소켓 연결
+        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+        upbitWebSocket?.setCoinView(this)
+        upbitWebSocket?.start() // 업비트 웹 소켓 실행
+        binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
+        binanceWebSocket?.setCoinView(this)
+        binanceWebSocket?.start()
+    }
+
+    // 업비트 시세 조회 API 호출 성공
+    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        if(requireActivity() != null) {
+            requireActivity().runOnUiThread() {
+                // 대표 코인
+                for (i in coinList.indices) {
+                    val symbol = coinList[i].symbol
+                    if (upbitCoinPriceMap.containsKey(symbol)) {
+                        coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    }
+                }
+                setRecyclerView()
+            }
+        }
+    }
+    // 바이낸스 시세 조회 API 호출 성공
+    override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
+        if(requireActivity() != null) {
+            requireActivity().runOnUiThread() {
+                // 대표 코인
+                for (i in coinList.indices) {
+                    val symbol = coinList[i].symbol
+                    if (binanceCoinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = coinList[i].upbitPrice
+                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
+                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
+                        coinList[i].binancePrice = binancePrice
+                        coinList[i].kimchi = kimchi
+                    }
+                }
+                setRecyclerView()
+            }
+        }
+    }
+    override fun usdtPriceSuccess(usdtPrice: Int) {
+        this.usdtPrice = usdtPrice
+    }
+    override fun coinPriceFailure(message: String) {
+        TODO("Not yet implemented")
     }
 }

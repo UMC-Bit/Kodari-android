@@ -28,11 +28,18 @@ import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
+import com.bit.kodari.Util.Coin.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.UpbitWebSocketListener
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
-class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView {
-
+class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
+CoinView{
+    var usdtPrice: Int = 1 // usdt 가격
+    private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
+    var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
+    var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private lateinit var possessionCoinManagementAdapter: PossessionCoinManagementAdapter
     private var coinList = ArrayList<PsnCoinMgtInsquireResult>()
     override fun initAfterBinding() {
@@ -54,8 +61,8 @@ class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<Fra
                             putString("coinImage", coinList[position].coinImg)
                             putString("coinName", coinList[position].coinName)
                             putString("coinSymbol", coinList[position].symbol)
-                            putString("priceAvg", coinList[position].priceAvg)
-                            putString("amount", coinList[position].amount)
+                            putDouble("priceAvg", coinList[position].priceAvg)
+                            putDouble("amount", coinList[position].amount)
                         }
                     }).commitAllowingStateLoss()
             }
@@ -139,7 +146,7 @@ class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<Fra
         dismissLoadingDialog()
         coinList = response.result
         //Log.d("psnSuccesscoinSize", "${coinList.size}")
-
+        getCoinPrice()
         setRecyclerView()
     }
 
@@ -167,5 +174,52 @@ class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<Fra
     override fun deletePsnCoinFailure(message: String) {
         dismissLoadingDialog()
         Log.d("deltePsnCoinFail" ,"${message}")
+    }
+    // 시세 받아오기
+    fun getCoinPrice() {
+        // 대표코인 이름 저장
+        for (i in 0 until coinList.size) {
+            coinSymbolSet.add(coinList[i].symbol)
+        }
+
+        // 웹 소켓 연결
+        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+        upbitWebSocket?.setCoinView(this)
+        upbitWebSocket?.start() // 업비트 웹 소켓 실행
+    }
+
+    // 업비트 시세 조회 API 호출 성공
+    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        if(requireActivity() != null) {
+            requireActivity().runOnUiThread() {
+                // 소유 코인
+                for (i in coinList.indices) {
+                    val symbol = coinList[i].symbol
+                    if (upbitCoinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        val amount = coinList[i].amount
+                        val priceAvg = coinList[i].priceAvg
+                        coinList[i].upbitPrice = upbitPrice
+                        coinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+                    }
+                }
+                setRecyclerView()
+            }
+        }
+    }
+
+    override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun usdtPriceSuccess(usdtPrice: Int) {
+        this.usdtPrice = usdtPrice
+    }
+    override fun coinPriceFailure(message: String) {
+        TODO("Not yet implemented")
+    }
+    // 평가순익 구하는 메서드
+    fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
+        return (currentPrice * amount) - (priceAvg * amount)
     }
 }

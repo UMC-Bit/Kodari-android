@@ -2,24 +2,18 @@ package com.bit.kodari.Main
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Debate.DialogCoin
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
@@ -27,7 +21,6 @@ import com.bit.kodari.Main.Adapter.HomeVPAdapter
 import com.bit.kodari.Main.Data.*
 import com.bit.kodari.Main.RetrofitInterface.HomeView
 import com.bit.kodari.Main.Service.HomeService
-import com.bit.kodari.Portfolio.Retrofit.PortfolioInterface
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.PossessionCoin.DialogMemoAndTwitter
@@ -39,30 +32,22 @@ import com.bit.kodari.Util.Coin.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.CoinView
 import com.bit.kodari.Util.Coin.UpbitWebSocketListener
 import com.bit.kodari.Util.Coin.UsdtService
-import com.bit.kodari.Util.Upbit.UpbitService
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getPw
 import com.bit.kodari.Util.getUserIdx
-import kotlinx.coroutines.*
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
-import kotlinx.coroutines.newFixedThreadPoolContext
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.concurrent.thread
-import kotlin.coroutines.CoroutineContext
-import kotlin.math.round
-import kotlin.math.roundToInt
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView , CoinView, HomeView {
-
     lateinit var homeVPAdapter: HomeVPAdapter
     lateinit var homeRCRVAdapter: HomeRCRVAdapter
     lateinit var homePCRVAdapter: HomePCRVAdapter
+    private var checkView = true
     var usdtPrice: Int = 1
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
@@ -78,11 +63,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 유저 코인, 대표 코인 심볼 저장
     var coinSymbolSet = HashSet<String>()
     // 업비트, 바이낸스 웹 소켓
-    lateinit var upbitWebSocket: UpbitWebSocketListener
-    lateinit var binanceWebSocket: BinanceWebSocketListener
+    var upbitWebSocket: UpbitWebSocketListener? = null
+    var binanceWebSocket: BinanceWebSocketListener? = null
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
-
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
@@ -96,8 +80,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
         )
-
-        //차트 데이터 가져오기 테스트
+        // Usdt 환율 받아옴
+        val usdtService = UsdtService()
+        usdtService.setCoinView(this)
+        usdtService.getFirsUsdtPrice()
+        usdtService.getUsdtPrice()
 
     }
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
@@ -228,9 +215,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     fun setRepresentRV() {
         homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
-        binding.homeRepresentCoinRv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
+        if(checkView) {
+            binding.homeRepresentCoinRv.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
+        }
 
     }
 
@@ -242,9 +231,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
             }
         })
-        binding.homeMyCoinRv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.homeMyCoinRv.adapter = homePCRVAdapter
+        if(checkView) {
+            binding.homeMyCoinRv.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.homeMyCoinRv.adapter = homePCRVAdapter
+        }
 
     }
 
@@ -446,13 +437,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        if(requireActivity() != null) {
+        if(requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in userCoinList.indices) {
                     val symbol = userCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
-                        userCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        val amount = userCoinList[i].amount
+                        val priceAvg = userCoinList[i].priceAvg
+                        userCoinList[i].upbitPrice = upbitPrice
+                        userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+
                     }
                 }
                 // 대표 코인
@@ -463,16 +459,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     }
                 }
                 // 뷰 바인딩
-                if (binding != null) {
-                    setRepresentRV()
-                    setRepresentPV()
-                }
+                setRepresentRV()
+                setRepresentPV()
             }
         }
     }
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
-        if(requireActivity() != null) {
+        if(requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in userCoinList.indices) {
@@ -497,10 +491,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     }
                 }
                 // 뷰 바인딩
-                if (binding != null) {
-                    setRepresentRV()
-                    setRepresentPV()
-                }
+                setRepresentRV()
+                setRepresentPV()
+
             }
         }
     }
@@ -538,19 +531,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         for (i in 0 until representCoinList.size) {
             coinSymbolSet.add(representCoinList[i].symbol)
         }
-        // Usdt 환율 받아옴
-        val usdtService = UsdtService()
-        usdtService.setCoinView(this)
-        usdtService.getFirsUsdtPrice()
-        usdtService.getUsdtPrice()
+
         // 웹 소켓 연결
         upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket.setCoinView(this)
-        upbitWebSocket.start() // 업비트 웹 소켓 실행
+        upbitWebSocket?.setCoinView(this)
+        upbitWebSocket?.start() // 업비트 웹 소켓 실행
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
-        binanceWebSocket.setCoinView(this)
-        binanceWebSocket.start()
-
+        binanceWebSocket?.setCoinView(this)
+        binanceWebSocket?.start()
     }
 
     // 뷰 바인딩 해주기
@@ -626,17 +614,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onDestroy() {
-        upbitWebSocket.webSocket.cancel() // 웹 소켓 닫기
-        binanceWebSocket.webSocket.cancel()
         super.onDestroy()
+        checkView = false
+        upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        binanceWebSocket?.webSocket?.cancel()
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        upbitWebSocket.webSocket.cancel() // 웹 소켓 닫기
-        binanceWebSocket.webSocket.cancel()
-        //upbitWebSocket.webSocket.close(1000, null) // 웹 소켓 닫기
 
-    }
     fun callPortfolioInfo(portIdx:Int){
         val portfolioService = PortfolioService()
         portfolioService.setPortfolioView(this)
@@ -658,7 +641,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             homeService.setHomeView(this)
             homeService.getMonthProfit(MyApplicationClass.myAccountIdx)
         }
+    }
 
+    // 평가순익 구하는 메서드
+    fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
+        return (currentPrice * amount) - (priceAvg * amount)
     }
 
 }

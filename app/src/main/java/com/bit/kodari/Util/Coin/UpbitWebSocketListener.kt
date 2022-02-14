@@ -2,6 +2,7 @@ package com.bit.kodari.Util.Coin
 
 import android.os.Handler
 import android.util.Log
+import com.bit.kodari.Main.HomeFragment
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
@@ -16,7 +17,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         this.coinView = coinView
     }
 
-    lateinit var webSocket: WebSocket
+    var webSocket: WebSocket? = null
     private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
@@ -37,7 +38,6 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
         // TODO HomeFragment livedata 처리
         coinView.upbitPriceSuccess(coinPriceMap)
-
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
@@ -47,6 +47,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     }
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         Log.d("Upbit_Socket","Error : " + t.message)
+        webSocket.cancel()
     }
 
     companion object {
