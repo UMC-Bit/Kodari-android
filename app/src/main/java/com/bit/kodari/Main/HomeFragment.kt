@@ -164,13 +164,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
-        //임시 로그아웃 버튼
-        binding.logout.setOnClickListener {
-            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
-            saveAutoLogin(false)
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
-        }
+//        //임시 로그아웃 버튼
+//        binding.logout.setOnClickListener {
+//            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
+//            saveAutoLogin(false)
+//            startActivity(Intent(requireContext(), LoginActivity::class.java))
+//            requireActivity().finish()
+//        }
 
     }
 
