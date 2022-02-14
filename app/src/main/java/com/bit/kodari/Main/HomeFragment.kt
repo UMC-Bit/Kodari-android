@@ -200,9 +200,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
-                        callPortfolioInfo(portIdxList[position])
-                        Log.d("callIdx" ,portfolioList.size.toString())
-
+                        if(portIdxList.size !=0 ){
+                            callPortfolioInfo(portIdxList[position])
+                            Log.d("callIdx" ,portfolioList.size.toString())
+                        }
                     }
                     portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
@@ -400,7 +401,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //포토폴리오 IDX 조회 성공
     override fun getPortIdxSuccess(resp: PortIdxResponse) {
-        Log.d("getPortIdx" , "성공")
+        dismissLoadingDialog()
 //        portIdxList.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
         for(idx in resp.result){
@@ -412,7 +413,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     //포토폴리오 IDX 조회 실패
     override fun getPortIdxFailure(message: String) {
-        Log.d("getPortIdx" , "실패")
+        dismissLoadingDialog()
     }
 
     // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
