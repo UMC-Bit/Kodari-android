@@ -53,7 +53,7 @@
         android:text="저번 12월 4일 폭락장을 경험한 뒤로 나만의 포지션 진입 전략을 세운 뒤로는 승률이 86퍼에 달했지만
 12월 31일 금요일의 갑작스런 상승빔때  큰 손절을 한 뒤에 제 자신에 대해 의구심이 계속 들더라구요.
 그래서 ...."
-        android:textSize="9sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_image_iv"
@@ -85,6 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="댓글"
+        android:textSize="11sp"
         android:layout_marginTop="18dp"
         android:paddingEnd="3dp"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -97,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="38"
+        android:textSize="11sp"
         android:textColor="#FD0606"
         android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"

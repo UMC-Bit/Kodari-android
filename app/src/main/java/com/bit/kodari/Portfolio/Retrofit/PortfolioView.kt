@@ -8,4 +8,5 @@ interface PortfolioView {
     fun getPortIdxFailure(message: String)
     fun portfolioSuccess(resp: PortfolioResponse)
     fun portfolioFailure(message: String)
+    fun getAccountProfit(profit: Double) // 계좌 수익률 조회
 }

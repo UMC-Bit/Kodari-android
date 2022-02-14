@@ -14,5 +14,6 @@ data class PossesionCoinResult(
     @SerializedName("status") val status: String,
     @SerializedName("amount")  val amount: Double,
     @SerializedName("symbol") val symbol: String,
-    @SerializedName("coinIdx") val coinIdx: Int
+    @SerializedName("coinIdx") val coinIdx: Int,
+    @SerializedName("twitter") val twitter:String
     )
