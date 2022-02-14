@@ -145,14 +145,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).addToBackStack(null)
                 .commitAllowingStateLoss()
 
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).addToBackStack(null)
                 .commitNowAllowingStateLoss()
         }
 
