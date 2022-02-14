@@ -49,10 +49,15 @@ class PortfolioService {
                 response: Response<PortIdxResponse>
             ) {
                 Log.d("portIdx", "포트폴리오 리스트 불러오기 성공!")
-                if(response.body()!!.result.size > 0){
-                    val portIdx = response.body()!!.result!![0].portIdx         //첫번째만 ? ? 이거 왜 이렇게해놨지 ?
-                    portfolioView.getPortIdxSuccess(response.body()!!)
-                    getPortfolioInfo(portIdx)                                   //이런식이면 안되지 않을까 ?
+                if(response.body()!!.result.size >= 0){
+                    if(response.body()!!.result.size == 0){
+                        portfolioView.getPortIdxSuccess(response.body()!!)
+                    } else{
+                        val portIdx = response.body()!!.result!![0].portIdx         //첫번째만 ? ? 이거 왜 이렇게해놨지 ?
+                        portfolioView.getPortIdxSuccess(response.body()!!)
+                        getPortfolioInfo(portIdx)                                   //이런식이면 안되지 않을까 ?
+                    }
+
                 }
             }
             override fun onFailure(call: Call<PortIdxResponse>, t: Throwable) {
