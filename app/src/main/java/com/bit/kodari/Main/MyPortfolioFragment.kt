@@ -57,6 +57,8 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
         //숫자 형태로 나타내기
         val f = NumberFormat.getInstance()
         f.isGroupingUsed=false
+
+        binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()+"원"
         property = resp.result.property
         binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
         Log.d("temp" , "${resp.result.property}")
