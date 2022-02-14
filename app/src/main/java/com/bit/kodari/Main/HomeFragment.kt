@@ -65,6 +65,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 업비트, 바이낸스 웹 소켓
     var upbitWebSocket: UpbitWebSocketListener? = null
     var binanceWebSocket: BinanceWebSocketListener? = null
+    private lateinit var portFolioView: PortfolioView
+
+    fun setPortFolioView(portFolioView: PortfolioView) {
+        this.portFolioView = portFolioView
+    }
+
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
@@ -197,6 +203,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         binding.homeVpPreviewBtn.visibility = View.GONE
                         callPortfolioInfo(portIdxList[position])
                         Log.d("callIdx" ,portfolioList.size.toString())
+
                     }
                     portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
@@ -227,7 +234,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         homePCRVAdapter = HomePCRVAdapter(userCoinList)
         homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener{
             override fun onClickItem(item: PossesionCoinResult) {
-                val dialog = DialogMemoAndTwitter(item.coinIdx)
+                val dialog = DialogMemoAndTwitter(item.coinIdx , item.twitter)
                 dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
             }
         })
@@ -398,7 +405,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //        portIdxList.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
         for(idx in resp.result){
-            portfolioList.add(MyPortfolioFragment(idx.portIdx))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
+            portfolioList.add(MyPortfolioFragment(idx.portIdx, this))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
             portIdxList.add(idx.portIdx)                                //포토폴리오 인덱스 저장
         }
         Log.d("portIdx" , "사이즈 : ${portIdxList.size} , ${portIdxList}")
@@ -439,6 +446,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null && checkView) {
+            var profitSum = 0.0
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in userCoinList.indices) {
@@ -449,7 +457,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         val priceAvg = userCoinList[i].priceAvg
                         userCoinList[i].upbitPrice = upbitPrice
                         userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
-
+                        profitSum += getProfit(upbitPrice, amount, priceAvg)
                     }
                 }
                 // 대표 코인
@@ -462,6 +470,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 뷰 바인딩
                 setRepresentRV()
                 setRepresentPV()
+                // 계좌 수익률 보내주기
+                portFolioView.getAccountProfit(profitSum)
             }
         }
     }
@@ -553,6 +563,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         showToast("포트폴리오 불러오기 실패")
     }
 
+    override fun getAccountProfit(profit: Double) {
+        TODO("Not yet implemented")
+    }
+
     //일별 데이터 성공
     override fun getDayProfitSuccess(response: GetProfitResponse) {
         if(response.result[0].profitIdx == 0)
@@ -612,6 +626,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val userIdx = response.result.userIdx
         val marketName = response.result.marketName
         return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        checkView = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkView = true
     }
 
     override fun onDestroy() {

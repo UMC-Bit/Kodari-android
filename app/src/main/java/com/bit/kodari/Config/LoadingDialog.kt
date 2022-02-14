@@ -2,8 +2,10 @@ package com.bit.kodari.Config
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.bit.kodari.databinding.DialogLoadingBinding
@@ -22,6 +24,7 @@ class LoadingDialog(context: Context) : Dialog(context) {
         window!!.setDimAmount(0.2f)
         window!!.setLayout( WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
+
     }
 
     override fun show() {

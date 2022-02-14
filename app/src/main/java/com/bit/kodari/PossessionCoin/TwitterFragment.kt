@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentTwitterBinding
 
-class TwitterFragment : Fragment() {
+class TwitterFragment(val twitter:String) : Fragment() {
     lateinit var binding: FragmentTwitterBinding
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class TwitterFragment : Fragment() {
         web.isHorizontalScrollBarEnabled = false
         web.isVerticalScrollBarEnabled = false
 
-        val source = "<a class=\"twitter-timeline\" href=\"https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw\"></a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
+        val source = "<a class=\"twitter-timeline\" href=\"https://twitter.com/${twitter}?ref_src=twsrc%5Etfw\"></a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
 
         web.loadData(source, "text/html", "UTF-8")
 

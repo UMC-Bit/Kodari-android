@@ -43,7 +43,7 @@ import retrofit2.Response
 //게시글 보여주는 화면
 //해야할 거 : 리싸이클러뷰 어댑터 구현 (1순위) -> DebateSelectPostComment 들이 리싸이클러뷰로 옴
 //DebateSelectPostResult로 현재 게시글 셋팅
-class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebateMineBinding::inflate) , DebateMineView{
+class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<FragmentDebateMineBinding>(FragmentDebateMineBinding::inflate) , DebateMineView{
 
     private lateinit var commentList : ArrayList<DebateSelectPostComment>
     var temp = ArrayList<DebateSelectPostReply>()
@@ -51,6 +51,7 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
     private var imgUrl : String? =null
     private var postIdx = 0
     private var commentIdx = 0
+    private var coinIdx = 0
 
     override fun initAfterBinding() {
         setInit()
@@ -58,6 +59,10 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         callSelectPost()
         callMyProfile()
         Log.d("nowPostIdx" , "지금 게시판의 postIdx : ${postIdx}")
+        if(requireArguments().containsKey("coinIdx")){
+            coinIdx = requireArguments().getInt("coinIdx")
+            Log.d("rere" , "${coinIdx}")
+        }
     }
 
     //초기 기본 셋팅 값들 설정
@@ -124,7 +129,7 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
             //게시글별 조회해서 필요한 내용만 가져다 사용 , 게시글 수정에서 왜 coinIdx가 필요해 ?
             val tempPost = postIdx          //전역으로 선언된 postIdx를 넘겨주기 위해서 사용 ->근데 왜 Bundle()에서는 안될까?
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, DebateModifyPostFragment().apply {
+                .replace(R.id.main_container_fl, DebateModifyPostFragment(coinName , coinIdx).apply {
                     arguments = Bundle().apply {
                         putInt("postIdx", tempPost)
                         Log.d("postIdx", "넘기는 : ${tempPost}")
@@ -161,6 +166,21 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
             binding.mineCommentInputMessageEt.hint = "해당 게시글에 댓글을 달아주세요."
             binding.mineCommentInputMessageEt.text.clear()
 
+        }
+
+        binding.mineBackBtnTv.setOnClickListener {
+            if(flag == 1){
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , DebateMainFragment()).commit()
+            } else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("coinName", coinName)
+                            putInt("coinIdx" , coinIdx)
+                        }
+                    }).commit()
+            }
         }
     }
 

@@ -70,6 +70,10 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
                     }
                 }).commitAllowingStateLoss()
         }
+        binding.inputQuantityPreviewBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , PortfolioSearchFragment()).commit()
+        }
     }
 
 }

@@ -77,9 +77,10 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
         debateCoinPostRVAdapter.setMyItemClickListener(object :DebateCoinPostRVAdapter.MyItemClickListener{
             override fun onItemClick(item: DebateCoinPostResult) {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, DebateMineFragment().apply {
+                    .replace(R.id.main_container_fl, DebateMineFragment(2,coinName).apply {
                         arguments = Bundle().apply {
                             putInt("postIdx" , item.postIdx)
+                            putInt("coinIdx", coinIdx)
                         }
                     }).addToBackStack(null).commitAllowingStateLoss()
             }
