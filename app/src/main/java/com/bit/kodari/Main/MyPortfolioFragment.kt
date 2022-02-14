@@ -15,13 +15,15 @@ import java.text.NumberFormat
 import kotlin.properties.Delegates
 
 //포토폴리오 Index로 포토폴리오 조회환 뒤 binding 처리 해줘야할듯
-class MyPortfolioFragment(val portIdx: Int) : BaseFragment<FragmentMyPortfolioBinding>(FragmentMyPortfolioBinding::inflate) ,PortfolioView{  //portIdx로 계좌 조회 ?
-
+class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : BaseFragment<FragmentMyPortfolioBinding>(FragmentMyPortfolioBinding::inflate) ,PortfolioView{  //portIdx로 계좌 조회 ?
+    var profit: Int = 0
+    var property: Double = 0.0
     var accoutIdx by Delegates.notNull<Int>()
 
     override fun initAfterBinding() {
         callMyPort()
         setListener()
+        homeFragment.setPortFolioView(this)
     }
 
     fun setListener(){
@@ -30,7 +32,7 @@ class MyPortfolioFragment(val portIdx: Int) : BaseFragment<FragmentMyPortfolioBi
             val dialog = ModifyInfoDialog(accoutIdx , portIdx).apply {
                 arguments = Bundle().apply {
                     putString("accountName", binding.myPortfolioAccountNameTv.text.toString())
-                    putString("myAsset", binding.myPortfolioAssetTv.text.toString())
+                    putString("myAsset", binding.myPortfolioAssetTv.text.toString() + profit + "원")
                 }
             }
             dialog.show(requireActivity().supportFragmentManager,"ModifyDialog")
@@ -55,7 +57,7 @@ class MyPortfolioFragment(val portIdx: Int) : BaseFragment<FragmentMyPortfolioBi
         //숫자 형태로 나타내기
         val f = NumberFormat.getInstance()
         f.isGroupingUsed=false
-
+        property = resp.result.property
         binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
         Log.d("temp" , "${resp.result.property}")
         binding.myPortfolioAccountNameTv.text = resp.result.accountName
@@ -65,5 +67,13 @@ class MyPortfolioFragment(val portIdx: Int) : BaseFragment<FragmentMyPortfolioBi
 
     override fun portfolioFailure(message: String) {
         binding.myPortfolioAccountNameTv.text = "정보를 불러오는데 실패했습니다."
+    }
+
+    override fun getAccountProfit(profit: Double) {
+        this.profit = profit.toInt()
+        val f = NumberFormat.getInstance()
+        f.isGroupingUsed=false
+        binding.myPortfolioAssetTv.text = f.format(property.toInt() + profit).toString() + "원"
+        binding.myPortfolioPercentTv
     }
 }
