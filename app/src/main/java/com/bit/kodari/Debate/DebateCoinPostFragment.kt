@@ -63,7 +63,7 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
                 .commitAllowingStateLoss()
         }
 
-        binding.debateCoinMainFindCoin.setOnClickListener {
+        binding.debateCoinMainFindCoinCl.setOnClickListener {
             val dialog = DialogCoin()
             dialog.show(requireActivity().supportFragmentManager , "DialogCoin")
         }

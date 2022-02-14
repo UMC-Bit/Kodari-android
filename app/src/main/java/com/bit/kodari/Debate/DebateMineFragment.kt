@@ -26,6 +26,8 @@ import com.bit.kodari.Debate.PostData.DebateSelectPostResponse
 import com.bit.kodari.Debate.Retrofit.DebateMineView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
+import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getRetorfit
@@ -230,7 +232,9 @@ class DebateMineFragment : BaseFragment<FragmentDebateMineBinding>(FragmentDebat
         binding.mineNoLikeNumTv.text = post.dislike.toString()
         binding.mineCoinSymbolTv.text = post.symbol
         if(!post.checkWriter){                                  //체크 writer가 false 면 버튼 안보이게해야함
-            binding.mineBtnContainerLl.visibility = View.GONE
+            binding.mineOutlineTV.visibility = View.GONE
+            binding.mineModifyTv.visibility = View.GONE
+            binding.mineRemoveTv.visibility = View.GONE
         }
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)

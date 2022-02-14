@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/btn_outline_white"
-    android:paddingBottom="13dp"
     android:layout_marginBottom="17dp">
 
     <ImageView
@@ -49,31 +48,33 @@
         android:layout_width="23dp"
         android:layout_height="22dp"
         android:src="@drawable/up"
-        android:layout_marginStart="109dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/list_item_content_tv"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginEnd="33dp"
+        app:layout_constraintEnd_toStartOf="@id/list_item_comment_count_tv"
+        app:layout_constraintTop_toTopOf="@+id/list_item_comment_count_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_comment_count_tv" />
 
     <TextView
         android:id="@+id/list_item_comment_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="댓글"
-        app:layout_constraintStart_toEndOf="@id/list_item_up_btn"
-        app:layout_constraintTop_toTopOf="@id/list_item_up_btn"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_up_btn"
-        android:layout_marginStart="30dp"/>
+        android:layout_marginTop="18dp"
+        android:paddingEnd="3dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/list_item_comment_count_num_tv"
+        app:layout_constraintTop_toBottomOf="@id/list_item_content_tv" />
 
     <TextView
         android:id="@+id/list_item_comment_count_num_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
         android:text="38"
         android:textColor="#FD0606"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_up_btn"
-        app:layout_constraintStart_toEndOf="@id/list_item_comment_count_tv"
-        app:layout_constraintTop_toTopOf="@id/list_item_up_btn" />
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/list_item_comment_count_tv"
+        app:layout_constraintTop_toBottomOf="@id/list_item_content_tv" />
 
     <ImageView
         android:id="@+id/list_item_down_btn"
@@ -83,7 +84,6 @@
         android:layout_marginStart="34dp"
         app:layout_constraintTop_toTopOf="@id/list_item_comment_count_tv"
         app:layout_constraintStart_toEndOf="@id/list_item_comment_count_num_tv"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_comment_count_tv"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintBottom_toBottomOf="@id/list_item_comment_count_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
