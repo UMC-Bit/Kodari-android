@@ -20,9 +20,9 @@
 
         <ImageView
             android:id="@+id/post_write_back_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/back_btn"
+            android:layout_width="28dp"
+            android:layout_height="31dp"
+            android:src="@drawable/previous"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="20dp"
@@ -53,10 +53,12 @@
 
         <TextView
             android:id="@+id/post_write_complete_btn_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="34dp"
             android:text="완료"
-            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:background="@drawable/btn_outline_yellow"
             app:layout_constraintEnd_toEndOf="parent"

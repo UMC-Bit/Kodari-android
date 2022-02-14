@@ -37,6 +37,9 @@ class DialogCoin : DialogFragment(), DebateCoinView {
     ): View? {
         _binding = DialogCoinBinding.inflate(inflater,container,false)
         setListener()
+        binding.dialogCloseIv.setOnClickListener {
+            dialog!!.dismiss()
+        }
         return binding.root
     }
 

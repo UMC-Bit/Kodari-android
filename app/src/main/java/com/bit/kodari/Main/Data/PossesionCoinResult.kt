@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class PossesionCoinResult(
     @SerializedName("userCoinIdx") val userCoinIdx: Int,
     @SerializedName("upbitPrice") var upbitPrice: Double,
+    @SerializedName("binancePrice") var binancePrice: Double,
+    @SerializedName("kimchi") var kimchi: Double,
     @SerializedName("profit") var profit: Double,
     @SerializedName("coinImg") var coinImg: Any,
     @SerializedName("coinName") val coinName: String,

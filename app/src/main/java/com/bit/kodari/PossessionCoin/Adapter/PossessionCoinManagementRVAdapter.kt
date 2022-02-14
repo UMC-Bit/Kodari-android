@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.databinding.ItemPossessionCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
+import java.text.DecimalFormat
 
 
 class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMgtInsquireResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
-
+    private var df: DecimalFormat = DecimalFormat("#.##")
     companion object{
         var isClick=false
         var clickPosition: Int = -1
@@ -37,8 +38,10 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
-            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = String.format("%.2f", item.priceAvg.toDouble())
+            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg) +"원"
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
+            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit) +"원"
         }
     }
 
@@ -78,4 +81,29 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
     }
 
     override fun getItemCount()=possessionCoinList.size
+
+    public fun formatD(number:Double): String {
+        return df.format(number)
+    }
+    fun formatPrice(number: Double): String{
+        lateinit var price: String
+        if(number>=1 && number < 10){
+            price = String.format("%.2f", number)
+        }else if(number>=10 && number < 100){
+            price = String.format("%.1f", number)
+        }else if(number>=100){
+            val price_ = String.format("%.0f", number).toDouble()
+            price = formatD(price_)
+        }else if(number<=-1 && number>-10){
+            price = String.format("%.2f", number)
+        }else if(number<=-10 && number>-100){
+            price = String.format("%.1f", number)
+        }else if(number <=-100){
+            val price_ = String.format("%.0f", number).toDouble()
+            price = formatD(price_)
+        }else{
+            price = String.format("%.5f", number)
+        }
+        return price;
+    }
 }

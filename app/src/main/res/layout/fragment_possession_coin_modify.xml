@@ -409,9 +409,7 @@
                         android:inputType="number"
                         android:background="#80D3D3D3"
                         android:paddingLeft="17dp"
-                        android:paddingRight="17dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:paddingRight="17dp">
                     </com.google.android.material.textfield.TextInputEditText>
 
                 </LinearLayout>

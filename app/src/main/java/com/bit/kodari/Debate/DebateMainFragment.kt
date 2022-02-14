@@ -32,7 +32,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
 
     fun setListener(){
         //코인 검색 창 뜨게 하기
-        binding.debateMainInputCl.setOnClickListener {
+        binding.debateMainFindCoinCl.setOnClickListener {
             val dialog = DialogCoin()
             dialog.show(requireActivity().supportFragmentManager , "DialogCoin")
         }

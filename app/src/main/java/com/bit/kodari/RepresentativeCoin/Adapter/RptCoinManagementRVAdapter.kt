@@ -10,9 +10,10 @@ import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.databinding.ItemRepresentativeCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
+import java.text.DecimalFormat
 
 class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResult>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>(){
-
+    private var df: DecimalFormat = DecimalFormat("#.##")
     interface MyItemClickListener {
         fun onItemCheck(item: RptCoinMgtInsquireResult)
         fun onItemUnCheck(item:RptCoinMgtInsquireResult)
@@ -33,6 +34,9 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResul
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
+            binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice) +"원"
+            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
 
             //업비트, 바이낸스 가격 추가하기.
 
@@ -70,4 +74,21 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResul
 
     }
     override fun getItemCount() = rptCoinList.size
+    public fun formatD(number:Double): String {
+        return df.format(number)
+    }
+    fun formatPrice(number: Double): String{
+        lateinit var price: String
+        if(number>=1 && number < 10){
+            price = String.format("%.2f", number)
+        }else if(number>=10 && number < 100){
+            price = String.format("%.1f", number)
+        }else if(number>=100){
+            val price_ = String.format("%.0f", number).toDouble()
+            price = formatD(price_)
+        }else{
+            price = String.format("%.5f", number)
+        }
+        return price;
+    }
 }
