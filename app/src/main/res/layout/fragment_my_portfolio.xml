@@ -11,15 +11,16 @@
 
     <TextView
         android:id="@+id/my_portfolio_asset_title_tv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="20dp"
         android:text="@string/my_asset"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/my_portfolio_restart_iv"
@@ -73,18 +74,6 @@
         app:layout_constraintTop_toTopOf="@id/my_portfolio_asset_tv"/>
 
 
-    <TextView
-        android:id="@+id/my_portfolio_text_day_tv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_portfolio_percent_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="38dp"
-        android:textColor="@color/black"
-        android:text="12월 28일 기준"
-        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/my_portfolio_account_name_tv"

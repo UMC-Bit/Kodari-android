@@ -56,7 +56,7 @@ class MyPortfolioFragment(val portIdx: Int) : BaseFragment<FragmentMyPortfolioBi
         val f = NumberFormat.getInstance()
         f.isGroupingUsed=false
 
-        binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
+        binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()+"원"
         Log.d("temp" , "${resp.result.property}")
         binding.myPortfolioAccountNameTv.text = resp.result.accountName
         accoutIdx = resp.result.accountIdx
