@@ -208,6 +208,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         binding.homeVpPreviewBtn.visibility = View.GONE
                         callPortfolioInfo(portIdxList[position])
                         Log.d("callIdx" ,portfolioList.size.toString())
+
                     }
                     portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
