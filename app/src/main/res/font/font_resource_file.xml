@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    볼드체-->
     <font
         android:font="@font/apple_sdgothic_neo_b"
+        android:fontStyle="normal"
+        android:fontWeight="400"/>
+
+<!--    노말체-->
+    <font
+        android:font="@font/apple_sdgothic_neo_l"
         android:fontStyle="normal"
         android:fontWeight="400"/>
 

@@ -367,7 +367,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/btn_outline_yellow"
                 android:paddingStart="5dp"
-                android:paddingTop="30dp"
+
                 android:paddingEnd="5dp"
                 android:paddingBottom="30dp">
 
@@ -375,13 +375,14 @@
                     android:id="@+id/home_represent_coin_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="16dp"
                     android:text="대표 코인"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@id/home_coin_container_cl"
+                    app:layout_constraintTop_toTopOf="@id/home_coin_container_cl" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/home_represent_container_cv"
@@ -389,6 +390,7 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="10dp"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/home_represent_coin_tv">
@@ -481,14 +483,16 @@
                     android:id="@+id/home_my_coin_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="소유 코인"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/home_represent_container_cv" />
+                    app:layout_constraintTop_toBottomOf="@id/home_represent_container_cv"
+                    app:layout_constraintBottom_toTopOf="@id/home_my_coin_container_cv"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/home_my_coin_container_cv"
@@ -613,7 +617,6 @@
                     android:text="문의"
                     android:textColor="#8B8B8B" />
             </LinearLayout>
-
 
         </com.google.android.material.appbar.AppBarLayout>
 
