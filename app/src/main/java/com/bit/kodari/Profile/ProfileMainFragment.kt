@@ -2,11 +2,10 @@ package com.bit.kodari.Profile
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Intro.IntroPageOneFragment
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Retrofit.ProfileMainView
