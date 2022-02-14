@@ -37,27 +37,29 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/debate_main_find_coin_Cl"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="21dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginEnd="21dp"
                 app:cardCornerRadius="10dp"
                 android:layout_marginTop="25dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/debate_main_title_tv"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_bias="0.7">
 
                 <TextView
                     android:id="@+id/debate_main_find_coin_TV"
-                    android:layout_width="258dp"
+                    android:layout_width="match_parent"
                     android:layout_height="31dp"
                     android:hint="원하시는 코인을 검색하세요."
                     android:textSize="10sp"
                     android:background="#80D3D3D3"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:paddingStart="16dp"
                     android:paddingEnd="15dp"
-                    android:drawableRight="@drawable/move_button"/>
+                    android:drawableRight="@drawable/move_button" />
 
             </androidx.cardview.widget.CardView>
 
@@ -84,6 +86,7 @@
             app:layout_constraintTop_toBottomOf="@id/container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/btn_outline_gray"
             tools:listitem="@layout/list_item_debate" />
 

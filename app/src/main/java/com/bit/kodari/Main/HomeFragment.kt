@@ -228,7 +228,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         homePCRVAdapter = HomePCRVAdapter(userCoinList)
         homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener{
             override fun onClickItem(item: PossesionCoinResult) {
-                val dialog = DialogMemoAndTwitter(item.coinIdx)
+                val dialog = DialogMemoAndTwitter(item.coinIdx , item.twitter)
                 dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
             }
         })

@@ -25,23 +25,27 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
     private lateinit var nickName: String
     private var logInService = LogInService()
     override fun initAfterBinding() {
-
         setListener()
     }
 
     fun setListener(){
         binding.signupNicknameNextBtn.setOnClickListener {
-            email = requireArguments().getString("email")!!
-            pw = requireArguments().getString("pw")!!
-            nickName = binding.signupNicknameEt.text.toString()
-            val nickNameInfo = NicknameInfo(nickName)
-            logInService.setNicknameView(this)
-            logInService.getCheckNickname(nickNameInfo)
+            if(binding.termsCheeckBox.isChecked){
+                email = requireArguments().getString("email")!!
+                pw = requireArguments().getString("pw")!!
+                nickName = binding.signupNicknameEt.text.toString()
+                val nickNameInfo = NicknameInfo(nickName)
+                logInService.setNicknameView(this)
+                logInService.getCheckNickname(nickNameInfo)
+            } else{
+                showToast("이용약관에 동의해주세요.")
+            }
+
         }
 
         binding.signupNicknameXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupPwFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
         }
     }
 

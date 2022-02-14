@@ -43,7 +43,7 @@
 
         <TextView
             android:id="@+id/debate_coin_main_write_btn"
-            android:layout_width="53dp"
+            android:layout_width="56dp"
             android:layout_height="30dp"
             android:text="글쓰기"
             android:textSize="12sp"
