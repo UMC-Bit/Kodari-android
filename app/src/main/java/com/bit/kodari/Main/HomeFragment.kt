@@ -145,14 +145,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).addToBackStack(null)
                 .commitAllowingStateLoss()
 
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).addToBackStack(null)
                 .commitNowAllowingStateLoss()
         }
 
@@ -201,9 +201,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
-                        callPortfolioInfo(portIdxList[position])
-                        Log.d("callIdx" ,portfolioList.size.toString())
-
+                        if(portIdxList.size !=0 ){
+                            callPortfolioInfo(portIdxList[position])
+                            Log.d("callIdx" ,portfolioList.size.toString())
+                        }
                     }
                     portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
@@ -401,7 +402,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //포토폴리오 IDX 조회 성공
     override fun getPortIdxSuccess(resp: PortIdxResponse) {
-        Log.d("getPortIdx" , "성공")
+        dismissLoadingDialog()
+        Log.d("test" , "getPortIdxSuccess")
 //        portIdxList.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
         for(idx in resp.result){
@@ -413,12 +415,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     //포토폴리오 IDX 조회 실패
     override fun getPortIdxFailure(message: String) {
-        Log.d("getPortIdx" , "실패")
+        dismissLoadingDialog()
+        Log.d("test" , "getPortIdxFailure")
     }
 
     // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
     override fun portfolioSuccess(response: PortfolioResponse) {
         dismissLoadingDialog()
+        Log.d("test" , "portfolioSuccess")
         when (response.code) {
             1000 -> {
                 // 계좌
@@ -435,8 +439,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 Log.d("Callidx" , "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}")
                 //계좌 인덱스 셋팅 됐을때 차트 호출
                 callGetProfit()
+                Log.d("test" , "portfolioSuccess")
             }
             else -> {
+                Log.d("test" , "portfolioFailure")
                 showToast(response.message)
             }
         }
@@ -445,7 +451,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        Log.d("test" , "upbitPriceSuccess")
         if(requireActivity() != null && checkView) {
+            Log.d("test" , "upbitPriceSuccess")
             var profitSum = 0.0
             requireActivity().runOnUiThread() {
                 // 소유 코인
@@ -477,6 +485,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
+        Log.d("test" , "binancePriceSuccess")
         if(requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
                 // 소유 코인
@@ -509,11 +518,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
     override fun usdtPriceSuccess(usdtPrice: Int) {
+        Log.d("test" , "usdtPriceSuccess")
         this.usdtPrice = usdtPrice
     }
 
     override fun coinPriceFailure(message: String) {
-        TODO("Not yet implemented")
+        Log.d("test" , "coinPriceFailure")
+
     }
 
     // 코루틴 시세 적용 및 뷰바인딩
@@ -524,6 +535,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 시세 받아오기
     fun getCoinPrice(response: PortfolioResponse) {
+        Log.d("test" , "getCoinPrice")
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
         // 계좌
@@ -560,15 +572,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 포트폴리오 API 호출 실패
     override fun portfolioFailure(message: String) {
+        Log.d("test" , "portfolioFailure")
         showToast("포트폴리오 불러오기 실패")
     }
 
     override fun getAccountProfit(profit: Double) {
-        TODO("Not yet implemented")
+
     }
 
     //일별 데이터 성공
     override fun getDayProfitSuccess(response: GetProfitResponse) {
+
+        Log.d("test" , "getDayProfitSuccess")
         if(response.result[0].profitIdx == 0)
             return
         val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
@@ -581,11 +596,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //일별 데이터 실패
     override fun getDayProfitFrailure(message: String) {
+
+        Log.d("test" , "getDayProfitFrailure")
         showToast(message)
     }
 
     //주별 데이터 성공
     override fun getWeekProfitSuccess(response: GetProfitResponse) {
+
+        Log.d("test" , "getWeekProfitSuccess")
         if(response.result[0].profitIdx == 0)
             return
         val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
@@ -598,6 +617,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     //주별 데이터 실패
     override fun getWeekProfitFailure(message: String) {
+
+        Log.d("test" , "getWeekProfitFailure")
         showToast(message)
     }
 
