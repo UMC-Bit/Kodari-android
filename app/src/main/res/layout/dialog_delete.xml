@@ -29,6 +29,7 @@
 
     <Button
         android:id="@+id/delete_dialog_delete_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="46dp"
         android:layout_height="27dp"
         android:text="삭제"
@@ -42,6 +43,7 @@
 
     <Button
         android:id="@+id/delete_dialog_cancel_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="46dp"
         android:layout_height="27dp"
         android:text="취소"

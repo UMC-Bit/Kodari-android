@@ -50,6 +50,7 @@
         android:layout_marginEnd="25dp"
         android:background="@null"
         android:hint="닉네임을 입력해 주세요."
+
         android:textColorHint="#36000000"
         android:inputType="text"
         android:textSize="20sp"
@@ -80,6 +81,7 @@
 
     <Button
         android:id="@+id/signup_nickname_next_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"

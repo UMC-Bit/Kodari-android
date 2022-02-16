@@ -254,6 +254,7 @@
 
             <Button
                 android:id="@+id/mine_comment_send_btn"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="30sp"
                 android:text="게시"
@@ -264,6 +265,7 @@
 <!--            대댓다는 버튼-->
             <Button
                 android:id="@+id/mine_re_comment_send_btn"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="30sp"
                 android:text="답글게시"

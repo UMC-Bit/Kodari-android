@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FDCC68">
@@ -42,21 +43,24 @@
         android:textStyle="bold"
         android:textColor="#FDCC68"
         android:backgroundTint="#FFF6F6"
+        style="?android:attr/borderlessButtonStyle"
         android:background="@drawable/button_ywhite"
         app:layout_constraintTop_toBottomOf="@id/login_logo_tv" />
 
+
     <Button
         android:id="@+id/login_sign_in_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="#FDCC68"
         android:text="아이디 로그인"
+        android:clickable="false"
+        android:textColor="#B35C5C5C"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#B35C5C5C"
-        android:backgroundTint="#FDCC68"
         app:layout_constraintTop_toBottomOf="@id/login_sign_up_btn"
-        style="?android:attr/borderlessButtonStyle"/>
-
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/login_name_tv"
