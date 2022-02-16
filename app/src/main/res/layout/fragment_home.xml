@@ -10,10 +10,10 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -92,7 +92,8 @@
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/home_viewpager_vp"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent">
+                            </androidx.viewpager2.widget.ViewPager2>
 
                         </androidx.cardview.widget.CardView>
 
@@ -155,12 +156,12 @@
                                     android:id="@+id/home_income_on_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/btn_outline_yellow"
                                     android:layout_marginStart="5dp"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
+                                    android:background="@drawable/btn_outline_yellow"
                                     android:paddingStart="10dp"
+                                    android:paddingTop="7dp"
                                     android:paddingEnd="10dp"
+                                    android:paddingBottom="7dp"
                                     android:text="소득"
                                     android:textColor="@color/black"
                                     android:textSize="11sp"
@@ -173,16 +174,16 @@
                                     android:id="@+id/home_income_off_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/btn_outline_white"
                                     android:layout_marginStart="5dp"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
+                                    android:background="@drawable/btn_outline_white"
                                     android:paddingStart="10dp"
+                                    android:paddingTop="7dp"
                                     android:paddingEnd="10dp"
-                                    android:textStyle="bold"
+                                    android:paddingBottom="7dp"
                                     android:text="소득"
                                     android:textColor="@color/black"
                                     android:textSize="11sp"
+                                    android:textStyle="bold"
                                     android:visibility="gone"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -192,12 +193,12 @@
                                     android:id="@+id/home_yield_off_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/btn_outline_white"
                                     android:layout_marginStart="5dp"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
+                                    android:background="@drawable/btn_outline_white"
                                     android:paddingStart="10dp"
+                                    android:paddingTop="7dp"
                                     android:paddingEnd="10dp"
+                                    android:paddingBottom="7dp"
                                     android:text="수익률"
                                     android:textColor="@color/black"
                                     android:textSize="11sp"
@@ -211,15 +212,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
-                                    android:paddingStart="10dp"
-                                    android:paddingEnd="10dp"
                                     android:background="@drawable/btn_outline_yellow"
+                                    android:paddingStart="10dp"
+                                    android:paddingTop="7dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingBottom="7dp"
                                     android:text="수익률"
-                                    android:textStyle="bold"
                                     android:textColor="@color/black"
                                     android:textSize="11sp"
+                                    android:textStyle="bold"
                                     android:visibility="gone"
                                     app:layout_constraintBottom_toBottomOf="@id/home_income_off_tv"
                                     app:layout_constraintStart_toEndOf="@id/home_income_off_tv"
@@ -240,54 +241,54 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:orientation="horizontal"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent">
+                                    app:layout_constraintTop_toTopOf="parent">
 
                                     <TextView
                                         android:id="@+id/home_day_on_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/btn_outline_yellow"
                                         android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
+                                        android:background="@drawable/btn_outline_yellow"
                                         android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
                                         android:paddingEnd="13dp"
-                                        android:textSize="11sp"
-                                        android:textStyle="bold"
+                                        android:paddingBottom="8dp"
                                         android:text="일"
                                         android:textColor="@color/black"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold"
                                         android:visibility="visible" />
 
                                     <TextView
                                         android:id="@+id/home_day_off_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/btn_outline_white"
                                         android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
+                                        android:background="@drawable/btn_outline_white"
                                         android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
                                         android:paddingEnd="13dp"
-                                        android:textSize="11sp"
-                                        android:textStyle="bold"
+                                        android:paddingBottom="8dp"
                                         android:text="일"
                                         android:textColor="@color/black"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold"
                                         android:visibility="gone" />
 
                                     <TextView
                                         android:id="@+id/home_week_off_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
                                         android:background="@drawable/btn_outline_white"
+                                        android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingEnd="13dp"
+                                        android:paddingBottom="8dp"
                                         android:text="주"
                                         android:textColor="@color/black"
-                                        android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
-                                        android:paddingStart="13dp"
-                                        android:paddingEnd="13dp"
                                         android:textSize="11sp"
                                         android:textStyle="bold" />
 
@@ -296,29 +297,29 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
-                                        android:paddingStart="13dp"
-                                        android:paddingEnd="13dp"
-                                        android:textSize="11sp"
-                                        android:textStyle="bold"
                                         android:background="@drawable/btn_outline_yellow"
+                                        android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingEnd="13dp"
+                                        android:paddingBottom="8dp"
                                         android:text="주"
                                         android:textColor="@color/black"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold"
                                         android:visibility="gone" />
 
                                     <TextView
                                         android:id="@+id/home_month_off_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
                                         android:background="@drawable/btn_outline_white"
+                                        android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingEnd="13dp"
+                                        android:paddingBottom="8dp"
                                         android:text="월"
                                         android:textColor="@color/black"
-                                        android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
-                                        android:paddingStart="13dp"
-                                        android:paddingEnd="13dp"
                                         android:textSize="11sp"
                                         android:textStyle="bold" />
 
@@ -326,14 +327,14 @@
                                         android:id="@+id/home_month_on_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
                                         android:background="@drawable/btn_outline_yellow"
+                                        android:paddingStart="13dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingEnd="13dp"
+                                        android:paddingBottom="8dp"
                                         android:text="월"
                                         android:textColor="@color/black"
-                                        android:layout_marginEnd="5dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="8dp"
-                                        android:paddingStart="13dp"
-                                        android:paddingEnd="13dp"
                                         android:textSize="11sp"
                                         android:textStyle="bold"
                                         android:visibility="gone" />
@@ -341,11 +342,9 @@
                                 </LinearLayout>
 
 
-
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </androidx.cardview.widget.CardView>
-
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/home_chart_lc"
                             android:layout_width="match_parent"
@@ -356,7 +355,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_radio_container_cv" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -379,11 +377,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
                     android:text="대표 코인"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="@id/home_coin_container_cl"
                     app:layout_constraintTop_toTopOf="@id/home_coin_container_cl" />
 
@@ -391,9 +389,9 @@
                     android:id="@+id/home_represent_container_cv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
                     android:layout_marginTop="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/home_represent_coin_tv">
@@ -411,9 +409,9 @@
                             android:background="@color/white"
                             android:scaleType="centerCrop"
                             android:src="@drawable/next_btn"
+                            app:layout_constraintBottom_toBottomOf="@+id/home_rpt_coin_outline_TV"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/home_rpt_coin_outline_TV"
-                            app:layout_constraintBottom_toBottomOf="@+id/home_rpt_coin_outline_TV"/>
+                            app:layout_constraintTop_toTopOf="@+id/home_rpt_coin_outline_TV" />
 
 
                         <TextView
@@ -422,10 +420,10 @@
                             android:layout_height="23dp"
                             android:layout_marginTop="14dp"
                             android:background="@drawable/button_outline"
-                            android:gravity="center"
                             android:textColor="#000000"
                             android:textSize="11dp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.55"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -449,8 +447,8 @@
                             android:text="@string/binanace"
                             android:textColor="@color/black"
                             android:textSize="11sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/home_rpt_coin_outline_TV"
+                            app:layout_constraintStart_toStartOf="@id/home_rpt_coin_outline_TV"
                             app:layout_constraintTop_toTopOf="@id/home_rpt_coin_outline_TV" />
 
                         <TextView
@@ -460,7 +458,7 @@
                             android:gravity="center"
                             android:text="김치 프리미엄"
                             android:textColor="@color/black"
-                            android:textSize="10sp"
+                            android:textSize="10.5sp"
                             app:layout_constraintStart_toEndOf="@id/home_binance_tv"
                             app:layout_constraintTop_toTopOf="@id/home_rpt_coin_outline_TV" />
 
@@ -494,16 +492,16 @@
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/home_my_coin_container_cv"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/home_represent_container_cv"
-                    app:layout_constraintBottom_toTopOf="@id/home_my_coin_container_cv"/>
+                    app:layout_constraintTop_toBottomOf="@id/home_represent_container_cv" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/home_my_coin_container_cv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/home_my_coin_tv">
@@ -521,13 +519,13 @@
                             android:background="@color/white"
                             android:scaleType="centerCrop"
                             android:src="@drawable/next_btn"
+                            app:layout_constraintBottom_toBottomOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV"
-                            app:layout_constraintBottom_toBottomOf="@id/home_psn_coin_outline_TV" />
+                            app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
 
                         <TextView
                             android:id="@+id/home_psn_coin_outline_TV"
-                            android:layout_width="187dp"
+                            android:layout_width="200dp"
                             android:layout_height="23dp"
                             android:layout_marginTop="14dp"
                             android:background="@drawable/button_outline"
@@ -535,6 +533,7 @@
                             android:textColor="#000000"
                             android:textSize="11dp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.55"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -545,7 +544,7 @@
                             android:gravity="center"
                             android:text="현재가"
                             android:textColor="#000000"
-                            android:textSize="11dp"
+                            android:textSize="11sp"
                             app:layout_constraintEnd_toStartOf="@id/possession_coin_management_profit_off_BT"
                             app:layout_constraintStart_toStartOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
@@ -557,7 +556,7 @@
                             android:gravity="center"
                             android:text="평가 순익"
                             android:textColor="#000000"
-                            android:textSize="11dp"
+                            android:textSize="11sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
@@ -569,7 +568,7 @@
                             android:gravity="center"
                             android:text="매수 평단가"
                             android:textColor="#000000"
-                            android:textSize="11dp"
+                            android:textSize="11sp"
                             app:layout_constraintEnd_toEndOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintStart_toEndOf="@id/possession_coin_management_profit_off_BT"
                             app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
@@ -603,35 +602,33 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
 
                 <Button
-                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/logout"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:backgroundTint="#FDCC68"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:textSize="12sp"
+                    android:backgroundTint="#FDCC68"
                     android:text="로그아웃"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/home_question_btn"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="#FDCC68"
                     android:drawableStart="@drawable/question_mark"
-                    android:layout_marginTop="20dp"
                     android:text="문의"
-                    android:textSize="12sp"
-                    android:textColor="@color/black" />
-<!--                android:textColor="#8B8B8B"-->
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <!--                android:textColor="#8B8B8B"-->
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/enroll_back_btn_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="31dp"
         android:src="@drawable/back_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,17 +27,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
+        android:paddingBottom="18dp"
         android:textStyle="bold"/>
 
     <ScrollView
         android:id="@+id/enroll_scroll_sv"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enroll_title_tv"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/btn_outline_gray">
+        android:background="#EDEDED">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/enroll_container_cl"
@@ -59,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="27dp"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/enroll_domestic_exchange_container_cv"
@@ -206,12 +208,15 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/enroll_domestic_exchange_container_cv"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="10dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="40dp"
+                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/enroll_oversea_exchange_container_cl"
