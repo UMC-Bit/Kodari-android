@@ -3,6 +3,7 @@ package com.bit.kodari.Profile
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Intro.IntroPageOneFragment
@@ -15,7 +16,6 @@ import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentProfileMainBinding
 
 class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
-
 
     lateinit var nickName:String
     lateinit var email:String
@@ -44,9 +44,11 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
                 }).commitAllowingStateLoss()
         }
 
+        // 뉴스 모아보기 서비스 준비 중이기 때문에 주석 처리함. 주석 지울 시에 웹뷰 연결됨
         binding.profileMainBtn2Ib.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, MyNewsFragment()).commitAllowingStateLoss()
+//            (context as MainActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_container_fl, MyNewsFragment()).commitAllowingStateLoss()
+            Toast.makeText(context, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.profileMainBtn3Ib.setOnClickListener {

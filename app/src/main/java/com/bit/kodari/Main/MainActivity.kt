@@ -2,8 +2,10 @@ package com.bit.kodari.Main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bit.kodari.AddOn.AddOnMainFragment
 import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Debate.DebateMainFragment
+import com.bit.kodari.Feed.FeedMainFragment
 import com.bit.kodari.Profile.ProfileMainFragment
 import com.bit.kodari.R
 import com.bit.kodari.Util.Upbit.UpbitService
@@ -42,17 +44,17 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.feed -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_container_fl, SearchFragment())
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, FeedMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.add_on -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_container_fl, LockerFragment())
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, AddOnMainFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
                 }
                 R.id.profile -> {
                     supportFragmentManager.beginTransaction()
