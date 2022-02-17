@@ -152,7 +152,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).addToBackStack(null)
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
                 .commitNowAllowingStateLoss()
         }
 
