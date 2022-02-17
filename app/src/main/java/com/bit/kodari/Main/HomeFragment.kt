@@ -151,8 +151,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).addToBackStack(null)
-                .commitNowAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).commitNowAllowingStateLoss()
         }
 
         //화살표 관련 리스너
@@ -446,7 +445,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null && checkView) {
-            var profitSum = 0.0
+            var currentSum = 0.0
             var sumBuyCoin = 0.0
             requireActivity().runOnUiThread() {
                 // 소유 코인
@@ -459,7 +458,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         sumBuyCoin += amount * priceAvg
                         userCoinList[i].upbitPrice = upbitPrice
                         userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
-                        profitSum += getProfit(upbitPrice, amount, priceAvg)
+                        currentSum += upbitPrice * amount
                     }
                 }
                 // 대표 코인
@@ -473,7 +472,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 setRepresentRV()
                 setRepresentPV()
                 // 계좌 수익률 보내주기
-                portFolioView.getAccountProfit(profitSum, sumBuyCoin)
+                portFolioView.getAccountProfit(currentSum, sumBuyCoin)
             }
         }
     }

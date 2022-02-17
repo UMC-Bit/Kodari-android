@@ -37,6 +37,7 @@ import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
 CoinView{
     var usdtPrice: Int = 1 // usdt 가격
+    private var checkView = true
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
@@ -46,7 +47,22 @@ CoinView{
         setListener()
         getPossessionCoins()
     }
+    override fun onPause() {
+        super.onPause()
+        checkView = false
+    }
 
+    override fun onResume() {
+        super.onResume()
+        checkView = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        checkView = false
+        upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        binanceWebSocket?.webSocket?.cancel()
+    }
     fun setListener(){
         binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 수정 fragement로 이동 가능
@@ -129,9 +145,11 @@ CoinView{
 
             }
         })
-
-        binding.possessionCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.possessionCoinManagementRV.adapter=possessionCoinManagementAdapter
+        if(checkView) {
+            binding.possessionCoinManagementRV.layoutManager =
+                LinearLayoutManager(context as MainActivity)
+            binding.possessionCoinManagementRV.adapter = possessionCoinManagementAdapter
+        }
     }
 
     fun getPossessionCoins(){

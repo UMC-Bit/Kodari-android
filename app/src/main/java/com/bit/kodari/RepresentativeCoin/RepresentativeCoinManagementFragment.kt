@@ -33,6 +33,7 @@ import com.bumptech.glide.Glide
 class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
     CoinView {
     var usdtPrice: Int = 1 // usdt 가격
+    private var checkView = true
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
@@ -52,6 +53,22 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         setListener()
         getRptCoins()
 
+    }
+    override fun onPause() {
+        super.onPause()
+        checkView = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkView = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        checkView = false
+        upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        binanceWebSocket?.webSocket?.cancel()
     }
     fun setListener(){
         binding.representativeCoinManagementAddTV.setOnClickListener {
@@ -89,8 +106,11 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 }
             }
         })
-        binding.representativeCoinManagementRV.layoutManager = LinearLayoutManager(context as MainActivity)
-        binding.representativeCoinManagementRV.adapter= rptCoinManagementAdapter
+        if(checkView) {
+            binding.representativeCoinManagementRV.layoutManager =
+                LinearLayoutManager(context as MainActivity)
+            binding.representativeCoinManagementRV.adapter = rptCoinManagementAdapter
+        }
     }
 
     //대표 코인 조회

@@ -73,10 +73,10 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
 
     override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
         this.profit = profit.toInt()
-        val profitRate = ((property + profit) / (property + sumBuyCoin))* 100 - 100
+        val profitRate = ((property + profit) / (property + sumBuyCoin)) * 100 - 100
         val f = NumberFormat.getInstance()
         f.isGroupingUsed=false
         binding.myPortfolioAssetTv.text = f.format(property.toInt() + profit).toString() + "원"
-        binding.myPortfolioPercentTv.text = f.format(profitRate) + "%"
+        binding.myPortfolioPercentTv.text = profitRate.toInt().toString()+ "%"
     }
 }
