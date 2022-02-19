@@ -14,6 +14,7 @@ import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentProfileMainBinding
+import com.bumptech.glide.Glide
 
 class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
 
@@ -73,6 +74,10 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         binding.profileMainNameTv.text = nickName
         binding.profileMainEmailTv.text = email
         Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")
+        Glide.with(binding.profileMainImageIv)
+            .load(response.result[0].profileImgUrl)
+            .centerCrop()
+            .into(binding.profileMainImageIv)
         dismissLoadingDialog()
     }
 

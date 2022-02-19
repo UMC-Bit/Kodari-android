@@ -174,7 +174,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
-
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {
