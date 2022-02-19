@@ -10,5 +10,6 @@ data class RepresentCoinResult(
     var portIdx: Int,
     var representIdx: Int,
     var status: String,
-    var symbol: String
+    var symbol: String,
+    var isChecked: Boolean
 )

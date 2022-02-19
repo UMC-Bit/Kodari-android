@@ -1,4 +1,4 @@
-package com.bit.kodari.Util.Binance
+package com.bit.kodari.Util.Coin
 
 data class BinanceResult(
     val symbol: String,

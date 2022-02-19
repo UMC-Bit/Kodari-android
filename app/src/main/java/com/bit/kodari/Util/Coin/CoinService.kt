@@ -5,7 +5,6 @@ import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
-import com.bit.kodari.Util.Binance.BinanceResult
 import com.bit.kodari.Util.Coin.CoinInterface
 import com.bit.kodari.Util.Coin.CoinView
 import io.reactivex.android.schedulers.AndroidSchedulers

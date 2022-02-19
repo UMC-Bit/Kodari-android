@@ -96,7 +96,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         }
 
         if(requireArguments().containsKey("priceAvg")){
-            val value = requireArguments().getString("priceAvg")!!.toDouble()
+            val value = requireArguments().getDouble("priceAvg")!!
             binding.possessionCoinModifyAverageunitPriceNumberTV.text=String.format("%.2f", value)
         }
     }

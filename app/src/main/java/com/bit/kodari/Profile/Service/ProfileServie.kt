@@ -68,16 +68,24 @@ class ProfileService() {
     }
 
     // 프로필 사진 변경 API 호출
-    fun updateProfileImg(userIdx: Int, profileImgUrl: String) {
+    fun updateProfileImg(profileImgUrl: String) {
         val updateProfileImgService = getRetorfit().create(ProfileRetrofitInterface::class.java)
 
-        updateProfileImgService.updateProfileImg("jwt", userIdx, profileImgUrl).enqueue(object : Callback<UpdateProfileImgResponse>{
+        updateProfileImgService.updateProfileImg(getJwt()!!, getUserIdx(), profileImgUrl).enqueue(object : Callback<UpdateProfileImgResponse>{
 
             override fun onResponse(
                 call: Call<UpdateProfileImgResponse>,
                 response: Response<UpdateProfileImgResponse>
             ) {
-                profileEditView.updateProfileImgSuccess(response.body()!!)
+                when(response.body()!!.code){
+                  1000 -> {
+                      profileEditView.updateProfileImgSuccess(response.body()!!)
+                  }
+                  else -> {
+                      profileEditView.updateProfileImgFailure(response.body()!!.message)
+                  }
+                }
+
             }
 
             override fun onFailure(call: Call<UpdateProfileImgResponse>, t: Throwable) {

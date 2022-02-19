@@ -1,22 +1,20 @@
 package com.bit.kodari.Main.Adapter
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
-import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.databinding.ItemRepresentativeCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
-class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResult>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>(){
+class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>(){
     private var df: DecimalFormat = DecimalFormat("#.##")
     interface MyItemClickListener {
-        fun onItemCheck(item: RptCoinMgtInsquireResult)
-        fun onItemUnCheck(item:RptCoinMgtInsquireResult)
+        fun onItemCheck(item: RepresentCoinResult)
+        fun onItemUnCheck(item:RepresentCoinResult)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -29,7 +27,7 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RptCoinMgtInsquireResul
     inner class RepresentativeCoinManagementViewHolder(val binding: ItemRepresentativeCoinManagementCoinListBinding): RecyclerView.ViewHolder(binding.root){
         val imageView: ImageView =binding.itemRepresentativeCoinManagementCoinListImageIV
 
-        fun bind(item : RptCoinMgtInsquireResult){ // 서버에서 받아와서 보여줄 것만
+        fun bind(item: RepresentCoinResult){ // 서버에서 받아와서 보여줄 것만
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName

@@ -93,5 +93,10 @@ dependencies {
 
     // okHttp3
     implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+
+    //AWS 연결
+    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.13.5'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
 }
 
