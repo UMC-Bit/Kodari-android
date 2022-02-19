@@ -59,7 +59,7 @@
                     android:gravity="center"
                     android:paddingStart="16dp"
                     android:paddingEnd="15dp"
-                    android:drawableRight="@drawable/move_button" />
+                    android:drawableRight="@drawable/yellow_next_btn" />
 
             </androidx.cardview.widget.CardView>
 

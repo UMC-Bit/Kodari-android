@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/yellow_arrow"
+                    android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_image_iv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_image_iv" />
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/yellow_arrow"
+                    android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_bar2_vw"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_bar1_vw" />
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/yellow_arrow"
+                    android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_bar3_vw"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_bar2_vw" />
@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/yellow_arrow"
+                    android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_bar3_vw" />
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/yellow_arrow"
+                    android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_bar4_vw" />

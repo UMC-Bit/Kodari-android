@@ -47,7 +47,7 @@
         android:id="@+id/item_possession_coin_search_coin_list_move_button_IV"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/move_button"
+        android:background="@drawable/yellow_next_btn"
         app:layout_constraintTop_toTopOf="@id/item_possession_coin_search_coin_list_image_IV"
         app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_search_coin_list_image_IV"
         app:layout_constraintEnd_toEndOf="parent"/>
