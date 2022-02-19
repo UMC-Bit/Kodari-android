@@ -1,4 +1,4 @@
-package com.bit.kodari.Util.Upbit
+package com.bit.kodari.Util.Coin
 
 data class UpbitPrice(
     val acc_trade_price: Double,

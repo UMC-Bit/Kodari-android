@@ -5,18 +5,13 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Debate.DebateMainFragment
-import com.bit.kodari.Debate.DebateModifyPostFragment
-import com.bit.kodari.Debate.DeleteDialog
-import com.bit.kodari.Debate.Service.DebateService
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
@@ -24,28 +19,31 @@ import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtDeleteView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtInsquireView
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtDeleteResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResponse
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinSearchResult
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
-import com.bit.kodari.Util.Coin.BinanceWebSocketListener
-import com.bit.kodari.Util.Coin.CoinView
-import com.bit.kodari.Util.Coin.UpbitWebSocketListener
-import com.bit.kodari.Util.getUserIdx
+import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
 class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
 CoinView{
+    private lateinit var viewModel: CoinViewModel
+    private lateinit var viewModelFactory: CoinViewModelFactory
     var usdtPrice: Int = 1 // usdt 가격
     private var checkView = true
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private lateinit var possessionCoinManagementAdapter: PossessionCoinManagementAdapter
-    private var coinList = ArrayList<PsnCoinMgtInsquireResult>()
+    private var coinList = ArrayList<PossesionCoinResult>()
     override fun initAfterBinding() {
         setListener()
         getPossessionCoins()
+        // ViewModel 적용
+        viewModelFactory = CoinViewModelFactory(coinList, null)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
+            setRecyclerView()
+        })
     }
     override fun onPause() {
         super.onPause()
@@ -141,7 +139,7 @@ CoinView{
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         possessionCoinManagementAdapter.setMyItemClickListener(object :
             PossessionCoinManagementAdapter.MyItemClickListener{
-            override fun onItemClick(item: PsnCoinMgtInsquireResult) {
+            override fun onItemClick(item: PossesionCoinResult) {
 
             }
         })
@@ -221,7 +219,7 @@ CoinView{
                         coinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
                     }
                 }
-                setRecyclerView()
+                viewModel.getUpdateUserCoin(coinList)
             }
         }
     }

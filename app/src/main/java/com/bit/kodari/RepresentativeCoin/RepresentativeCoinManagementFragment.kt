@@ -1,72 +1,54 @@
 package com.bit.kodari.RepresentativeCoin
 
 import android.app.AlertDialog
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
-import com.bit.kodari.Main.Data.PortfolioResponse
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
-import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
 import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
-import com.bit.kodari.Util.Coin.BinanceWebSocketListener
-import com.bit.kodari.Util.Coin.CoinView
-import com.bit.kodari.Util.Coin.UpbitWebSocketListener
-import com.bit.kodari.Util.Coin.UsdtService
+import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
-import com.bumptech.glide.Glide
+
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
 class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
     CoinView {
-    var usdtPrice: Int = 1 // usdt 가격
-    private var checkView = true
+    private lateinit var viewModel: CoinViewModel
+    private lateinit var viewModelFactory: CoinViewModelFactory
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private lateinit var rptCoinManagementAdapter: RptCoinManagementAdapter
-    private var coinList = ArrayList<RptCoinMgtInsquireResult>()
+    private var coinList = ArrayList<RepresentCoinResult>()
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
     companion object{
         private var cnt = 0
     }
     override fun initAfterBinding() {
         // Usdt 환율 받아옴
-        val usdtService = UsdtService()
-        usdtService.setCoinView(this)
-        usdtService.getFirsUsdtPrice()
-        usdtService.getUsdtPrice()
         deleteDialog()
         setListener()
         getRptCoins()
-
-    }
-    override fun onPause() {
-        super.onPause()
-        checkView = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkView = true
+        // ViewModel 적용
+        viewModelFactory = CoinViewModelFactory(null, coinList)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
+            setRecyclerView()
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        checkView = false
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
         binanceWebSocket?.webSocket?.cancel()
     }
@@ -90,7 +72,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
         rptCoinManagementAdapter.setMyItemClickListener(object :
             RptCoinManagementAdapter.MyItemClickListener{
-            override fun onItemCheck(item: RptCoinMgtInsquireResult) {  //선택했을때 -> off 눌렀을때
+            override fun onItemCheck(item: RepresentCoinResult) {  //선택했을때 -> off 눌렀을때
                 item.isChecked = true                                   //true로 변경
                 if(!deleteRcoinList.contains(item.representIdx)){
                     deleteRcoinList.add(item.representIdx)
@@ -98,7 +80,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 }
             }
 
-            override fun onItemUnCheck(item: RptCoinMgtInsquireResult) {    //선택 해제했을때 -> on 눌렀을 때
+            override fun onItemUnCheck(item: RepresentCoinResult) {    //선택 해제했을때 -> on 눌렀을 때
                 item.isChecked = false
                 if(deleteRcoinList.contains(item.representIdx)){
                     deleteRcoinList.remove(item.representIdx)
@@ -106,11 +88,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 }
             }
         })
-        if(checkView) {
             binding.representativeCoinManagementRV.layoutManager =
                 LinearLayoutManager(context as MainActivity)
             binding.representativeCoinManagementRV.adapter = rptCoinManagementAdapter
-        }
+
     }
 
     //대표 코인 조회
@@ -212,31 +193,32 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                         coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
                     }
                 }
-                setRecyclerView()
+                viewModel.getUpdateRepresentCoin(coinList)
             }
         }
     }
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null) {
+            var usdtPrice = binanceCoinPriceMap.get("usdt")!!.toInt()
             requireActivity().runOnUiThread() {
                 // 대표 코인
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
                     if (binanceCoinPriceMap.containsKey(symbol)) {
                         val upbitPrice = coinList[i].upbitPrice
-                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
+                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         coinList[i].binancePrice = binancePrice
                         coinList[i].kimchi = kimchi
                     }
                 }
-                setRecyclerView()
+                viewModel.getUpdateRepresentCoin(coinList)
             }
         }
     }
     override fun usdtPriceSuccess(usdtPrice: Int) {
-        this.usdtPrice = usdtPrice
+        TODO("Not yet implemented")
     }
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")

@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResult
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.databinding.ItemPossessionCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 
-class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMgtInsquireResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
+class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PossesionCoinResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
     private var df: DecimalFormat = DecimalFormat("#.##")
     companion object{
         var isClick=false
@@ -20,7 +20,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
     }
 
     interface MyItemClickListener {
-        fun onItemClick(item: PsnCoinMgtInsquireResult)
+        fun onItemClick(item: PossesionCoinResult)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -34,7 +34,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PsnCoinMg
 
         val imageView: ImageView =binding.itemPossessionCoinManagementCoinListImageIV
 
-        fun bind(item : PsnCoinMgtInsquireResult){ // 서버에서 받아와서 보여줄 것만
+        fun bind(item: PossesionCoinResult){ // 서버에서 받아와서 보여줄 것만
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName

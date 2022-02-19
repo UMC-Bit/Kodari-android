@@ -1,10 +1,10 @@
 package com.bit.kodari.Main
 
-import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -27,11 +26,7 @@ import com.bit.kodari.PossessionCoin.DialogMemoAndTwitter
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
-import com.bit.kodari.Util.*
-import com.bit.kodari.Util.Coin.BinanceWebSocketListener
-import com.bit.kodari.Util.Coin.CoinView
-import com.bit.kodari.Util.Coin.UpbitWebSocketListener
-import com.bit.kodari.Util.Coin.UsdtService
+import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getPw
@@ -43,25 +38,29 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView , CoinView, HomeView {
-    lateinit var homeVPAdapter: HomeVPAdapter
-    lateinit var homeRCRVAdapter: HomeRCRVAdapter
-    lateinit var homePCRVAdapter: HomePCRVAdapter
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
+    CoinView, HomeView {
+    private lateinit var homeVPAdapter: HomeVPAdapter
+    private lateinit var homeRCRVAdapter: HomeRCRVAdapter
+    private lateinit var homePCRVAdapter: HomePCRVAdapter
+    private lateinit var viewModel: CoinViewModel
+    private lateinit var viewModelFactory: CoinViewModelFactory
     private var checkView = true
-    var usdtPrice: Int = 1
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
     lateinit var accounName: String
-    //var profitList = LinkedList<GetProfitResult>()
 
     // 유저 코인 리스트
-    lateinit var userCoinList: List<PossesionCoinResult>
+    var userCoinList = ArrayList<PossesionCoinResult>()
+
     // 대표 코인 리스트
-    lateinit var representCoinList: List<RepresentCoinResult>
+    var representCoinList = ArrayList<RepresentCoinResult>()
+
     // 수익률 리스트
     // val profitList = response.result.profitResultList
     // 유저 코인, 대표 코인 심볼 저장
     var coinSymbolSet = HashSet<String>()
+
     // 업비트, 바이낸스 웹 소켓
     var upbitWebSocket: UpbitWebSocketListener? = null
     var binanceWebSocket: BinanceWebSocketListener? = null
@@ -86,12 +85,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
         )
-        // Usdt 환율 받아옴
-        val usdtService = UsdtService()
-        usdtService.setCoinView(this)
-        usdtService.getFirsUsdtPrice()
-        usdtService.getUsdtPrice()
+
+        viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
+            setRepresentRV()
+        })
+        viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
+            setRepresentPV()
+        })
     }
+
+    fun setRepresentRV() {
+        if(binding!=null) {
+            homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
+            binding.homeRepresentCoinRv.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
+        }
+    }
+
+    fun setRepresentPV() {
+        if (binding != null) {
+            homePCRVAdapter = HomePCRVAdapter(userCoinList)
+            homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener {
+                override fun onClickItem(item: PossesionCoinResult) {
+                    val dialog = DialogMemoAndTwitter(item.coinIdx, item.twitter)
+                    dialog.show(requireActivity().supportFragmentManager, "DialogMemoAndTwitter")
+                }
+            })
+            binding.homeMyCoinRv.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.homeMyCoinRv.adapter = homePCRVAdapter
+        }
+    }
+
     //초기 클릭 리스너 등 모든 리스너를 정의하는 함수
     fun setListener() {
         //소득 클릭시 변경
@@ -144,14 +172,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).addToBackStack(null)
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
+                .addToBackStack(null)
                 .commitAllowingStateLoss()
 
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName)).commitNowAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
+                .commitNowAllowingStateLoss()
         }
 
         //화살표 관련 리스너
@@ -181,7 +211,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
-        Log.d("setViewpager" , "뷰페이저 크ㅡ기 : ${portfolioList.size}")
+        Log.d("setViewpager", "뷰페이저 크ㅡ기 : ${portfolioList.size}")
         homeVPAdapter = HomeVPAdapter(this, portfolioList)
         //homeVPAdapter.addFragment(MyPortfolioFragment())
         binding.homeViewpagerVp.adapter = homeVPAdapter
@@ -199,9 +229,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
-                        if(portIdxList.size !=0 ){
+                        if (portIdxList.size != 0) {
                             callPortfolioInfo(portIdxList[position])
-                            Log.d("callIdx" ,portfolioList.size.toString())
+                            Log.d("callIdx", portfolioList.size.toString())
                         }
                     }
                     portfolioList.size - 1 -> {     //마지막
@@ -219,34 +249,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
     }
 
-    fun setRepresentRV() {
-        homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
-        if(checkView) {
-            binding.homeRepresentCoinRv.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            binding.homeRepresentCoinRv.adapter = homeRCRVAdapter
-        }
-
-    }
-
-    fun setRepresentPV() {
-        homePCRVAdapter = HomePCRVAdapter(userCoinList)
-        homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener{
-            override fun onClickItem(item: PossesionCoinResult) {
-                val dialog = DialogMemoAndTwitter(item.coinIdx , item.twitter)
-                dialog.show(requireActivity().supportFragmentManager , "DialogMemoAndTwitter")
-            }
-        })
-        if(checkView) {
-            binding.homeMyCoinRv.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            binding.homeMyCoinRv.adapter = homePCRVAdapter
-        }
-
-    }
-
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
-    fun setChartDummy(profitList: ArrayList<GetProfitResult>) {
+    fun setChartDummy(profitList: ArrayList<GetProfitResult>){
 
 //        binding.homeChartLc.apply {
 //            setDrawGridBackground(false);
@@ -265,21 +269,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //        }
 
 
-        binding.homeChartLc.getDescription().setEnabled(false);
-        // enable touch gestures
-        binding.homeChartLc.setTouchEnabled(false);
+    binding.homeChartLc.getDescription().setEnabled(false);
+    // enable touch gestures
+    binding.homeChartLc.setTouchEnabled(false);
 
-        // enable scaling and dragging
-        binding.homeChartLc.setDragEnabled(false);
-        binding.homeChartLc.setScaleEnabled(false);
+    // enable scaling and dragging
+    binding.homeChartLc.setDragEnabled(false);
+    binding.homeChartLc.setScaleEnabled(false);
 
-        // if disabled, scaling can be done on x- and y-axis separately
-        binding.homeChartLc.setPinchZoom(false);
+    // if disabled, scaling can be done on x- and y-axis separately
+    binding.homeChartLc.setPinchZoom(false);
 
-        binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
+    binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
 
-        // set custom chart offsets (automatic offset calculation is hereby disabled)
-        binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
+    // set custom chart offsets (automatic offset calculation is hereby disabled)
+    binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
 
 //        binding.homeChartLc.axisLeft.apply {
 //            setLabelCount(4, true)
@@ -288,17 +292,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            setGridColor(Color.argb(102, 255, 255, 255))
 //            setAxisLineColor(Color.TRANSPARENT)
 //        }
-        binding.homeChartLc.legend.isEnabled = false            //범례 없애기
-        binding.homeChartLc.data = setChartDummyData(profitList)
+    binding.homeChartLc.legend.isEnabled = false            //범례 없애기
+    binding.homeChartLc.data = setChartDummyData(profitList)
 
-        //Y축 셋팅
-        binding.homeChartLc.axisLeft.isEnabled = true;
-        binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
-        binding.homeChartLc.axisLeft.spaceTop = 40f;
-        binding.homeChartLc.axisLeft.spaceBottom = 40f;
-        binding.homeChartLc.axisRight.isEnabled = false;
+    //Y축 셋팅
+    binding.homeChartLc.axisLeft.isEnabled = true;
+    binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
+    binding.homeChartLc.axisLeft.spaceTop = 40f;
+    binding.homeChartLc.axisLeft.spaceBottom = 40f;
+    binding.homeChartLc.axisRight.isEnabled = false;
 
-            //X축 셋팅
+    //X축 셋팅
 //        binding.homeChartLc.xAxis.apply {
 //            valueFormatter = object :ValueFormatter(){
 //                override fun getFormattedValue(value: Float): String {          //-10 이들어옴 Why?
@@ -318,7 +322,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            setAvoidFirstLastClipping(true)
 //            setSpaceMin(10f)
 //        }
-        //X축 String으로 셋팅
+    //X축 String으로 셋팅
 //        binding.homeChartLc.xAxis.valueFormatter = object :ValueFormatter(){
 //            override fun getFormattedValue(value: Float): String {
 //                Log.d("listtest", "${value} , ${value.toInt()}" )
@@ -326,63 +330,74 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            }
 //        }
 
-        val temp :ArrayList<String> = ArrayList()
-        for(cur in profitList){
-            temp.add(cur.createAt)
-        }
-
-        binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
-
-        //X축 셋팅.
-        binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        binding.homeChartLc.xAxis.setLabelCount(7,true)
-        //binding.homeChartLc.xAxis.setDrawLabels(true)
-        binding.homeChartLc.xAxis.textColor = Color.BLACK
-        binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
-        binding.homeChartLc.xAxis.isEnabled = true
-        binding.homeChartLc.xAxis.textSize = 7f
-
-
-
-        binding.homeChartLc.invalidate()
+    val temp: ArrayList<String> = ArrayList()
+    for(cur in profitList)
+    {
+        temp.add(cur.createAt)
     }
 
-    //차트에 더미 데이터 셋팅팅
-    //7일치만 먼저 불러와보자 .
-    fun setChartDummyData(profitList:ArrayList<GetProfitResult>): LineData {
-        val values: ArrayList<Entry> = ArrayList()
+    binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
 
-        //소득이 체크되어있을떄
-        if(binding.homeIncomeOnTv.visibility == View.VISIBLE){
-            for (cur in 0 until profitList.size ) { //until이 마지막 전까지
-                //배열에 하나씩 꺼내보기
-                val temp = profitList[cur]
-                val tempVal = temp.earning.toFloat()          //소득
-                values.add(Entry(cur.toFloat(), tempVal))         //X축 , Y축 값 등록 -> 기본적으로 float이라 int로 변환한후 가져와얗마.
-                Log.d("List" ,"${cur.toFloat()} , ${tempVal}")
-            }
+    //X축 셋팅.
+    binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+    binding.homeChartLc.xAxis.setLabelCount(7,true)
+    //binding.homeChartLc.xAxis.setDrawLabels(true)
+    binding.homeChartLc.xAxis.textColor = Color.BLACK
+    binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
+    binding.homeChartLc.xAxis.isEnabled = true
+    binding.homeChartLc.xAxis.textSize = 7f
 
-        } else if(binding.homeYieldOnTv.visibility == View.VISIBLE){
-            for (cur in 0 until profitList.size ) { //until이 마지막 전까지
-                //배열에 하나씩 꺼내보기
-                val temp = profitList[cur]
-                val tempVal = temp.profitRate.toFloat()          //
-                values.add(Entry(cur.toFloat(), tempVal))         //X축 , Y축 값 등록 -> 기본적으로 float이라 int로 변환한후 가져와얗마.
-            }
+
+
+    binding.homeChartLc.invalidate()
+}
+
+//차트에 더미 데이터 셋팅팅
+//7일치만 먼저 불러와보자 .
+fun setChartDummyData(profitList: ArrayList<GetProfitResult>): LineData {
+    val values: ArrayList<Entry> = ArrayList()
+
+    //소득이 체크되어있을떄
+    if (binding.homeIncomeOnTv.visibility == View.VISIBLE) {
+        for (cur in 0 until profitList.size) { //until이 마지막 전까지
+            //배열에 하나씩 꺼내보기
+            val temp = profitList[cur]
+            val tempVal = temp.earning.toFloat()          //소득
+            values.add(
+                Entry(
+                    cur.toFloat(),
+                    tempVal
+                )
+            )         //X축 , Y축 값 등록 -> 기본적으로 float이라 int로 변환한후 가져와얗마.
+            Log.d("List", "${cur.toFloat()} , ${tempVal}")
         }
 
-        val set1 = LineDataSet(values, "")
-        set1.setColor(Color.WHITE)
-        set1.setCircleColor(Color.BLACK)
-        set1.setLineWidth(3f)
-        set1.setDrawCircles(false)
-        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+    } else if (binding.homeYieldOnTv.visibility == View.VISIBLE) {
+        for (cur in 0 until profitList.size) { //until이 마지막 전까지
+            //배열에 하나씩 꺼내보기
+            val temp = profitList[cur]
+            val tempVal = temp.profitRate.toFloat()          //
+            values.add(
+                Entry(
+                    cur.toFloat(),
+                    tempVal
+                )
+            )         //X축 , Y축 값 등록 -> 기본적으로 float이라 int로 변환한후 가져와얗마.
+        }
+    }
 
-        set1.setValueTextSize(9f)
-        set1.setDrawValues(false)
-        set1.setDrawFilled(true)
-        set1.setFormLineWidth(1f)
-        set1.setFormSize(15f)
+    val set1 = LineDataSet(values, "")
+    set1.setColor(Color.WHITE)
+    set1.setCircleColor(Color.BLACK)
+    set1.setLineWidth(3f)
+    set1.setDrawCircles(false)
+    set1.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+
+    set1.setValueTextSize(9f)
+    set1.setDrawValues(false)
+    set1.setDrawFilled(true)
+    set1.setFormLineWidth(1f)
+    set1.setFormSize(15f)
 //
 //        val set1 = LineDataSet(values, "DataSet 1")
 //        set1.setFillAlpha(110);
@@ -395,282 +410,296 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //        set1.highLightColor = Color.WHITE
 //        set1.setDrawValues(false)
 
-        return LineData(set1)
-    }
+    return LineData(set1)
+}
 
-    //포토폴리오 IDX 조회 성공
-    override fun getPortIdxSuccess(resp: PortIdxResponse) {
-        dismissLoadingDialog()
+//포토폴리오 IDX 조회 성공
+override fun getPortIdxSuccess(resp: PortIdxResponse) {
+    dismissLoadingDialog()
 //        portIdxList.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
-        for(idx in resp.result){
-            portfolioList.add(MyPortfolioFragment(idx.portIdx, this))         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
-            portIdxList.add(idx.portIdx)                                //포토폴리오 인덱스 저장
+    for (idx in resp.result) {
+        portfolioList.add(
+            MyPortfolioFragment(
+                idx.portIdx,
+                this
+            )
+        )         //포폴 추가. 이 후 Service내부에서 단일 포폴 조회
+        portIdxList.add(idx.portIdx)                                //포토폴리오 인덱스 저장
+    }
+    Log.d("portIdx", "사이즈 : ${portIdxList.size} , ${portIdxList}")
+    setViewpager()      //여기에 실행 안하면 이게 너무 늦게 실행되서 안됨 , 포폴 목록 조회해서 뷰페이저에 셋팅.
+}
+
+//포토폴리오 IDX 조회 실패
+override fun getPortIdxFailure(message: String) {
+    dismissLoadingDialog()
+}
+
+// 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
+override fun portfolioSuccess(response: PortfolioResponse) {
+    dismissLoadingDialog()
+    when (response.code) {
+        1000 -> {
+            // 계좌
+            getAccountResult(response)
+            // 코인 시세 받아오기
+            getCoinPrice(response)
+            // 수익률 리스트
+            val profitList = response.result.profitResultList
+            //AccountIdx 와 PortIdx 싱글톤에 셋팅
+            MyApplicationClass.myAccountIdx = response.result.accountIdx
+            MyApplicationClass.myPortIdx = response.result.portIdx
+            accounName = response.result.accountName                //계좌이름
+            Log.d(
+                "인덱스 정보",
+                "account : ${MyApplicationClass.myAccountIdx} , Port : ${MyApplicationClass.myPortIdx}"
+            )
+            Log.d(
+                "Callidx",
+                "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}"
+            )
+            //계좌 인덱스 셋팅 됐을때 차트 호출
+            callGetProfit()
         }
-        Log.d("portIdx" , "사이즈 : ${portIdxList.size} , ${portIdxList}")
-        setViewpager()      //여기에 실행 안하면 이게 너무 늦게 실행되서 안됨 , 포폴 목록 조회해서 뷰페이저에 셋팅.
-    }
-    //포토폴리오 IDX 조회 실패
-    override fun getPortIdxFailure(message: String) {
-        dismissLoadingDialog()
-    }
-
-    // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
-    override fun portfolioSuccess(response: PortfolioResponse) {
-        dismissLoadingDialog()
-        when (response.code) {
-            1000 -> {
-                // 계좌
-                getAccountResult(response)
-                // 코인 시세 받아오기
-                getCoinPrice(response)
-                // 수익률 리스트
-                val profitList = response.result.profitResultList
-                //AccountIdx 와 PortIdx 싱글톤에 셋팅
-                MyApplicationClass.myAccountIdx = response.result.accountIdx
-                MyApplicationClass.myPortIdx = response.result.portIdx
-                accounName = response.result.accountName                //계좌이름
-                Log.d("인덱스 정보" , "account : ${MyApplicationClass.myAccountIdx} , Port : ${MyApplicationClass.myPortIdx}")
-                Log.d("Callidx" , "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}")
-                //계좌 인덱스 셋팅 됐을때 차트 호출
-                callGetProfit()
-            }
-            else -> {
-                showToast(response.message)
-            }
+        else -> {
+            showToast(response.message)
         }
     }
+}
 
 
-    // 업비트 시세 조회 API 호출 성공
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        if(requireActivity() != null && checkView) {
-            var currentSum = 0.0
-            var sumBuyCoin = 0.0
-            requireActivity().runOnUiThread() {
+// 업비트 시세 조회 API 호출 성공
+override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    if (requireActivity() != null && checkView) {
+        var currentSum = 0.0
+        var sumBuyCoin = 0.0
+        requireActivity().runOnUiThread() {
+            // 소유 코인
+            for (i in userCoinList.indices) {
+                val symbol = userCoinList[i].symbol
+                if (upbitCoinPriceMap.containsKey(symbol)) {
+                    val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    val amount = userCoinList[i].amount
+                    val priceAvg = userCoinList[i].priceAvg
+                    sumBuyCoin += amount * priceAvg
+                    userCoinList[i].upbitPrice = upbitPrice
+                    userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+                    currentSum += upbitPrice * amount
+                }
+            }
+            // 대표 코인
+            for (i in representCoinList.indices) {
+                val symbol = representCoinList[i].symbol
+                if (upbitCoinPriceMap.containsKey(symbol)) {
+                    representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                }
+            }
+            viewModel.getUpdateUserCoin(userCoinList)
+            viewModel.getUpdateRepresentCoin(representCoinList)
+            // 계좌 수익률 보내주기
+            portFolioView.getAccountProfit(currentSum, sumBuyCoin)
+        }
+    }
+}
+
+// 바이낸스 시세 조회 API 호출 성공
+override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
+    if (requireActivity() != null && checkView) {
+        requireActivity().runOnUiThread() {
+            var usdtPrice = UsdtService.usdtPrice
                 // 소유 코인
-                for (i in userCoinList.indices) {
-                    val symbol = userCoinList[i].symbol
-                    if (upbitCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = upbitCoinPriceMap.get(symbol)!!
-                        val amount = userCoinList[i].amount
-                        val priceAvg = userCoinList[i].priceAvg
-                        sumBuyCoin += amount * priceAvg
-                        userCoinList[i].upbitPrice = upbitPrice
-                        userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
-                        currentSum += upbitPrice * amount
-                    }
+            for (i in userCoinList.indices) {
+                val symbol = userCoinList[i].symbol
+                if (binanceCoinPriceMap.containsKey(symbol)) {
+                    val upbitPrice = userCoinList[i].upbitPrice
+                    val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
+                    var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
+                    userCoinList[i].binancePrice = binancePrice
+                    userCoinList[i].kimchi = kimchi
                 }
-                // 대표 코인
-                for (i in representCoinList.indices) {
-                    val symbol = representCoinList[i].symbol
-                    if (upbitCoinPriceMap.containsKey(symbol)) {
-                        representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
-                    }
-                }
-                // 뷰 바인딩
-                setRepresentRV()
-                setRepresentPV()
-                // 계좌 수익률 보내주기
-                portFolioView.getAccountProfit(currentSum, sumBuyCoin)
             }
-        }
-    }
-    // 바이낸스 시세 조회 API 호출 성공
-    override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
-        if(requireActivity() != null && checkView) {
-            requireActivity().runOnUiThread() {
-                // 소유 코인
-                for (i in userCoinList.indices) {
-                    val symbol = userCoinList[i].symbol
-                    if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = userCoinList[i].upbitPrice
-                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
-                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
-                        userCoinList[i].binancePrice = binancePrice
-                        userCoinList[i].kimchi = kimchi
-                    }
+            // 대표 코인
+            for (i in representCoinList.indices) {
+                val symbol = representCoinList[i].symbol
+                if (binanceCoinPriceMap.containsKey(symbol)) {
+                    val upbitPrice = representCoinList[i].upbitPrice
+                    val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
+                    var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
+                    representCoinList[i].binancePrice = binancePrice
+                    representCoinList[i].kimchi = kimchi
                 }
-                // 대표 코인
-                for (i in representCoinList.indices) {
-                    val symbol = representCoinList[i].symbol
-                    if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = representCoinList[i].upbitPrice
-                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice
-                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
-                        representCoinList[i].binancePrice = binancePrice
-                        representCoinList[i].kimchi = kimchi
-                    }
-                }
-                // 뷰 바인딩
-                setRepresentRV()
-                setRepresentPV()
-
             }
+            viewModel.getUpdateUserCoin(userCoinList)
+            viewModel.getUpdateRepresentCoin(representCoinList)
         }
     }
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        this.usdtPrice = usdtPrice
+}
+
+override fun usdtPriceSuccess(usdtPrice: Int) {
+    TODO("Not yet implemented")
+}
+
+override fun coinPriceFailure(message: String) {
+    TODO("Not yet implemented")
+}
+
+// 코루틴 시세 적용 및 뷰바인딩
+suspend fun setCoinPrice(response: PortfolioResponse) {
+    getCoinPrice(response)
+    setPortViewBinding()
+}
+
+// 시세 받아오기
+fun getCoinPrice(response: PortfolioResponse) {
+    val userCoinNameList = ArrayList<String>()
+    val representCoinNameList = ArrayList<String>()
+    // 계좌
+    getAccountResult(response)
+    // 유저 코인 리스트
+    this.userCoinList = response.result.userCoinList as ArrayList<PossesionCoinResult>
+    // 대표 코인 리스트
+    this.representCoinList = response.result.representCoinList as ArrayList<RepresentCoinResult>
+    // 수익률 리스트
+    val profitList = response.result.profitResultList
+    // 소유코인 이름 저장
+    for (i in 0 until userCoinList.size) {
+        coinSymbolSet.add(userCoinList[i].symbol)
+    }
+    // 대표코인 이름 저장
+    for (i in 0 until representCoinList.size) {
+        coinSymbolSet.add(representCoinList[i].symbol)
     }
 
-    override fun coinPriceFailure(message: String) {
-        TODO("Not yet implemented")
+    // 웹 소켓 연결
+    upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+    upbitWebSocket?.setCoinView(this)
+    upbitWebSocket?.start() // 업비트 웹 소켓 실행
+    binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
+    binanceWebSocket?.setCoinView(this)
+    binanceWebSocket?.start()
+}
+
+// 뷰 바인딩 해주기
+fun setPortViewBinding() {
+    // 대표코인, 소유코인 뷰 바인딩
+
+}
+
+// 포트폴리오 API 호출 실패
+override fun portfolioFailure(message: String) {
+    showToast("포트폴리오 불러오기 실패")
+}
+
+override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
+    TODO("Not yet implemented")
+}
+
+//일별 데이터 성공
+override fun getDayProfitSuccess(response: GetProfitResponse) {
+    if (response.result[0].profitIdx == 0)
+        return
+    val profitList: ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
+    for (cur in response.result) {
+        cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
+        profitList.add(cur)             //정보들 저장
     }
+    setChartDummy(profitList)
+}
 
-    // 코루틴 시세 적용 및 뷰바인딩
-    suspend fun setCoinPrice(response: PortfolioResponse) {
-        getCoinPrice(response)
-        setPortViewBinding()
+//일별 데이터 실패
+override fun getDayProfitFrailure(message: String) {
+    showToast(message)
+}
+
+//주별 데이터 성공
+override fun getWeekProfitSuccess(response: GetProfitResponse) {
+    if (response.result[0].profitIdx == 0)
+        return
+    val profitList: ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
+
+    for (cur in response.result) {
+        cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
+        profitList.add(cur)             //정보들 저장
     }
+    setChartDummy(profitList)
+}
 
-    // 시세 받아오기
-    fun getCoinPrice(response: PortfolioResponse) {
-        val userCoinNameList = ArrayList<String>()
-        val representCoinNameList = ArrayList<String>()
-        // 계좌
-        getAccountResult(response)
-        // 유저 코인 리스트
-        this.userCoinList = response.result.userCoinList
-        // 대표 코인 리스트
-        this.representCoinList = response.result.representCoinList
-        // 수익률 리스트
-        val profitList = response.result.profitResultList
-        // 소유코인 이름 저장
-        for (i in 0 until userCoinList.size) {
-            coinSymbolSet.add(userCoinList[i].symbol)
-        }
-        // 대표코인 이름 저장
-        for (i in 0 until representCoinList.size) {
-            coinSymbolSet.add(representCoinList[i].symbol)
-        }
+//주별 데이터 실패
+override fun getWeekProfitFailure(message: String) {
+    showToast(message)
+}
 
-        // 웹 소켓 연결
-        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket?.setCoinView(this)
-        upbitWebSocket?.start() // 업비트 웹 소켓 실행
-        binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
-        binanceWebSocket?.setCoinView(this)
-        binanceWebSocket?.start()
+//월별 데이터 성공
+override fun getMonthProfitSuccess(response: GetProfitResponse) {
+    if (response.result[0].profitIdx == 0)
+        return
+    val profitList: ArrayList<GetProfitResult> = ArrayList()
+    for (cur in response.result) {
+        cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
+        profitList.add(cur)             //정보들 저장
     }
+    setChartDummy(profitList)
+}
 
-    // 뷰 바인딩 해주기
-    fun setPortViewBinding() {
-        // 대표코인, 소유코인 뷰 바인딩
+//월별 데이터 실패
+override fun getMonthProfitFailure(message: String) {
+    showToast(message)
+}
 
+fun getAccountResult(response: PortfolioResponse): AccountResult {
+    val accountIdx = response.result.accountIdx
+    val accountName = response.result.accountName
+    val property = response.result.property
+    val totalProperty = response.result.totalProperty
+    val userIdx = response.result.userIdx
+    val marketName = response.result.marketName
+    return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
+}
+
+override fun onPause() {
+    super.onPause()
+    checkView = false
+}
+
+override fun onResume() {
+    super.onResume()
+    checkView = true
+}
+
+override fun onDestroy() {
+    super.onDestroy()
+    checkView = false
+    upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+    binanceWebSocket?.webSocket?.cancel()
+}
+
+fun callPortfolioInfo(portIdx: Int) {
+    val portfolioService = PortfolioService()
+    portfolioService.setPortfolioView(this)
+    portfolioService.getPortfolioInfo(portIdx)
+}
+
+fun callGetProfit() {
+    if (!checkView)
+        return
+    if (binding.homeDayOnTv.visibility == View.VISIBLE) {
+        val homeService = HomeService()
+        homeService.setHomeView(this)
+        homeService.getDayProfit(MyApplicationClass.myAccountIdx)
+    } else if (binding.homeWeekOnTv.visibility == View.VISIBLE) {
+        val homeService = HomeService()
+        homeService.setHomeView(this)
+        homeService.getWeekProfit(MyApplicationClass.myAccountIdx)
+    } else if (binding.homeMonthOnTv.visibility == View.VISIBLE) {
+        val homeService = HomeService()
+        homeService.setHomeView(this)
+        homeService.getMonthProfit(MyApplicationClass.myAccountIdx)
     }
+}
 
-    // 포트폴리오 API 호출 실패
-    override fun portfolioFailure(message: String) {
-        showToast("포트폴리오 불러오기 실패")
-    }
-
-    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        TODO("Not yet implemented")
-    }
-
-    //일별 데이터 성공
-    override fun getDayProfitSuccess(response: GetProfitResponse) {
-        if(response.result[0].profitIdx == 0)
-            return
-        val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-            for (cur in response.result) {
-                cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
-                profitList.add(cur)             //정보들 저장
-        }
-        setChartDummy(profitList)
-    }
-
-    //일별 데이터 실패
-    override fun getDayProfitFrailure(message: String) {
-        showToast(message)
-    }
-
-    //주별 데이터 성공
-    override fun getWeekProfitSuccess(response: GetProfitResponse) {
-        if(response.result[0].profitIdx == 0)
-            return
-        val profitList : ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-
-            for (cur in response.result) {
-                cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
-                profitList.add(cur)             //정보들 저장
-            }
-        setChartDummy(profitList)
-    }
-    //주별 데이터 실패
-    override fun getWeekProfitFailure(message: String) {
-        showToast(message)
-    }
-
-    //월별 데이터 성공
-    override fun getMonthProfitSuccess(response: GetProfitResponse) {
-        if(response.result[0].profitIdx == 0)
-            return
-        val profitList : ArrayList<GetProfitResult> = ArrayList()
-        for(cur in response.result){
-            cur.createAt = cur.createAt.substring(5,10)         //월-일만 저장
-            profitList.add(cur)             //정보들 저장
-        }
-        setChartDummy(profitList)
-    }
-
-    //월별 데이터 실패
-    override fun getMonthProfitFailure(message: String) {
-        showToast(message)
-    }
-
-    fun getAccountResult(response: PortfolioResponse): AccountResult {
-        val accountIdx = response.result.accountIdx
-        val accountName = response.result.accountName
-        val property = response.result.property
-        val totalProperty = response.result.totalProperty
-        val userIdx = response.result.userIdx
-        val marketName = response.result.marketName
-        return AccountResult(accountIdx, accountName, property, totalProperty, userIdx, marketName)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        checkView = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkView = true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        checkView = false
-        upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
-        binanceWebSocket?.webSocket?.cancel()
-    }
-
-    fun callPortfolioInfo(portIdx:Int){
-        val portfolioService = PortfolioService()
-        portfolioService.setPortfolioView(this)
-        portfolioService.getPortfolioInfo(portIdx)
-    }
-
-    fun callGetProfit(){
-        if(binding.homeDayOnTv.visibility == View.VISIBLE){
-            val homeService = HomeService()
-            homeService.setHomeView(this)
-            homeService.getDayProfit(MyApplicationClass.myAccountIdx)
-        } else if(binding.homeWeekOnTv.visibility == View.VISIBLE){
-            val homeService = HomeService()
-            homeService.setHomeView(this)
-            homeService.getWeekProfit(MyApplicationClass.myAccountIdx)
-        } else if(binding.homeMonthOnTv.visibility == View.VISIBLE){
-            val homeService = HomeService()
-            homeService.setHomeView(this)
-            homeService.getMonthProfit(MyApplicationClass.myAccountIdx)
-        }
-    }
-
-    // 평가순익 구하는 메서드
-    fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
-        return (currentPrice * amount) - (priceAvg * amount)
-    }
-
+// 평가순익 구하는 메서드
+fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
+    return (currentPrice * amount) - (priceAvg * amount)
+}
 }

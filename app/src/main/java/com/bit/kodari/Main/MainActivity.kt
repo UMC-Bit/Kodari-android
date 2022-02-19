@@ -6,7 +6,6 @@ import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Debate.DebateMainFragment
 import com.bit.kodari.Profile.ProfileMainFragment
 import com.bit.kodari.R
-import com.bit.kodari.Util.Upbit.UpbitService
 
 
 class MainActivity : AppCompatActivity() {

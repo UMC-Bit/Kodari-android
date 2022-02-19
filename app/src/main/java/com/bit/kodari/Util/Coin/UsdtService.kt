@@ -16,8 +16,10 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class UsdtService {
+    companion object{
+       var usdtPrice: Int = 1200
+    }
     private lateinit var coinView: CoinView
-    private var usdtPrice: Int = 1200
     private var KRW_BTC: Double = 1.0
     private var BTC_USDT: Double = 1.0
     private var TSUD_USDT: Double = 1.0
@@ -66,6 +68,7 @@ class UsdtService {
                 if (price != null) {
                         BTC_USDT = price
                 }
+
                 Log.d("결과", "성공: USDT-BTC: ${price}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
@@ -104,6 +107,8 @@ class UsdtService {
                 if (price != null) {
                     KRW_BTC = price
                 }
+                if(KRW_BTC != 1.0 && BTC_USDT != 1.0 && TSUD_USDT != 1.0)
+                    usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
                 Log.d("결과", "성공: KRW-BTC: ${BigDecimal(price).toPlainString()}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
@@ -116,6 +121,8 @@ class UsdtService {
                 if (price != null) {
                     BTC_USDT = price
                 }
+                if(KRW_BTC != 1.0 && BTC_USDT != 1.0 && TSUD_USDT != 1.0)
+                    usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
                 Log.d("결과", "성공: USDT-BTC: ${price}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
@@ -128,8 +135,9 @@ class UsdtService {
                 if (price != null) {
                     TSUD_USDT = price
                 }
-                usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
-                coinView.usdtPriceSuccess(usdtPrice)
+
+                if(KRW_BTC != 1.0 && BTC_USDT != 1.0 && TSUD_USDT != 1.0)
+                    usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
                 Log.d("결과", "성공: USDT-TUSD: ${usdtPrice-10}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
