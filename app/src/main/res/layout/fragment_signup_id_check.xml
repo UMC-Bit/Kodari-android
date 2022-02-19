@@ -82,6 +82,7 @@
 
     <Button
         android:id="@+id/signup_id_check_next_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"

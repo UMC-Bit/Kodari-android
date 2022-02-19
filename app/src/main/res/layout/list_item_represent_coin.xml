@@ -69,6 +69,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="10sp"
+            app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/represent_coin_iv"

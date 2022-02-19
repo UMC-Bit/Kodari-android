@@ -176,6 +176,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_CV"
@@ -404,7 +405,7 @@
                         android:textColorHint="#000000"
                         android:textStyle="bold"
                         android:hint="일자"
-                        android:drawableRight="@drawable/move_button"
+                        android:drawableRight="@drawable/yellow_next_btn"
                         android:textSize="15sp"
                         android:inputType="number"
                         android:background="#80D3D3D3"
@@ -441,7 +442,7 @@
                         android:textColorHint="#000000"
                         android:textStyle="bold"
                         android:hint="수수료"
-                        android:drawableRight="@drawable/move_button"
+                        android:drawableRight="@drawable/yellow_next_btn"
                         android:textSize="15sp"
                         android:inputType="number"
                         android:background="#80D3D3D3"

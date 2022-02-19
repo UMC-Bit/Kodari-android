@@ -116,6 +116,7 @@
 
                     <androidx.core.widget.NestedScrollView
                         android:id="@+id/representative_coin_management_SV"
+                        android:overScrollMode="never"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="5dp"

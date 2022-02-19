@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:id="@+id/debate_modify_root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/btn_outline_gray"
     tools:context=".Debate.DebatePostWriteFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,6 +60,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/addon_main_dividing_line_IV"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/dividing_line"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/modify_container_cl"
         android:layout_width="match_parent"
@@ -87,6 +95,7 @@
             android:layout_height="wrap_content"
             android:text="abs123"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="@id/modify_profile_iv"
             app:layout_constraintBottom_toBottomOf="@id/modify_profile_iv"

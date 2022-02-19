@@ -9,12 +9,12 @@
         android:id="@+id/signup_id_x_ib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="25dp"
-        android:src="@drawable/x_btn"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#FDCC68"
+        android:src="@drawable/x_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/signup_id_title_tv"
@@ -80,6 +80,7 @@
 
     <Button
         android:id="@+id/signup_id_next_btn"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
