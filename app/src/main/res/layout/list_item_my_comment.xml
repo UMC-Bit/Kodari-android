@@ -53,16 +53,6 @@
         app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
         app:layout_constraintStart_toEndOf="@id/list_item_my_comment_image_iv"/>
 
-    <ImageButton
-        android:id="@+id/list_item_my_comment_x_ib"
-        android:layout_width="7dp"
-        android:layout_height="10dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/gray_x_btn"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_my_comment_image_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/list_item_my_comment_image_iv" />
-
     <TextView
         android:id="@+id/list_item_my_comment_coin_name_tv"
         android:layout_width="wrap_content"

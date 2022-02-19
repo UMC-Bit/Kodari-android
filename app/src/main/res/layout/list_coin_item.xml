@@ -46,7 +46,7 @@
         android:id="@+id/coin_select_btn_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/next_btn"
+        android:src="@drawable/yellow_next_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/coin_iv"
         app:layout_constraintBottom_toBottomOf="@id/coin_iv"

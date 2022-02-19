@@ -408,8 +408,8 @@
                             android:layout_marginEnd="13dp"
                             android:background="@color/white"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/next_btn"
                             app:layout_constraintBottom_toBottomOf="@+id/home_rpt_coin_outline_TV"
+                            android:src="@drawable/yellow_next_btn"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/home_rpt_coin_outline_TV" />
 
@@ -518,8 +518,8 @@
                             android:layout_marginEnd="13dp"
                             android:background="@color/white"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/next_btn"
                             app:layout_constraintBottom_toBottomOf="@id/home_psn_coin_outline_TV"
+                            android:src="@drawable/yellow_next_btn"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
 
