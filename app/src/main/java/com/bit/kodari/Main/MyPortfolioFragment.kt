@@ -54,17 +54,17 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
     }
 
     override fun portfolioSuccess(resp: PortfolioResponse) {
-        //숫자 형태로 나타내기
-        val f = NumberFormat.getInstance()
-        f.isGroupingUsed=false
+            //숫자 형태로 나타내기
+            val f = NumberFormat.getInstance()
+            f.isGroupingUsed = false
+            binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString() + "원"
+            property = resp.result.property
+            binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
+            Log.d("temp", "${resp.result.property}")
+            binding.myPortfolioAccountNameTv.text = resp.result.accountName
+            accoutIdx = resp.result.accountIdx
+            //resp.result.marketName 마켓이름 저장
 
-        binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()+"원"
-        property = resp.result.property
-        binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
-        Log.d("temp" , "${resp.result.property}")
-        binding.myPortfolioAccountNameTv.text = resp.result.accountName
-        accoutIdx = resp.result.accountIdx
-        //resp.result.marketName 마켓이름 저장
     }
 
     override fun portfolioFailure(message: String) {
