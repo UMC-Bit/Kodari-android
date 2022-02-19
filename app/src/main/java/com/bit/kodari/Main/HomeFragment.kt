@@ -1,5 +1,6 @@
 package com.bit.kodari.Main
 
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -26,11 +28,8 @@ import com.bit.kodari.PossessionCoin.DialogMemoAndTwitter
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
+import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Coin.*
-import com.bit.kodari.Util.getEmail
-import com.bit.kodari.Util.getJwt
-import com.bit.kodari.Util.getPw
-import com.bit.kodari.Util.getUserIdx
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -198,13 +197,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
-        //임시 로그아웃 버튼
+        /*//임시 로그아웃 버튼
         binding.logout.setOnClickListener {
             saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
             saveAutoLogin(false)
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
-        }
+        }*/
 
     }
 
