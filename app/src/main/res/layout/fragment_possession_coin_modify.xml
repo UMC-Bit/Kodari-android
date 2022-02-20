@@ -24,9 +24,9 @@
 
             <ImageView
                 android:id="@+id/possession_coin_modify_before_button_IV"
-                android:layout_width="28dp"
-                android:layout_height="31dp"
-                android:background="@drawable/before_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_vector_56__1_"
                 android:layout_marginTop="19dp"
                 android:layout_marginLeft="16dp"
                 app:layout_constraintStart_toStartOf="parent"

@@ -11,7 +11,7 @@
     android:id="@+id/representative_coin_search_back_IV"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/before_button"
+    android:src="@drawable/previous_button"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     android:layout_marginStart="16dp"
