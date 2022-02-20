@@ -30,7 +30,7 @@
         android:layout_width="19dp"
         android:layout_height="19dp"
         android:layout_marginStart="6dp"
-        android:src="@drawable/restart" />
+        android:src="@drawable/restart_btn" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/make_portfolio_mark_on_iv"-->
