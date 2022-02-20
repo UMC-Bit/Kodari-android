@@ -5,20 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_my_info_container_cl"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
+    android:layout_height="180dp"
     tools:context=".Main.MakePortfolioFragment">
 
     <TextView
         android:id="@+id/make_portfolio_asset_title_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif-condensed-light"
         android:text="@string/my_asset"
         android:textColor="@color/black"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/make_portfolio_my_asset_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,27 +30,27 @@
         android:layout_width="19dp"
         android:layout_height="19dp"
         android:layout_marginStart="6dp"
-        android:src="@drawable/restart_btn" />
+        android:src="@drawable/restart" />
 
-    <ImageView
-        android:id="@+id/make_portfolio_mark_on_iv"
-        app:layout_constraintBottom_toBottomOf="@id/make_portfolio_restart_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/make_portfolio_restart_iv"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/mark_on" />
+<!--    <ImageView-->
+<!--        android:id="@+id/make_portfolio_mark_on_iv"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/make_portfolio_restart_iv"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/make_portfolio_restart_iv"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:src="@drawable/mark_on" />-->
 
 
     <TextView
         android:id="@+id/make_portfolio_my_asset_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/make_portfolio_mark_on_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="0원"
         android:textColor="@color/black"
         android:textSize="30sp"
@@ -62,14 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/make_portfolio_my_asset_tv"
-        android:layout_width="136dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:textSize="15sp" />
-
-
-
-
+        android:layout_marginBottom="12dp"
+        android:layout_width="111dp"
+        android:layout_height="37dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
