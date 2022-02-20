@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/list_re_comment_mask_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:src="@drawable/debate_mask"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,10 +28,10 @@
 
         <TextView
             android:id="@+id/list_re_comment_nickname_tv"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="pastagood"
-            android:textSize="12sp"
+            android:textSize="12.5sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:text="아니 그건 됐고 이더리움 떡상 부탁 좀"
             android:textColor="@color/black"
-            android:textSize="11sp"
-            android:layout_marginStart="2dp"
+            android:textSize="12.5sp"
+            android:layout_marginStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/list_re_comment_nickname_tv"
             app:layout_constraintTop_toTopOf="@id/list_re_comment_nickname_tv"

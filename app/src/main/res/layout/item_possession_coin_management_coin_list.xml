@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/item_possession_coin_management_coin_list_price_TV"
-        android:layout_width="55dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:text="57,100,000"
         android:textSize="10sp"
@@ -69,7 +69,7 @@
 
     <TextView
         android:id="@+id/item_possession_coin_management_coin_list_priceAvg_TV"
-        android:layout_width="55dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:text="51,000,000"
         android:textSize="10sp"

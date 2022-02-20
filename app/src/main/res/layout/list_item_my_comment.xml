@@ -44,7 +44,7 @@
         android:id="@+id/list_item_my_comment_nickname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="12.5sp"
         android:textColor="@color/black"
         android:text="chicken_boy113"
         android:textStyle="bold"
