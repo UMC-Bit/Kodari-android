@@ -18,7 +18,6 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
 
 <!--        textview에 대한 전체 글꼴 적용. 노말체-->
         <item name="android:textViewStyle">@style/apple_sdgothic_neo_l</item>
