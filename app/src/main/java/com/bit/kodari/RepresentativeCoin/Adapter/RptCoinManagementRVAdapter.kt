@@ -1,5 +1,6 @@
 package com.bit.kodari.Main.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +29,14 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
         val imageView: ImageView =binding.itemRepresentativeCoinManagementCoinListImageIV
 
         fun bind(item: RepresentCoinResult){ // 서버에서 받아와서 보여줄 것만
+            val color = getPriceColor(item.change)
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
             binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice) +"원"
             binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.setTextColor(color)
             binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
 
             //업비트, 바이낸스 가격 추가하기.
@@ -81,12 +84,24 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
             price = String.format("%.2f", number)
         }else if(number>=10 && number < 100){
             price = String.format("%.1f", number)
-        }else if(number>=100){
+        }else if(number>=100 || number == 0.0){
             val price_ = String.format("%.0f", number).toDouble()
             price = formatD(price_)
         }else{
             price = String.format("%.5f", number)
         }
         return price;
+    }
+    fun getPriceColor(change: Double): Int{
+        // 상승, 하락, 보합
+        var colorUpbit = 0 // 업비트
+        if(change == 1.0){
+            colorUpbit = Color.RED
+        }else if(change == -1.0){
+            colorUpbit = Color.BLUE
+        }else{
+            colorUpbit = Color.BLACK
+        }
+        return colorUpbit
     }
 }

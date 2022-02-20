@@ -190,7 +190,11 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
+                        val change = upbitCoinPriceMap.get(symbol+"change")
                         coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        if (change != null) {
+                            coinList[i].change = change
+                        }
                     }
                 }
                 viewModel.getUpdateRepresentCoin(coinList)

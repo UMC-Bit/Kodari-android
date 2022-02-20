@@ -33,8 +33,16 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         val message = bytes.utf8()
         var symbol = JSONObject(message).getString("code")
         symbol = symbol.replace("KRW-","") // KRW- 제거
-        val price = JSONObject(message).getDouble("trade_price")
+        val price = JSONObject(message).getDouble("trade_price") // 가격 받아오기
         coinPriceMap.put(symbol, price)
+        val change = JSONObject(message).getString("ask_bid")
+        var changeNum = 0.0
+        if(change.equals("ASK")){
+            changeNum = 1.0
+        }else if(change.equals("BID")){
+            changeNum = -1.0
+        }
+        coinPriceMap.put(symbol+"change",changeNum) // 전일 대비, RISE(상승), EVEN(보합), FALL(하락)
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
         // TODO HomeFragment livedata 처리
         coinView.upbitPriceSuccess(coinPriceMap)

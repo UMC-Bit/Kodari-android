@@ -1,5 +1,6 @@
 package com.bit.kodari.Main
 
+import android.media.tv.TvContract
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -16,6 +17,7 @@ import kotlin.properties.Delegates
 
 //포토폴리오 Index로 포토폴리오 조회환 뒤 binding 처리 해줘야할듯
 class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : BaseFragment<FragmentMyPortfolioBinding>(FragmentMyPortfolioBinding::inflate) ,PortfolioView{  //portIdx로 계좌 조회 ?
+    private var checkView = true
     var profit: Int = 0
     var property: Double = 0.0
     var accoutIdx by Delegates.notNull<Int>()
@@ -26,6 +28,10 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
         homeFragment.setPortFolioView(this)
     }
 
+    override fun onDestroyView() {
+        checkView = false
+        super.onDestroyView()
+    }
     fun setListener(){
         //편집 버튼 누르면 다이얼로그 띄우기
         binding.myPortfolioModifyIv.setOnClickListener {
@@ -54,6 +60,7 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
     }
 
     override fun portfolioSuccess(resp: PortfolioResponse) {
+        if(checkView) {
             //숫자 형태로 나타내기
             val f = NumberFormat.getInstance()
             f.isGroupingUsed = false
@@ -64,7 +71,7 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
             binding.myPortfolioAccountNameTv.text = resp.result.accountName
             accoutIdx = resp.result.accountIdx
             //resp.result.marketName 마켓이름 저장
-
+        }
     }
 
     override fun portfolioFailure(message: String) {

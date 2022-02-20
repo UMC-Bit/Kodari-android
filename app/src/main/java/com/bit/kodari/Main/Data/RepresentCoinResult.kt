@@ -11,5 +11,6 @@ data class RepresentCoinResult(
     var representIdx: Int,
     var status: String,
     var symbol: String,
-    var isChecked: Boolean
+    var isChecked: Boolean,
+    var change: Double
 )

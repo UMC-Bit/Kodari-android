@@ -1,5 +1,6 @@
 package com.bit.kodari.Main.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,8 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
     private var df: DecimalFormat = DecimalFormat("#.##")
     inner class MyViewHolder(val binding:ListItemRepresentCoinBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : RepresentCoinResult){
+            val color = getPriceColor(item.change)
+            binding.representUpbitPriceTv.setTextColor(color)
             binding.representBinanacePriceTv.text = formatPrice(item.binancePrice) +"원"
             binding.representUpbitPriceTv.text = formatPrice(item.upbitPrice) +"원"
             Glide.with(binding.representCoinIv)
@@ -45,13 +48,25 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
             price = String.format("%.2f", number)
         }else if(number>=10 && number < 100){
             price = String.format("%.1f", number)
-        }else if(number>=100){
+        }else if(number>=100 || number == 0.0){
             val price_ = String.format("%.0f", number).toDouble()
             price = formatD(price_)
         }else{
             price = String.format("%.5f", number)
         }
         return price;
+    }
+    fun getPriceColor(change: Double): Int{
+        // 상승, 하락, 보합
+        var colorUpbit = 0 // 업비트
+        if(change == 1.0){
+            colorUpbit = Color.RED
+        }else if(change == -1.0){
+            colorUpbit = Color.BLUE
+        }else{
+            colorUpbit = Color.BLACK
+        }
+        return colorUpbit
     }
 }
 

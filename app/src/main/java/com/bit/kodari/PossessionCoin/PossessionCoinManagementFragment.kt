@@ -213,9 +213,13 @@ CoinView{
                     val symbol = coinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        val change = upbitCoinPriceMap.get(symbol+"change")
                         val amount = coinList[i].amount
                         val priceAvg = coinList[i].priceAvg
                         coinList[i].upbitPrice = upbitPrice
+                        if (change != null) {
+                            coinList[i].change = change
+                        }
                         coinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
                     }
                 }

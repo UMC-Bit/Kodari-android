@@ -17,7 +17,7 @@ import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentDebateMainBinding
 
 class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView{
-
+    private var checkView = true
     private var postList = ArrayList<DebatePostResult>()
     private lateinit var debateMainRVAdapter : DebateMainRVAdapter
 
@@ -30,6 +30,11 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         debateService.getPostsAll()
     }
 
+    override fun onDestroyView() {
+        checkView = false
+        super.onDestroyView()
+    }
+
     fun setListener(){
         //코인 검색 창 뜨게 하기
         binding.debateMainFindCoinCl.setOnClickListener {
@@ -39,21 +44,25 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
 
     }
 
-    fun setRecyclerView(){
-        debateMainRVAdapter = DebateMainRVAdapter(postList)
-        debateMainRVAdapter.setMyItemClickListener(object : DebateMainRVAdapter.MyItemClickListener{
-            override fun onItemClick(item: DebatePostResult) {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, DebateMineFragment(1).apply {
-                        arguments = Bundle().apply {
-                            putInt("postIdx" , item.postIdx)
-                        }
-                    }).addToBackStack(null).commitAllowingStateLoss()
-            }
+    fun setRecyclerView() {
+        if (checkView) {
+            debateMainRVAdapter = DebateMainRVAdapter(postList)
+            debateMainRVAdapter.setMyItemClickListener(object :
+                DebateMainRVAdapter.MyItemClickListener {
+                override fun onItemClick(item: DebatePostResult) {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, DebateMineFragment(1).apply {
+                            arguments = Bundle().apply {
+                                putInt("postIdx", item.postIdx)
+                            }
+                        }).addToBackStack(null).commitAllowingStateLoss()
+                }
 
-        })
-        binding.debateMainListRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL , false)
-        binding.debateMainListRv.adapter = debateMainRVAdapter
+            })
+            binding.debateMainListRv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            binding.debateMainListRv.adapter = debateMainRVAdapter
+        }
     }
 
     override fun getPostsAllSuccess(response: DebatePostResponse) {

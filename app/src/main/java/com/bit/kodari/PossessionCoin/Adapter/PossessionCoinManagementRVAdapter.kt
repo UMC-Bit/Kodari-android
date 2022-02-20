@@ -1,5 +1,6 @@
 package com.bit.kodari.PossessionCoin.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,15 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
 
         fun bind(item: PossesionCoinResult){ // 서버에서 받아와서 보여줄 것만
             // 코인 이미지, 코인 이름, 코인 심볼, 현재가, 평가 순익, 매수 평단가
+            val color = getPriceColor(item.change)
+            binding.itemPossessionCoinManagementCoinListPriceTV.setTextColor(color)
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg) +"원"
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
             binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            if(item.profit < 0)
+                binding.itemPossessionCoinManagementCoinListProfitPlusTV.setTextColor(Color.BLUE)
             binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit) +"원"
         }
     }
@@ -105,5 +110,17 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             price = String.format("%.5f", number)
         }
         return price;
+    }
+    fun getPriceColor(change: Double): Int{
+        // 상승, 하락, 보합
+        var colorUpbit = 0 // 업비트
+        if(change == 1.0){
+            colorUpbit = Color.RED
+        }else if(change == -1.0){
+            colorUpbit = Color.BLUE
+        }else{
+            colorUpbit = Color.BLACK
+        }
+        return colorUpbit
     }
 }
