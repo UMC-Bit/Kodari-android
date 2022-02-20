@@ -112,6 +112,7 @@
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/dialog_coin.xml" value="0.6" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/dialog_modify_info.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/dialog_terms.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_add_on_main.xml" value="0.8800000000000001" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.176" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_debate_coin_post.xml" value="0.15307971014492755" />
@@ -123,7 +124,7 @@
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_edit_pw.xml" value="0.264" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_enroll_exchange.xml" value="0.4" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_feed_main.xml" value="0.536" />
-        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_home.xml" value="0.307518115942029" />
+        <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_intro_page_four.xml" value="0.264" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_intro_page_one.xml" value="0.17933130699088146" />
         <entry key="..\:/Users/alice/AndroidStudioProjects/Kodari-android/app/src/main/res/layout/fragment_intro_page_three.xml" value="0.2692502532928065" />
