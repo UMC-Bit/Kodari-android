@@ -71,23 +71,17 @@
                 app:layout_constraintTop_toTopOf="@id/possession_coin_add_domestic_exchange_TV"
                 app:layout_constraintBottom_toBottomOf="@id/possession_coin_add_domestic_exchange_TV" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_add_exchange_logo_CV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
+
+            <ImageView
+                android:id="@+id/possession_coin_add_exchange_logo_IV"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="10dp"
+                android:src="@drawable/upbit_logo"
                 app:layout_constraintEnd_toStartOf="@id/possession_coin_add_exchange_name_TV"
                 app:layout_constraintTop_toTopOf="@id/possession_coin_add_exchange_name_TV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_add_exchange_name_TV">
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_add_exchange_name_TV" />
 
-                <ImageView
-                    android:id="@+id/possession_coin_add_exchange_logo_IV"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/upbit_logo"/>
-
-            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/possession_coin_add_first_dividing_line_IV"
