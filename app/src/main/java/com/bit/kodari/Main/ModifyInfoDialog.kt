@@ -55,7 +55,8 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         }
 
         binding.infoDialogModifyCashBtn.setOnClickListener {
-            val money = binding.infoDialogInputCashEt.text.toString()
+            val money = binding.infoDialogInputCashEt.text.toString().substring(0,binding.infoDialogInputCashEt.text.toString().length-1)
+            Log.d("money","${money}")
             callModifyProperty(money)
         }
 
@@ -87,6 +88,9 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
     //삭제 버튼 눌렀을때 포토폴리오 삭제 성공
     override fun deletePortSuccess(response: DeletePortResponse) {
         Toast.makeText(requireContext() ,"${response.result}" , Toast.LENGTH_SHORT).show()
+        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container_fl,HomeFragment())
+            .commit()
+        dismiss()
     }
     //삭제 버튼 눌렀을때 포토폴리오 삭제 실패
     override fun deletePortFailure(message: String) {

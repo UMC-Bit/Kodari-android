@@ -34,7 +34,8 @@ class DebateCoinPostRVAdapter(var coinPostList:ArrayList<DebateCoinPostResult>) 
             if(item.profileImgUrl != ""){       //값이 있으면
                 Glide.with(binding.listItemMyWritingImageIv)
                     .load(item.profileImgUrl)
-                    .error(R.drawable.profile_image)
+                    .error(R.drawable.ic_basic_profile)
+                    .placeholder(R.drawable.ic_basic_profile)
                     .into(binding.listItemMyWritingImageIv)
             }
             //Url로 프로필 그리기

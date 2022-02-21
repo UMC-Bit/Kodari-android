@@ -106,7 +106,7 @@ class PortfolioService {
         })
     }
     //계좌생성 API , 소유코인으로 추가할 코인 리스트도 넘겨줘야 한다.
-    fun postAccount(postAccountRequest: PostAccountRequest , addCoinList : ArrayList<PsnCoinAddInfo>){
+    fun postAccount(postAccountRequest: PostAccountRequest , addCoinList : ArrayList<PsnCoinAddTradeInfo>){
         val portfolioService = getRetorfit().create(PortfolioInterface::class.java)
         portfolioService.postAccount(getJwt()!!, postAccountRequest).enqueue(object : Callback<PostAccountResponse>{
             override fun onResponse(
@@ -138,7 +138,7 @@ class PortfolioService {
 
     }
 
-    fun postPort(postPortRequest : PostPortFolioRequest , addCoinList : ArrayList<PsnCoinAddInfo>){
+    fun postPort(postPortRequest : PostPortFolioRequest , addCoinList : ArrayList<PsnCoinAddTradeInfo>){
         val portfolioService = getRetorfit().create(PortfolioInterface::class.java)
         portfolioService.postPortFolio(getJwt()!! , postPortRequest).enqueue(object : Callback<PostPortFolioResponse>{
             override fun onResponse(
@@ -152,8 +152,8 @@ class PortfolioService {
                       Log.d("postPort" , "포폴 생성 성공 : ${resp.result.portIdx} , ${resp.result.accountIdx}")
                       //여기서 이제 소유코인 등록 API 호출 해야함.
                       for(cur in addCoinList){
-                          cur.accountIdx = resp.result.accountIdx   //계좌 인덱스 셋팅
-                          //cur.portIdx = resp.result.portIdx  //계좌 번호 셋팅
+                          //cur.accountIdx = resp.result.accountIdx   //계좌 인덱스 셋팅
+                          cur.portIdx = resp.result.portIdx  //계좌 번호 셋팅
                           //                          //API 호출해야함 .
                           getPsnCoinAddPf(cur)
                       }
@@ -177,13 +177,13 @@ class PortfolioService {
     //거래내역 추가..
 
     //소유코인 추가 API -> 거래 생성으로 진행.
-    fun getPsnCoinAddPf(psnCoinAddInfo: PsnCoinAddInfo){
+    fun getPsnCoinAddPf(psnCoinAddTradeInfo: PsnCoinAddTradeInfo){
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnCoinAdd(getJwt()!!, psnCoinAddInfo).enqueue(object : Callback<PsnCoinAddResponse> {
+        psnCoinService.getPsnCoinAddTrade(getJwt()!!, psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse> {
             override fun onResponse( // 통신 성공
-                call: Call<PsnCoinAddResponse>,
-                response: Response<PsnCoinAddResponse>
+                call: Call<PsnCoinAddTradeResponse>,
+                response: Response<PsnCoinAddTradeResponse>
             ) {
                 val resp = response.body()!!
                 when(resp.code){
@@ -199,7 +199,7 @@ class PortfolioService {
                 }
             }
 
-            override fun onFailure(call: Call<PsnCoinAddResponse>, t: Throwable) { // 통신 실패
+            override fun onFailure(call: Call<PsnCoinAddTradeResponse>, t: Throwable) { // 통신 실패
                 Log.d("getPsncoinAdd", "소유 코인 추가 실패  : ${t}")
                 //Log.d("getPsncoinAdd" , "${PsnCoinAddResponse}")
                 portManagementView.makePortFailure("${t}")

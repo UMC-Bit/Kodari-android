@@ -28,6 +28,7 @@ class DialogMemoAndTwitter(val coinIdx:Int , val twitter: String) : DialogFragme
         //뷰페이저와 탭 레이아웃 연결
         val possessionCoinAdapter = PossessionCoinViewpagerAdapter(this,coinIdx , twitter)
         binding.memoAndTwitterVp.adapter = possessionCoinAdapter
+        binding.memoAndTwitterVp.isUserInputEnabled = false
         TabLayoutMediator(binding.memoAndTwitterTb, binding.memoAndTwitterVp) {
             tab, position ->
             tab.text = information[position]

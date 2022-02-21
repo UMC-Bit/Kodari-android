@@ -37,6 +37,9 @@
             android:name=".Login.LoginActivity"
             android:exported="false" />
 
+        <activity android:name=".Profile.EditProfileActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".Intro.IntroActivity"
             android:exported="false" />

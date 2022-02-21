@@ -1,5 +1,6 @@
 package com.bit.kodari.Config
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ abstract class BaseActivity<T: ViewBinding>(private val inflate: (LayoutInflater
         private set
 
     private var imm : InputMethodManager? = null
+    private lateinit var mLoadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,5 +47,17 @@ abstract class BaseActivity<T: ViewBinding>(private val inflate: (LayoutInflater
     // 키보드 숨기기
     fun hideKeyboard(v: View){
         imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
+    fun showLoadingDialog(context: Context){
+        mLoadingDialog = LoadingDialog(context)
+        mLoadingDialog.show()
+    }
+
+    //API 호출해서 데이터 불러오면 로딩바 없애는거
+    fun dismissLoadingDialog(){
+        if(mLoadingDialog.isShowing){
+            mLoadingDialog.dismiss()
+        }
     }
 }

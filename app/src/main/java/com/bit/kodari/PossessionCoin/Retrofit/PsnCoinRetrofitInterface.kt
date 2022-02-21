@@ -28,6 +28,5 @@ interface PsnCoinRetrofitInterface {
     @PATCH("/userCoin/del/{userCoinIdx}")
     fun deletePsnCoin(@Header("X-ACCESS-TOKEN") jwt:String , @Path("userCoinIdx") userCoinIdx:Int) : Call<PsnCoinMgtDeleteResponse>
 
-
     //fun getPsnCoinInquire(@Query("coinName") coinName : String):Call<PsnCoinMgtInsquireResponse> ? 일 때, 위에는 : 일 때
 }

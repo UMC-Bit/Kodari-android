@@ -27,7 +27,6 @@ class DebateCoinRVAdapter(var coinList:ArrayList<DebateCoinResult>):RecyclerView
             if(item.coinImg != ""){
                 Glide.with(binding.coinIv)
                     .load(item.coinImg)
-                    .error(R.drawable.profile_image)
                     .into(binding.coinIv)
             }
             binding.coinSymbolTv.text = item.symbol

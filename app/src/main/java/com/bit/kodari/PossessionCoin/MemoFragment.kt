@@ -13,6 +13,7 @@ import com.bit.kodari.Main.Data.GetTradeListResult
 import com.bit.kodari.Main.RetrofitInterface.MemoView
 import com.bit.kodari.Main.Service.HomeService
 import com.bit.kodari.PossessionCoin.Adapter.MemoRVAdapter
+import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinGetTradeResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinGetTradeResult
 import com.bit.kodari.databinding.FragmentEditPwBinding
@@ -29,33 +30,59 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
     }
     //여기서 해당 소유코인에 대한 값들 불러와야함.
     fun setRecyclerView(){
-//        memoList.add(PsnCoinGetTradeResult(2,"buy","BTC","2022-01-01",27.5,"테스트",10000,"active",31))
-//        memoList.add(PsnCoinGetTradeResult(2,"sell","BTC","2022-01-01",27.5,"테스트",10000,"active",31))
-//        memoList.add(PsnCoinGetTradeResult(2,"buy","BTC","2022-01-01",27.5,"테스트",10000,"active",31))
-//        memoList.add(PsnCoinGetTradeResult(2,"buy","BTC","2022-01-01",27.5,"테스트",10000,"active",31))
         val memoRVAdapter = MemoRVAdapter(memoList)
+        memoRVAdapter.setMyItemClickListener(object : MemoRVAdapter.MemoClickListener{
+            override fun onDeleteClick(item: GetTradeListResult) {
+                callDeleteTrade(item.tradeIdx)      //클릭시 삭제 호출
+                Log.d("tradeIdx" , "${item.tradeIdx}")
+            }
+        })
         binding.memoDialogRV.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.memoDialogRV.adapter = memoRVAdapter
     }
 
-    fun callTradeList(coinIdx: Int){
+    private fun callTradeList(coinIdx: Int){
+        Log.d("삭제 후 실행" , "callTradeList")
         val homeService = HomeService()
         homeService.setMemoView(this)
         showLoadingDialog(requireContext())
         homeService.getTradeList(coinIdx)
     }
 
+    private fun callDeleteTrade(tradeIdx:Int){
+        val homeService = HomeService()
+        homeService.setMemoView(this)
+        showLoadingDialog(requireContext())
+        homeService.deleteTrade(tradeIdx)
+    }
+
+
     //거래내역 불러오기 성공했을떄
     override fun getTradeListSuccess(response: GetTradeListResponse) {
         dismissLoadingDialog()
         memoList = response.result
-        Log.d("getTrade", "${memoList}")
+        memoList[0].isFirst = true                      //가장 최근것만 삭제 가능하게 구분.
+        Log.d("getTrade", "${memoList.size}")
         setRecyclerView()
     }
+    //입력값을 입력해주세요 -> 뜨면서 삭제는 됨
 
 
     //거래내역 불러오기 실패했을떄
     override fun getTradeListFailure(message: String) {
+        dismissLoadingDialog()
+        Log.d("getTradeList" , "실패")
+        showToast(message)
+    }
+
+    //거래내역 삭제 성공했을때
+    override fun deleteTradeSuccess(response: DeleteTradeResponse) {
+        dismissLoadingDialog()
+        callTradeList(coinIdx)      //삭제 후 재조회
+    }
+
+    //거래내역 삭제 실패했을떄
+    override fun deleteTradeFailure(message: String) {
         dismissLoadingDialog()
         showToast(message)
     }

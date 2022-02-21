@@ -22,7 +22,8 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listReCommentMaskIv)
                     .load(item.profileImgUrl)
-                    .error(R.drawable.profile_image)
+                    .error(R.drawable.ic_basic_profile)
+                    .placeholder(R.drawable.ic_basic_profile)
                     .into(binding.listReCommentMaskIv)
             }
             binding.listReCommentNicknameTv.text = item.nickName

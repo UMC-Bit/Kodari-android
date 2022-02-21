@@ -62,7 +62,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: HomePCRVAdapter.MyViewHolder, position: Int) {
         holder.bind(list[position])
-        holder.itemView.setOnClickListener { mItemClickListener.onClickItem(list[position]) }
+        holder.binding.root.setOnClickListener { mItemClickListener.onClickItem(list[position]) }
     }
 
     override fun getItemCount(): Int = list.size

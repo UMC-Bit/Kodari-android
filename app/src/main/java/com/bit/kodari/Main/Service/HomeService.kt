@@ -6,7 +6,11 @@ import com.bit.kodari.Main.Data.GetProfitResponse
 import com.bit.kodari.Main.Data.GetTradeListResponse
 import com.bit.kodari.Main.RetrofitInterface.HomeRetrofitInterface
 import com.bit.kodari.Main.RetrofitInterface.HomeView
+import com.bit.kodari.Main.RetrofitInterface.MainView
 import com.bit.kodari.Main.RetrofitInterface.MemoView
+import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
+import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
+import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
@@ -16,6 +20,7 @@ import retrofit2.Response
 class HomeService {
     private lateinit var memoView: MemoView
     private lateinit var homeView: HomeView
+    private lateinit var mainView: MainView
 
     fun setMemoView(memoView: MemoView) {
         this.memoView = memoView
@@ -23,6 +28,10 @@ class HomeService {
 
     fun setHomeView(homeView: HomeView) {
         this.homeView = homeView
+    }
+
+    fun setMainView(mainView: MainView){
+        this.mainView = mainView
     }
 
     //메모에 거래 내역 가져오기
@@ -46,6 +55,34 @@ class HomeService {
 
             override fun onFailure(call: Call<GetTradeListResponse>, t: Throwable) {
                 Log.d("getMemoList", t.toString())
+            }
+        })
+    }
+
+    //거래 내역 삭제
+    fun deleteTrade(tradeIdx:Int){
+        val homeService = getRetorfit().create(HomeRetrofitInterface::class.java)
+        homeService.deleteTrade(getJwt()!!, tradeIdx).enqueue(object : Callback<DeleteTradeResponse> {
+            override fun onResponse(
+                call: Call<DeleteTradeResponse>,
+                response: Response<DeleteTradeResponse>
+            ) {
+                when(response.body()!!.code){
+                  1000 -> {
+                      Log.d("deleteTrade" , "${response.body()!!}")
+                      memoView.deleteTradeSuccess(response.body()!!)
+                  }
+                  else -> {
+                      Log.d("deleteTrade" , "${response.body()!!}")
+                      memoView.deleteTradeFailure(response.body()!!.message)
+                  }
+                }
+
+            }
+
+            override fun onFailure(call: Call<DeleteTradeResponse>, t: Throwable) {
+                Log.d("deleteTrade" , "${t}")
+                memoView.deleteTradeFailure("${t}")
             }
         })
     }
@@ -125,4 +162,29 @@ class HomeService {
                 }
             })
     }
+
+    fun getUserFromEmail(email:String){
+        val homeService = getRetorfit().create(HomeRetrofitInterface::class.java)
+        homeService.getUserFromEmail(email).enqueue(object : Callback<GetProfileResponse>{
+            override fun onResponse(
+                call: Call<GetProfileResponse>,
+                response: Response<GetProfileResponse>
+            ) {
+                when(response.body()!!.code){
+                  1000 -> {
+                      mainView.getUserSuccess(response.body()!!)
+                  }
+                  else -> {
+                      mainView.getUserFailure(response.body()!!.message)
+                  }
+                }
+            }
+
+            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
+                mainView.getUserFailure("$t")
+            }
+        })
+    }
+
+
 }
