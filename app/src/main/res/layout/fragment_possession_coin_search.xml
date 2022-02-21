@@ -58,22 +58,16 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="6dp"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_search_exchange_logo_CV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
+
+            <ImageView
+                android:id="@+id/possession_coin_search_exchange_logo_IV"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/upbit_logo"
                 app:layout_constraintStart_toStartOf="@id/possession_coin_search_domestic_exchange_TV"
-                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_domestic_exchange_TV">
-
-                <ImageView
-                    android:id="@+id/possession_coin_search_exchange_logo_IV"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/upbit_logo" />
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_domestic_exchange_TV" />
 
             <TextView
                 android:id="@+id/possession_coin_search_exchange_name_TV"
@@ -83,9 +77,9 @@
                 android:text="업비트"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@id/possession_coin_search_exchange_logo_CV"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_search_exchange_logo_CV"
-                app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_exchange_logo_CV"/>
+                app:layout_constraintStart_toEndOf="@id/possession_coin_search_exchange_logo_IV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_search_exchange_logo_IV"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_exchange_logo_IV"/>
 
 
             <TextView
@@ -97,7 +91,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_exchange_logo_CV"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_exchange_logo_IV"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="30dp"/>
 
@@ -126,6 +120,7 @@
                         android:drawablePadding="6dp"
                         android:textStyle="bold"
                         android:hint="암호화폐 검색"
+                        android:gravity="center_vertical"
                         android:drawableLeft="@drawable/magnifying_glass"
                         android:paddingRight="10dp"
                         android:textSize="11sp"
