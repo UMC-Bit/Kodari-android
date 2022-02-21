@@ -120,10 +120,16 @@ class EditProfileActivity :
             binding.editProfileEmailAddressTv.text = email
         }
 
-        if(intent.hasExtra("url")){
+        if(intent.hasExtra("url") && intent.getStringExtra("url") != null){
             url = intent.getStringExtra("url")!!
             Glide.with(binding.editProfileMainImageIv)
                 .load(url)
+                .placeholder(R.drawable.ic_basic_profile)
+                .error(R.drawable.ic_basic_profile)
+                .into(binding.editProfileMainImageIv)
+        }else{
+            Glide.with(binding.editProfileMainImageIv)
+                .load(R.drawable.ic_basic_profile)
                 .placeholder(R.drawable.ic_basic_profile)
                 .error(R.drawable.ic_basic_profile)
                 .into(binding.editProfileMainImageIv)

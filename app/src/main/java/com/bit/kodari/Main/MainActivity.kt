@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() , MainView {
 
     //왜 되는거지 ? 뭔지 모르지만 됐음 .. ->해결 나중에 분석 필요
     fun loadImage(
-        imageUrl: String,
+        imageUrl: String?,
         @IdRes itemId: Int,
         @DrawableRes placeHolderResourceId: Int,
         @IdRes fragmentNavigationId: Int = 0
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() , MainView {
 
     private fun loadProfileImage(
         imageView: ImageView,
-        imageUrl: String,
+        imageUrl: String?,
         @DrawableRes placeHolderResourceId: Int,
         @IdRes itemId: Int
     ) {
@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity() , MainView {
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .optionalCircleCrop()
             .placeholder(placeHolderResourceId)
+            .error(R.drawable.ic_basic_profile)
             .listener(object : RequestListener<Drawable> {
 
                 override fun onLoadFailed(
@@ -163,7 +164,7 @@ class MainActivity : AppCompatActivity() , MainView {
 
     override fun getUserSuccess(resp: GetProfileResponse) {
         Log.d("url","${resp.result[0].profileImgUrl}" )
-        loadImage(resp.result[0].profileImgUrl ,R.id.profile , R.drawable.ic_basic_profile )
+        loadImage(resp.result[0].profileImgUrl ,R.id.profile , R.drawable.ic_basic_profile)
         //loadProfileImage(resp.result[0].profileImgUrl)
     }
 

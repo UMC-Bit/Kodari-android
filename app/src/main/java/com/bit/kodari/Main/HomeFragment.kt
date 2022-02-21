@@ -597,10 +597,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         showToast("포트폴리오 불러오기 실패")
     }
 
-    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        Log.d("getAccountPorfit" , "Home의 AccountProfit")
-    }
-
     //일별 데이터 성공
     override fun getDayProfitSuccess(response: GetProfitResponse) {
         if (response.result[0].profitIdx == 0)

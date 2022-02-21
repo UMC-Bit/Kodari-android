@@ -18,7 +18,7 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
 
     private lateinit var nickName:String
     private lateinit var email:String
-    private lateinit var imgUrl:String
+    private var imgUrl:String? = ""
 
     override fun initAfterBinding() {
         Log.d("initAfterBinding", "실행")
@@ -85,6 +85,7 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         Glide.with(binding.profileMainImageIv)
             .load(response.result[0].profileImgUrl)
             .centerCrop()
+            .error(R.drawable.ic_basic_profile)
             .into(binding.profileMainImageIv)
         dismissLoadingDialog()
     }
