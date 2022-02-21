@@ -8,6 +8,7 @@ data class PossesionCoinResult(
     @SerializedName("binancePrice") var binancePrice: Double,
     @SerializedName("kimchi") var kimchi: Double,
     @SerializedName("profit") var profit: Double,
+    @SerializedName("profitRate") var profitRate: Double,
     @SerializedName("coinImg") var coinImg: String,
     @SerializedName("coinName") val coinName: String,
     @SerializedName("priceAvg") val priceAvg: Double,
@@ -17,5 +18,4 @@ data class PossesionCoinResult(
     @SerializedName("coinIdx") val coinIdx: Int,
     @SerializedName("twitter") val twitter:String,
     @SerializedName("change") var change:Double,
-
     )

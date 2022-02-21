@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Util.formatPrice
+import com.bit.kodari.Util.getPriceColor
 import com.bit.kodari.databinding.ItemPossessionCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 
 class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<PossesionCoinResult>): RecyclerView.Adapter<PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder>(){
-    private var df: DecimalFormat = DecimalFormat("#.##")
     companion object{
         var isClick=false
         var clickPosition: Int = -1
@@ -41,12 +42,12 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             binding.itemPossessionCoinManagementCoinListPriceTV.setTextColor(color)
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
-            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg) +"원"
+            binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg)
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
-            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice)
             if(item.profit < 0)
                 binding.itemPossessionCoinManagementCoinListProfitPlusTV.setTextColor(Color.BLUE)
-            binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit) +"원"
+            binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit)
         }
     }
 
@@ -84,43 +85,5 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
 
 
     }
-
     override fun getItemCount()=possessionCoinList.size
-
-    public fun formatD(number:Double): String {
-        return df.format(number)
-    }
-    fun formatPrice(number: Double): String{
-        lateinit var price: String
-        if(number>=1 && number < 10){
-            price = String.format("%.2f", number)
-        }else if(number>=10 && number < 100){
-            price = String.format("%.1f", number)
-        }else if(number>=100){
-            val price_ = String.format("%.0f", number).toDouble()
-            price = formatD(price_)
-        }else if(number<=-1 && number>-10){
-            price = String.format("%.2f", number)
-        }else if(number<=-10 && number>-100){
-            price = String.format("%.1f", number)
-        }else if(number <=-100){
-            val price_ = String.format("%.0f", number).toDouble()
-            price = formatD(price_)
-        }else{
-            price = String.format("%.5f", number)
-        }
-        return price;
-    }
-    fun getPriceColor(change: Double): Int{
-        // 상승, 하락, 보합
-        var colorUpbit = 0 // 업비트
-        if(change == 1.0){
-            colorUpbit = Color.RED
-        }else if(change == -1.0){
-            colorUpbit = Color.BLUE
-        }else{
-            colorUpbit = Color.BLACK
-        }
-        return colorUpbit
-    }
 }

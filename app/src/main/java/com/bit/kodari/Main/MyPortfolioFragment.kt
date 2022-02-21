@@ -11,6 +11,7 @@ import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Portfolio.Retrofit.PortfolioView
 import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.R
+import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.databinding.FragmentMyPortfolioBinding
 import java.text.NumberFormat
 import kotlin.properties.Delegates
@@ -62,11 +63,9 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
     override fun portfolioSuccess(resp: PortfolioResponse) {
         if(checkView) {
             //숫자 형태로 나타내기
-            val f = NumberFormat.getInstance()
-            f.isGroupingUsed = false
-            binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString() + "원"
+            binding.myPortfolioAssetTv.text = formatPrice(resp.result.property) + "원"
             property = resp.result.property
-            binding.myPortfolioAssetTv.text = f.format(resp.result.property).toString()
+            binding.myPortfolioAssetTv.text = formatPrice(resp.result.property)
             Log.d("temp", "${resp.result.property}")
             binding.myPortfolioAccountNameTv.text = resp.result.accountName
             accoutIdx = resp.result.accountIdx
@@ -78,12 +77,12 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
         binding.myPortfolioAccountNameTv.text = "정보를 불러오는데 실패했습니다."
     }
 
-    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        this.profit = profit.toInt()
-        val profitRate = ((property + profit) / (property + sumBuyCoin)) * 100 - 100
-        val f = NumberFormat.getInstance()
-        f.isGroupingUsed=false
-        binding.myPortfolioAssetTv.text = f.format(property.toInt() + profit).toString() + "원"
-        binding.myPortfolioPercentTv.text = profitRate.toInt().toString()+ "%"
+    fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
+        if (checkView) {
+            this.profit = profit.toInt()
+            val profitRate = ((property + profit) / (property + sumBuyCoin)) * 100 - 100
+            binding.myPortfolioAssetTv.text = formatPrice(property.toInt() + profit) + "원"
+            binding.myPortfolioPercentTv.text = formatPrice(profitRate) + "%"
+        }
     }
 }

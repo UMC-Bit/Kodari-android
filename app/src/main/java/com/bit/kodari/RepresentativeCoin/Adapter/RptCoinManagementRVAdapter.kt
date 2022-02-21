@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.RepresentCoinResult
+import com.bit.kodari.Util.formatD
+import com.bit.kodari.Util.formatPrice
+import com.bit.kodari.Util.getPriceColor
 import com.bit.kodari.databinding.ItemRepresentativeCoinManagementCoinListBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): RecyclerView.Adapter<RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder>(){
-    private var df: DecimalFormat = DecimalFormat("#.##")
     interface MyItemClickListener {
         fun onItemCheck(item: RepresentCoinResult)
         fun onItemUnCheck(item:RepresentCoinResult)
@@ -34,8 +36,8 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
-            binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice) +"원"
-            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice) +"원"
+            binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice)
+            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice)
             binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.setTextColor(color)
             binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
 
@@ -72,36 +74,6 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
             holder.binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.VISIBLE
             mItemClickListener.onItemCheck(rptCoinList[position])
         }
-
     }
     override fun getItemCount() = rptCoinList.size
-    public fun formatD(number:Double): String {
-        return df.format(number)
-    }
-    fun formatPrice(number: Double): String{
-        lateinit var price: String
-        if(number>=1 && number < 10){
-            price = String.format("%.2f", number)
-        }else if(number>=10 && number < 100){
-            price = String.format("%.1f", number)
-        }else if(number>=100 || number == 0.0){
-            val price_ = String.format("%.0f", number).toDouble()
-            price = formatD(price_)
-        }else{
-            price = String.format("%.5f", number)
-        }
-        return price;
-    }
-    fun getPriceColor(change: Double): Int{
-        // 상승, 하락, 보합
-        var colorUpbit = 0 // 업비트
-        if(change == 1.0){
-            colorUpbit = Color.RED
-        }else if(change == -1.0){
-            colorUpbit = Color.BLUE
-        }else{
-            colorUpbit = Color.BLACK
-        }
-        return colorUpbit
-    }
 }

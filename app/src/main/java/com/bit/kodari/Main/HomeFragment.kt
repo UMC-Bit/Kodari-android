@@ -44,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var homePCRVAdapter: HomePCRVAdapter
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
+    private var viewPagerPosition = 0;
     private var checkView = true
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
@@ -228,6 +229,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {        //page변경됐을떄
                 super.onPageSelected(position)
+                viewPagerPosition = position
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
@@ -413,7 +415,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //포토폴리오 IDX 조회 성공
     override fun getPortIdxSuccess(resp: PortIdxResponse) {
         dismissLoadingDialog()
-//        portIdxList.clear()               데이터 자동 추가가 왜됌?
+//        portIdxLi.st.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
         for (idx in resp.result) {
             portfolioList.add(
@@ -484,7 +486,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         if (change != null) {
                             userCoinList[i].change = change
                         }
-                        userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+                        userCoinList[i].profit = getProfit(upbitPrice, priceAvg, amount)
+                        userCoinList[i].profitRate = getProfitRate(upbitPrice, priceAvg, amount)
                         currentSum += upbitPrice * amount
                     }
                 }
@@ -499,10 +502,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         }
                     }
                 }
+                if(viewPagerPosition < portfolioList.size && currentSum != 0.0
+                    && portfolioList[viewPagerPosition] is MyPortfolioFragment) {
+                    val myPortfolioFragment: MyPortfolioFragment =
+                        portfolioList[viewPagerPosition] as MyPortfolioFragment
+                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)
+                }
                 viewModel.getUpdateUserCoin(userCoinList)
                 viewModel.getUpdateRepresentCoin(representCoinList)
                 // 계좌 수익률 보내주기
-                portFolioView.getAccountProfit(currentSum, sumBuyCoin)
             }
         }
     }
@@ -511,7 +519,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
-                var usdtPrice = UsdtService.usdtPrice
+                var usdtPrice = 1197
                 // 대표 코인
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
@@ -547,6 +555,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     fun getCoinPrice(response: PortfolioResponse) {
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
+        userCoinList.clear()
+        representCoinList.clear()
         // 계좌
         getAccountResult(response)
         // 유저 코인 리스트
@@ -582,10 +592,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 포트폴리오 API 호출 실패
     override fun portfolioFailure(message: String) {
         showToast("포트폴리오 불러오기 실패")
-    }
-
-    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        TODO("Not yet implemented")
     }
 
     //일별 데이터 성공
@@ -691,8 +697,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    // 평가순익 구하는 메서드
     fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return (currentPrice * amount) - (priceAvg * amount)
+    }
+    fun getProfitRate(currentPrice: Double, priceAvg: Double, amount: Double): Double {
+        return ((currentPrice * amount) / (priceAvg * amount)) * 100 - 100
     }
 }
