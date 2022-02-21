@@ -211,19 +211,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     fun setViewpager() {
         Log.d("setViewpager", "뷰페이저 크ㅡ기 : ${portfolioList.size}")
         homeVPAdapter = HomeVPAdapter(this, portfolioList)
+        Log.d("setViewpager", "뷰페이저 크ㅡ기2 : ${portfolioList.size}")      //여기서 2가됨
         //homeVPAdapter.addFragment(MyPortfolioFragment())
         binding.homeViewpagerVp.adapter = homeVPAdapter
+        Log.d("setViewpager", "뷰페이저 크ㅡ기3 : ${portfolioList.size}")
         binding.homeViewpagerVp.offscreenPageLimit = 3
+        Log.d("setViewpager", "뷰페이저 크ㅡ기4 : ${portfolioList.size}")
 
         //homeVPAdapter.addFragment(MyPortfolioFragment())          //왜 처음 셋팅떄는 되는데 그 뒤론 안될까 ?
 
         binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
+        Log.d("setViewpager", "뷰페이저 크ㅡ기5 : ${portfolioList.size}")
         binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
-
+        Log.d("setViewpager", "뷰페이저 크ㅡ기6 : ${portfolioList.size}")
         binding.homeViewpagerVp.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {        //page변경됐을떄
                 super.onPageSelected(position)
+                Log.d("setViewpager", "뷰페이저 크ㅡ기7 : ${portfolioList.size}")
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
@@ -236,6 +241,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         binding.homeVpNextBtn.visibility = View.GONE
                     }
                     else -> {
+                        Log.d("setViewpager", "else position : ${position}")
                         binding.homeVpNextBtn.visibility = View.VISIBLE
                         binding.homeVpPreviewBtn.visibility = View.VISIBLE
                         callPortfolioInfo(portIdxList[position].toInt())
@@ -245,6 +251,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             }
         })
+        //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
@@ -346,7 +353,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     //차트에 더미 데이터 셋팅팅
-//7일치만 먼저 불러와보자 .
+    //7일치만 먼저 불러와보자 .
     fun setChartDummyData(profitList: ArrayList<GetProfitResult>): LineData {
         val values: ArrayList<Entry> = ArrayList()
 
@@ -488,6 +495,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
                     }
                 }
+                //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
                 viewModel.getUpdateUserCoin(userCoinList)
                 viewModel.getUpdateRepresentCoin(representCoinList)
                 // 계좌 수익률 보내주기
@@ -585,7 +593,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        TODO("Not yet implemented")
+        Log.d("getAccountPorfit" , "Home의 AccountProfit")
     }
 
     //일별 데이터 성공
@@ -653,6 +661,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onPause() {
         super.onPause()
         checkView = false
+        portfolioList.clear()   //초기화
     }
 
     override fun onResume() {

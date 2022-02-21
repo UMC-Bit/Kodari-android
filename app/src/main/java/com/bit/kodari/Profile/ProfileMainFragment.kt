@@ -18,11 +18,12 @@ import com.bumptech.glide.Glide
 
 class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProfileMainBinding::inflate) , ProfileMainView{
 
-    lateinit var nickName:String
-    lateinit var email:String
+    private lateinit var nickName:String
+    private lateinit var email:String
+    private lateinit var imgUrl:String
 
     override fun initAfterBinding() {
-
+        Log.d("initAfterBinding", "실행")
         val profileService = ProfileService()
         profileService.setProfileMainView(this)
         showLoadingDialog(requireContext())
@@ -36,11 +37,13 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         binding.profileMainBtn1Ib.setOnClickListener {
             val tempNickName = nickName
             val tempEmail = email
+            val tempUrl = imgUrl
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, EditProfileFragment().apply {
                     arguments = Bundle().apply {
                         putString("nickName", tempNickName)
                         putString("email",tempEmail)
+                        putString("url" , tempUrl)
                     }
                 }).commitAllowingStateLoss()
         }
@@ -71,6 +74,7 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
     override fun getProfileSuccess(response: GetProfileResponse) {
         nickName = response.result[0].nickName
         email = response.result[0].email
+        imgUrl = response.result[0].profileImgUrl
         binding.profileMainNameTv.text = nickName
         binding.profileMainEmailTv.text = email
         Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")

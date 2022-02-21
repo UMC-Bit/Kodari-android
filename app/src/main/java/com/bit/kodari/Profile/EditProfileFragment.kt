@@ -49,20 +49,28 @@ import com.amazonaws.regions.Regions
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.bit.kodari.Main.Service.HomeService
+import com.bit.kodari.Util.getEmail
+import com.bumptech.glide.Glide
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
-
+//편집 창 왔을때 유저 정보 호출해야함
 class EditProfileFragment :
     BaseFragment<FragmentEditProfileBinding>(FragmentEditProfileBinding::inflate), ProfileEditView {
 
-    lateinit var nickName: String
+    private lateinit var nickName: String
+    private lateinit var email:String
+    private lateinit var url:String
 
     //private var imageView: ImageView? = binding.editProfileMainImageIv
     private var currentImageUri: Uri? = null               //가져온 이미지 uri
     private var file: File? = null                          //null이면 실행 X
     private var uploadFileName: String? = null
+
+    private var chkNickName = true
+    private var chkProfile = true
 
     //갤러리에서 사진 제대로 가져왔을 경우 실행되는 메서드.
     private val pickerActivityLauncher: ActivityResultLauncher<Intent> =
@@ -102,16 +110,34 @@ class EditProfileFragment :
             nickName = requireArguments().getString("nickName")!!
             binding.editProfileInputNicknameEt.setText(nickName)
         }
+        //프로필 , 이메일 셋팅..
+        if(requireArguments().containsKey("email")){
+            email = requireArguments().getString("email")!!
+            binding.editProfileEmailAddressTv.text = email
+        }
+
+        if(requireArguments().containsKey("url")){
+            url = requireArguments().getString("url")!!
+            Glide.with(binding.editProfileMainImageIv)
+                .load(url)
+                .placeholder(R.drawable.ic_basic_profile)
+                .error(R.drawable.ic_basic_profile)
+                .into(binding.editProfileMainImageIv)
+        }
 
     }
 
     override fun updateNameSuccess(resp: UpdateNameResponse) {
+        dismissLoadingDialog()
+        chkNickName = true
         when (resp.code) {
             1000 -> {
                 showToast("닉네임 변경 성공")
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, ProfileMainFragment())
-                    .commitAllowingStateLoss()
+                if(chkNickName && chkProfile){          //둘다 true면 변경
+                    (context as MainActivity).supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, ProfileMainFragment())
+                        .commitAllowingStateLoss()
+                }
 
             }
             else -> {
@@ -128,6 +154,12 @@ class EditProfileFragment :
     //프로필 이미지 Update 성공
     override fun updateProfileImgSuccess(resp: UpdateProfileImgResponse) {
         dismissLoadingDialog()
+        chkProfile = true
+        if(chkProfile && chkNickName){
+            requireActivity().supportFragmentManager.beginTransaction().
+            replace(R.id.main_container_fl , ProfileMainFragment()).commit()
+
+        }
         Log.d("updateImage" , "${resp.result}")
     }
 
@@ -147,18 +179,16 @@ class EditProfileFragment :
         binding.editProfileFinishB.setOnClickListener {
             val nickName = binding.editProfileInputNicknameEt.text.toString()
             if (nickName != this.nickName) {      //처음 입력된거와 다르면실행
+                chkNickName = false
                 callUpdateNickname(nickName)
             }
 
             if (file != null) {                   //이미지 변경했으면
                 //showToast(file!!.absolutePath)
-                showLoadingDialog(requireContext())                     //다이얼로그 띄우기
+                chkProfile = false
                 uploadWithTransferUtility(file!!.name, file!!)         //파일 업로드하기 , 제대로 업로드 됐으면 실행.
-
             }
 
-            requireActivity().supportFragmentManager.beginTransaction().
-                    replace(R.id.main_container_fl , ProfileMainFragment()).commit()
 
             //S3에 이미지 올리고 url 받아서 서버에등록.
         }
@@ -232,9 +262,11 @@ class EditProfileFragment :
         showToast("Nickname Check 실패 ,$message")
     }
 
+
     fun callUpdateNickname(nickName: String) {
         val profileService = ProfileService()
         profileService.setProfileEditView(this)
+        showLoadingDialog(requireContext())
         profileService.updateName(nickName)
     }
 
@@ -243,6 +275,7 @@ class EditProfileFragment :
         val profileService = ProfileService()
         Log.d("updateImage" , url)
         profileService.setProfileEditView(this)
+        showLoadingDialog(requireContext())
         profileService.updateProfileImg(url)
     }
 

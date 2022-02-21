@@ -44,7 +44,8 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listCommentMaskIv)
                     .load(item.profileImgUrl)
-                    .error(R.drawable.profile_image)
+                    .error(R.drawable.ic_basic_profile)
+                    .placeholder(R.drawable.ic_basic_profile)
                     .into(binding.listCommentMaskIv)
             }
 

@@ -34,7 +34,8 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listItemMyWritingImageIv)
                     .load(item.profileImgUrl)
-                    .error(R.drawable.profile_image)
+                    .error(R.drawable.ic_basic_profile)
+                    .placeholder(R.drawable.ic_basic_profile)
                     .into(binding.listItemMyWritingImageIv)
             }
             //binding.listItemMyWritingImageIv.setImageBitmap(item.profileImgUrl)
