@@ -123,7 +123,7 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
             }
         })
     }
-
+    //소유코인 삭제
     fun deletePsnCoin(userCoinIdx:Int){
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
         Log.d("deletePsnCoin" ,"${getJwt()}")
@@ -141,4 +141,6 @@ class PsnCoinService{ // PsnCoinService의 매개변수는 없어도 되나 toas
 
         })
     }
+
+
 }

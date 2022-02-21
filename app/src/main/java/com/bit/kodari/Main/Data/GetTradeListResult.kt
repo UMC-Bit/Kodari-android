@@ -11,5 +11,6 @@ data class GetTradeListResult(
     @SerializedName("memo") val memo: String,
     @SerializedName("price") val price: Int,
     @SerializedName("status") val status: String,
-    @SerializedName("tradeIdx") val tradeIdx: Int
+    @SerializedName("tradeIdx") val tradeIdx: Int,
+    var isFirst: Boolean = false
 )

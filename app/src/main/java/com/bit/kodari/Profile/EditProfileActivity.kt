@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.mobileconnectors.s3.transferutility.*
@@ -41,24 +42,24 @@ import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateNameResponse
 import com.bit.kodari.Profile.RetrofitData.UpdateProfileImgResponse
 import com.bit.kodari.R
-import com.bit.kodari.Util.getUserIdx
-import com.bit.kodari.databinding.FragmentEditProfileBinding
 import java.io.File
 
 import com.amazonaws.regions.Regions
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.bit.kodari.Config.BaseActivity
 import com.bit.kodari.Main.Service.HomeService
 import com.bit.kodari.Util.getEmail
+import com.bit.kodari.databinding.ActivityEditProfileBinding
 import com.bumptech.glide.Glide
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
 //편집 창 왔을때 유저 정보 호출해야함
-class EditProfileFragment :
-    BaseFragment<FragmentEditProfileBinding>(FragmentEditProfileBinding::inflate), ProfileEditView {
+class EditProfileActivity :
+    BaseActivity<ActivityEditProfileBinding>(ActivityEditProfileBinding::inflate), ProfileEditView {
 
     private lateinit var nickName: String
     private lateinit var email:String
@@ -94,30 +95,33 @@ class EditProfileFragment :
                     Log.d("pcik", "실패 : ${e}")
                 }
             } else if (it.resultCode == RESULT_CANCELED) {
-                Toast.makeText(requireContext(), "사진 선택 취소", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("ActivityResult", "something wrong")
             }
         }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun initAfterBinding() {
         setInit()
         setListener()
     }
 
     fun setInit() {
-        if (requireArguments().containsKey("nickName")) {
-            nickName = requireArguments().getString("nickName")!!
+        //Intent로 변경해야함.
+
+        if (intent.hasExtra("nickName")) {
+            nickName = intent.getStringExtra("nickName")!!
             binding.editProfileInputNicknameEt.setText(nickName)
         }
         //프로필 , 이메일 셋팅..
-        if(requireArguments().containsKey("email")){
-            email = requireArguments().getString("email")!!
+        if(intent.hasExtra("email")){
+            email = intent.getStringExtra("email")!!
             binding.editProfileEmailAddressTv.text = email
         }
 
-        if(requireArguments().containsKey("url")){
-            url = requireArguments().getString("url")!!
+        if(intent.hasExtra("url")){
+            url = intent.getStringExtra("url")!!
             Glide.with(binding.editProfileMainImageIv)
                 .load(url)
                 .placeholder(R.drawable.ic_basic_profile)
@@ -134,9 +138,10 @@ class EditProfileFragment :
             1000 -> {
                 showToast("닉네임 변경 성공")
                 if(chkNickName && chkProfile){          //둘다 true면 변경
-                    (context as MainActivity).supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container_fl, ProfileMainFragment())
-                        .commitAllowingStateLoss()
+//                    (context as MainActivity).supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_container_fl, ProfileMainFragment())
+//                        .commitAllowingStateLoss()
+                    finish()        //둘다 true면 종료
                 }
 
             }
@@ -156,8 +161,9 @@ class EditProfileFragment :
         dismissLoadingDialog()
         chkProfile = true
         if(chkProfile && chkNickName){
-            requireActivity().supportFragmentManager.beginTransaction().
-            replace(R.id.main_container_fl , ProfileMainFragment()).commit()
+//            requireActivity().supportFragmentManager.beginTransaction().
+//            replace(R.id.main_container_fl , ProfileMainFragment()).commit()
+            finish()
 
         }
         Log.d("updateImage" , "${resp.result}")
@@ -170,10 +176,12 @@ class EditProfileFragment :
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun setListener() {
         binding.editProfilePreIv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+//            (context as MainActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_container_fl, ProfileMainFragment()).commitAllowingStateLoss()
+            finish()
         }
 
         binding.editProfileFinishB.setOnClickListener {
@@ -204,7 +212,7 @@ class EditProfileFragment :
             //갤러리 접근 권한 먼저 체크
             when {
                 ContextCompat.checkSelfPermission(
-                    requireContext(),
+                    this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     // 권한이 잘 부여 되었을 때 갤러리에서 사진을 선택하는 기능
@@ -227,8 +235,9 @@ class EditProfileFragment :
     }
 
     //권한 요청 팝업 띄위기 , 권한 확인하면 naviagatesPhotos 실행
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun showContextPopupPermission() {
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(this)
             .setTitle("권한이 필요합니다.")
             .setMessage("프로필 이미지를 바꾸기 위해서는 갤러리 접근 권한이 필요합니다.")
             .setPositiveButton("동의하기") { _, _ ->
@@ -249,7 +258,7 @@ class EditProfileFragment :
     override fun getCheckNicknameSuccess(response: NicknameResponse) {
         when (response.code) {
             1000 -> {
-                Toast.makeText(context, "닉네임 입력 성공", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "닉네임 입력 성공", Toast.LENGTH_SHORT).show()
                 binding.editProfileErrorTv.text = response.result
             }
             else -> {
@@ -266,7 +275,7 @@ class EditProfileFragment :
     fun callUpdateNickname(nickName: String) {
         val profileService = ProfileService()
         profileService.setProfileEditView(this)
-        showLoadingDialog(requireContext())
+        showLoadingDialog(this)
         profileService.updateName(nickName)
     }
 
@@ -275,7 +284,7 @@ class EditProfileFragment :
         val profileService = ProfileService()
         Log.d("updateImage" , url)
         profileService.setProfileEditView(this)
-        showLoadingDialog(requireContext())
+        showLoadingDialog(this)
         profileService.updateProfileImg(url)
     }
 
@@ -286,9 +295,9 @@ class EditProfileFragment :
         val s3Client = AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2))
 
         val transferUtility = TransferUtility.builder().s3Client(s3Client).context(
-            requireActivity().applicationContext
+            this.applicationContext
         ).build()
-        TransferNetworkLossHandler.getInstance(requireActivity().applicationContext)
+        TransferNetworkLossHandler.getInstance(this.applicationContext)
 
         uploadFileName = "profile/" + UUID.randomUUID()
             .toString() + fileName           //저장할 File이름 저장 -> 이걸 이용해서 url 만들거임
@@ -330,7 +339,7 @@ class EditProfileFragment :
             val proj = arrayOf(MediaStore.Images.Media.DATA)
             assert(currentImageUri != null)
             cursor =
-                requireContext().getContentResolver()
+                this.getContentResolver()
                     .query(currentImageUri!!, proj, null, null, null)
             Log.d("pick", "cursor: ${cursor}")
             assert(cursor != null)
@@ -358,7 +367,7 @@ class EditProfileFragment :
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     navigatesPhotos()
                 else
-                    Toast.makeText(requireContext(), "권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
             }
             else -> {
 

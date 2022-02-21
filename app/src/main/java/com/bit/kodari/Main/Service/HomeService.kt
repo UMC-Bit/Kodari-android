@@ -8,6 +8,8 @@ import com.bit.kodari.Main.RetrofitInterface.HomeRetrofitInterface
 import com.bit.kodari.Main.RetrofitInterface.HomeView
 import com.bit.kodari.Main.RetrofitInterface.MainView
 import com.bit.kodari.Main.RetrofitInterface.MemoView
+import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
+import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
@@ -53,6 +55,34 @@ class HomeService {
 
             override fun onFailure(call: Call<GetTradeListResponse>, t: Throwable) {
                 Log.d("getMemoList", t.toString())
+            }
+        })
+    }
+
+    //거래 내역 삭제
+    fun deleteTrade(tradeIdx:Int){
+        val homeService = getRetorfit().create(HomeRetrofitInterface::class.java)
+        homeService.deleteTrade(getJwt()!!, tradeIdx).enqueue(object : Callback<DeleteTradeResponse> {
+            override fun onResponse(
+                call: Call<DeleteTradeResponse>,
+                response: Response<DeleteTradeResponse>
+            ) {
+                when(response.body()!!.code){
+                  1000 -> {
+                      Log.d("deleteTrade" , "${response.body()!!}")
+                      memoView.deleteTradeSuccess(response.body()!!)
+                  }
+                  else -> {
+                      Log.d("deleteTrade" , "${response.body()!!}")
+                      memoView.deleteTradeFailure(response.body()!!.message)
+                  }
+                }
+
+            }
+
+            override fun onFailure(call: Call<DeleteTradeResponse>, t: Throwable) {
+                Log.d("deleteTrade" , "${t}")
+                memoView.deleteTradeFailure("${t}")
             }
         })
     }
@@ -155,4 +185,6 @@ class HomeService {
             }
         })
     }
+
+
 }

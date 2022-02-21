@@ -4,6 +4,7 @@ import com.bit.kodari.Main.Data.GetProfitResponse
 import com.bit.kodari.Main.Data.GetTradeListResponse
 import com.bit.kodari.Main.Data.MakePortRequest
 import com.bit.kodari.Main.Data.MakePortResponse
+import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -25,5 +26,8 @@ interface HomeRetrofitInterface {
     //회원 목록 이메일로 조회
     @GET("/app/users/get")
     fun getUserFromEmail(@Query("email") email:String) : Call<GetProfileResponse>
+
+    @PATCH("/trades/delete/{tradeIdx}")
+    fun deleteTrade(@Header("X-ACCESS-TOKEN") jwt:String ,@Path("tradeIdx") tradeIdx:Int) : Call<DeleteTradeResponse>
 
 }

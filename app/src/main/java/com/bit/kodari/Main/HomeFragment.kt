@@ -545,11 +545,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         TODO("Not yet implemented")
     }
 
-    // 코루틴 시세 적용 및 뷰바인딩
-    suspend fun setCoinPrice(response: PortfolioResponse) {
-        getCoinPrice(response)
-        setPortViewBinding()
-    }
 
     // 시세 받아오기
     fun getCoinPrice(response: PortfolioResponse) {
