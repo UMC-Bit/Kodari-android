@@ -18,7 +18,7 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
 
     private lateinit var nickName:String
     private lateinit var email:String
-    private lateinit var imgUrl:String
+    private var imgUrl:String? =null
 
     override fun initAfterBinding() {
         Log.d("initAfterBinding", "실행")
