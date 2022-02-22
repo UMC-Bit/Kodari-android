@@ -28,6 +28,9 @@ class DeleteDialog: DialogFragment() , DebateDeletePostView{
         if(requireArguments().containsKey("postIdx")){
             postIdx = requireArguments().getInt("postIdx")
         }
+
+        //SpannerableStringBuilder
+
         setListener()
         return binding.root
     }
