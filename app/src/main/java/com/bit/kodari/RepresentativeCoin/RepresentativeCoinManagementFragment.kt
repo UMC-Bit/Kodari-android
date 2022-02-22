@@ -15,9 +15,11 @@ import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
 import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
-import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UsdtService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화

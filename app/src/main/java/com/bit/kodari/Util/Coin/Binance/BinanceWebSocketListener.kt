@@ -1,11 +1,10 @@
-package com.bit.kodari.Util.Coin
+package com.bit.kodari.Util.Coin.Binance
 
 import android.util.Log
-import com.bit.kodari.Main.HomeFragment
+import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.Upbit.UsdtService
 import okhttp3.*
-import okio.ByteString
 import org.json.JSONObject
-import java.text.DecimalFormat
 
 class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(), CoinView {
     var usdtPrice: Int = 1200 // usdt 가격

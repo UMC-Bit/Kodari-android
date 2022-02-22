@@ -1,8 +1,9 @@
 package com.bit.kodari.Util.Coin
 
 
+import com.bit.kodari.Util.Coin.Binance.BinanceResult
+import com.bit.kodari.Util.Coin.Upbit.UpbitPrice
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

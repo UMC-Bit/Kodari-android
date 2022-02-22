@@ -22,6 +22,8 @@ import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResponse
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
 class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
