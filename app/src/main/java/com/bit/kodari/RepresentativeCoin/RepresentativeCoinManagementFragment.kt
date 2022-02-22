@@ -190,7 +190,11 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
+                        val change = upbitCoinPriceMap.get(symbol+"change")
                         coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        if (change != null) {
+                            coinList[i].change = change
+                        }
                     }
                 }
                 viewModel.getUpdateRepresentCoin(coinList)
@@ -200,7 +204,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null) {
-            var usdtPrice = binanceCoinPriceMap.get("usdt")!!.toInt()
+            var usdtPrice = UsdtService.usdtPrice
             requireActivity().runOnUiThread() {
                 // 대표 코인
                 for (i in coinList.indices) {

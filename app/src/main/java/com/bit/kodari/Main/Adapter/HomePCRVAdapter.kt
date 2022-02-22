@@ -1,16 +1,19 @@
 package com.bit.kodari.Main.Adapter
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Util.formatD
+import com.bit.kodari.Util.formatPrice
+import com.bit.kodari.Util.getPriceColor
 import com.bit.kodari.databinding.ListMyCoinBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<HomePCRVAdapter.MyViewHolder>(){
-    private var df: DecimalFormat = DecimalFormat("#.##")
 
     interface MyItemClickListener{
         fun onClickItem(item:PossesionCoinResult)
@@ -24,14 +27,29 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
 
     inner class MyViewHolder(val binding:ListMyCoinBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : PossesionCoinResult){
+            val color = getPriceColor(item.change)
+            // 바인딩
             binding.myCoinNameTv.text = item.coinName
             binding.myCoinSymbolTv.text = item.symbol
             Glide.with(binding.myCoinIv)
                 .load(item.coinImg)
                 .into(binding.myCoinIv)
-            binding.myNowPriceTv.text = formatPrice(item.upbitPrice) +"원"
-            binding.myProfitTv.text = formatPrice(item.profit) + "원"
-            binding.myUnitPriceTv.text = formatPrice(item.priceAvg) + "원"
+            binding.myNowPriceTv.text = formatPrice(item.upbitPrice)
+            binding.myNowPriceTv.setTextColor(color)
+            if(item.profit < 0){
+                binding.myProfitTv.setTextColor(Color.BLUE)
+                binding.myProfitTv.text = formatPrice(item.profit)
+            }else{
+                binding.myProfitTv.text = "+" + formatPrice(item.profit)
+            }
+            if(item.profitRate < 0){
+                binding.myProfitPercentTv.setTextColor(Color.BLUE)
+                binding.myProfitPercentTv.text = formatD(item.profitRate) + "%"
+            }else{
+                binding.myProfitPercentTv.setTextColor(Color.RED)
+                binding.myProfitPercentTv.text = formatD(item.profitRate) + "%"
+            }
+            binding.myUnitPriceTv.text = formatPrice(item.priceAvg)
         //binding.representCoinSymbolTv.text = item.symbol
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }
@@ -48,30 +66,4 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
-
-    public fun formatD(number:Double): String {
-        return df.format(number)
-    }
-
-    fun formatPrice(number: Double): String{
-        lateinit var price: String
-        if(number>=1 && number < 10){
-            price = String.format("%.2f", number)
-        }else if(number>=10 && number < 100){
-            price = String.format("%.1f", number)
-        }else if(number>=100){
-            val price_ = String.format("%.0f", number).toDouble()
-            price = formatD(price_)
-        }else if(number<=-1 && number>-10){
-            price = String.format("%.2f", number)
-        }else if(number<=-10 && number>-100){
-            price = String.format("%.1f", number)
-        }else if(number <=-100){
-            val price_ = String.format("%.0f", number).toDouble()
-            price = formatD(price_)
-        }else{
-            price = String.format("%.5f", number)
-        }
-        return price;
-    }
 }

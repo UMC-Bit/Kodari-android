@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/profile_main_title_tv"
@@ -49,7 +49,8 @@
                     android:layout_width="54dp"
                     android:layout_height="54dp"
                     android:layout_marginStart="20dp"
-                    android:background="@drawable/profile_image"
+                    android:background="@drawable/ic_basic_profile"
+                    android:layout_marginBottom="10dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_rect1_cl"
                     app:layout_constraintStart_toStartOf="@id/profile_main_rect1_cl"
@@ -77,17 +78,31 @@
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_image_iv"
                     app:layout_constraintStart_toStartOf="@id/profile_main_name_tv" />
 
+                <Button
+                    android:id="@+id/profile_main_logout_btn"
+                    android:layout_width="56dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="10dp"
+                    android:text="로그아웃"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@drawable/finish_btn_outline_gray"
+                    app:layout_constraintTop_toBottomOf="@id/profile_main_email_tv"
+                    app:layout_constraintStart_toStartOf="@id/profile_main_email_tv" />
+
 
                 <ImageButton
                     android:id="@+id/profile_main_btn1_ib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
+                    android:padding="5dp"
                     android:background="@color/white"
                     android:src="@drawable/yellow_next_btn"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_main_image_iv"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profile_main_image_iv" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -148,6 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
+                    android:padding="5dp"
                     android:background="@color/white"
                     android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_bar2_vw"
@@ -179,6 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
+                    android:padding="5dp"
                     android:background="@color/white"
                     android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="@id/profile_main_bar3_vw"
@@ -203,6 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@color/white"
+                    android:padding="5dp"
                     android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -218,7 +236,8 @@
                 android:background="@drawable/button_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_main_rect2_cl">
+                app:layout_constraintTop_toBottomOf="@id/profile_main_rect2_cl"
+                >
 
                 <TextView
                     android:id="@+id/profile_main_security_tv"
@@ -257,11 +276,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
+                    android:padding="5dp"
                     android:background="@color/white"
                     android:src="@drawable/yellow_next_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profile_main_bar4_vw" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_main_rect4_cl"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/button_white"
+                app:layout_constraintStart_toStartOf="@id/profile_main_rect3_cl"
+                app:layout_constraintTop_toBottomOf="@id/profile_main_rect3_cl"
+                >
+
+                <TextView
+                    android:id="@+id/profile_main_inquire_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="문의하기"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                <ImageButton
+                    android:id="@+id/profile_main_btn6_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:padding="5dp"
+                    android:background="@color/white"
+                    android:src="@drawable/yellow_next_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

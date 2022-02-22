@@ -21,7 +21,7 @@
             android:id="@+id/post_write_back_btn"
             android:layout_width="28dp"
             android:layout_height="31dp"
-            android:src="@drawable/previous"
+            android:src="@drawable/previous_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="20dp"

@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/list_comment_mask_iv"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:src="@drawable/debate_mask"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,10 +29,10 @@
 
     <TextView
         android:id="@+id/list_comment_nickname_tv"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="pastagood"
-        android:textSize="14sp"
+        android:textSize="12.5sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/list_comment_mask_iv"
@@ -46,7 +46,7 @@
         android:text="아니 그건 됐고 이더리움 떡상 부탁 좀"
         android:textColor="@color/black"
         android:textSize="12.5sp"
-        android:layout_marginStart="3dp"
+        android:layout_marginStart="30dp"
         android:layout_marginEnd="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/list_comment_nickname_tv"
@@ -59,8 +59,8 @@
         android:layout_height="14dp"
         android:src="@drawable/like_on"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/list_item_content_tv"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_content_tv"
+        app:layout_constraintTop_toTopOf="@id/list_comment_mask_iv"
+        app:layout_constraintBottom_toBottomOf="@id/list_comment_mask_iv"
         android:layout_marginEnd="27dp"/>
 
     <ImageView
@@ -69,8 +69,8 @@
         android:layout_height="14dp"
         android:src="@drawable/like_off"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/list_item_content_tv"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_content_tv"
+        app:layout_constraintTop_toTopOf="@id/list_comment_mask_iv"
+        app:layout_constraintBottom_toBottomOf="@id/list_comment_mask_iv"
         android:visibility="invisible"
         android:layout_marginEnd="27dp"/>
 
@@ -92,9 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@id/list_item_content_tv"
-                app:layout_constraintTop_toBottomOf="@+id/list_item_content_tv"
+                app:layout_constraintTop_toTopOf="@+id/list_item_comment_ask_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/list_item_comment_ask_tv"
                 android:textSize="10sp"
                 android:text="좋아요 3개" />
 
@@ -102,10 +102,10 @@
                 android:id="@+id/list_item_modify_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/list_item_comment_like_cnt_tv"
+                app:layout_constraintStart_toEndOf="@id/list_item_comment_like_cnt_tv"
                 app:layout_constraintTop_toTopOf="@id/list_item_comment_like_cnt_tv"
                 app:layout_constraintBottom_toBottomOf="@id/list_item_comment_like_cnt_tv"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="25dp"
                 android:textSize="10sp"
                 android:text="수정"/>
 
@@ -118,17 +118,15 @@
                 app:layout_constraintStart_toEndOf="@id/list_item_modify_tv"
                 app:layout_constraintTop_toTopOf="@id/list_item_modify_tv"
                 app:layout_constraintBottom_toBottomOf="@id/list_item_modify_tv"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="25dp"/>
 
         <ImageView
             android:id="@+id/comment_bar"
-            android:layout_width="0dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:src="@drawable/comment_bar"
             android:scaleType="fitXY"
-            android:layout_marginEnd="3dp"
             app:layout_constraintStart_toStartOf="@id/list_item_comment_like_cnt_tv"
-            app:layout_constraintEnd_toStartOf="@id/list_item_now_comment_tv"
             app:layout_constraintTop_toTopOf="@id/list_item_now_comment_tv"
             app:layout_constraintBottom_toBottomOf="@id/list_item_now_comment_tv"/>
 
@@ -138,8 +136,8 @@
             android:layout_height="wrap_content"
             android:text="댓글 3개"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/comment_bar"
+            android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"

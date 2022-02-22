@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:background="@drawable/black_arrow"
+                android:background="@drawable/previous_button"
                 app:layout_constraintBottom_toBottomOf="@id/edit_profile_main_title_tv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/edit_profile_main_title_tv" />
@@ -65,7 +65,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/profile_image"
+                android:background="@drawable/ic_basic_profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_profile_main_title_tv"/>

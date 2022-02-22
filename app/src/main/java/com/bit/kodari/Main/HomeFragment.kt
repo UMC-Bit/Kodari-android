@@ -44,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var homePCRVAdapter: HomePCRVAdapter
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
+    private var viewPagerPosition = 0;
     private var checkView = true
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
@@ -93,6 +94,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
             setRepresentPV()
         })
+    }
+    override fun onDestroyView() {
+        checkView = false
+        super.onDestroyView()
     }
 
     fun setRepresentRV() {
@@ -229,6 +234,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             override fun onPageSelected(position: Int) {        //page변경됐을떄
                 super.onPageSelected(position)
                 Log.d("setViewpager", "뷰페이저 크ㅡ기7 : ${portfolioList.size}")
+                viewPagerPosition = position
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
@@ -271,23 +277,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            getDescription().isEnabled = false;
 //
 //        }
+        if(checkView == true) {
+            binding.homeChartLc.getDescription().setEnabled(false);
+            // enable touch gestures
+            binding.homeChartLc.setTouchEnabled(false);
 
+            // enable scaling and dragging
+            binding.homeChartLc.setDragEnabled(false);
+            binding.homeChartLc.setScaleEnabled(false);
 
-        binding.homeChartLc.getDescription().setEnabled(false);
-        // enable touch gestures
-        binding.homeChartLc.setTouchEnabled(false);
+            // if disabled, scaling can be done on x- and y-axis separately
+            binding.homeChartLc.setPinchZoom(false);
 
-        // enable scaling and dragging
-        binding.homeChartLc.setDragEnabled(false);
-        binding.homeChartLc.setScaleEnabled(false);
+            binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
 
-        // if disabled, scaling can be done on x- and y-axis separately
-        binding.homeChartLc.setPinchZoom(false);
-
-        binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
-
-        // set custom chart offsets (automatic offset calculation is hereby disabled)
-        binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
+            // set custom chart offsets (automatic offset calculation is hereby disabled)
+            binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
 
 //        binding.homeChartLc.axisLeft.apply {
 //            setLabelCount(4, true)
@@ -296,17 +301,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            setGridColor(Color.argb(102, 255, 255, 255))
 //            setAxisLineColor(Color.TRANSPARENT)
 //        }
-        binding.homeChartLc.legend.isEnabled = false            //범례 없애기
-        binding.homeChartLc.data = setChartDummyData(profitList)
+            binding.homeChartLc.legend.isEnabled = false            //범례 없애기
+            binding.homeChartLc.data = setChartDummyData(profitList)
 
-        //Y축 셋팅
-        binding.homeChartLc.axisLeft.isEnabled = true;
-        binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
-        binding.homeChartLc.axisLeft.spaceTop = 40f;
-        binding.homeChartLc.axisLeft.spaceBottom = 40f;
-        binding.homeChartLc.axisRight.isEnabled = false;
+            //Y축 셋팅
+            binding.homeChartLc.axisLeft.isEnabled = true;
+            binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
+            binding.homeChartLc.axisLeft.spaceTop = 40f;
+            binding.homeChartLc.axisLeft.spaceBottom = 40f;
+            binding.homeChartLc.axisRight.isEnabled = false;
 
-        //X축 셋팅
+            //X축 셋팅
 //        binding.homeChartLc.xAxis.apply {
 //            valueFormatter = object :ValueFormatter(){
 //                override fun getFormattedValue(value: Float): String {          //-10 이들어옴 Why?
@@ -326,7 +331,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            setAvoidFirstLastClipping(true)
 //            setSpaceMin(10f)
 //        }
-        //X축 String으로 셋팅
+            //X축 String으로 셋팅
 //        binding.homeChartLc.xAxis.valueFormatter = object :ValueFormatter(){
 //            override fun getFormattedValue(value: Float): String {
 //                Log.d("listtest", "${value} , ${value.toInt()}" )
@@ -334,22 +339,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            }
 //        }
 
-        val temp: ArrayList<String> = ArrayList()
-        for (cur in profitList) {
-            temp.add(cur.createAt)
+            val temp: ArrayList<String> = ArrayList()
+            for (cur in profitList) {
+                temp.add(cur.createAt)
+            }
+
+            binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
+
+            //X축 셋팅.
+            binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+            binding.homeChartLc.xAxis.setLabelCount(7, true)
+            //binding.homeChartLc.xAxis.setDrawLabels(true)
+            binding.homeChartLc.xAxis.textColor = Color.BLACK
+            binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
+            binding.homeChartLc.xAxis.isEnabled = true
+            binding.homeChartLc.xAxis.textSize = 7f
+            binding.homeChartLc.invalidate()
         }
-
-        binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
-
-        //X축 셋팅.
-        binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        binding.homeChartLc.xAxis.setLabelCount(7, true)
-        //binding.homeChartLc.xAxis.setDrawLabels(true)
-        binding.homeChartLc.xAxis.textColor = Color.BLACK
-        binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
-        binding.homeChartLc.xAxis.isEnabled = true
-        binding.homeChartLc.xAxis.textSize = 7f
-        binding.homeChartLc.invalidate()
     }
 
     //차트에 더미 데이터 셋팅팅
@@ -416,7 +422,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //포토폴리오 IDX 조회 성공
     override fun getPortIdxSuccess(resp: PortIdxResponse) {
         dismissLoadingDialog()
-//        portIdxList.clear()               데이터 자동 추가가 왜됌?
+//        portIdxLi.st.clear()               데이터 자동 추가가 왜됌?
 //        portfolioList.clear()
         for (idx in resp.result) {
             portfolioList.add(
@@ -468,7 +474,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
@@ -480,11 +485,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     val symbol = userCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        val change = upbitCoinPriceMap.get(symbol+"change")
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
                         sumBuyCoin += amount * priceAvg
                         userCoinList[i].upbitPrice = upbitPrice
-                        userCoinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+                        if (change != null) {
+                            userCoinList[i].change = change
+                        }
+                        userCoinList[i].profit = getProfit(upbitPrice, priceAvg, amount)
+                        userCoinList[i].profitRate = getProfitRate(upbitPrice, priceAvg, amount)
                         currentSum += upbitPrice * amount
                     }
                 }
@@ -492,14 +502,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
+                        val change = upbitCoinPriceMap.get(symbol+"change")
                         representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        if (change != null) {
+                            representCoinList[i].change = change
+                        }
                     }
+                }
+                if(viewPagerPosition < portfolioList.size && currentSum != 0.0
+                    && portfolioList[viewPagerPosition] is MyPortfolioFragment) {
+                    val myPortfolioFragment: MyPortfolioFragment =
+                        portfolioList[viewPagerPosition] as MyPortfolioFragment
+                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)
                 }
                 //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
                 viewModel.getUpdateUserCoin(userCoinList)
                 viewModel.getUpdateRepresentCoin(representCoinList)
                 // 계좌 수익률 보내주기
-                portFolioView.getAccountProfit(currentSum, sumBuyCoin)
             }
         }
     }
@@ -508,18 +527,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
-                var usdtPrice = UsdtService.usdtPrice
-                // 소유 코인
-                for (i in userCoinList.indices) {
-                    val symbol = userCoinList[i].symbol
-                    if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = userCoinList[i].upbitPrice
-                        val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
-                        var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
-                        userCoinList[i].binancePrice = binancePrice
-                        userCoinList[i].kimchi = kimchi
-                    }
-                }
+                var usdtPrice = 1197
                 // 대표 코인
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
@@ -550,6 +558,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     fun getCoinPrice(response: PortfolioResponse) {
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
+        userCoinList.clear()
+        representCoinList.clear()
         // 계좌
         getAccountResult(response)
         // 유저 코인 리스트
@@ -585,10 +595,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // 포트폴리오 API 호출 실패
     override fun portfolioFailure(message: String) {
         showToast("포트폴리오 불러오기 실패")
-    }
-
-    override fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
-        Log.d("getAccountPorfit" , "Home의 AccountProfit")
     }
 
     //일별 데이터 성공
@@ -695,8 +701,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    // 평가순익 구하는 메서드
     fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return (currentPrice * amount) - (priceAvg * amount)
+    }
+    fun getProfitRate(currentPrice: Double, priceAvg: Double, amount: Double): Double {
+        return ((currentPrice * amount) / (priceAvg * amount)) * 100 - 100
     }
 }
