@@ -4,10 +4,7 @@ import android.util.Log
 import com.MyApplicationClass
 import com.bit.kodari.Main.Data.GetProfitResponse
 import com.bit.kodari.Main.Data.GetTradeListResponse
-import com.bit.kodari.Main.RetrofitInterface.HomeRetrofitInterface
-import com.bit.kodari.Main.RetrofitInterface.HomeView
-import com.bit.kodari.Main.RetrofitInterface.MainView
-import com.bit.kodari.Main.RetrofitInterface.MemoView
+import com.bit.kodari.Main.RetrofitInterface.*
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
 import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
@@ -21,6 +18,7 @@ class HomeService {
     private lateinit var memoView: MemoView
     private lateinit var homeView: HomeView
     private lateinit var mainView: MainView
+    private lateinit var deleteTradeView :DeleteTradeView
 
     fun setMemoView(memoView: MemoView) {
         this.memoView = memoView
@@ -32,6 +30,10 @@ class HomeService {
 
     fun setMainView(mainView: MainView){
         this.mainView = mainView
+    }
+
+    fun setDeleteTradeView(deleteTradeView: DeleteTradeView){
+        this.deleteTradeView = deleteTradeView
     }
 
     //메모에 거래 내역 가져오기
@@ -70,11 +72,11 @@ class HomeService {
                 when(response.body()!!.code){
                   1000 -> {
                       Log.d("deleteTrade" , "${response.body()!!}")
-                      memoView.deleteTradeSuccess(response.body()!!)
+                      deleteTradeView.deleteTradeSuccess(response.body()!!)
                   }
                   else -> {
                       Log.d("deleteTrade" , "${response.body()!!}")
-                      memoView.deleteTradeFailure(response.body()!!.message)
+                      deleteTradeView.deleteTradeFailure(response.body()!!.message)
                   }
                 }
 
@@ -82,7 +84,7 @@ class HomeService {
 
             override fun onFailure(call: Call<DeleteTradeResponse>, t: Throwable) {
                 Log.d("deleteTrade" , "${t}")
-                memoView.deleteTradeFailure("${t}")
+                deleteTradeView.deleteTradeFailure("${t}")
             }
         })
     }

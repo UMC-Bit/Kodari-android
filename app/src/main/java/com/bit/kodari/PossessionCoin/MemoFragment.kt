@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Debate.DeleteDialog
+import com.bit.kodari.Main.Account.DeleteTradeDialog
 import com.bit.kodari.Main.Data.GetTradeListResponse
 import com.bit.kodari.Main.Data.GetTradeListResult
 import com.bit.kodari.Main.RetrofitInterface.MemoView
@@ -33,8 +35,16 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
         val memoRVAdapter = MemoRVAdapter(memoList)
         memoRVAdapter.setMyItemClickListener(object : MemoRVAdapter.MemoClickListener{
             override fun onDeleteClick(item: GetTradeListResult) {
-                callDeleteTrade(item.tradeIdx)      //클릭시 삭제 호출
-                Log.d("tradeIdx" , "${item.tradeIdx}")
+                //삭제 다이얼로그 띄우기
+                val dialog = DeleteTradeDialog().apply {
+                    arguments = Bundle().apply {
+                        putInt("tradeIdx", item.tradeIdx)
+                    }
+                }
+                dialog.show(requireActivity().supportFragmentManager, "DeleteTradeDialog")
+
+//                callDeleteTrade(item.tradeIdx)      //클릭시 삭제 호출
+//                Log.d("tradeIdx" , "${item.tradeIdx}")
             }
         })
         binding.memoDialogRV.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
@@ -75,15 +85,15 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
         showToast(message)
     }
 
-    //거래내역 삭제 성공했을때
-    override fun deleteTradeSuccess(response: DeleteTradeResponse) {
-        dismissLoadingDialog()
-        callTradeList(coinIdx)      //삭제 후 재조회
-    }
-
-    //거래내역 삭제 실패했을떄
-    override fun deleteTradeFailure(message: String) {
-        dismissLoadingDialog()
-        showToast(message)
-    }
+//    //거래내역 삭제 성공했을때
+//    override fun deleteTradeSuccess(response: DeleteTradeResponse) {
+//        dismissLoadingDialog()
+//        callTradeList(coinIdx)      //삭제 후 재조회
+//    }
+//
+//    //거래내역 삭제 실패했을떄
+//    override fun deleteTradeFailure(message: String) {
+//        dismissLoadingDialog()
+//        showToast(message)
+//    }
 }

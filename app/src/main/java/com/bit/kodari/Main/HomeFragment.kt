@@ -513,7 +513,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     && portfolioList[viewPagerPosition] is MyPortfolioFragment) {
                     val myPortfolioFragment: MyPortfolioFragment =
                         portfolioList[viewPagerPosition] as MyPortfolioFragment
-                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)
+                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)    //업비트 시세 받아오면 함수실행해서 총자산갱신
                 }
                 //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
                 viewModel.getUpdateUserCoin(userCoinList)

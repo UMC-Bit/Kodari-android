@@ -136,6 +136,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                         putString("imgUrl", imgUrl)
                         putString("nickName", binding.mineNicknameTv.text.toString())
                         putString("content", binding.mineContentTv.text.toString())
+                        putInt("flag",flag)
                     }
                 }).addToBackStack(null).commitAllowingStateLoss()
         }
