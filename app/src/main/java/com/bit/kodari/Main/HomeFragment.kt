@@ -265,103 +265,71 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
     fun setChartDummy(profitList: ArrayList<GetProfitResult>) {
-//        binding.homeChartLc.apply {
-//            setDrawGridBackground(false);
-//            setDrawBorders(false);
-//            getLegend().setEnabled(false);
-//            setAutoScaleMinMaxEnabled(true);
-//            setTouchEnabled(true);
-//            setDragEnabled(true);
-//            setScaleEnabled(true);
-//            setPinchZoom(true);
-//            setDoubleTapToZoomEnabled(false);
-//            setBackgroundColor(Color.BLUE);         //수정함
-//            getAxisRight().isEnabled = false;
-//            getDescription().isEnabled = false;
-//
-//        }
         if(checkView == true) {
             if(profitList.size == 0) {
                 binding.homeChartLc.clear()
                 binding.homeChartLc.setBackgroundColor(Color.rgb(255, 255, 255))
                 return
             }
-            binding.homeChartLc.getDescription().setEnabled(false);
-            // enable touch gestures
-            binding.homeChartLc.setTouchEnabled(false);
-
-            // enable scaling and dragging
-            binding.homeChartLc.setDragEnabled(false);
-            binding.homeChartLc.setScaleEnabled(false);
-
-            // if disabled, scaling can be done on x- and y-axis separately
-            binding.homeChartLc.setPinchZoom(false);
-
-            binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
-
-            // set custom chart offsets (automatic offset calculation is hereby disabled)
-            binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
-
-//        binding.homeChartLc.axisLeft.apply {
-//            setLabelCount(4, true)
-//            setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
-//            setTextColor(Color.BLACK)
-//            setGridColor(Color.argb(102, 255, 255, 255))
-//            setAxisLineColor(Color.TRANSPARENT)
-//        }
-            binding.homeChartLc.legend.isEnabled = false            //범례 없애기
-            binding.homeChartLc.data = setChartDummyData(profitList)
-
-            //Y축 셋팅
-            binding.homeChartLc.axisLeft.isEnabled = true;
-            binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
-            binding.homeChartLc.axisLeft.spaceTop = 40f;
-            binding.homeChartLc.axisLeft.spaceBottom = 40f;
-            binding.homeChartLc.axisRight.isEnabled = false;
-
-            //X축 셋팅
-//        binding.homeChartLc.xAxis.apply {
-//            valueFormatter = object :ValueFormatter(){
-//                override fun getFormattedValue(value: Float): String {          //-10 이들어옴 Why?
-//                    Log.d("listtest" , "${value}")
-//                    //Log.d("list", profitList[value.toInt()].createAt)
-//                    return profitList[value.toInt()].createAt
-//                }
-//            }
-//            setDrawLimitLinesBehindData(true)
-//            setPosition(XAxis.XAxisPosition.BOTTOM)
-//            setTextColor(Color.WHITE)
-//            disableGridDashedLine()
-//            setDrawGridLines(false)
-//            setGridColor(Color.argb(204, 255, 255, 255))
-//            setAxisLineColor(Color.TRANSPARENT)
-//            setLabelCount(4)
-//            setAvoidFirstLastClipping(true)
-//            setSpaceMin(10f)
-//        }
-            //X축 String으로 셋팅
-//        binding.homeChartLc.xAxis.valueFormatter = object :ValueFormatter(){
-//            override fun getFormattedValue(value: Float): String {
-//                Log.d("listtest", "${value} , ${value.toInt()}" )
-//                if(value >=0) return profitList[value.toInt()].createAt
-//            }
-//        }
 
             val temp: ArrayList<String> = ArrayList()
             for (cur in profitList) {
                 temp.add(cur.createAt)
             }
 
+            binding.homeChartLc.data = setChartDummyData(profitList)        //데이터추가
+            binding.homeChartLc.xAxis.setDrawGridLines(false)
+            binding.homeChartLc.axisLeft.setDrawGridLines(false)
+            binding.homeChartLc.xAxis.axisLineColor = resources.getColor(R.color.chartColor)//top line
+            binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartColor)
+            binding.homeChartLc.xAxis.position =  XAxis.XAxisPosition.BOTTOM
+            binding.homeChartLc.axisLeft.axisLineColor = resources.getColor(R.color.chartColor)//left line
+            binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartColor)
+            binding.homeChartLc.axisRight.isEnabled = false
+            binding.homeChartLc.setDrawBorders(false)
+            binding.homeChartLc.setDrawGridBackground(false)
+            binding.homeChartLc.description = null
+            binding.homeChartLc.isAutoScaleMinMaxEnabled = false
+            binding.homeChartLc.setBackgroundColor(Color.rgb(51, 102, 204))
+            binding.homeChartLc.legend.isEnabled = false
             binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
-
-            //X축 셋팅.
-            binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-            binding.homeChartLc.xAxis.setLabelCount(7, true)
-            //binding.homeChartLc.xAxis.setDrawLabels(true)
-            binding.homeChartLc.xAxis.textColor = Color.BLACK
-            binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
-            binding.homeChartLc.xAxis.isEnabled = true
-            binding.homeChartLc.xAxis.textSize = 7f
+//
+//            binding.homeChartLc.getDescription().setEnabled(false);
+//            // enable touch gestures
+//            binding.homeChartLc.setTouchEnabled(false);
+//
+//            // enable scaling and dragging
+//            binding.homeChartLc.setDragEnabled(false);
+//            binding.homeChartLc.setScaleEnabled(false);
+//
+//            // if disabled, scaling can be done on x- and y-axis separately
+//            binding.homeChartLc.setPinchZoom(false);
+//
+//            binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
+//
+//            // set custom chart offsets (automatic offset calculation is hereby disabled)
+//            binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
+//
+//            binding.homeChartLc.legend.isEnabled = false            //범례 없애기
+//
+//
+//            //Y축 셋팅
+//            binding.homeChartLc.axisLeft.isEnabled = true;
+//            binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
+//            binding.homeChartLc.axisLeft.spaceTop = 40f;
+//            binding.homeChartLc.axisLeft.spaceBottom = 40f;
+//            binding.homeChartLc.axisRight.isEnabled = false;
+//
+//
+//
+//            //X축 셋팅.
+//            binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+//            binding.homeChartLc.xAxis.setLabelCount(7, true)
+//            //binding.homeChartLc.xAxis.setDrawLabels(true)
+//            binding.homeChartLc.xAxis.textColor = Color.BLACK
+//            binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
+//            binding.homeChartLc.xAxis.isEnabled = true
+//            binding.homeChartLc.xAxis.textSize = 7f
             binding.homeChartLc.invalidate()
         }
     }
@@ -402,28 +370,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         val set1 = LineDataSet(values, "")
-        set1.setColor(Color.WHITE)
-        set1.setCircleColor(Color.BLACK)
-        set1.setLineWidth(3f)
-        set1.setDrawCircles(false)
-        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-        set1.setValueTextSize(9f)
-        set1.setDrawValues(false)
-        set1.setDrawFilled(true)
-        set1.setFormLineWidth(1f)
-        set1.setFormSize(15f)
+//        set1.setColor(Color.WHITE)
+//        set1.setCircleColor(Color.BLACK)
+//        set1.setLineWidth(3f)
+//        set1.setDrawCircles(false)
+//        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER)
 //
-//        val set1 = LineDataSet(values, "DataSet 1")
-//        set1.setFillAlpha(110);
-//        set1.setFillColor(Color.RED);
-//        set1.lineWidth = 1.75f
-//        set1.circleRadius = 5f
-//        set1.circleHoleRadius = 2.5f
-//        set1.color = Color.WHITE
-//        set1.setCircleColor(Color.WHITE)
-//        set1.highLightColor = Color.WHITE
+//        set1.setValueTextSize(9f)
 //        set1.setDrawValues(false)
+//        set1.setDrawFilled(true)
+//        set1.setFormLineWidth(1f)
+//        set1.setFormSize(15f)
+
+        //수정
+        set1.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set1.setDrawFilled(true)
+        set1.setDrawHighlightIndicators(true)
+        set1.lineWidth = 1.95f
+        set1.circleRadius = 5f
+        set1.color = Color.parseColor("#EFEFFF")
+        set1.setDrawCircleHole(false)
+        set1.setDrawCircles(false)
+        set1.highLightColor = Color.WHITE
+        set1.setDrawValues(false)
 
         return LineData(set1)
     }
