@@ -89,7 +89,9 @@ CoinView{
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 삭제 다이얼로그가 띄워짐
             val isClick = PossessionCoinManagementAdapter.isClick
+            Log.d("PossessiongCoinDelete", "실행 ,  체크 : ${isClick}")
             val position = PossessionCoinManagementAdapter.clickPosition
+            Log.d("PossessiongCoinDelete", "실행 , ${position} , 체크 : ${isClick}")
             if (isClick && position != -1) {
                 val deleteDialogView = LayoutInflater.from(context as MainActivity)
                     .inflate(R.layout.fragment_possession_coin_delete_dialog, null)

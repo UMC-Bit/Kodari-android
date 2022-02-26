@@ -1,6 +1,7 @@
 package com.bit.kodari.Main.Adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
                 binding.itemRepresentativeCoinManagementCoinListSelectOffIV.visibility = View.VISIBLE
                 binding.itemRepresentativeCoinManagementCoinListSelectOnIV.visibility = View.GONE
             }
+            Log.d("대표코인", "갱신")
 
         }
     }

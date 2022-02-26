@@ -17,6 +17,7 @@ import com.bit.kodari.databinding.FragmentSignupIdBinding
 
 class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdBinding::inflate), EmailView {
 
+
     override fun initAfterBinding() {
         setListener()
     }

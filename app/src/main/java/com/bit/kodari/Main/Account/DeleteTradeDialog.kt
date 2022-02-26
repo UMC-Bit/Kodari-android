@@ -60,10 +60,10 @@ class DeleteTradeDialog: DialogFragment() ,DeleteTradeView{
     override fun deleteTradeSuccess(response: DeleteTradeResponse) {
         when(response.code){
             1000 -> {
+                Log.d("DeleteTrade" , "${response.result}")
                 Toast.makeText(context,"${response.result}",Toast.LENGTH_SHORT).show()
                 dismiss()
-//                requireActivity().supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_container_fl , DebateMainFragment()).commitAllowingStateLoss()
+                //dismiss이후 재 조회해야함.
 
             }
             else -> {

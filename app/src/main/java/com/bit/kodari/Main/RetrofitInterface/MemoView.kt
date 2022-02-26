@@ -6,4 +6,5 @@ import com.bit.kodari.PossessionCoin.RetrofitData.DeleteTradeResponse
 interface MemoView {        //거래내역 출력하는 뷰
     fun getTradeListSuccess(response:GetTradeListResponse)
     fun getTradeListFailure(message:String)
+
 }

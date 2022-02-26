@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.bit.kodari.R
 import com.bit.kodari.Util.Inflate
+import com.bit.kodari.databinding.FragmentHomeBinding
 
 
 abstract class BaseFragment<VB : ViewBinding>(
@@ -27,6 +31,8 @@ abstract class BaseFragment<VB : ViewBinding>(
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
         //binding = inflate.invoke(inflater,container,false)
+        //바인딩 별로 구분할 수 있지 않을까 ?
+
         return binding.root
     }
 
@@ -38,6 +44,8 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+
     }
 
     protected abstract fun initAfterBinding()

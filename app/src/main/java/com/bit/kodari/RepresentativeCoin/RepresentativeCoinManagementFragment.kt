@@ -139,8 +139,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         coinList = response.result
         //널값 넘어오면서 오류
         //Log.d("psnSuccesscoinSize", "${coinList.size}")
-        // 코인 시세 받아오기
-        getCoinPrice()
+        // 코인 시세 받아오기 단 , 대표코인이 없을 경우 실행하지 않음.
+        if(coinList.size != 0){
+            getCoinPrice()
+        }
         setRecyclerView()
     }
 
@@ -158,6 +160,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
             getRptCoins()           //삭제 완료됐으면 재호출
             deleteRcoinList.clear() //삭제 리스트 초기화
             Log.d("deleteRCoin", "삭제 리스트 추가 : ${deleteRcoinList.size}")
+            cnt = 0;
         }
 
     }
@@ -226,5 +229,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     }
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cnt = 0
     }
 }

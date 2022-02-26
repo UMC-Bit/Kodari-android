@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeInfo
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddTradeResponse
@@ -64,7 +65,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
                 timePicker.show()
             }, year, month, day)
 
-        binding.possessionCoinModifyDateInputET.setOnClickListener { v ->
+        binding.possessionCoinModifyDateCV.setOnClickListener { v ->
             datePicker.show()
         }
     }

@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Profile.RetrofitData.GetMyCommentResult
+import com.bit.kodari.R
 import com.bit.kodari.databinding.ListItemMyCommentBinding
+import com.bumptech.glide.Glide
 
 class MyCommentRVAdapter(var postList: ArrayList<GetMyCommentResult>) : RecyclerView.Adapter<MyCommentRVAdapter.MyViewHolder>() {
 
@@ -19,6 +21,11 @@ class MyCommentRVAdapter(var postList: ArrayList<GetMyCommentResult>) : Recycler
             binding.listItemMyCommentUpCntTv.text = item.postList[0].like.toString()
             binding.listItemMyCommentDownCntTv.text = item.postList[0].dislike.toString()
             binding.listItemMyCommentContentTv.text = item.postList[0].content
+            Glide.with(binding.listItemMyCommentImageIv)
+                .load(item.postList[0].profileImgUrl)
+                .error(R.drawable.ic_basic_profile)
+                .placeholder(R.drawable.ic_basic_profile)
+                .into(binding.listItemMyCommentImageIv)
         }
 
     }
