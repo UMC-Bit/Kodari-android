@@ -80,7 +80,7 @@ class UsdtService {
                     TSUD_USDT = price
                 }
                 usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
-                coinView.usdtPriceSuccess(usdtPrice)
+                //coinView.usdtPriceSuccess(usdtPrice)
                 Log.d("결과", "성공: USDT-TUSD: ${usdtPrice -10}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")

@@ -81,10 +81,6 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         TODO("Not yet implemented")
     }
 
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        this.usdtPrice = usdtPrice
-    }
-
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
     }
