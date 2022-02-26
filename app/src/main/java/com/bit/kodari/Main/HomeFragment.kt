@@ -211,14 +211,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
-        /*//임시 로그아웃 버튼
-        binding.logout.setOnClickListener {
-            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
-            saveAutoLogin(false)
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
-        }*/
-
     }
 
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
@@ -394,11 +386,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 Log.d("List", "${cur.toFloat()} , ${tempVal}")
             }
 
-        } else if (binding.homeYieldOnTv.visibility == View.VISIBLE) {
+        } else if (binding.homeYieldOnTv.visibility == View.VISIBLE) {  //수익률
             for (cur in 0 until profitList.size) { //until이 마지막 전까지
                 //배열에 하나씩 꺼내보기
                 val temp = profitList[cur]
                 val tempVal = temp.profitRate.toFloat()          //
+                Log.d("수익률", "${tempVal}")
                 values.add(
                     Entry(
                         cur.toFloat(),

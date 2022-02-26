@@ -1,5 +1,6 @@
 package com.bit.kodari.Main.Account
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -96,4 +97,13 @@ class DeleteTradeDialog: DialogFragment() ,DeleteTradeView{
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        val parentFragment = parentFragment
+        if (parentFragment is DialogInterface.OnDismissListener) {
+            parentFragment.onDismiss(dialog);
+        }
+    }
+
 }
