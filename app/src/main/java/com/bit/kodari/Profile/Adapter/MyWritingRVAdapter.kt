@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Profile.RetrofitData.GetMyPostResult
+import com.bit.kodari.R
 import com.bit.kodari.databinding.ListItemMyWritingBinding
+import com.bumptech.glide.Glide
 
 class MyWritingRVAdapter(var postList:ArrayList<GetMyPostResult>) : RecyclerView.Adapter<MyWritingRVAdapter.MyViewHolder>() {
 
@@ -19,6 +21,11 @@ class MyWritingRVAdapter(var postList:ArrayList<GetMyPostResult>) : RecyclerView
             binding.listItemMyWritingContentTv.text = item.content
             //binding.listItemMyWritingImageIv.setImageBitmap(item.profileImgUrl)
             //Url로 프로필 그리기
+            Glide.with(binding.listItemMyWritingImageIv)
+                .load(item.profileImgUrl)
+                .error(R.drawable.ic_basic_profile)
+                .placeholder(R.drawable.ic_basic_profile)
+                .into(binding.listItemMyWritingImageIv)
 
         }
     }

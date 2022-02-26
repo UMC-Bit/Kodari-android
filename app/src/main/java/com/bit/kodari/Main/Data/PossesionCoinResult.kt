@@ -18,4 +18,5 @@ data class PossesionCoinResult(
     @SerializedName("coinIdx") val coinIdx: Int,
     @SerializedName("twitter") val twitter:String,
     @SerializedName("change") var change:Double,
+    var isChecked : Boolean
     )

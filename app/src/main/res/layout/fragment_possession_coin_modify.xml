@@ -398,20 +398,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:id="@+id/possession_coin_modify_date_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:textColorHint="#000000"
                         android:textStyle="bold"
                         android:hint="일자"
+                        android:gravity="center_vertical"
                         android:drawableRight="@drawable/yellow_next_btn"
                         android:textSize="15sp"
-                        android:inputType="number"
                         android:background="#80D3D3D3"
                         android:paddingLeft="17dp"
                         android:paddingRight="17dp">
-                    </com.google.android.material.textfield.TextInputEditText>
+                    </TextView>
 
                 </LinearLayout>
 
@@ -442,7 +442,6 @@
                         android:textColorHint="#000000"
                         android:textStyle="bold"
                         android:hint="수수료"
-                        android:drawableRight="@drawable/yellow_next_btn"
                         android:textSize="15sp"
                         android:inputType="number"
                         android:background="#80D3D3D3"

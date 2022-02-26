@@ -17,7 +17,9 @@ import com.bit.kodari.databinding.FragmentLoginIdBinding
 
 class LoginIdFragment : BaseFragment<FragmentLoginIdBinding>(FragmentLoginIdBinding::inflate) {
 
+
     override fun initAfterBinding() {
+
         setListener()
     }
 

@@ -1,13 +1,18 @@
 package com.bit.kodari.PossessionCoin
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Debate.DeleteDialog
+import com.bit.kodari.Main.Account.DeleteTradeDialog
 import com.bit.kodari.Main.Data.GetTradeListResponse
 import com.bit.kodari.Main.Data.GetTradeListResult
 import com.bit.kodari.Main.RetrofitInterface.MemoView
@@ -22,21 +27,38 @@ import com.bit.kodari.databinding.FragmentMemoBinding
 class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(FragmentMemoBinding::inflate) , MemoView {
 
     //더미데이터로 사용할 리스트
-    var memoList = ArrayList<GetTradeListResult>()
+    private var memoList = ArrayList<GetTradeListResult>()
+    private lateinit var mOnDismissListener : OnDismissLister
 
+    interface OnDismissLister {
+        fun onChangedMemo()
+    }
     override fun initAfterBinding() {
         //더미데이터 메모 하나만 넣어두기.
         callTradeList(coinIdx)
     }
+
     //여기서 해당 소유코인에 대한 값들 불러와야함.
     fun setRecyclerView(){
         val memoRVAdapter = MemoRVAdapter(memoList)
         memoRVAdapter.setMyItemClickListener(object : MemoRVAdapter.MemoClickListener{
             override fun onDeleteClick(item: GetTradeListResult) {
-                callDeleteTrade(item.tradeIdx)      //클릭시 삭제 호출
-                Log.d("tradeIdx" , "${item.tradeIdx}")
+                //삭제 다이얼로그 띄우기
+                val dialog = DeleteTradeDialog().apply {
+                    arguments = Bundle().apply {
+                        putInt("tradeIdx", item.tradeIdx)
+                    }
+                }
+
+                dialog.show(requireActivity().supportFragmentManager, "DeleteTradeDialog")
+                requireActivity().supportFragmentManager.executePendingTransactions()
+                dialog.dialog!!.setOnDismissListener {
+                   // callTradeList(coinIdx)
+                    Log.d("dismiss", "${coinIdx} 와 실행")
+                }
             }
         })
+
         binding.memoDialogRV.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL,false)
         binding.memoDialogRV.adapter = memoRVAdapter
     }
@@ -75,15 +97,5 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
         showToast(message)
     }
 
-    //거래내역 삭제 성공했을때
-    override fun deleteTradeSuccess(response: DeleteTradeResponse) {
-        dismissLoadingDialog()
-        callTradeList(coinIdx)      //삭제 후 재조회
-    }
 
-    //거래내역 삭제 실패했을떄
-    override fun deleteTradeFailure(message: String) {
-        dismissLoadingDialog()
-        showToast(message)
-    }
 }

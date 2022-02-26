@@ -24,6 +24,8 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
     private lateinit var pw: String
     private lateinit var nickName: String
     private var logInService = LogInService()
+
+
     override fun initAfterBinding() {
         setListener()
     }

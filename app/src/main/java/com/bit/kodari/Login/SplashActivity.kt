@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bit.kodari.Config.BaseActivity
 import com.bit.kodari.Intro.IntroActivity
 import com.bit.kodari.Login.Retrofit.LogInView
@@ -27,6 +32,12 @@ import com.bit.kodari.databinding.ActivitySplashBinding
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) ,LogInView {
     var anim_fade_in_1: Animation? = null
     var anim_fade_in_2: Animation? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window!!.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initAfterBinding() {
         var logo : ImageView = findViewById(R.id.splash_logo_iv)

@@ -65,6 +65,7 @@ class AccountService {
             })
     }
 
+    //포토폴리오 삭제
     fun deletePort(portIdx:Int){
         val accountService = getRetorfit().create(AccountRetrofitInterface::class.java)
         accountService.deletePort(getJwt()!!, portIdx).enqueue(object : Callback<DeletePortResponse>{

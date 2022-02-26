@@ -39,7 +39,7 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
             val dialog = ModifyInfoDialog(accoutIdx , portIdx).apply {
                 arguments = Bundle().apply {
                     putString("accountName", binding.myPortfolioAccountNameTv.text.toString())
-                    putString("myAsset", binding.myPortfolioAssetTv.text.toString() + profit + "원")
+                    putString("myAsset", "${formatPrice(profit.toDouble())}")
                 }
             }
             dialog.show(requireActivity().supportFragmentManager,"ModifyDialog")

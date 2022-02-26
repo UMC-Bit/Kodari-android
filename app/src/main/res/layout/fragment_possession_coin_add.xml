@@ -314,22 +314,21 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:id="@+id/possession_coin_add_date_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="#80D3D3D3"
                         android:drawableRight="@drawable/yellow_next_btn"
                         android:hint="일자"
-                        android:inputType="text"
                         android:paddingLeft="17dp"
                         android:paddingRight="17dp"
                         android:textColorHint="#000000"
                         android:textSize="15sp"
                         android:textStyle="bold"
+                        android:gravity="center_vertical"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                    </com.google.android.material.textfield.TextInputEditText>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 </LinearLayout>
 
@@ -358,7 +357,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="#80D3D3D3"
-                        android:drawableRight="@drawable/yellow_next_btn"
                         android:hint="수수료"
                         android:inputType="number"
                         android:paddingLeft="17dp"

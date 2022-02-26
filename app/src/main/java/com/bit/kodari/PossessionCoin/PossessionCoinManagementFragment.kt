@@ -2,7 +2,11 @@ package com.bit.kodari.PossessionCoin
 
 //import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -86,7 +90,9 @@ CoinView{
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 삭제 다이얼로그가 띄워짐
             val isClick = PossessionCoinManagementAdapter.isClick
+            Log.d("PossessiongCoinDelete", "실행 ,  체크 : ${isClick}")
             val position = PossessionCoinManagementAdapter.clickPosition
+            Log.d("PossessiongCoinDelete", "실행 , ${position} , 체크 : ${isClick}")
             if (isClick && position != -1) {
                 val deleteDialogView = LayoutInflater.from(context as MainActivity)
                     .inflate(R.layout.fragment_possession_coin_delete_dialog, null)
@@ -119,7 +125,12 @@ CoinView{
 
         val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
         val cancelButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
+        val deleteAskTextView = deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_ask_TV)
 
+        //글자 색 바꾸기
+        val builder = SpannableStringBuilder(deleteAskTextView.text)
+        builder.setSpan(ForegroundColorSpan(Color.RED) , 7,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        deleteAskTextView.setText(builder)
         // 여기에 어댑터와 연결해서 삭제 기능 불러오기
         deleteConfirmButton.setOnClickListener {
                 // 소유코인 삭제 API 호출 ->

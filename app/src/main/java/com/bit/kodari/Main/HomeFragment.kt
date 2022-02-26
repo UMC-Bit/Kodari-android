@@ -71,12 +71,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     var binanceWebSocket: BinanceWebSocketListener? = null
     private lateinit var portFolioView: PortfolioView
 
+
     fun setPortFolioView(portFolioView: PortfolioView) {
         this.portFolioView = portFolioView
     }
 
+
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
+
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
@@ -86,6 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         usdService.setUsdView(this)
         usdService.getUsdExchangeRate()
 //        setChartDummy()          포폴 조회 or 버튼 누를떄마다 차트 생성하게해야함.
+
         setListener()
 
         Log.d(
@@ -104,7 +108,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     override fun onDestroyView() {
         checkView = false
-        super.onDestroyView()
+        Log.d("onDestroyView Home", "실행")
+        requireActivity().window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        requireActivity().window!!.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.white)
+        super.onDestroyView()       //부모의 onDestryView 호출
     }
 
     fun setRepresentRV() {
@@ -208,50 +215,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.setCurrentItem(current + 1, false)
         }
 
-        /*//임시 로그아웃 버튼
-        binding.logout.setOnClickListener {
-            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
-            saveAutoLogin(false)
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
-        }*/
-
     }
 
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
-        Log.d("setViewpager", "뷰페이저 크ㅡ기 : ${portfolioList.size}")
         homeVPAdapter = HomeVPAdapter(this, portfolioList)
-        Log.d("setViewpager", "뷰페이저 크ㅡ기2 : ${portfolioList.size}")      //여기서 2가됨
-        //homeVPAdapter.addFragment(MyPortfolioFragment())
         binding.homeViewpagerVp.adapter = homeVPAdapter
-        Log.d("setViewpager", "뷰페이저 크ㅡ기3 : ${portfolioList.size}")
         binding.homeViewpagerVp.offscreenPageLimit = 3
-        Log.d("setViewpager", "뷰페이저 크ㅡ기4 : ${portfolioList.size}")
 
-        //homeVPAdapter.addFragment(MyPortfolioFragment())          //왜 처음 셋팅떄는 되는데 그 뒤론 안될까 ?
 
         binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
-        Log.d("setViewpager", "뷰페이저 크ㅡ기5 : ${portfolioList.size}")
         binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
-        Log.d("setViewpager", "뷰페이저 크ㅡ기6 : ${portfolioList.size}")
+        //뷰페이저 화살표 설정 리스너.
         binding.homeViewpagerVp.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {        //page변경됐을떄
                 super.onPageSelected(position)
-                Log.d("setViewpager", "뷰페이저 크ㅡ기7 : ${portfolioList.size}")
                 viewPagerPosition = position
                 when (position) {
                     0 -> {      //시작
                         binding.homeVpPreviewBtn.visibility = View.GONE
+                        binding.homeVpNextBtn.visibility = View.VISIBLE
                         if (portIdxList.size != 0) {
                             callPortfolioInfo(portIdxList[position])
-                            Log.d("callIdx", portfolioList.size.toString())
                         }
+                        Log.d("HomeViewPager" , "HomeViewPagerPosition : ${position}")
                     }
                     portfolioList.size - 1 -> {     //마지막
                         binding.homeVpNextBtn.visibility = View.GONE
+                        binding.homeVpPreviewBtn.visibility = View.VISIBLE
+                        Log.d("HomeViewPager" , "HomeViewPagerPosition : ${position}")
+                        userCoinList.clear()
+                        representCoinList.clear()
+                        setRepresentRV()
+                        setRepresentPV()
+                        setChartDummy(profitList = ArrayList())
+
                     }
                     else -> {
                         Log.d("setViewpager", "else position : ${position}")
@@ -285,6 +285,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //
 //        }
         if(checkView == true) {
+            if(profitList.size == 0) {
+                binding.homeChartLc.clear()
+                binding.homeChartLc.setBackgroundColor(Color.rgb(255, 255, 255))
+                return
+            }
             binding.homeChartLc.getDescription().setEnabled(false);
             // enable touch gestures
             binding.homeChartLc.setTouchEnabled(false);
@@ -385,11 +390,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 Log.d("List", "${cur.toFloat()} , ${tempVal}")
             }
 
-        } else if (binding.homeYieldOnTv.visibility == View.VISIBLE) {
+        } else if (binding.homeYieldOnTv.visibility == View.VISIBLE) {  //수익률
             for (cur in 0 until profitList.size) { //until이 마지막 전까지
                 //배열에 하나씩 꺼내보기
                 val temp = profitList[cur]
                 val tempVal = temp.profitRate.toFloat()          //
+                Log.d("수익률", "${tempVal}")
                 values.add(
                     Entry(
                         cur.toFloat(),
@@ -520,7 +526,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     && portfolioList[viewPagerPosition] is MyPortfolioFragment) {
                     val myPortfolioFragment: MyPortfolioFragment =
                         portfolioList[viewPagerPosition] as MyPortfolioFragment
-                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)
+                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)    //업비트 시세 받아오면 함수실행해서 총자산갱신
                 }
                 //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
                 viewModel.getUpdateUserCoin(userCoinList)
@@ -587,11 +593,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binanceWebSocket?.start()
     }
 
-    // 뷰 바인딩 해주기
-    fun setPortViewBinding() {
-        // 대표코인, 소유코인 뷰 바인딩
-
-    }
 
     // 포트폴리오 API 호출 실패
     override fun portfolioFailure(message: String) {
@@ -669,6 +670,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onResume() {
         super.onResume()
         checkView = true
+        //상태바 색상 변경하기
+        Log.d("onCreateView Home", "실행")
+        requireActivity().window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        requireActivity().window!!.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.main_color)
     }
 
     override fun onDestroy() {
