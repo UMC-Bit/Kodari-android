@@ -11,4 +11,5 @@
     <color name="gray">#EDEDED</color>
     <color name="main_color">#FDCC68</color>
     <color name="transparent">#00000000</color>
+    <color name="scrollView_color">#FFE5B0</color>
 </resources>
