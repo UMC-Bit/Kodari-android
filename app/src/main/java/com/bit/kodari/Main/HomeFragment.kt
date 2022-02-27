@@ -3,12 +3,9 @@ package com.bit.kodari.Main
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
-import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeVPAdapter
@@ -36,6 +32,10 @@ import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.USD.UsdService
+import com.bit.kodari.Util.Coin.USD.UsdView
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -44,7 +44,10 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
-    CoinView, HomeView {
+    CoinView, HomeView, UsdView {
+    companion object{
+        var usdtPrice = 1180
+    }
     private lateinit var homeVPAdapter: HomeVPAdapter
     private lateinit var homeRCRVAdapter: HomeRCRVAdapter
     private lateinit var homePCRVAdapter: HomePCRVAdapter
@@ -86,6 +89,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         portFolioService.setPortfolioView(this)
         showLoadingDialog(requireContext())
         portFolioService.getPortfolioList(getUserIdx())
+        val usdService = UsdService()
+        usdService.setUsdView(this)
+        usdService.getUsdExchangeRate()
+//        setChartDummy()          포폴 조회 or 버튼 누를떄마다 차트 생성하게해야함.
 
         setListener()
 
@@ -508,7 +515,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
-                var usdtPrice = 1197
                 // 대표 코인
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
@@ -525,11 +531,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     }
-
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
     }
@@ -686,5 +687,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
     fun getProfitRate(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return ((currentPrice * amount) / (priceAvg * amount)) * 100 - 100
+    }
+
+    override fun usdExchangeSuccess(exchangeRate: Double) {
+        Log.d("환율 조회성공:", "usdtPrice: ${exchangeRate}")
+        usdtPrice = exchangeRate.toInt()
     }
 }

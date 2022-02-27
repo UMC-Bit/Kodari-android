@@ -15,14 +15,16 @@ import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
 import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
-import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
 class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
     CoinView {
+    var usdtPrice = HomeFragment.usdtPrice
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
@@ -207,7 +209,6 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null) {
-            var usdtPrice = UsdtService.usdtPrice
             requireActivity().runOnUiThread() {
                 // 대표 코인
                 for (i in coinList.indices) {
@@ -223,9 +224,6 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 viewModel.getUpdateRepresentCoin(coinList)
             }
         }
-    }
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        TODO("Not yet implemented")
     }
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")

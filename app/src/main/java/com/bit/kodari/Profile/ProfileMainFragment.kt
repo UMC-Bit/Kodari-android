@@ -1,6 +1,7 @@
 package com.bit.kodari.Profile
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -75,6 +76,10 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         binding.profileMainBtn5Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, EditPwFragment()).commitAllowingStateLoss()
+        }
+        binding.profileMainBtn6Ib.setOnClickListener { // 플러스 친구
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://plus.kakao.com/home/@kodari"))
+            startActivity(intent)
         }
 
         binding.profileMainLogoutBtn.setOnClickListener {

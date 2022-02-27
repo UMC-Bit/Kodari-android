@@ -1,19 +1,15 @@
-package com.bit.kodari.Util.Coin
+package com.bit.kodari.Util.Coin.Upbit
 
 import android.util.Log
-import com.bit.kodari.Main.Data.PossesionCoinResult
-import com.bit.kodari.Main.Data.RepresentCoinResult
-import com.bit.kodari.Main.HomeFragment
+import com.bit.kodari.Util.Coin.CoinInterface
+import com.bit.kodari.Util.Coin.CoinView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.newFixedThreadPoolContext
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.math.BigDecimal
-import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class UsdtService {
     companion object{
@@ -84,8 +80,8 @@ class UsdtService {
                     TSUD_USDT = price
                 }
                 usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
-                coinView.usdtPriceSuccess(usdtPrice)
-                Log.d("결과", "성공: USDT-TUSD: ${usdtPrice-10}")
+                //coinView.usdtPriceSuccess(usdtPrice)
+                Log.d("결과", "성공: USDT-TUSD: ${usdtPrice -10}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
             })
@@ -138,7 +134,7 @@ class UsdtService {
 
                 if(KRW_BTC != 1.0 && BTC_USDT != 1.0 && TSUD_USDT != 1.0)
                     usdtPrice = ((KRW_BTC / BTC_USDT) * TSUD_USDT).toInt()
-                Log.d("결과", "성공: USDT-TUSD: ${usdtPrice-10}")
+                Log.d("결과", "성공: USDT-TUSD: ${usdtPrice -10}")
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
             })

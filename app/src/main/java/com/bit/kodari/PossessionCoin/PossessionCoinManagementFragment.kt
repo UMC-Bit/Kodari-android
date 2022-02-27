@@ -26,13 +26,14 @@ import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinMgtInsquireResponse
 import com.bit.kodari.PossessionCoin.Service.PsnCoinService
 import com.bit.kodari.R
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 
 class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
 CoinView{
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
-    var usdtPrice: Int = 1 // usdt 가격
     private var checkView = true
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
@@ -241,10 +242,6 @@ CoinView{
 
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")
-    }
-
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        this.usdtPrice = usdtPrice
     }
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")

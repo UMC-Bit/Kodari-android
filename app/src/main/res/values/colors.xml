@@ -17,4 +17,5 @@
 <!--    <color name="chartColor">#BDF6FE</color>-->
 <!--    <color name="chartTextColor">#FDFDFD</color>-->
 <!--    <color name="chartBackground">#FDDC5C</color>-->
+    <color name="scrollView_color">#FFE5B0</color>
 </resources>

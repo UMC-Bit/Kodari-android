@@ -1,8 +1,7 @@
-package com.bit.kodari.Util.Coin
+package com.bit.kodari.Util.Coin.Upbit
 
-import android.os.Handler
 import android.util.Log
-import com.bit.kodari.Main.HomeFragment
+import com.bit.kodari.Util.Coin.CoinView
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject

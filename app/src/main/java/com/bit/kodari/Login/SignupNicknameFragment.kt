@@ -18,7 +18,7 @@ import com.bit.kodari.Login.Service.LogInService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentSignupNicknameBinding
 
-class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(FragmentSignupNicknameBinding::inflate) ,SignUpView, NicknameView {
+class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(FragmentSignupNicknameBinding::inflate) ,SignUpView, NicknameView, TermsView{
 
     private lateinit var email :String
     private lateinit var pw: String
@@ -39,10 +39,14 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
                 val nickNameInfo = NicknameInfo(nickName)
                 logInService.setNicknameView(this)
                 logInService.getCheckNickname(nickNameInfo)
-            } else{
+            } else {
                 showToast("이용약관에 동의해주세요.")
             }
-
+        }
+        binding.termsTextView.setOnClickListener {
+            val dialog = TermsDialog()
+            dialog.setTermsInterface(this)
+            dialog.show(requireActivity().supportFragmentManager, "TermsDialog")
         }
 
         binding.signupNicknameXIb.setOnClickListener{
@@ -86,5 +90,9 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
     override fun getNicknameFailure(message: String) {
         showToast("Nickname Check 실패 ,$message")
+    }
+
+    override fun setAgree(term: Boolean) {
+        binding.termsCheeckBox.setChecked(true)
     }
 }
