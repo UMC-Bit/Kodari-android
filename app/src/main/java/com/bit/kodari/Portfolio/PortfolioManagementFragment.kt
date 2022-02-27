@@ -54,7 +54,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
             psnCoinList.clear()
             return
         }
-        if(requireArguments().containsKey("coinDataResponse")){
+        else if(requireArguments().containsKey("coinDataResponse")){
             val coinDataResponse = requireArguments().getSerializable("coinDataResponse") as CoinDataResponse
             Log.d("coinData" , "$coinDataResponse")
             //managementRVAdapter.add(coinDataResponse)           //리스트에 추가하기.
