@@ -280,17 +280,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.data = setChartDummyData(profitList)        //데이터추가
             binding.homeChartLc.xAxis.setDrawGridLines(false)
             binding.homeChartLc.axisLeft.setDrawGridLines(false)
-            binding.homeChartLc.xAxis.axisLineColor = resources.getColor(R.color.chartColor)//top line
-            binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartColor)
+            binding.homeChartLc.xAxis.axisLineColor = resources.getColor(R.color.chartTextColor)//top line
+            binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartTextColor)
             binding.homeChartLc.xAxis.position =  XAxis.XAxisPosition.BOTTOM
-            binding.homeChartLc.axisLeft.axisLineColor = resources.getColor(R.color.chartColor)//left line
-            binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartColor)
+            binding.homeChartLc.axisLeft.axisLineColor = resources.getColor(R.color.chartTextColor)//left line
+            binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartTextColor)
             binding.homeChartLc.axisRight.isEnabled = false
             binding.homeChartLc.setDrawBorders(false)
             binding.homeChartLc.setDrawGridBackground(false)
             binding.homeChartLc.description = null
             binding.homeChartLc.isAutoScaleMinMaxEnabled = false
-            binding.homeChartLc.setBackgroundColor(Color.rgb(51, 102, 204))
+            binding.homeChartLc.setBackgroundColor(resources.getColor(R.color.chartBackground))
             binding.homeChartLc.legend.isEnabled = false
             binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
 //
@@ -386,6 +386,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         set1.mode = LineDataSet.Mode.CUBIC_BEZIER
         set1.setDrawFilled(true)
         set1.setDrawHighlightIndicators(true)
+        set1.fillColor = resources.getColor(R.color.chartColor) //차트 밑에 색상
         set1.lineWidth = 1.95f
         set1.circleRadius = 5f
         set1.color = Color.parseColor("#EFEFFF")

@@ -19,7 +19,6 @@ class TermsDialog : DialogFragment() {
         binding = DialogTermsBinding.inflate(inflater , container, false)
 
 
-
         return binding.root
     }
 
