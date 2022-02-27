@@ -48,6 +48,7 @@ import com.amazonaws.regions.Regions
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.bit.kodari.BuildConfig
 import com.bit.kodari.Config.BaseActivity
 import com.bit.kodari.Main.Service.HomeService
 import com.bit.kodari.Util.getEmail
@@ -297,7 +298,7 @@ class EditProfileActivity :
     //S3에 이미지 업로드하기 , 코드 분석하기
     fun uploadWithTransferUtility(fileName: String, file: File) {
         val awsCredentials =
-            BasicAWSCredentials("AKIAW6ZEQICBQ3G4KYJK", "Uou5zXfiMhIeLIY7HrlaoD+qgiR77IyUXXZaHN7F")
+            BasicAWSCredentials("${BuildConfig.S3_API_ACCESS_KEY}", "${BuildConfig.S3_API_SECRET_KEY}")
         val s3Client = AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2))
 
         val transferUtility = TransferUtility.builder().s3Client(s3Client).context(

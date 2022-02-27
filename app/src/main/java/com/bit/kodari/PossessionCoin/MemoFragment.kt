@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.DeleteDialog
@@ -28,14 +29,22 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
 
     //더미데이터로 사용할 리스트
     private var memoList = ArrayList<GetTradeListResult>()
-    private lateinit var mOnDismissListener : OnDismissLister
 
-    interface OnDismissLister {
-        fun onChangedMemo()
-    }
+
+
     override fun initAfterBinding() {
         //더미데이터 메모 하나만 넣어두기.
         callTradeList(coinIdx)
+        requireActivity().supportFragmentManager.setFragmentResultListener("request",this,
+            {
+                    key , bundle->
+                if(key == "request"){
+                    if(bundle.containsKey("delete")){       //삭제되었다고 하고 넘어오면
+                        Log.d("delete" , "번들 실행")
+                        callTradeList(coinIdx)
+                    }
+                }
+            })
     }
 
     //여기서 해당 소유코인에 대한 값들 불러와야함.
@@ -49,13 +58,8 @@ class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(Fragment
                         putInt("tradeIdx", item.tradeIdx)
                     }
                 }
-
                 dialog.show(requireActivity().supportFragmentManager, "DeleteTradeDialog")
-                requireActivity().supportFragmentManager.executePendingTransactions()
-                dialog.dialog!!.setOnDismissListener {
-                   // callTradeList(coinIdx)
-                    Log.d("dismiss", "${coinIdx} 와 실행")
-                }
+
             }
         })
 

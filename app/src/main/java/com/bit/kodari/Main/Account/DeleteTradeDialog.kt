@@ -12,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentResultListener
 import com.bit.kodari.Debate.DebateMainFragment
 import com.bit.kodari.Debate.PostData.DebateDeletePostResponse
 import com.bit.kodari.Debate.Retrofit.DebateDeletePostView
@@ -63,6 +65,8 @@ class DeleteTradeDialog: DialogFragment() ,DeleteTradeView{
             1000 -> {
                 Log.d("DeleteTrade" , "${response.result}")
                 Toast.makeText(context,"${response.result}",Toast.LENGTH_SHORT).show()
+                val bundle = bundleOf("delete" to true) //삭제되었다고 보내기
+                requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
                 dismiss()
                 //dismiss이후 재 조회해야함.
 
