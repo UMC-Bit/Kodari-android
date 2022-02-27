@@ -1,5 +1,6 @@
 package com.bit.kodari.Main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -290,7 +291,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.setDrawGridBackground(false)
             binding.homeChartLc.description = null
             binding.homeChartLc.isAutoScaleMinMaxEnabled = false
-            binding.homeChartLc.setBackgroundColor(resources.getColor(R.color.chartBackground))
+            binding.homeChartLc.setBackgroundDrawable(resources.getDrawable(R.drawable.chart_background))
             binding.homeChartLc.legend.isEnabled = false
             binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
 //
@@ -336,6 +337,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //차트에 더미 데이터 셋팅팅
     //7일치만 먼저 불러와보자 .
+    @SuppressLint("UseCompatLoadingForDrawables")
     fun setChartDummyData(profitList: ArrayList<GetProfitResult>): LineData {
         val values: ArrayList<Entry> = ArrayList()
 
@@ -386,7 +388,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         set1.mode = LineDataSet.Mode.CUBIC_BEZIER
         set1.setDrawFilled(true)
         set1.setDrawHighlightIndicators(true)
-        set1.fillColor = resources.getColor(R.color.chartColor) //차트 밑에 색상
+        set1.fillDrawable = resources.getDrawable(R.drawable.chart_fill) //차트 밑에 색상
         set1.lineWidth = 1.95f
         set1.circleRadius = 5f
         set1.color = Color.parseColor("#EFEFFF")

@@ -12,7 +12,7 @@
     <color name="main_color">#FDCC68</color>
     <color name="transparent">#00000000</color>
     <color name="chartColor">#8CD4E6</color>
-    <color name="chartTextColor">#8CD4E6</color>
+    <color name="chartTextColor">#0033CC</color>
     <color name="chartBackground">#3366CC</color>
 <!--    <color name="chartColor">#BDF6FE</color>-->
 <!--    <color name="chartTextColor">#FDFDFD</color>-->
