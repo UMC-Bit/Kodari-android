@@ -301,6 +301,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.setBackgroundDrawable(resources.getDrawable(R.drawable.chart_background))
             binding.homeChartLc.legend.isEnabled = false
             binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
+            binding.homeChartLc.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            binding.homeChartLc.getRenderer().getPaintRender().setShadowLayer(3f, 5f, 3f, Color.GRAY);
 //
 //            binding.homeChartLc.getDescription().setEnabled(false);
 //            // enable touch gestures
