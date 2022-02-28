@@ -40,7 +40,7 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
     override fun getPasswordSuccess(response: PasswordResponse) {
         when(response.code){
             1000-> {
-                Toast.makeText(context, "Password 입력 성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "Password 입력 성공", Toast.LENGTH_SHORT).show()
                 pw = binding.signupPwEt.text.toString()
                 email = requireArguments().getString("email")!!
                 (context as LoginActivity).supportFragmentManager.beginTransaction()

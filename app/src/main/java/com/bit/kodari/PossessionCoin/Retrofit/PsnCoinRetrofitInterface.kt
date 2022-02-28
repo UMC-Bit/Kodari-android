@@ -19,7 +19,9 @@ interface PsnCoinRetrofitInterface {
     @POST("/trades/post")
     fun getPsnCoinAddTrade(@Header("X-ACCESS-TOKEN") jwt: String, @Body psnCoinAddTradeInfo: PsnCoinAddTradeInfo):Call<PsnCoinAddTradeResponse>
 
-
+    // 포트폴리오에서 거래 내역 생성 API
+    @POST("/trades/post/first")
+    fun getPsnCoinAddTradePortfolio(@Header("X-ACCESS-TOKEN") jwt: String, @Body psnCoinAddTradeInfo: PsnCoinAddTradeInfo):Call<PsnCoinAddTradeResponse>
     // 소유 코인 조회
     @GET("/userCoin/{portIdx}")
     fun getPsnCoinInquire(@Header("X-ACCESS-TOKEN") jwt :String , @Path("portIdx") portIdx : Int):Call<PsnCoinMgtInsquireResponse>

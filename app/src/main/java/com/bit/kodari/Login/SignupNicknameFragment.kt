@@ -77,7 +77,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
         when(response.code){
             1000-> {
-                Toast.makeText(context, "Nickname 입력 성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "Nickname 입력 성공", Toast.LENGTH_SHORT).show()
                 val signUpInfo = SignUpInfo(nickName,email,pw)
                 logInService.setSignUpView(this)
                 logInService.getSignUp(signUpInfo)

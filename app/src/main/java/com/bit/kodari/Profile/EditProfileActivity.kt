@@ -265,7 +265,7 @@ class EditProfileActivity :
     override fun getCheckNicknameSuccess(response: NicknameResponse) {
         when (response.code) {
             1000 -> {
-                Toast.makeText(this, "닉네임 입력 성공", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "닉네임 변경이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 binding.editProfileErrorTv.text = response.result
             }
             else -> {

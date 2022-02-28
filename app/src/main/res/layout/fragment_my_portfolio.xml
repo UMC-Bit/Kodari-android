@@ -20,16 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/my_portfolio_asset_tv"/>
 
-    <ImageView
-        android:id="@+id/my_portfolio_restart_iv"
-        app:layout_constraintBottom_toBottomOf="@id/my_portfolio_asset_title_tv"
-        app:layout_constraintStart_toEndOf="@id/my_portfolio_asset_title_tv"
-        app:layout_constraintTop_toTopOf="@id/my_portfolio_asset_title_tv"
-        android:layout_width="19dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        android:src="@drawable/restart_btn" />
-
     <TextView
         android:id="@+id/my_portfolio_modify_iv"
         android:text="편집"
@@ -76,15 +66,14 @@
         android:id="@+id/my_portfolio_account_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="졸업 좀 하자"
+        android:layout_marginBottom="15dp"
+        android:text="계좌 이름"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintVertical_bias="0.402" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

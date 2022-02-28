@@ -117,7 +117,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
         //생성 완료 됐을 때
         cnt++
         if(cnt == psnCoinList.size){            //넣은 코인만큼 호출되면 Home으로 돌아가자.
-            showToast("생성 완료") // 다음 누르면 여기서 변경하게 하면 안될 것같은데 .. 이 함수가 몇번 이상 호출되면 실행되게 해야하지 않을까 ?
+            showToast("포트폴리오 생성 완료") // 다음 누르면 여기서 변경하게 하면 안될 것같은데 .. 이 함수가 몇번 이상 호출되면 실행되게 해야하지 않을까 ?
             dismissLoadingDialog()
             Log.d("makePortSuccess" ,"성공")
             requireActivity().supportFragmentManager.beginTransaction()
