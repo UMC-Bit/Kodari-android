@@ -1,16 +1,20 @@
 package com.bit.kodari.Profile
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Retrofit.ProfileMainView
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.getUserIdx
+import com.bit.kodari.Util.saveAutoLogin
+import com.bit.kodari.Util.saveLoginInfo
 import com.bit.kodari.databinding.FragmentProfileMainBinding
 import com.bumptech.glide.Glide
 
@@ -72,6 +76,17 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         binding.profileMainBtn5Ib.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, EditPwFragment()).commitAllowingStateLoss()
+        }
+        binding.profileMainBtn6Ib.setOnClickListener { // 플러스 친구
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://plus.kakao.com/home/@kodari"))
+            startActivity(intent)
+        }
+
+        binding.profileMainLogoutBtn.setOnClickListener {
+            saveLoginInfo(null, null, null, 0)     //0이면 유저 없는거
+            saveAutoLogin(false)
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
         }
     }
 

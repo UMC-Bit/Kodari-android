@@ -17,6 +17,7 @@ import com.bit.kodari.databinding.FragmentSignupIdBinding
 
 class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdBinding::inflate), EmailView {
 
+
     override fun initAfterBinding() {
         setListener()
     }
@@ -38,7 +39,7 @@ class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdB
     override fun getEmailSuccess(response: EmailResponse) {
         when(response.code){
             1000-> {
-                Toast.makeText(context, "이메일 입력 성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "이메일 입력 성공", Toast.LENGTH_SHORT).show()
                 (context as LoginActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.login_container_fl, SignupPwFragment().apply {
                         arguments = Bundle().apply {

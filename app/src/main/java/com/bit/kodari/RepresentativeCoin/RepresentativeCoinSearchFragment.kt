@@ -140,6 +140,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
             Log.d("addRpt ", "추가 성공")
+            cnt= 0
         }
     }
 

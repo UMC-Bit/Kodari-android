@@ -15,14 +15,16 @@ import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
 import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
 import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
-import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResult
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.Util.Coin.*
+import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
 class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
     CoinView {
+    var usdtPrice = HomeFragment.usdtPrice
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
@@ -139,8 +141,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         coinList = response.result
         //널값 넘어오면서 오류
         //Log.d("psnSuccesscoinSize", "${coinList.size}")
-        // 코인 시세 받아오기
-        getCoinPrice()
+        // 코인 시세 받아오기 단 , 대표코인이 없을 경우 실행하지 않음.
+        if(coinList.size != 0){
+            getCoinPrice()
+        }
         setRecyclerView()
     }
 
@@ -158,6 +162,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
             getRptCoins()           //삭제 완료됐으면 재호출
             deleteRcoinList.clear() //삭제 리스트 초기화
             Log.d("deleteRCoin", "삭제 리스트 추가 : ${deleteRcoinList.size}")
+            cnt = 0;
         }
 
     }
@@ -204,7 +209,6 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         if(requireActivity() != null) {
-            var usdtPrice = UsdtService.usdtPrice
             requireActivity().runOnUiThread() {
                 // 대표 코인
                 for (i in coinList.indices) {
@@ -221,10 +225,12 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
             }
         }
     }
-    override fun usdtPriceSuccess(usdtPrice: Int) {
-        TODO("Not yet implemented")
-    }
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cnt = 0
     }
 }

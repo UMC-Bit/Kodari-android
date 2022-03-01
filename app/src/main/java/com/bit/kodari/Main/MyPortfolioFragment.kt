@@ -39,7 +39,7 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
             val dialog = ModifyInfoDialog(accoutIdx , portIdx).apply {
                 arguments = Bundle().apply {
                     putString("accountName", binding.myPortfolioAccountNameTv.text.toString())
-                    putString("myAsset", binding.myPortfolioAssetTv.text.toString() + profit + "원")
+                    putString("myAsset", "${formatPrice(property)}")
                 }
             }
             dialog.show(requireActivity().supportFragmentManager,"ModifyDialog")
@@ -80,7 +80,7 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
     fun getAccountProfit(profit: Double, sumBuyCoin: Double) {
         if (checkView) {
             this.profit = profit.toInt()
-            val profitRate = ((property + profit) / (property + sumBuyCoin)) * 100 - 100
+            val profitRate = (profit / sumBuyCoin) * 100 - 100
             binding.myPortfolioAssetTv.text = formatPrice(property.toInt() + profit) + "원"
             binding.myPortfolioPercentTv.text = formatPrice(profitRate) + "%"
         }

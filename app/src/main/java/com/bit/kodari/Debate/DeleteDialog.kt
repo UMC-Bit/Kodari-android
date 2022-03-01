@@ -1,6 +1,10 @@
 package com.bit.kodari.Debate
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +32,12 @@ class DeleteDialog: DialogFragment() , DebateDeletePostView{
         if(requireArguments().containsKey("postIdx")){
             postIdx = requireArguments().getInt("postIdx")
         }
+
+        //"삭제" 부분 빨갛게 만들기
+        val builder = SpannableStringBuilder(binding.deleteMessageTv.text)
+        builder.setSpan(ForegroundColorSpan(Color.RED) , 5,7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.deleteMessageTv.setText(builder)
+
         setListener()
         return binding.root
     }

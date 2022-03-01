@@ -1,16 +1,18 @@
 package com.bit.kodari.Main.Data
 
+import com.google.gson.annotations.SerializedName
+
 data class RepresentCoinResult(
-    var coinIdx: Int,
-    var binancePrice: Double,
-    var upbitPrice: Double,
-    var kimchi: Double,
-    var coinImg: Any,
-    var coinName: String,
-    var portIdx: Int,
-    var representIdx: Int,
-    var status: String,
-    var symbol: String,
+    @SerializedName("coinIdx") var coinIdx: Int,
+    @SerializedName("binancePrice") var binancePrice: Double,
+    @SerializedName("upbitPrice") var upbitPrice: Double,
+    @SerializedName("kimchi") var kimchi: Double,
+    @SerializedName("coinImg") var coinImg: Any,
+    @SerializedName("coinName") var coinName: String,
+    @SerializedName("portIdx") var portIdx: Int,
+    @SerializedName("representIdx") var representIdx: Int,
+    @SerializedName("status") var status: String,
+    @SerializedName("symbol") var symbol: String,
     var isChecked: Boolean,
     var change: Double
 )

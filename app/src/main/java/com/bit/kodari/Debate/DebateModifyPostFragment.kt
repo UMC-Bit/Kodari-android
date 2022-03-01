@@ -11,11 +11,13 @@ import com.bit.kodari.R
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.databinding.FragmentDebateModifyPostBinding
 import com.bumptech.glide.Glide
+import kotlin.properties.Delegates
 
 
 class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFragment<FragmentDebateModifyPostBinding>(FragmentDebateModifyPostBinding::inflate) , DebateModifyPostView {
 
-    var postIdx = 0
+    private var postIdx = 0
+    private var flag by Delegates.notNull<Int>()
 
     override fun initAfterBinding() {
         getPostInfo()                //게시글 Index가져오기
@@ -43,6 +45,10 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
             //EditText는 setText해야한다.
             binding.modifyContentEt.setText(requireArguments().getString("content"))
         }
+
+        if(requireArguments().containsKey("flag")){
+            flag = requireArguments().getInt("flag")
+        }
     }
 
     fun setListener(){
@@ -52,8 +58,20 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
             debateService.setDebateModifyPostView(this)
             showLoadingDialog(requireContext())
             debateService.modifyPost(postIdx , debateModifyRequest)
-
         }
+
+        binding.modifyBackBtn.setOnClickListener {
+            val tempPostIdx = postIdx
+            val tempFlag = flag
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , DebateMineFragment(tempFlag,coinName).apply {
+                    arguments = Bundle().apply {
+                        putInt("postIdx", tempPostIdx)
+                    }
+                }).commit()
+        }
+
+
     }
 
     override fun updatePostSuccess(response: DebateModifyResponse) {

@@ -97,7 +97,7 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
     override fun updatePostSuccess(response: DebateWritePostResponse) {
         when(response.code){
           1000 -> {     //호출하고 이전 프래그먼트로가야함
-              showToast("글쓰기에 성공하셨습니다.")
+              showToast("게시글 등록 완료.")
               Log.d("post" , "${response.result.userIdx}")
               requireActivity().supportFragmentManager.beginTransaction()
                   .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
@@ -109,7 +109,7 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
           }
           else -> {
               showToast(response.message)
-              Log.d("post" , "글쓰기에 실패했습니다. ${response.code} , ${response.message} , ${response.isSuccess}")
+              Log.d("post" , "게시글 등록에 실패했습니다. ${response.code} , ${response.message} , ${response.isSuccess}")
           }
         }
         dismissLoadingDialog()

@@ -1,6 +1,7 @@
 package com.bit.kodari.PossessionCoin.Adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,10 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
 
     interface MyItemClickListener {
         fun onItemClick(item: PossesionCoinResult)
+    }
+
+    public fun getClick():Boolean{
+        return isClick
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -48,11 +53,20 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             if(item.profit < 0)
                 binding.itemPossessionCoinManagementCoinListProfitPlusTV.setTextColor(Color.BLUE)
             binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit)
+
+            if(item.isChecked){
+                binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility = View.VISIBLE
+                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility = View.GONE
+            } else{
+                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =View.VISIBLE
+                binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility = View.GONE
+            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder {
-        isClick=false
+
         val binding = ItemPossessionCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return PossessionCoinManagementViewHolder(binding)
     }
@@ -60,26 +74,39 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
 
     override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
         holder.bind(possessionCoinList[position])
-        isClickMap[position] = false
-
+//        isClickMap[position] = false
             holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.setOnClickListener {
-                if(!isClick)
-                {
+                Log.d("PossessiongAdatper" , "${isClick} 와 ${isClickMap[position]}")
+                //if(!isClick)
+               //{
+                    Log.d("버튼 클릭" , "실행")
+                    possessionCoinList[position].isChecked = true
+                    clickPosition = position
                     isClick=true
                     isClickMap[position] = true
-                    clickPosition = position
                     mItemClickListener.onItemClick(possessionCoinList[position])
                     holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
                         View.VISIBLE
-                }
+                    //다른 애들은 체크 해제해줘야함
+                    for( num in 0 until possessionCoinList.size){
+                        if(num == clickPosition) continue
+                        possessionCoinList[num].isChecked = false       //나 이외에 것들 전부 false로 바꿈
+                        //바꾼 후 재 갱신 해줘야함 ..
+                    }
+                    notifyDataSetChanged()
+                    Log.d("PossessiongCoinDelete" , " isClick : ${isClick}, isClickMap[position] : ${isClickMap[position]}")
+               // }
             }
 
             holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.setOnClickListener {
+                Log.d("PossessiongAdatper" , "${isClick} 와 ${isClickMap[position]}")
                 if(isClick && isClickMap[position] == true)
                 {
+                    possessionCoinList[position].isChecked = false
                     isClick=false
                     holder.binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility =
                         View.GONE
+                    holder.binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility = View.VISIBLE
                 }
             }
 

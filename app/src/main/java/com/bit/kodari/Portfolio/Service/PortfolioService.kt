@@ -180,7 +180,7 @@ class PortfolioService {
     fun getPsnCoinAddPf(psnCoinAddTradeInfo: PsnCoinAddTradeInfo){
         val psnCoinService = getRetorfit().create(PsnCoinRetrofitInterface::class.java)
 
-        psnCoinService.getPsnCoinAddTrade(getJwt()!!, psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse> {
+        psnCoinService.getPsnCoinAddTradePortfolio(getJwt()!!, psnCoinAddTradeInfo).enqueue(object : Callback<PsnCoinAddTradeResponse> {
             override fun onResponse( // 통신 성공
                 call: Call<PsnCoinAddTradeResponse>,
                 response: Response<PsnCoinAddTradeResponse>

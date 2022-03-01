@@ -11,6 +11,7 @@ import com.bit.kodari.Main.Account.Data.*
 import com.bit.kodari.Main.Account.Retrofit.ModifyDialogView
 import com.bit.kodari.Main.Account.Servcie.AccountService
 import com.bit.kodari.R
+import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.databinding.DialogModifyInfoBinding
 import kotlin.properties.Delegates
 
@@ -39,6 +40,7 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         if(requireArguments().containsKey("accountName") && requireArguments().containsKey("myAsset")){
             binding.infoDialogInputAccountEt.setText(requireArguments().getString("accountName"))
             binding.infoDialogInputCashEt.setText(requireArguments().getString("myAsset"))
+            Log.d("myasset", "${requireArguments().getString("myAsset")}")
         }
         Log.d("accountIdx " ,accountIdx.toString())
     }
@@ -55,7 +57,8 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         }
 
         binding.infoDialogModifyCashBtn.setOnClickListener {
-            val money = binding.infoDialogInputCashEt.text.toString().substring(0,binding.infoDialogInputCashEt.text.toString().length-1)
+            //val money = binding.infoDialogInputCashEt.text.toString().substring(0,binding.infoDialogInputCashEt.text.toString().length-1)
+            val money = binding.infoDialogInputCashEt.text.toString().replace(",","")
             Log.d("money","${money}")
             callModifyProperty(money)
         }

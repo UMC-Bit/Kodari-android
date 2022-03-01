@@ -44,25 +44,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/home_notification_none_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/ic_baseline_notifications_none_24"
-                            app:layout_constraintEnd_toStartOf="@id/home_timelapse_iv"
-                            app:layout_constraintTop_toTopOf="@id/home_timelapse_iv" />
-
-                        <ImageView
-                            android:id="@+id/home_timelapse_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_baseline_timelapse_24"
-                            app:layout_constraintBottom_toTopOf="@id/home_my_info_cv"
-                            app:layout_constraintEnd_toEndOf="@id/home_my_info_cv"
-                            app:layout_constraintTop_toTopOf="parent" />
-
 
                         <ImageView
                             android:id="@+id/home_vp_preview_btn"
@@ -93,8 +74,7 @@
                                 android:id="@+id/home_viewpager_vp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:overScrollMode="never">
-                            </androidx.viewpager2.widget.ViewPager2>
+                                android:overScrollMode="never"></androidx.viewpager2.widget.ViewPager2>
 
                         </androidx.cardview.widget.CardView>
 
@@ -346,6 +326,7 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </androidx.cardview.widget.CardView>
+
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/home_chart_lc"
                             android:layout_width="match_parent"
@@ -409,8 +390,8 @@
                             android:layout_marginEnd="13dp"
                             android:background="@color/white"
                             android:scaleType="centerCrop"
-                            app:layout_constraintBottom_toBottomOf="@+id/home_rpt_coin_outline_TV"
                             android:src="@drawable/yellow_next_btn"
+                            app:layout_constraintBottom_toBottomOf="@+id/home_rpt_coin_outline_TV"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/home_rpt_coin_outline_TV" />
 
@@ -519,8 +500,8 @@
                             android:layout_marginEnd="13dp"
                             android:background="@color/white"
                             android:scaleType="centerCrop"
-                            app:layout_constraintBottom_toBottomOf="@id/home_psn_coin_outline_TV"
                             android:src="@drawable/yellow_next_btn"
+                            app:layout_constraintBottom_toBottomOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/home_psn_coin_outline_TV" />
 

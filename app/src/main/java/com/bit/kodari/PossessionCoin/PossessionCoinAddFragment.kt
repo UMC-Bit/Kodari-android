@@ -32,7 +32,6 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
                 .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).addToBackStack(null)
                 .commitAllowingStateLoss()
         }
-        datetimepicker()
         getCoinInformation()
         setListener()
         //포토폴리오 이름 ...
@@ -52,7 +51,7 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
             { view, hourOfDay, minute ->
                 val date = String.format("%02d:%02d:00", hourOfDay, minute)
                 tradeTime.append(date)
-                binding.possessionCoinAddDateInputET.setText(tradeTime.toString())
+                binding.possessionCoinAddDateInputET.text = (tradeTime.toString())
                 tradeTime.setLength(0)
             }, hour, minute, false)
         val datePicker = DatePickerDialog(context as MainActivity,
@@ -62,9 +61,8 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
                 tradeTime.append("")
                 timePicker.show()
             }, year, month, day)
-        binding.possessionCoinAddDateInputET.setOnClickListener { v ->
-            datePicker.show()
-        }
+
+        datePicker.show()
     }
 
     // 전체 코인 검색 창에서 선택한 코인 정보(코인 이름, 코인 심볼, 코인 이미지) 가져오기
@@ -115,26 +113,13 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
             showLoadingDialog(requireContext())
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
         }
-    }
 
-//    override fun psnCoinAddSuccess(response: PsnCoinAddResponse) {
-//        dismissLoadingDialog()
-//        when(response.code){
-//            1000 -> {
-//                Toast.makeText(context,"소유코인 추가 성공" , Toast.LENGTH_SHORT).show()
-//                (context as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
-//            }
-//            else -> {
-//                Toast.makeText(context,"소유코인 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
-//
-//    override fun psnCoinAddFailure(message: String) {
-//        dismissLoadingDialog()
-//        Log.d("failadd" ,"$message")
-//    }
+        binding.possessionCoinAddDateCV.setOnClickListener{
+            datetimepicker()
+        }
+
+
+    }
 
     override fun psnCoinAddTradeSuccess(response: PsnCoinAddTradeResponse) {
         dismissLoadingDialog()
