@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_possession_coin">#00EDEDED</color>
+    <color name="gray">#EDEDED</color>
+    <color name="main_color">#FDCC68</color>
+    <color name="transparent">#00000000</color>
+    <color name="chartColor">#8CD4E6</color>
+    <color name="chartTextColor">#0033CC</color>
+    <color name="chartBackground">#3366CC</color>
+<!--    <color name="chartColor">#BDF6FE</color>-->
+<!--    <color name="chartTextColor">#FDFDFD</color>-->
+<!--    <color name="chartBackground">#FDDC5C</color>-->
+    <color name="scrollView_color">#FFE5B0</color>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/addon_main_backbutton_IB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/previous_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/addon_main_addon_TV"
+        app:layout_constraintBottom_toBottomOf="@+id/addon_main_addon_TV"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/addon_main_addon_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="애드온"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="19dp"/>
+
+    <ImageView
+        android:id="@+id/addon_main_dividing_line_IV"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/dividing_line"
+        android:layout_marginTop="19dp"
+        app:layout_constraintTop_toBottomOf="@id/addon_main_addon_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_service_preparation"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addon_main_dividing_line_IV"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

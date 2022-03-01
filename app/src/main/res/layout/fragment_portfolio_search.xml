@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Portfolio.PortfolioSearchFragment">
+
+    <ImageView
+        android:id="@+id/portfolio_search_back_btn_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/previous_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/portfolio_search_info_container_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/portfolio_search_back_btn_iv"
+        android:layout_marginTop="30dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/portfolio_search_info_container_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/portfolio_search_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="국내 거래소"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"/>
+
+            <ImageView
+                android:id="@+id/portfolio_search_coin_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/upbit_set"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/portfolio_search_title_tv"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/portfolio_search_ask_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="암호화폐를 검색해서 찾아보세요."
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/portfolio_search_coin_iv"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"/>
+
+            <EditText
+                android:id="@+id/portfolio_search_input_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/btn_outline_gray"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:fontFamily="@font/apple_sdgothic_neo_l"
+                android:hint="암호 화폐 검색"
+                android:paddingTop="8dp"
+                android:paddingStart="10dp"
+                android:paddingBottom="10dp"
+                android:textColorHint="@color/black"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/portfolio_search_ask_tv" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/portfolio_search_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/portfolio_search_info_container_cv"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/list_coin_item" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

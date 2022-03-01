@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="267dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="3dp">
+    
+            <TextView
+                android:id="@+id/item_possession_coin_memo_date_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2021. 10. 24"
+                android:textColor="#000000"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_coin_name_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비트코인"
+                android:textColor="#000000"
+                android:textSize="10dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintStart_toEndOf="@id/item_possession_coin_memo_date_TV"
+                app:layout_constraintTop_toTopOf="parent"/>
+            
+            <ImageView
+                android:id="@+id/item_possession_coin_memo_delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_memo_close"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/item_possession_coin_memo_buy_image_IV"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/memo_buy"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_date_TV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:id="@+id/item_possession_coin_memo_sell_image_IV"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/memo_sell"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_date_TV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_buy_text_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매수"
+                android:textColor="#000000"
+                android:layout_marginStart="30dp"
+                app:layout_constraintTop_toTopOf="@id/item_possession_coin_memo_buy_image_IV"
+                app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_memo_buy_image_IV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_sell_text_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매도"
+                android:textColor="#000000"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/item_possession_coin_memo_sell_image_IV"
+                app:layout_constraintBottom_toBottomOf="@id/item_possession_coin_memo_sell_image_IV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_averageunit_price_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30,000원"
+                android:textSize="12dp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_quantity_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 BTC"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_averageunit_price_TV"/>
+
+            <TextView
+                android:id="@+id/item_possession_coin_memo_profit_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(1,890,520원)"
+                android:textSize="12dp"
+                app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_quantity_TV"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/item_possession_coin_memo_buy_memo_input_CV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="24dp"
+                android:layout_marginTop="45dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_profit_TV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/item_possession_coin_memo_dividing_line_TV">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/item_possession_coin_memo_buy_memo_input_TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:background="#FFF7E7"
+                        android:drawablePadding="6dp"
+                        android:hint="전일 종가로 무조건 팔기 (흔들리지 않고)"
+                        android:inputType="text"
+                        android:textSize="10sp"
+                        android:gravity="center">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_possession_coin_memo_sell_memo_input_CV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="24dp"
+        android:layout_marginTop="42dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/item_possession_coin_memo_dividing_line_TV"
+        app:layout_constraintTop_toBottomOf="@id/item_possession_coin_memo_profit_TV"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_possession_coin_memo_sell_memo_input_ET"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="#669CD5E7"
+                android:drawablePadding="6dp"
+                android:hint="음..."
+                android:inputType="text"
+                android:textSize="10sp">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/item_possession_coin_memo_dividing_line_TV"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

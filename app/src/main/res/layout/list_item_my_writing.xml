@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/profile_outline"
+    android:paddingBottom="13dp"
+    android:layout_marginBottom="17dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/list_item_my_writing_image_iv"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/profile_image"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="25dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_nickname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12.5sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="chicken_boy113"
+        android:layout_marginStart="6dp"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_writing_image_iv"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_image_iv"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_writing_image_iv"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_coin_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="DOGE"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        android:background="@drawable/btn_outline_yellow"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_writing_image_iv"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_image_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_content_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="저번 12월 4일 폭락장을 경험한 뒤로 나만의 포지션 진입 전략을 세운 뒤로는 승률이 86퍼에 달했지만
+12월 31일 금요일의 갑작스런 상승빔때  큰 손절을 한 뒤에 제 자신에 대해 의구심이 계속 들더라구요.
+그래서 ...."
+        android:textSize="12.5sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_image_iv"
+        android:layout_marginTop="23dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"/>
+
+    <ImageView
+        android:id="@+id/list_item_my_writing_up_btn"
+        android:layout_width="23dp"
+        android:layout_height="22dp"
+        android:src="@drawable/thumbs_up"
+        android:layout_marginEnd="34dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_item_my_writing_comment_count_tv"
+        app:layout_constraintTop_toTopOf="@+id/list_item_my_writing_comment_count_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_my_writing_comment_count_tv"/>
+    
+    <TextView
+        android:id="@+id/list_item_my_writing_like_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_writing_up_btn"
+        app:layout_constraintEnd_toEndOf="@id/list_item_my_writing_up_btn"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_up_btn"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_comment_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="댓글"
+        android:textSize="12sp"
+        android:layout_marginTop="18dp"
+        android:paddingEnd="3dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/list_item_my_writing_comment_count_num_tv"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_content_tv" />
+
+    <TextView
+        android:id="@+id/list_item_my_writing_comment_count_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="38"
+        android:textSize="12sp"
+        android:textColor="#FD0606"
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_writing_comment_count_tv"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_content_tv"/>
+
+    <ImageView
+        android:id="@+id/list_item_my_writing_down_btn"
+        android:layout_width="23dp"
+        android:layout_height="22dp"
+        android:src="@drawable/thumbs_down"
+        android:layout_marginStart="34dp"
+        app:layout_constraintTop_toTopOf="@+id/list_item_my_writing_comment_count_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_my_writing_comment_count_tv"
+        app:layout_constraintStart_toEndOf="@+id/list_item_my_writing_comment_count_num_tv"/>
+
+    <TextView
+        android:id="@+id/list_item_my_writing_dislike_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/list_item_my_writing_down_btn"
+        app:layout_constraintEnd_toEndOf="@id/list_item_my_writing_down_btn"
+        app:layout_constraintTop_toBottomOf="@id/list_item_my_writing_down_btn"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Kodari</string>
+    <string name="myCoin">내자산</string>
+    <string name="debate_room">토론장</string>
+    <string name="feed">피드</string>
+    <string name="add_on">애드온</string>
+    <string name="profile">프로필</string>
+    <string name="my_asset">총 자산</string>
+    <string name="start_btn">내 포트폴리오 시작</string>
+    <string name="upbit">업비트</string>
+    <string name="binanace">바이낸스</string>
+    <string name="kimchi">김치 프리미엄</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="debate">토론장</string>
+    <string name="enroll_exchange">거래소 등록</string>
+    <string name="Bitfinex">Bitfinex</string>
 </resources>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="267dp"
+        android:layout_height="395dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="267dp"
+            android:layout_height="395dp">
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_possession_coin_TV"
+                android:layout_width="44dp"
+                android:layout_height="17dp"
+                android:layout_marginTop="7dp"
+                android:text="소유 코인"
+                android:textSize="11dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_outline_TV"
+                android:layout_width="133dp"
+                android:layout_height="23dp"
+                android:textSize="11dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:background="@drawable/button_outline"
+                android:layout_marginTop="21dp"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_dialog_possession_coin_TV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_memo_on_TV"
+                android:layout_width="59dp"
+                android:layout_height="23dp"
+                android:text="메모"
+                android:textSize="11dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:background="@drawable/button_outline"
+                android:backgroundTint="#B3FDCC68"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_dialog_outline_TV"/>
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_memo_off_TV"
+                android:layout_width="59dp"
+                android:layout_height="23dp"
+                android:text="메모"
+                android:textSize="11dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_dialog_outline_TV"/>
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_twitter_off_TV"
+                android:layout_width="61dp"
+                android:layout_height="23dp"
+                android:text="트위터"
+                android:textSize="11dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintEnd_toEndOf="@id/possession_coin_dialog_outline_TV"/>
+
+            <TextView
+                android:id="@+id/possession_coin_dialog_twitter_on_TV"
+                android:layout_width="61dp"
+                android:layout_height="23dp"
+                android:text="트위터"
+                android:textSize="11dp"
+                android:background="@drawable/button_outline"
+                android:backgroundTint="#B3FDCC68"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintEnd_toEndOf="@id/possession_coin_dialog_outline_TV"/>
+
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="267dp"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintEnd_toEndOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_dialog_outline_TV"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="47dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/possession_coin_dialog_RV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_possession_coin_memo" />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

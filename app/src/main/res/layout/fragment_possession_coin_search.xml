@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PossessionCoin.PossessionCoinSearchFragment">
+
+    <ImageView
+        android:id="@+id/possession_coin_search_back_IV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/previous_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/possession_coin_search_possession_coin_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소유 코인"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/possession_coin_search_back_IV"
+        app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_back_IV"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/possession_coin_search_container_CV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/possession_coin_search_back_IV"
+        android:layout_marginTop="38dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/possession_coin_search_domestic_exchange_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="국내 거래소"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="6dp"/>
+
+
+            <ImageView
+                android:id="@+id/possession_coin_search_exchange_logo_IV"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/upbit_logo"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_search_domestic_exchange_TV"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_domestic_exchange_TV" />
+
+            <TextView
+                android:id="@+id/possession_coin_search_exchange_name_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="업비트"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@id/possession_coin_search_exchange_logo_IV"
+                app:layout_constraintTop_toTopOf="@id/possession_coin_search_exchange_logo_IV"
+                app:layout_constraintBottom_toBottomOf="@id/possession_coin_search_exchange_logo_IV"/>
+
+
+            <TextView
+                android:id="@+id/possession_coin_search_search_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="암호화폐를 검색해서 찾아보세요."
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_exchange_logo_IV"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/possession_coin_search_search_CV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                app:cardCornerRadius="24dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_search_search_TV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/possession_coin_search_search_input_ET"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:drawablePadding="6dp"
+                        android:textStyle="bold"
+                        android:hint="암호화폐 검색"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/magnifying_glass"
+                        android:paddingRight="10dp"
+                        android:textSize="11sp"
+                        android:inputType="text"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/possession_coin_search_coin_list_RV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/possession_coin_search_container_CV"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_possession_coin_search_coin_list" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
