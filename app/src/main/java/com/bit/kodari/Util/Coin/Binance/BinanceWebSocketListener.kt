@@ -14,7 +14,7 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         // Usdt 환율 받아옴
         val usdtService = UsdtService()
         usdtService.setCoinView(this)
-        usdtService.getFirsUsdtPrice()
+        usdtService.getFirsUsdtPrice()  //얘는 뭐지
     }
 
     var webSocket: WebSocket? = null
