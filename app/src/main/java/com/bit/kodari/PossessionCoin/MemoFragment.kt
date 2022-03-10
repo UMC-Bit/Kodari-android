@@ -25,7 +25,7 @@ import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinGetTradeResult
 import com.bit.kodari.databinding.FragmentEditPwBinding
 import com.bit.kodari.databinding.FragmentMemoBinding
 
-class MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(FragmentMemoBinding::inflate) , MemoView {
+class   MemoFragment(val coinIdx:Int) : BaseFragment<FragmentMemoBinding>(FragmentMemoBinding::inflate) , MemoView {
 
     //더미데이터로 사용할 리스트
     private var memoList = ArrayList<GetTradeListResult>()
