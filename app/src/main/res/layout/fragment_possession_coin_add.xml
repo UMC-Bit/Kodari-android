@@ -434,7 +434,7 @@
                         android:textSize="11sp"
                         android:inputType="text"
                         android:maxLength="100"
-                        android:background="#80D3D3D3"
+                        android:background="@drawable/input_outline"
                         android:paddingLeft="17dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">

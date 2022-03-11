@@ -12,7 +12,6 @@
         android:id="@+id/make_portfolio_asset_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
         android:fontFamily="sans-serif-condensed-light"
         android:text="@string/my_asset"
         android:textColor="@color/black"
