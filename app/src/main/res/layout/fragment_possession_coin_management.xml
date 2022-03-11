@@ -5,13 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/possession_coin_management_before_button_BT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/previous_button"
+        android:padding="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/previous_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

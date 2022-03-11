@@ -4,15 +4,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/feed_main_backbutton_IB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/previous_button"
+        android:padding="10dp"
+        android:src="@drawable/previous_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/feed_main_feed_TV"
         app:layout_constraintBottom_toBottomOf="@+id/feed_main_feed_TV"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="6dp"/>
 
 
     <TextView

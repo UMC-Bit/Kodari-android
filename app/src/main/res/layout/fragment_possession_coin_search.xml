@@ -10,11 +10,12 @@
         android:id="@+id/possession_coin_search_back_IV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:src="@drawable/previous_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/possession_coin_search_possession_coin_TV"

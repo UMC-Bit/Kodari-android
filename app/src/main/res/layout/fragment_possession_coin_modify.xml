@@ -26,9 +26,10 @@
                 android:id="@+id/possession_coin_modify_before_button_IV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/previous_button"
-                android:layout_marginTop="19dp"
-                android:layout_marginLeft="16dp"
+                android:src="@drawable/previous_button"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="6dp"
+                android:padding="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -57,7 +58,7 @@
                 android:textColor="#000000"
                 android:textSize="15dp"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="51dp"
+                android:layout_marginTop="41dp"
                 android:layout_marginBottom="21dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_before_button_IV"/>

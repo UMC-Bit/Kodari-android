@@ -23,8 +23,9 @@
         android:id="@+id/edit_pw_pre_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/previous_button"
+        android:layout_marginStart="20dp"
+        android:padding="10dp"
+        android:src="@drawable/previous_button"
         app:layout_constraintBottom_toBottomOf="@id/edit_pw_title_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_pw_title_tv" />
