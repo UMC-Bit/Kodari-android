@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/btn_outline_gray"
-            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawableStart="@drawable/search_icon"
             android:textColorHint="@color/black"
             android:gravity="center_vertical"
             android:textSize="11sp"

@@ -10,11 +10,12 @@
         android:id="@+id/enroll_back_btn_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/back_btn"
+        android:padding="10dp"
+        android:src="@drawable/previous_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/enroll_title_tv"
