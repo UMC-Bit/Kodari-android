@@ -177,8 +177,8 @@
                     android:id="@+id/possession_coin_management_delete_button_IB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:background="@drawable/delete_off_button"
+                    android:layout_marginLeft="60dp"
+                    android:background="@drawable/delete_btn_off"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -186,8 +186,8 @@
                     android:id="@+id/possession_coin_management_modify_off_button_IB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/modify_off_button"
-                    android:layout_marginRight="50dp"
+                    android:background="@drawable/modify_btn_off"
+                    android:layout_marginRight="60dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
