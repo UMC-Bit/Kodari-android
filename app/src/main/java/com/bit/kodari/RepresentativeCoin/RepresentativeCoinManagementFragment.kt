@@ -189,6 +189,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
 
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        var position = 0
         if(requireActivity() != null) {
             requireActivity().runOnUiThread() {
                 // 대표 코인
@@ -201,13 +202,15 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                             coinList[i].change = change
                         }
                     }
+                    position = i
                 }
-                viewModel.getUpdateRepresentCoin(coinList)
+                viewModel.getUpdateRepresentCoin(coinList, position)
             }
         }
     }
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
+        var position = 0
         if(requireActivity() != null) {
             requireActivity().runOnUiThread() {
                 // 대표 코인
@@ -220,8 +223,9 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                         coinList[i].binancePrice = binancePrice
                         coinList[i].kimchi = kimchi
                     }
+                    position = i
                 }
-                viewModel.getUpdateRepresentCoin(coinList)
+                viewModel.getUpdateRepresentCoin(coinList, position)
             }
         }
     }

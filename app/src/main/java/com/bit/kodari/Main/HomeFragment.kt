@@ -1,20 +1,15 @@
 package com.bit.kodari.Main
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bit.kodari.databinding.FragmentHomeBinding
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
@@ -36,21 +31,30 @@ import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.USD.UsdService
 import com.bit.kodari.Util.Coin.USD.UsdView
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView, HomeView, UsdView {
-    companion object{
+    companion object {
         var usdtPrice = 1180
     }
+
+    // 유저 코인 리스트
+    var userCoinList = ArrayList<PossesionCoinResult>()
+
+    // 대표 코인 리스트
+    var representCoinList = ArrayList<RepresentCoinResult>()
+
     private lateinit var homeVPAdapter: HomeVPAdapter
-    private lateinit var homeRCRVAdapter: HomeRCRVAdapter
-    private lateinit var homePCRVAdapter: HomePCRVAdapter
+    private var homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
+    private var homePCRVAdapter = HomePCRVAdapter(userCoinList)
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var viewPagerPosition = 0;
@@ -59,11 +63,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     var portIdxList = ArrayList<Int>()
     lateinit var accounName: String
 
-    // 유저 코인 리스트
-    var userCoinList = ArrayList<PossesionCoinResult>()
-
-    // 대표 코인 리스트
-    var representCoinList = ArrayList<RepresentCoinResult>()
 
     // 수익률 리스트
     // val profitList = response.result.profitResultList
@@ -83,7 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //BaseFragment에서 onStart에서 실행시켜줌
     override fun initAfterBinding() {
-
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
@@ -95,7 +93,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //        setChartDummy()          포폴 조회 or 버튼 누를떄마다 차트 생성하게해야함.
 
         setListener()
-
+        setRepresentRV()
+        setRepresentPV()
         Log.d(
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
@@ -104,22 +103,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
-            setRepresentRV()
+            if(homeRCRVAdapter != null){
+                var position = viewModel.getRepresentCoinPosition()
+                homeRCRVAdapter.setData(representCoinList, position)
+            }else {
+                setRepresentRV()
+            }
         })
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
-            setRepresentPV()
+            if(homePCRVAdapter != null){
+                var position = viewModel.getUserCoinPosition()
+                homePCRVAdapter.setData(userCoinList, position)
+            }else {
+                setRepresentPV()
+            }
         })
     }
+
     override fun onDestroyView() {
         checkView = false
         Log.d("onDestroyView Home", "실행")
         requireActivity().window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        requireActivity().window!!.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.white)
+        requireActivity().window!!.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.white)
         super.onDestroyView()       //부모의 onDestryView 호출
     }
 
     fun setRepresentRV() {
         if (binding != null) {
+            val animator = binding.homeRepresentCoinRv.itemAnimator // 애니메이션 제거
+            if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+                animator.supportsChangeAnimations =
+                    false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
+            }
             homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
             binding.homeRepresentCoinRv.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -129,6 +145,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     fun setRepresentPV() {
         if (binding != null) {
+            val animator = binding.homeMyCoinRv.itemAnimator // 애니메이션 제거
+            if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+                animator.supportsChangeAnimations =
+                    false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
+            }
             homePCRVAdapter = HomePCRVAdapter(userCoinList)
             homePCRVAdapter.setMyItemClickListener(object : HomePCRVAdapter.MyItemClickListener {
                 override fun onClickItem(item: PossesionCoinResult) {
@@ -224,57 +245,59 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
     //API 호출 이후 실행
     fun setViewpager() {
-        homeVPAdapter = HomeVPAdapter(this, portfolioList)
-        binding.homeViewpagerVp.adapter = homeVPAdapter
-        binding.homeViewpagerVp.offscreenPageLimit = 3
+        if (checkView) {
+            homeVPAdapter = HomeVPAdapter(this, portfolioList)
+            binding.homeViewpagerVp.adapter = homeVPAdapter
+            binding.homeViewpagerVp.offscreenPageLimit = 3
 
 
-        binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
-        binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
-        //뷰페이저 화살표 설정 리스너.
-        binding.homeViewpagerVp.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {        //page변경됐을떄
-                super.onPageSelected(position)
-                viewPagerPosition = position
-                when (position) {
-                    0 -> {      //시작
-                        binding.homeVpPreviewBtn.visibility = View.GONE
-                        binding.homeVpNextBtn.visibility = View.VISIBLE
-                        if (portIdxList.size != 0) {
-                            callPortfolioInfo(portIdxList[position])
+            binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
+            binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
+            //뷰페이저 화살표 설정 리스너.
+            binding.homeViewpagerVp.registerOnPageChangeCallback(object :
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {        //page변경됐을떄
+                    super.onPageSelected(position)
+                    viewPagerPosition = position
+                    when (position) {
+                        0 -> {      //시작
+                            binding.homeVpPreviewBtn.visibility = View.GONE
+                            binding.homeVpNextBtn.visibility = View.VISIBLE
+                            if (portIdxList.size != 0) {
+                                callPortfolioInfo(portIdxList[position])
+                            }
+                            Log.d("HomeViewPager", "HomeViewPagerPosition : ${position}")
                         }
-                        Log.d("HomeViewPager" , "HomeViewPagerPosition : ${position}")
-                    }
-                    portfolioList.size - 1 -> {     //마지막
-                        binding.homeVpNextBtn.visibility = View.GONE
-                        binding.homeVpPreviewBtn.visibility = View.VISIBLE
-                        Log.d("HomeViewPager" , "HomeViewPagerPosition : ${position}")
-                        userCoinList.clear()
-                        representCoinList.clear()
-                        setRepresentRV()
-                        setRepresentPV()
-                        setChartDummy(profitList = ArrayList())
+                        portfolioList.size - 1 -> {     //마지막
+                            binding.homeVpNextBtn.visibility = View.GONE
+                            binding.homeVpPreviewBtn.visibility = View.VISIBLE
+                            Log.d("HomeViewPager", "HomeViewPagerPosition : ${position}")
+                            userCoinList.clear()
+                            representCoinList.clear()
+                            setRepresentRV()
+                            setRepresentPV()
+                            setChartDummy(profitList = ArrayList())
 
+                        }
+                        else -> {
+                            Log.d("setViewpager", "else position : ${position}")
+                            binding.homeVpNextBtn.visibility = View.VISIBLE
+                            binding.homeVpPreviewBtn.visibility = View.VISIBLE
+                            callPortfolioInfo(portIdxList[position].toInt())
+                        }
                     }
-                    else -> {
-                        Log.d("setViewpager", "else position : ${position}")
-                        binding.homeVpNextBtn.visibility = View.VISIBLE
-                        binding.homeVpPreviewBtn.visibility = View.VISIBLE
-                        callPortfolioInfo(portIdxList[position].toInt())
-                    }
+                    binding.myRecordIndicators.animatePageSelected(position)
+
                 }
-                binding.myRecordIndicators.animatePageSelected(position)
-
-            }
-        })
-        //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
+            })
+            //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
+        }
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
     fun setChartDummy(profitList: ArrayList<GetProfitResult>) {
-        if(checkView == true) {
-            if(profitList.size == 0) {
+        if (checkView) {
+            if (profitList.size == 0) {
                 binding.homeChartLc.clear()
                 binding.homeChartLc.setBackgroundColor(Color.rgb(255, 255, 255))
                 return
@@ -288,10 +311,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.data = setChartDummyData(profitList)        //데이터추가
             binding.homeChartLc.xAxis.setDrawGridLines(false)
             binding.homeChartLc.axisLeft.setDrawGridLines(false)
-            binding.homeChartLc.xAxis.axisLineColor = resources.getColor(R.color.chartTextColor)//top line
+            binding.homeChartLc.xAxis.axisLineColor =
+                resources.getColor(R.color.chartTextColor)//top line
             binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartTextColor)
-            binding.homeChartLc.xAxis.position =  XAxis.XAxisPosition.BOTTOM
-            binding.homeChartLc.axisLeft.axisLineColor = resources.getColor(R.color.chartTextColor)//left line
+            binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            binding.homeChartLc.axisLeft.axisLineColor =
+                resources.getColor(R.color.chartTextColor)//left line
             binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartTextColor)
             binding.homeChartLc.axisRight.isEnabled = false
             binding.homeChartLc.setDrawBorders(false)
@@ -302,7 +327,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.legend.isEnabled = false
             binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
             binding.homeChartLc.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            binding.homeChartLc.getRenderer().getPaintRender().setShadowLayer(3f, 5f, 3f, Color.GRAY);
+            binding.homeChartLc.getRenderer().getPaintRender()
+                .setShadowLayer(3f, 5f, 3f, Color.GRAY);
 //
 //            binding.homeChartLc.getDescription().setEnabled(false);
 //            // enable touch gestures
@@ -469,13 +495,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         if (requireActivity() != null && checkView) {
             var currentSum = 0.0
             var sumBuyCoin = 0.0
+            var userCoinPosition = 0
+            var representCoinPosition = 0
+            var userCoinCheck = false;
+            var representCoinCheck = false;
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in userCoinList.indices) {
                     val symbol = userCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val upbitPrice = upbitCoinPriceMap.get(symbol)!!
-                        val change = upbitCoinPriceMap.get(symbol+"change")
+                        val change = upbitCoinPriceMap.get(symbol + "change")
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
                         sumBuyCoin += amount * priceAvg
@@ -486,28 +516,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         userCoinList[i].profit = getProfit(upbitPrice, priceAvg, amount)
                         userCoinList[i].profitRate = getProfitRate(upbitPrice, priceAvg, amount)
                         currentSum += upbitPrice * amount
+                        userCoinPosition = i;
+                        userCoinCheck = true
                     }
                 }
                 // 대표 코인
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
-                        val change = upbitCoinPriceMap.get(symbol+"change")
+                        val change = upbitCoinPriceMap.get(symbol + "change")
                         representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
                         if (change != null) {
                             representCoinList[i].change = change
                         }
+                        representCoinPosition = i;
+                        representCoinCheck = true
                     }
                 }
-                if(viewPagerPosition < portfolioList.size && currentSum != 0.0
-                    && portfolioList[viewPagerPosition] is MyPortfolioFragment) {
+                if (viewPagerPosition < portfolioList.size && currentSum != 0.0
+                    && portfolioList[viewPagerPosition] is MyPortfolioFragment
+                ) {
                     val myPortfolioFragment: MyPortfolioFragment =
                         portfolioList[viewPagerPosition] as MyPortfolioFragment
-                    myPortfolioFragment.getAccountProfit(currentSum, sumBuyCoin)    //업비트 시세 받아오면 함수실행해서 총자산갱신
+                    myPortfolioFragment.getAccountProfit(
+                        currentSum,
+                        sumBuyCoin
+                    )    //업비트 시세 받아오면 함수실행해서 총자산갱신
                 }
                 //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
-                viewModel.getUpdateUserCoin(userCoinList)
-                viewModel.getUpdateRepresentCoin(representCoinList)
+                if(userCoinCheck){
+                    viewModel.getUpdateUserCoin(userCoinList, userCoinPosition)
+                }
+                if(representCoinCheck){
+                    viewModel.getUpdateRepresentCoin(representCoinList, representCoinPosition)
+                }
                 // 계좌 수익률 보내주기
             }
         }
@@ -515,6 +557,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
+        var position = 0
         if (requireActivity() != null && checkView) {
             requireActivity().runOnUiThread() {
                 // 대표 코인
@@ -528,11 +571,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         representCoinList[i].kimchi = kimchi
                     }
                 }
-                viewModel.getUpdateUserCoin(userCoinList)
-                viewModel.getUpdateRepresentCoin(representCoinList)
+                viewModel.getUpdateRepresentCoin(representCoinList, position)
             }
         }
     }
+
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
     }
@@ -650,7 +693,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         //상태바 색상 변경하기
         Log.d("onCreateView Home", "실행")
         requireActivity().window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        requireActivity().window!!.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.main_color)
+        requireActivity().window!!.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.main_color)
     }
 
     override fun onDestroy() {
@@ -687,6 +731,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return (currentPrice * amount) - (priceAvg * amount)
     }
+
     fun getProfitRate(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return ((currentPrice * amount) / (priceAvg * amount)) * 100 - 100
     }

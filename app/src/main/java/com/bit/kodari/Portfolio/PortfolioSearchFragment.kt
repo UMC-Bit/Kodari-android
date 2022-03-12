@@ -29,7 +29,9 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
 
         binding.portfolioSearchBackBtnIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
+                    arguments = Bundle()
+                }).commitAllowingStateLoss()
         }
     }
 

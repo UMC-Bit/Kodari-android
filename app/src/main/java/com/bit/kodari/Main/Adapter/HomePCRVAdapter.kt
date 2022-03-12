@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Util.formatD
 import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.Util.getPriceColor
@@ -14,7 +15,6 @@ import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<HomePCRVAdapter.MyViewHolder>(){
-
     interface MyItemClickListener{
         fun onClickItem(item:PossesionCoinResult)
     }
@@ -66,4 +66,8 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
+    fun setData(userCoinList: ArrayList<PossesionCoinResult>, position: Int) {
+        list = userCoinList
+        notifyItemChanged(position)
+    }
 }
