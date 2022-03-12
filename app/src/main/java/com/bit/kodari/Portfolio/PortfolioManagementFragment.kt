@@ -30,10 +30,13 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 //뒤로가기 눌렀을때 Home으로 가게 구현해야함 , 또 기존 정보 다 날라가게 해야함..
-class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBinding>(FragmentPortfolioManagementBinding::inflate) , PortManagementView{
+class PortfolioManagementFragment :
+    BaseFragment<FragmentPortfolioManagementBinding>(FragmentPortfolioManagementBinding::inflate),
+    PortManagementView {
 
     lateinit var managementRVAdapter: ManagementRVAdapter       //일단 .. 데이터를 가져와보자.
-    companion object{   //static으로 다시 돌아와도 리스트 초기화 되지 않게함.
+
+    companion object {   //static으로 다시 돌아와도 리스트 초기화 되지 않게함.
         private var psnCoinList = ArrayList<CoinDataResponse>()     //가져온 코인을 추가하는 식으로 해야할 것 같음.
         private var cnt = 0;
     }
@@ -45,18 +48,19 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
         setRecyclerView()                   //리싸이클러뷰 우선 셋팅
         setListener()
     }
+
     //문제점 1 : list가 계속 새로 선언되나 ?
-    fun setInit(){
+    fun setInit() {
         //argument 자체가 없음.
         //만약 코인 객체가 넘어왔다면 psnCoinList에 셋팅
         //sharedPreference에 넣어야할듯
-        if(requireArguments().isEmpty){     //홈 화면에서 넘어왔을 경우
+        if (requireArguments().isEmpty) {     //홈 화면에서 넘어왔을 경우
             psnCoinList.clear()
             return
-        }
-        else if(requireArguments().containsKey("coinDataResponse")){
-            val coinDataResponse = requireArguments().getSerializable("coinDataResponse") as CoinDataResponse
-            Log.d("coinData" , "$coinDataResponse")
+        } else if (requireArguments().containsKey("coinDataResponse")) {
+            val coinDataResponse =
+                requireArguments().getSerializable("coinDataResponse") as CoinDataResponse
+            Log.d("coinData", "$coinDataResponse")
             //managementRVAdapter.add(coinDataResponse)           //리스트에 추가하기.
             psnCoinList.add(coinDataResponse)
         }
@@ -64,7 +68,7 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun setListener(){
+    fun setListener() {
 
         binding.root.setOnTouchListener { view, motionEvent ->
             hideKeyboard()
@@ -74,12 +78,13 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
 
         binding.portfolioManagementCoinBackBtnIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , EnrollExchangeFragment()).commit()
+                .replace(R.id.main_container_fl, EnrollExchangeFragment()).commit()
         }
 
         binding.portfolioManagementSearchCoinBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioSearchFragment()).addToBackStack(null).commit()
+                .replace(R.id.main_container_fl, PortfolioSearchFragment()).addToBackStack(null)
+                .commit()
         }
 
         binding.portfolioManagementNextTextTv.setOnClickListener {
@@ -87,28 +92,31 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
             //Home에서 내 포토폴리오 있으면 데이터들 나오게 해야함.
             val accountName = binding.portfolioManagementInputAccountEt.text.toString()
             val property = binding.portfolioManagementInputAssetEt.text.toString()
-            val postAccountRequest = PostAccountRequest(accountName,"1",property,getUserIdx())
+            val postAccountRequest = PostAccountRequest(accountName, "1", property, getUserIdx())
             //val addCoinList = ArrayList<PsnCoinAddTradeInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
             val addCoinList = ArrayList<PsnCoinAddTradeInfo>()
-            for( cur in psnCoinList){       //여기서 거래 생성으로 바꿔야함
+            for (cur in psnCoinList) {       //여기서 거래 생성으로 바꿔야함
                 //LocalDateTime 이 현재시간 가져오는것
                 //val addCoin = PsnCoinAddInfo(getUserIdx(),cur.coinIdx,MyApplicationClass.myAccountIdx,cur.priceAvg,cur.amount)
-               val addCoin = PsnCoinAddTradeInfo(0,cur.coinIdx,cur.priceAvg,cur.amount,0.05,"buy","첫 등록",
-                    LocalDateTime.now().toString())
+                val addCoin = PsnCoinAddTradeInfo(
+                    0, cur.coinIdx, cur.priceAvg, cur.amount, 0.05, "buy", "첫 등록",
+                    LocalDateTime.now().toString()
+                )
                 //var addCoin = PsnCoinAddInfo(getUserIdx(), cur.coinIdx,0,cur.priceAvg ,cur.amount)  //accountIdx는 다시 추가해야함
                 addCoinList.add(addCoin)
             }
-            Log.d("버튼 클릭" , "${psnCoinList.size}")
+            Log.d("버튼 클릭", "${psnCoinList.size}")
             val portfolioService = PortfolioService()
             portfolioService.setPortManagementView(this)
             showLoadingDialog(requireContext())
-            portfolioService.postAccount(postAccountRequest,addCoinList)
+            portfolioService.postAccount(postAccountRequest, addCoinList)
         }
     }
 
-    fun setRecyclerView(){
+    fun setRecyclerView() {
         managementRVAdapter = ManagementRVAdapter(psnCoinList)
-        binding.portfolioManagementCoinListRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        binding.portfolioManagementCoinListRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.portfolioManagementCoinListRv.adapter = managementRVAdapter
     }
 
@@ -116,12 +124,12 @@ class PortfolioManagementFragment : BaseFragment<FragmentPortfolioManagementBind
     override fun makePortSuccess(response: PsnCoinAddTradeResponse) {
         //생성 완료 됐을 때
         cnt++
-        if(cnt == psnCoinList.size){            //넣은 코인만큼 호출되면 Home으로 돌아가자.
+        if (cnt == psnCoinList.size) {            //넣은 코인만큼 호출되면 Home으로 돌아가자.
             showToast("포트폴리오 생성 완료") // 다음 누르면 여기서 변경하게 하면 안될 것같은데 .. 이 함수가 몇번 이상 호출되면 실행되게 해야하지 않을까 ?
             dismissLoadingDialog()
-            Log.d("makePortSuccess" ,"성공")
+            Log.d("makePortSuccess", "성공")
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
             //홈 화면으로 되돌리기
         }
 

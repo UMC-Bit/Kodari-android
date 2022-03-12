@@ -72,7 +72,8 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
         }
         binding.inputQuantityPreviewBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioSearchFragment()).commit()
+                .replace(R.id.main_container_fl , PortfolioManagementFragment())
+                .commit()
         }
     }
 
