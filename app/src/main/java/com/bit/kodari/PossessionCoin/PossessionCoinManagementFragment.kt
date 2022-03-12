@@ -219,6 +219,7 @@ CoinView{
 
     // 업비트 시세 조회 API 호출 성공
     override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        var position = 0
         if(requireActivity() != null) {
             requireActivity().runOnUiThread() {
                 // 소유 코인
@@ -235,8 +236,9 @@ CoinView{
                         }
                         coinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
                     }
+                    position = i;
                 }
-                viewModel.getUpdateUserCoin(coinList)
+                viewModel.getUpdateUserCoin(coinList, position)
             }
         }
     }

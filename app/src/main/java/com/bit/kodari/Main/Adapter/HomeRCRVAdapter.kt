@@ -1,6 +1,5 @@
 package com.bit.kodari.Main.Adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,6 @@ import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.Util.getPriceColor
 import com.bit.kodari.databinding.ListItemRepresentCoinBinding
 import com.bumptech.glide.Glide
-import java.text.DecimalFormat
 
 class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<HomeRCRVAdapter.MyViewHolder>(){
     inner class MyViewHolder(val binding:ListItemRepresentCoinBinding) : RecyclerView.ViewHolder(binding.root){
@@ -39,7 +37,9 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
-
-
+    fun setData(representCoinList: ArrayList<RepresentCoinResult>, position: Int) {
+        list = representCoinList
+        notifyItemChanged(position)
+    }
 }
 

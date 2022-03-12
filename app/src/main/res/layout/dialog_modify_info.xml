@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/info_dialog_modify_name_btn"
-                android:layout_width="24dp"
+                android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:text="수정"
                 android:textSize="9sp"
@@ -115,7 +115,7 @@
 
             <TextView
                 android:id="@+id/info_dialog_modify_cash_btn"
-                android:layout_width="24dp"
+                android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:gravity="center"
                 android:text="수정"

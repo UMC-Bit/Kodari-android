@@ -17,7 +17,6 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     }
 
     var webSocket: WebSocket? = null
-    private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
 
@@ -31,6 +30,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
 
     //onMessage로 응답 받고 HomeFragment로 넘김
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+        val coinPriceMap = HashMap<String, Double>()
         val message = bytes.utf8()
         var symbol = JSONObject(message).getString("code")
         symbol = symbol.replace("KRW-","") // KRW- 제거
@@ -45,7 +45,6 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         }
         coinPriceMap.put(symbol+"change",changeNum) // 전일 대비, RISE(상승), EVEN(보합), FALL(하락)
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
-        // TODO HomeFragment livedata 처리
         coinView.upbitPriceSuccess(coinPriceMap)
     }
 
@@ -83,5 +82,4 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         sb.deleteCharAt(sb.length-1) // "," 제거
         return sb.toString()
     }
-
 }

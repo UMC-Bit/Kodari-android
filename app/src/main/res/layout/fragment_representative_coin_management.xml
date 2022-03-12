@@ -7,13 +7,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RepresentativeCoin.RepresentativeCoinManagementFragment">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/representative_coin_management_before_button_BT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/previous_button"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:src="@drawable/previous_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -150,7 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:background="@drawable/delete_off_button"
+                        android:background="@drawable/delete_btn_off"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" />
