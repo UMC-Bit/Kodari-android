@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -342,6 +343,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_coin_container_cl"
                 android:layout_width="match_parent"
@@ -444,20 +446,22 @@
                             app:layout_constraintStart_toEndOf="@id/home_binance_tv"
                             app:layout_constraintTop_toTopOf="@id/home_rpt_coin_outline_TV" />
 
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/home_represent_coin_rv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="130dp"
                             android:layout_marginTop="5dp"
                             android:padding="10dp"
                             app:layout_constraintEnd_toEndOf="@id/home_rpt_coin_outline_TV"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_rpt_coin_outline_TV"
                             tools:itemCount="3"
-                            tools:listitem="@layout/list_item_represent_coin" />
-
+                            tools:listitem="@layout/list_item_represent_coin"
+                            android:nestedScrollingEnabled="true"
+                            android:scrollbars="vertical"
+                            android:scrollbarFadeDuration="0" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -563,6 +567,7 @@
                             android:padding="10dp"
                             app:layout_constraintEnd_toEndOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_psn_coin_outline_TV"
                             tools:itemCount="3"
                             tools:listitem="@layout/list_my_coin" />
@@ -573,21 +578,6 @@
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/home_btn_container_ll"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <!--                android:textColor="#8B8B8B"-->
-            </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 

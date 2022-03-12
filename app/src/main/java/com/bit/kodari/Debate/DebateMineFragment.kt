@@ -128,15 +128,17 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         binding.mineModifyTv.setOnClickListener {
             //게시글별 조회해서 필요한 내용만 가져다 사용 , 게시글 수정에서 왜 coinIdx가 필요해 ?
             val tempPost = postIdx          //전역으로 선언된 postIdx를 넘겨주기 위해서 사용 ->근데 왜 Bundle()에서는 안될까?
+            val tempUrl = imgUrl
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, DebateModifyPostFragment(coinName , coinIdx).apply {
                     arguments = Bundle().apply {
                         putInt("postIdx", tempPost)
                         Log.d("postIdx", "넘기는 : ${tempPost}")
-                        putString("imgUrl", imgUrl)
+                        putString("imgUrl", tempUrl)
                         putString("nickName", binding.mineNicknameTv.text.toString())
                         putString("content", binding.mineContentTv.text.toString())
                         putInt("flag",flag)
+                        Log.d("imgUrl", "홈 : ${imgUrl}")
                     }
                 }).addToBackStack(null).commitAllowingStateLoss()
         }
@@ -263,7 +265,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             .error(R.drawable.profile_image)
             .into(binding.mineMaskIv)
 
-        if(imgUrl != null){     //null 아닐때만 넘겨주
+        if(post.profileImgUrl != null){     //null 아닐때만 넘겨주
             imgUrl = post.profileImgUrl.toString()   //이미지 URL 저장 , 이거를 수정 눌렀을떄 넘겨주면됨됨
         }
 
