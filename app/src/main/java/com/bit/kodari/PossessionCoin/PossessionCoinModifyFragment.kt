@@ -93,13 +93,16 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         }
 
         if(requireArguments().containsKey("amount")){
-            binding.possessionCoinModifyQuantityNumberTV.text=requireArguments().getString("amount")
+            Log.d("amout", "${requireArguments().getDouble("amount")}")
+            binding.possessionCoinModifyQuantityNumberTV.text=requireArguments().getDouble("amount").toString()
         }
 
         if(requireArguments().containsKey("priceAvg")){
             val value = requireArguments().getDouble("priceAvg")!!
             binding.possessionCoinModifyAverageunitPriceNumberTV.text=String.format("%.2f", value)
         }
+
+
     }
 
     fun setListener()

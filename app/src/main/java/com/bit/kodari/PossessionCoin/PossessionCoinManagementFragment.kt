@@ -82,6 +82,7 @@ CoinView{
                             putString("coinSymbol", coinList[position].symbol)
                             putDouble("priceAvg", coinList[position].priceAvg)
                             putDouble("amount", coinList[position].amount)
+                            Log.d("amout", "매니지 : ${coinList[position].amount}")
                         }
                     }).commitAllowingStateLoss()
             }

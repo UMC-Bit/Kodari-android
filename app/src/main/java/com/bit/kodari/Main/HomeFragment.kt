@@ -49,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         var usdtPrice = 1180
     }
     private lateinit var homeVPAdapter: HomeVPAdapter
-    private lateinit var homeRCRVAdapter: HomeRCRVAdapter
+    private var homeRCRVAdapter: HomeRCRVAdapter? = null
     private lateinit var homePCRVAdapter: HomePCRVAdapter
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
@@ -104,6 +104,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
+           // setRepresentRV()
             setRepresentRV()
         })
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {

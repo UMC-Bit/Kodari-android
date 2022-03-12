@@ -33,6 +33,7 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
             Log.d("postIdx" , "받아온 postIdx : ${postIdx}")
         }
         if(requireArguments().containsKey("imgUrl")){
+            Log.d("imgUrl","${requireArguments().getString("imgUrl")}")
             Glide.with(binding.modifyProfileIv)
                 .load(requireArguments().getString("imgUrl"))
                 .error(R.drawable.profile_image)

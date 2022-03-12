@@ -17,6 +17,7 @@ import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentDebateMainBinding
 
 class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView{
+
     private var checkView = true
     private var postList = ArrayList<DebatePostResult>()
     private lateinit var debateMainRVAdapter : DebateMainRVAdapter

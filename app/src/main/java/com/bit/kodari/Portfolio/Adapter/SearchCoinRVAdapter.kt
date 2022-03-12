@@ -40,7 +40,7 @@ class SearchCoinRVAdapter(var searchCoinList:ArrayList<SearchCoinResult>): Recyc
 
     override fun onBindViewHolder(holder: SearchCoinViewHolder, position: Int) {
         holder.bind(searchCoinList[position])
-        holder.binding.coinSelectBtnIv.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             mItemClickListener.onItemClick(searchCoinList[position])
         }
     }

@@ -24,7 +24,7 @@ import kotlin.properties.Delegates
 //닉네임도 셋팅해야함
 class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(FragmentDebatePostWriteBinding::inflate) ,DebatePostWriteVIew {
     private var coinIdx by Delegates.notNull<Int>()         //어떤 코인 게시글에 쓸지
-    lateinit var coinName : String                          //코인 이름도 저장 -> 얘를 다시 돌려줘야함
+    private lateinit var coinName : String                          //코인 이름도 저장 -> 얘를 다시 돌려줘야함
 
     override fun initAfterBinding() {
         setInit()
@@ -76,8 +76,19 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
             debateService.setDebatePostWriteVIew(this)
             showLoadingDialog(requireContext())
             debateService.writePost(post)
-
        }
+
+        binding.postWriteBackBtn.setOnClickListener {
+            val tempCoinName = coinName
+            val tempCoinIdx = coinIdx
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("coinName", tempCoinName)
+                        putInt("coinIdx" , tempCoinIdx)
+                    }
+                }).commit()
+        }
     }
 
     //다른 곳 클릭시 올라온 키보드 내려가게함
