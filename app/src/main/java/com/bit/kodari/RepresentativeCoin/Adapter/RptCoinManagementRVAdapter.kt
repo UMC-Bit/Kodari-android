@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Util.formatD
 import com.bit.kodari.Util.formatPrice
@@ -57,7 +58,10 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
 
         }
     }
-
+    fun setData(representCoinList: ArrayList<RepresentCoinResult>, position: Int) {
+        rptCoinList = representCoinList
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder {
         val binding = ItemRepresentativeCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepresentativeCoinManagementViewHolder(binding)

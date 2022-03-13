@@ -54,7 +54,10 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
             //binding.representCoinIv.setImageBitmap() .이미지 셋팅됐을시
         }
     }
-
+    fun setData(userCoinList: ArrayList<PossesionCoinResult>, position: Int) {
+        list = userCoinList
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePCRVAdapter.MyViewHolder {
         val binding = ListMyCoinBinding.inflate(LayoutInflater.from(parent.context),parent,false )
         return MyViewHolder(binding)
@@ -66,8 +69,6 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
-    fun setData(userCoinList: ArrayList<PossesionCoinResult>, position: Int) {
-        list = userCoinList
-        notifyItemChanged(position)
-    }
+
+
 }

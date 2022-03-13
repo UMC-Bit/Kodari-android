@@ -27,6 +27,10 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
         }
     }
 
+    fun setData(representCoinList: ArrayList<RepresentCoinResult>, position: Int) {
+        list = representCoinList
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRCRVAdapter.MyViewHolder {
         val binding = ListItemRepresentCoinBinding.inflate(LayoutInflater.from(parent.context),parent,false )
         return MyViewHolder(binding)
@@ -37,9 +41,6 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = list.size
-    fun setData(representCoinList: ArrayList<RepresentCoinResult>, position: Int) {
-        list = representCoinList
-        notifyItemChanged(position)
-    }
+
 }
 
