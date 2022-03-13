@@ -23,10 +23,13 @@
 
 <!--        textview에 대한 전체 글꼴 적용. 노말체-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
-        <item name="android:buttonStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
         <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
+        <item name="android:fontFamily">@font/font_resource_file</item>
 
 
-<!--        <item name="android:timePickerStyle">@style/MyTimePickerTheme</item>-->
+        <!--        <item name="android:timePickerStyle">@style/MyTimePickerTheme</item>-->
     </style>
 </resources>
