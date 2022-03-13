@@ -6,6 +6,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.PostData.DebateWritePostRequest
 import com.bit.kodari.Debate.PostData.DebateWritePostResponse
@@ -25,6 +26,25 @@ import kotlin.properties.Delegates
 class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(FragmentDebatePostWriteBinding::inflate) ,DebatePostWriteVIew {
     private var coinIdx by Delegates.notNull<Int>()         //어떤 코인 게시글에 쓸지
     private lateinit var coinName : String                          //코인 이름도 저장 -> 얘를 다시 돌려줘야함
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val tempCoinName = coinName
+                val tempCoinIdx = coinIdx
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("coinName", tempCoinName)
+                            putInt("coinIdx" , tempCoinIdx)
+                        }
+                    }).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         setInit()
@@ -147,5 +167,10 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
     override fun getUserInfoFailure(message: String) {
         Log.d("WriteGetUserInfo" , "${message}")
         dismissLoadingDialog()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

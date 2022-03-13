@@ -1,8 +1,10 @@
 package com.bit.kodari.Debate
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateMainRVAdapter
@@ -12,15 +14,19 @@ import com.bit.kodari.Debate.PostData.DebatePostResponse
 import com.bit.kodari.Debate.PostData.DebatePostResult
 import com.bit.kodari.Debate.Retrofit.DebateMainView
 import com.bit.kodari.Debate.Service.DebateService
+import com.bit.kodari.Main.HomeFragment
+import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.R
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentDebateMainBinding
 
-class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView{
+class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebateMainBinding::inflate) , DebateMainView  {
 
     private var checkView = true
     private var postList = ArrayList<DebatePostResult>()
     private lateinit var debateMainRVAdapter : DebateMainRVAdapter
+
+    private lateinit var callback:OnBackPressedCallback
 
     override fun initAfterBinding() {
         setListener()
@@ -30,6 +36,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         showLoadingDialog(requireContext())
         debateService.getPostsAll()
     }
+
 
     override fun onDestroyView() {
         checkView = false
@@ -56,7 +63,7 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
                             arguments = Bundle().apply {
                                 putInt("postIdx", item.postIdx)
                             }
-                        }).addToBackStack(null).commitAllowingStateLoss()
+                        }).commit()
                 }
 
             })
@@ -86,6 +93,5 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
         Log.d("getPost",msg)
         dismissLoadingDialog()
     }
-
 
 }

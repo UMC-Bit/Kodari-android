@@ -27,13 +27,13 @@ class LoginFragment : Fragment() {
         // 회원 가입 버튼
         binding.loginSignUpBtn.setOnClickListener {
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupIdFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupIdFragment()).commit()
         }
 
         // 아이디 로그인 버튼
         binding.loginSignInBtn.setOnClickListener {
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, LoginIdFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, LoginIdFragment()).commit()
         }
 
         return binding.root

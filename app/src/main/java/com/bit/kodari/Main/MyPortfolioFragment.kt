@@ -30,8 +30,8 @@ class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : Ba
     }
 
     override fun onDestroyView() {
-        checkView = false
         super.onDestroyView()
+        checkView = false
     }
     fun setListener(){
         //편집 버튼 누르면 다이얼로그 띄우기

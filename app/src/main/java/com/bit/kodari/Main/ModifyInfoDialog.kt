@@ -134,5 +134,10 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container_fl , HomeFragment()).commit()
+    }
 
 }

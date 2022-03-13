@@ -1,11 +1,13 @@
 package com.bit.kodari.Login
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Retrofit.PasswordView
@@ -20,6 +22,19 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
     lateinit var email : String
     lateinit var pw : String
 
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as LoginActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.login_container_fl, SignupIdFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
+
     override fun initAfterBinding() {
         setListener()
     }
@@ -33,7 +48,7 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
 
         binding.signupPwXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, LoginFragment()).commit()
         }
     }
 
@@ -49,7 +64,7 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
                             putString("email" , email)
                             putString("pw",pw)
                         }
-                    }).addToBackStack(null).commitAllowingStateLoss()
+                    }).commit()
             }
             else -> {
                 binding.signupPwCheckTv.text = response.message
@@ -59,5 +74,10 @@ class SignupPwFragment : BaseFragment<FragmentSignupPwBinding>(FragmentSignupPwB
 
     override fun getPasswordFailure(message: String) {
         showToast("Password Check 실패 ,$message")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

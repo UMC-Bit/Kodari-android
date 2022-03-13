@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MyApplicationClass
@@ -34,13 +35,24 @@ class PortfolioManagementFragment :
     BaseFragment<FragmentPortfolioManagementBinding>(FragmentPortfolioManagementBinding::inflate),
     PortManagementView {
 
-    lateinit var managementRVAdapter: ManagementRVAdapter       //일단 .. 데이터를 가져와보자.
+    private lateinit var managementRVAdapter: ManagementRVAdapter       //일단 .. 데이터를 가져와보자.
+    private lateinit var callback:OnBackPressedCallback
 
     companion object {   //static으로 다시 돌아와도 리스트 초기화 되지 않게함.
         private var psnCoinList = ArrayList<CoinDataResponse>()     //가져온 코인을 추가하는 식으로 해야할 것 같음.
         private var cnt = 0;
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, EnrollExchangeFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initAfterBinding() {
@@ -83,8 +95,7 @@ class PortfolioManagementFragment :
 
         binding.portfolioManagementSearchCoinBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioSearchFragment()).addToBackStack(null)
-                .commit()
+                .replace(R.id.main_container_fl, PortfolioSearchFragment()).commit()
         }
 
         binding.portfolioManagementNextTextTv.setOnClickListener {
@@ -129,7 +140,7 @@ class PortfolioManagementFragment :
             dismissLoadingDialog()
             Log.d("makePortSuccess", "성공")
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).commit()
             //홈 화면으로 되돌리기
         }
 
@@ -152,6 +163,11 @@ class PortfolioManagementFragment :
         //생성 실패 했을 때
         dismissLoadingDialog()
         showToast(message)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
     override fun onDestroyView() {

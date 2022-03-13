@@ -1,7 +1,9 @@
 package com.bit.kodari.Debate
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.PostData.DebateModifyRequest
 import com.bit.kodari.Debate.PostData.DebateModifyResponse
@@ -18,6 +20,24 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
 
     private var postIdx = 0
     private var flag by Delegates.notNull<Int>()
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val tempPostIdx = postIdx
+                val tempFlag = flag
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , DebateMineFragment(tempFlag,coinName).apply {
+                        arguments = Bundle().apply {
+                            putInt("postIdx", tempPostIdx)
+                        }
+                    }).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         getPostInfo()                //게시글 Index가져오기
@@ -100,5 +120,10 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
     override fun updatePostFailure(message: String) {
         Log.d("updatePost" , "통신 실패.")
         dismissLoadingDialog()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

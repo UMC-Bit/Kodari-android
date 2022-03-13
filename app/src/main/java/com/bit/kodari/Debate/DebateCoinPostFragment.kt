@@ -1,7 +1,9 @@
 package com.bit.kodari.Debate
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateCoinPostRVAdapter
@@ -21,6 +23,18 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
     private var coinIdx = 0             //초기값
     private lateinit var debateCoinPostRVAdapter: DebateCoinPostRVAdapter
     private lateinit var coinPostList : ArrayList<DebateCoinPostResult>
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , DebateMainFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         getCoinName()       //이름 가져오기
@@ -59,8 +73,7 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
                         putInt("coinIdx" , coinIdx)
                     }
                 })
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+                .commit()
         }
 
         binding.debateCoinMainFindCoinCl.setOnClickListener {
@@ -99,5 +112,10 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
     override fun getCoinPostFailure(message: String) {
         Log.d("coinPost" ,"성공 ,${message}")
         dismissLoadingDialog()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

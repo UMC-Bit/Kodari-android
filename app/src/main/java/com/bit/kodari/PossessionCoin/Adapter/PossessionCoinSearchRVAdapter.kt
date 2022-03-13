@@ -42,7 +42,7 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
     override fun onBindViewHolder(holder: PossessionCoinSearchViewHolder, position: Int) {
         holder.bind(searchcoinList[position])
 //        var SearchCoinList = searchcoinList[position]
-        holder.binding.itemPossessionCoinSearchCoinListMoveButtonIV.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             mItemClickListener.onItemClick(searchcoinList[position])
         }
     }
@@ -57,4 +57,5 @@ class PossessionCoinSearchAdapter(var searchcoinList:ArrayList<PsnCoinSearchResu
         Log.d("filterList", "${filteredList.size}")
         notifyDataSetChanged()
     }
+
 }
