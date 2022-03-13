@@ -286,7 +286,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)
             .load(post.profileImgUrl)
-            .error(R.drawable.profile_image)
+            .error(R.drawable.ic_basic_profile)
+            .placeholder(R.drawable.ic_basic_profile)
             .into(binding.mineMaskIv)
 
         if(post.profileImgUrl != null){     //null 아닐때만 넘겨주
