@@ -1,11 +1,13 @@
 package com.bit.kodari.Login
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Retrofit.EmailView
@@ -17,6 +19,18 @@ import com.bit.kodari.databinding.FragmentSignupIdBinding
 
 class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdBinding::inflate), EmailView {
 
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as LoginActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.login_container_fl, LoginFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         setListener()
@@ -45,7 +59,7 @@ class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdB
                         arguments = Bundle().apply {
                             putString("email", binding.signupIdEt.text.toString())
                         }
-                    }).addToBackStack(null).commitAllowingStateLoss()
+                    }).commit()
             }
             else -> {
                 binding.signupIdCheckTv.text = response.message
@@ -55,5 +69,10 @@ class SignupIdFragment : BaseFragment<FragmentSignupIdBinding>(FragmentSignupIdB
 
     override fun getEmailFailure(message: String) {
         showToast("Email Check 실패 ,$message")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

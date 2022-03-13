@@ -1,14 +1,17 @@
 package com.bit.kodari.PossessionCoin
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.number.IntegerWidth
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Login.SignupPwFragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinSearchAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
@@ -25,12 +28,23 @@ import kotlin.properties.Delegates
 class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinAddBinding>(FragmentPossessionCoinAddBinding::inflate) , PsnCoinAddTradeView {
     val tradeTime = StringBuilder()
     var coinIdx by Delegates.notNull<Int>()
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).addToBackStack(null)
-                .commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commit()
         }
         getCoinInformation()
         setListener()
@@ -138,5 +152,10 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
     override fun psnCoinAddTradeFailure(message: String) {
         dismissLoadingDialog()
         Log.d("failaddtrade" ,"$message")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

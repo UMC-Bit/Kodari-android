@@ -54,6 +54,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="50,000,000"
+        android:textStyle="normal"
         android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/represent_coin_iv"

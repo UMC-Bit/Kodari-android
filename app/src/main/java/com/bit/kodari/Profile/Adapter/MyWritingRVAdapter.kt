@@ -15,7 +15,7 @@ class MyWritingRVAdapter(var postList:ArrayList<GetMyPostResult>) : RecyclerView
         fun bind(item : GetMyPostResult) {
             binding.listItemMyWritingCoinNameTv.text = item.symbol
             binding.listItemMyWritingNicknameTv.text = item.nickName
-            binding.listItemMyWritingCommentCountTv.text = item.comment_cnt.toString()
+            binding.listItemMyWritingCommentCountNumTv.text = item.comment_cnt.toString()
             binding.listItemMyWritingLikeCnt.text = item.like.toString()
             binding.listItemMyWritingDislikeCnt.text = item.dislike.toString()
             binding.listItemMyWritingContentTv.text = item.content

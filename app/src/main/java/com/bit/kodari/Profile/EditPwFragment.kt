@@ -1,15 +1,18 @@
 package com.bit.kodari.Profile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.PossessionCoinSearchFragment
 import com.bit.kodari.Profile.Retrofit.PwEditView
 import com.bit.kodari.Profile.RetrofitData.ChangePasswordInfo
 import com.bit.kodari.Profile.RetrofitData.ChangePasswordResponse
@@ -21,6 +24,19 @@ import com.bit.kodari.databinding.FragmentEditPwBinding
 
 class EditPwFragment : BaseFragment<FragmentEditPwBinding>(FragmentEditPwBinding::inflate), PwEditView {
 
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
+
     override fun initAfterBinding() {
         setListener()
     }
@@ -28,7 +44,7 @@ class EditPwFragment : BaseFragment<FragmentEditPwBinding>(FragmentEditPwBinding
     fun setListener() {
         binding.editPwPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
         }
 
         binding.editPwCurrentCheckB.setOnClickListener {
@@ -47,6 +63,7 @@ class EditPwFragment : BaseFragment<FragmentEditPwBinding>(FragmentEditPwBinding
                 binding.editPwCorrectCheckErrorTv.text = "비밀번호가 일치하지 않습니다"
             }
         }
+
     }
 
     override fun checkPasswordSuccess(response: CheckPasswordResponse) {
@@ -83,5 +100,10 @@ class EditPwFragment : BaseFragment<FragmentEditPwBinding>(FragmentEditPwBinding
 
     override fun changePasswordFailure(message: String) {
         Toast.makeText(context, "통신 실패", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

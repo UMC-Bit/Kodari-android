@@ -1,10 +1,12 @@
 package com.bit.kodari.Portfolio
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Portfolio.Data.CoinDataResponse
 import com.bit.kodari.R
@@ -23,6 +25,20 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
     private var coinIdx by Delegates.notNull<Int>()
     private lateinit var priceAvg:String
     private lateinit var amount:String
+
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , PortfolioSearchFragment())
+                    .commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         setInit()
@@ -79,6 +95,11 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
                 })
                 .commitAllowingStateLoss()
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
 }

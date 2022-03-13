@@ -1,9 +1,11 @@
 package com.bit.kodari.Portfolio
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
@@ -21,6 +23,20 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
     private var coinList = ArrayList<SearchCoinResult>()
     private var filteredList  = ArrayList<SearchCoinResult>()
     private lateinit var searchCoinRVAdapter: SearchCoinRVAdapter
+    private lateinit var callback : OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
+                        arguments = Bundle()
+                    }).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
 
@@ -31,7 +47,7 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
                     arguments = Bundle()
-                }).commitAllowingStateLoss()
+                }).commit()
         }
     }
 
@@ -107,5 +123,9 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
         Log.d("getSearchCoinAllFailure", "코인 목록 불러오기 실패, ${message}")
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
 }

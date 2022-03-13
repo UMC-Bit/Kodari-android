@@ -1,9 +1,11 @@
 package com.bit.kodari.RepresentativeCoin
 
 import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -12,6 +14,7 @@ import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.R
 import com.bit.kodari.RepresentativeCoin.Retrofit.RptCoinMgtInsquireView
 import com.bit.kodari.RepresentativeCoin.RetrofitData.DeleteRptCoinResponse
@@ -34,9 +37,23 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     private var coinList = ArrayList<RepresentCoinResult>()
     private var rptCoinManagementAdapter = RptCoinManagementAdapter(coinList)
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
+    private lateinit var callback: OnBackPressedCallback
+
     companion object{
         private var cnt = 0
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, HomeFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
+
     override fun initAfterBinding() {
         // Usdt 환율 받아옴
         deleteDialog()
@@ -63,12 +80,12 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     fun setListener(){
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).commit()
         }
 
         binding.representativeCoinManagementBeforeButtonBT.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).commit()
         }
 
 
@@ -247,5 +264,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     override fun onDestroyView() {
         super.onDestroyView()
         cnt = 0
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

@@ -20,6 +20,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
 
+    //처음에 onOpen으로 소켓열음
     override fun onOpen(webSocket: WebSocket, response: Response) {
         val text = "[{\"ticket\":\"kodari\"},{\"type\":\"ticker\",\"codes\":[${symbols}]}]"
         webSocket.send(text)
@@ -27,6 +28,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         //webSocket.close(NORMAL_CLOSURE_STATUS, null) //없을 경우 끊임없이 서버와 통신함
     }
 
+    //onMessage로 응답 받고 HomeFragment로 넘김
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         val coinPriceMap = HashMap<String, Double>()
         val message = bytes.utf8()

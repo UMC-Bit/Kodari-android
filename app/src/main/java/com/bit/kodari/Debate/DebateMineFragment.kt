@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateCommentRVAdapter
@@ -53,6 +54,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
     private var commentIdx = 0
     private var coinIdx = 0
 
+    private lateinit var callback:OnBackPressedCallback
+
     override fun initAfterBinding() {
         setInit()
         setListener()
@@ -63,6 +66,27 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             coinIdx = requireArguments().getInt("coinIdx")
             Log.d("rere" , "${coinIdx}")
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(flag == 1){
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl , DebateMainFragment()).commit()
+                } else{
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                            arguments = Bundle().apply {
+                                putString("coinName", coinName)
+                                putInt("coinIdx" , coinIdx)
+                            }
+                        }).commit()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
     }
 
     //초기 기본 셋팅 값들 설정
@@ -140,7 +164,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                         putInt("flag",flag)
                         Log.d("imgUrl", "홈 : ${imgUrl}")
                     }
-                }).addToBackStack(null).commitAllowingStateLoss()
+                }).commit()
         }
 
         binding.mineLikeBtn.setOnClickListener {
@@ -262,7 +286,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)
             .load(post.profileImgUrl)
-            .error(R.drawable.profile_image)
+            .error(R.drawable.ic_basic_profile)
+            .placeholder(R.drawable.ic_basic_profile)
             .into(binding.mineMaskIv)
 
         if(post.profileImgUrl != null){     //null 아닐때만 넘겨주
@@ -478,6 +503,11 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         val debateService = DebateService()
         debateService.setDebateMineView(this)
         debateService.pressCommentLike(commentLikeRequest)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
 }

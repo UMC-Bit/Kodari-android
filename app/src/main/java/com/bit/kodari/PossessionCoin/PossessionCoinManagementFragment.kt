@@ -2,6 +2,7 @@ package com.bit.kodari.PossessionCoin
 
 //import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementRVAdapter
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -41,6 +43,19 @@ CoinView{
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private var coinList = ArrayList<PossesionCoinResult>()
     private var possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
+    private lateinit var callback:OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, HomeFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
+
     override fun initAfterBinding() {
         setListener()
         getPossessionCoins()
@@ -92,7 +107,7 @@ CoinView{
                             putDouble("amount", coinList[position].amount)
                             Log.d("amout", "매니지 : ${coinList[position].amount}")
                         }
-                    }).commitAllowingStateLoss()
+                    }).commit()
             }
         }
 
@@ -116,12 +131,12 @@ CoinView{
 
         binding.possessionCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commit()
         }
 
         binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, HomeFragment()).commit()
         }
     }
 
@@ -264,5 +279,10 @@ CoinView{
     // 평가순익 구하는 메서드
     fun getProfit(currentPrice: Double, priceAvg: Double, amount: Double): Double {
         return (currentPrice * amount) - (priceAvg * amount)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }
