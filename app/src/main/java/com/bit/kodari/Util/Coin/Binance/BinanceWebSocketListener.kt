@@ -18,7 +18,6 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
     }
 
     var webSocket: WebSocket? = null
-    private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
 
@@ -29,6 +28,7 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
 
 
     override fun onMessage(webSocket: WebSocket, message: String) {
+        val coinPriceMap = HashMap<String, Double>()
         var symbol = JSONObject(message).getString("s")
         symbol = symbol.replace("USDT","") // KRW- 제거
         val price = JSONObject(message).getDouble("c")

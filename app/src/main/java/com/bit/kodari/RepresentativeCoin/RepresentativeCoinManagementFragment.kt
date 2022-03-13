@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
 import com.bit.kodari.Main.Data.RepresentCoinResult
@@ -30,8 +31,8 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
-    private lateinit var rptCoinManagementAdapter: RptCoinManagementAdapter
     private var coinList = ArrayList<RepresentCoinResult>()
+    private var rptCoinManagementAdapter = RptCoinManagementAdapter(coinList)
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
     companion object{
         private var cnt = 0
@@ -45,7 +46,12 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         viewModelFactory = CoinViewModelFactory(null, coinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
-            setRecyclerView()
+            if(rptCoinManagementAdapter != null){
+                var position = viewModel.getRepresentCoinPosition()
+                rptCoinManagementAdapter.setData(coinList, position)
+            }else {
+                setRecyclerView()
+            }
         })
     }
 
@@ -69,6 +75,11 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     }
 
     fun setRecyclerView(){
+        val animator = binding.representativeCoinManagementRV.itemAnimator // 애니메이션 제거
+        if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+            animator.supportsChangeAnimations =
+                false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
+        }
         rptCoinManagementAdapter= RptCoinManagementAdapter(coinList)
         //아이템 클릭 리스너를 현재 뷰에서 처리
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅
@@ -201,8 +212,8 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                         if (change != null) {
                             coinList[i].change = change
                         }
+                        position = i
                     }
-                    position = i
                 }
                 viewModel.getUpdateRepresentCoin(coinList, position)
             }
@@ -222,8 +233,8 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         coinList[i].binancePrice = binancePrice
                         coinList[i].kimchi = kimchi
+                        position = i
                     }
-                    position = i
                 }
                 viewModel.getUpdateRepresentCoin(coinList, position)
             }

@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Data.PossesionCoinResult
@@ -38,8 +39,8 @@ CoinView{
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
-    private lateinit var possessionCoinManagementAdapter: PossessionCoinManagementAdapter
     private var coinList = ArrayList<PossesionCoinResult>()
+    private var possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
     override fun initAfterBinding() {
         setListener()
         getPossessionCoins()
@@ -47,7 +48,12 @@ CoinView{
         viewModelFactory = CoinViewModelFactory(coinList, null)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
-            setRecyclerView()
+            if(possessionCoinManagementAdapter != null){
+                var position = viewModel.getUserCoinPosition()
+                possessionCoinManagementAdapter.setData(coinList, position)
+            }else {
+                setRecyclerView()
+            }
         })
     }
     override fun onPause() {
@@ -66,6 +72,7 @@ CoinView{
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
         binanceWebSocket?.webSocket?.cancel()
     }
+
     fun setListener(){
         binding.possessionCoinManagementModifyOffButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 수정 fragement로 이동 가능
@@ -145,8 +152,12 @@ CoinView{
             deleteAlertDialog.dismiss()
         }
     }
-
     fun setRecyclerView(){
+        val animator = binding.possessionCoinManagementRV.itemAnimator // 애니메이션 제거
+        if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+            animator.supportsChangeAnimations =
+                false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
+        }
         possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
         //아이템 클릭 리스너를 현재 뷰에서 처리
         //Adapter에 있는 position값과 같이 HomeFragment로 넘어와서 자동 셋팅

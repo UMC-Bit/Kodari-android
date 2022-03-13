@@ -45,13 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     companion object {
         var usdtPrice = 1180
     }
-
-    // 유저 코인 리스트
-    var userCoinList = ArrayList<PossesionCoinResult>()
-
-    // 대표 코인 리스트
-    var representCoinList = ArrayList<RepresentCoinResult>()
-
+    var coinPriceMap = HashMap<String, Double>(); // key:symbol, value:price
+    var userCoinList = ArrayList<PossesionCoinResult>() // 유저 코인 리스트
+    var representCoinList = ArrayList<RepresentCoinResult>() // 대표 코인 리스트
     private lateinit var homeVPAdapter: HomeVPAdapter
     private var homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
     private var homePCRVAdapter = HomePCRVAdapter(userCoinList)
@@ -93,8 +89,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //        setChartDummy()          포폴 조회 or 버튼 누를떄마다 차트 생성하게해야함.
 
         setListener()
-        setRepresentRV()
-        setRepresentPV()
         Log.d(
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
@@ -500,27 +494,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             var userCoinCheck = false;
             var representCoinCheck = false;
             requireActivity().runOnUiThread() {
-                // 소유 코인
+                // 소유 코인 시세 받아오기, 수익률 구하기
                 for (i in userCoinList.indices) {
                     val symbol = userCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        coinPriceMap.put(symbol, upbitPrice)
                         val change = upbitCoinPriceMap.get(symbol + "change")
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
-                        sumBuyCoin += amount * priceAvg
                         userCoinList[i].upbitPrice = upbitPrice
                         if (change != null) {
                             userCoinList[i].change = change
                         }
                         userCoinList[i].profit = getProfit(upbitPrice, priceAvg, amount)
                         userCoinList[i].profitRate = getProfitRate(upbitPrice, priceAvg, amount)
+                        userCoinPosition = i;
+                        userCoinCheck = true
+                    }
+                }
+                // 소유 코인 소득 구하기
+                for (i in userCoinList.indices) {
+                    val symbol = userCoinList[i].symbol
+                    if (coinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = coinPriceMap.get(symbol)!!
+                        val amount = userCoinList[i].amount
+                        val priceAvg = userCoinList[i].priceAvg
+                        userCoinList[i].upbitPrice = upbitPrice
+                        sumBuyCoin += amount * priceAvg
                         currentSum += upbitPrice * amount
                         userCoinPosition = i;
                         userCoinCheck = true
                     }
                 }
-                // 대표 코인
+                // 대표 코인 시세 받아오기
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
@@ -569,6 +576,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         representCoinList[i].binancePrice = binancePrice
                         representCoinList[i].kimchi = kimchi
+                        position = i;
                     }
                 }
                 viewModel.getUpdateRepresentCoin(representCoinList, position)
@@ -585,6 +593,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     fun getCoinPrice(response: PortfolioResponse) {
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
+        setRepresentRV()
+        setRepresentPV()
         userCoinList.clear()
         representCoinList.clear()
         // 계좌
