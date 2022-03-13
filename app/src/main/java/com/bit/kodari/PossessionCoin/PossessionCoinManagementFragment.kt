@@ -59,6 +59,7 @@ CoinView{
     override fun onPause() {
         super.onPause()
         checkView = false
+        PossessionCoinManagementAdapter.clickPosition = -1
     }
 
     override fun onResume() {

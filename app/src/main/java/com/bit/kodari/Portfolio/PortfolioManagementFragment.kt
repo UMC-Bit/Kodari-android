@@ -69,7 +69,6 @@ class PortfolioManagementFragment :
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setListener() {
-
         binding.root.setOnTouchListener { view, motionEvent ->
             hideKeyboard()
             false

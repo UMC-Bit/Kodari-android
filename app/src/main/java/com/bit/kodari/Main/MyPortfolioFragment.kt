@@ -18,12 +18,13 @@ import kotlin.properties.Delegates
 
 //포토폴리오 Index로 포토폴리오 조회환 뒤 binding 처리 해줘야할듯
 class MyPortfolioFragment(val portIdx: Int, val homeFragment: HomeFragment) : BaseFragment<FragmentMyPortfolioBinding>(FragmentMyPortfolioBinding::inflate) ,PortfolioView{  //portIdx로 계좌 조회 ?
-    private var checkView = true
+    private var checkView = false
     var profit: Int = 0
     var property: Double = 0.0
     var accoutIdx by Delegates.notNull<Int>()
 
     override fun initAfterBinding() {
+        checkView = true
         callMyPort()
         setListener()
         homeFragment.setPortFolioView(this)

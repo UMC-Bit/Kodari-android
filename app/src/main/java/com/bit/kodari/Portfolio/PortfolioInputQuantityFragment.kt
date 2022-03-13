@@ -72,8 +72,12 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
         }
         binding.inputQuantityPreviewBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioManagementFragment())
-                .commit()
+                .replace(R.id.main_container_fl , PortfolioManagementFragment().apply{
+                    arguments = Bundle().apply{
+
+                    }
+                })
+                .commitAllowingStateLoss()
         }
     }
 
