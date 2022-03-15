@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="원하는 정보로 변경하려면\n수정 버튼을 눌러주세요."
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/info_dialog_exit_btn"
@@ -60,32 +60,33 @@
 
             <EditText
                 android:id="@+id/info_dialog_input_account_et"
-                android:layout_width="0dp"
+                android:layout_width="170dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/btn_outline_gray"
+                android:background="@drawable/input_outline"
                 android:gravity="center"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_account_name_tv"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/info_dialog_modify_name_btn"
                 app:layout_constraintStart_toEndOf="@id/info_dialog_account_name_tv"
                 app:layout_constraintTop_toTopOf="@id/info_dialog_account_name_tv" />
 
             <TextView
                 android:id="@+id/info_dialog_modify_name_btn"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_outline_yellow"
+                android:gravity="center"
                 android:text="수정"
-                android:textSize="9sp"
-                android:textStyle="normal"
-                android:layout_marginEnd="10dp"
                 android:textColor="@color/black"
-                app:layout_constraintTop_toTopOf="@id/info_dialog_input_account_et"
+                android:textSize="12sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_input_account_et"
-                app:layout_constraintEnd_toEndOf="@id/info_dialog_input_account_et"
-                android:background="@drawable/btn_outline_yellow"
-                android:gravity="center"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_input_account_et"
+                app:layout_constraintVertical_bias="0.4" />
 
             <TextView
                 android:id="@+id/info_dialog_cash_tv"
@@ -101,31 +102,32 @@
 
             <EditText
                 android:id="@+id/info_dialog_input_cash_et"
-                android:layout_width="0dp"
+                android:layout_width="170dp"
                 android:layout_height="30dp"
-                android:background="@drawable/btn_outline_gray"
-                app:layout_constraintTop_toTopOf="@id/info_dialog_cash_tv"
-                app:layout_constraintBottom_toBottomOf="@id/info_dialog_cash_tv"
-                app:layout_constraintStart_toEndOf="@id/info_dialog_cash_tv"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="15sp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="20dp"
-                android:gravity="center"/>
+                android:background="@drawable/input_outline"
+                android:gravity="center"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/info_dialog_cash_tv"
+                app:layout_constraintEnd_toStartOf="@id/info_dialog_modify_cash_btn"
+                app:layout_constraintHorizontal_bias="0.506"
+                app:layout_constraintStart_toEndOf="@id/info_dialog_cash_tv"
+                app:layout_constraintTop_toTopOf="@id/info_dialog_cash_tv" />
 
             <TextView
                 android:id="@+id/info_dialog_modify_cash_btn"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:gravity="center"
                 android:text="수정"
-                android:textSize="9sp"
-                android:layout_marginEnd="10dp"
+                android:textSize="12sp"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="@id/info_dialog_input_cash_et"
                 app:layout_constraintBottom_toBottomOf="@id/info_dialog_input_cash_et"
-                app:layout_constraintEnd_toEndOf="@id/info_dialog_input_cash_et"
-                android:background="@drawable/btn_outline_yellow" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/input_outline_yellow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,6 +139,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintTop_toBottomOf="@id/info_cardView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="30dp"
@@ -146,7 +149,7 @@
         <TextView
             android:id="@+id/info_dialog_delete_btn"
             android:layout_width="54dp"
-            android:layout_height="27dp"
+            android:layout_height="28dp"
             android:text="삭제"
             android:gravity="center"
             android:textSize="12sp"
