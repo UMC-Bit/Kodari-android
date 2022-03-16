@@ -4,12 +4,14 @@ package com.bit.kodari.PossessionCoin
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -122,7 +124,11 @@ CoinView{
                     .inflate(R.layout.fragment_possession_coin_delete_dialog, null)
                 val deleteDialogBuilder = AlertDialog.Builder(context as MainActivity)
                     .setView(deleteDialogView)
-                val deleteAlertDialog = deleteDialogBuilder.show()
+                val deleteAlertDialog = deleteDialogBuilder.create()
+                deleteDialogView.setBackgroundColor(Color.TRANSPARENT)
+                deleteAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                deleteAlertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                deleteAlertDialog.show()
                 val position = PossessionCoinManagementAdapter.clickPosition
                 deleteDialog(coinList[position].userCoinIdx)
                 deleteAlertDialog.dismiss()

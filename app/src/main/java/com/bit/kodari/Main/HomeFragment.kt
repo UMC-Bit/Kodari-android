@@ -124,7 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentRV() {
-        if (binding != null) {
+        if (checkView && binding != null) {
             val animator = binding.homeRepresentCoinRv.itemAnimator // 애니메이션 제거
             if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
                 animator.supportsChangeAnimations =
@@ -138,7 +138,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun setRepresentPV() {
-        if (binding != null) {
+        if (checkView && binding != null) {
             val animator = binding.homeMyCoinRv.itemAnimator // 애니메이션 제거
             if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
                 animator.supportsChangeAnimations =

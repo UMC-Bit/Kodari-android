@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/possession_coin_search_exchange_logo_CV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_background_round">
 
             <TextView
                 android:id="@+id/possession_coin_delete_dialog_ask_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="70dp"
+                android:bufferType="spannable"
                 android:text="소유 코인을 삭제할까요?"
                 android:textColor="#000000"
-                android:bufferType="spannable"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/delete_line_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:src="@drawable/line"
-                app:layout_constraintTop_toBottomOf="@id/possession_coin_delete_dialog_ask_TV"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="30dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_delete_dialog_ask_TV" />
 
             <TextView
                 android:id="@+id/possession_coin_delete_dialog_delete_confirm_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
-                android:text="삭제"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_click_ripple"
+                android:gravity="center"
+                android:text="삭제"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/delete_line_iv"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"/>
+                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"
+                app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/possession_coin_delete_dialog_delte_confirm_on_TV"-->
-<!--                android:layout_width="46dp"-->
-<!--                android:layout_height="27dp"-->
-<!--                android:text="삭제"-->
-<!--                android:textSize="12dp"-->
-<!--                android:textColor="#000000"-->
-<!--                android:gravity="center"-->
-<!--                android:visibility="gone"-->
-<!--                android:background="@drawable/button_outline"-->
-<!--                android:backgroundTint="#B3FDCC68"-->
-<!--                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/possession_coin_delete_dialog_cancel_TV"-->
-<!--                app:layout_constraintTop_toTopOf="@id/possession_coin_delete_dialog_cancel_TV" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/possession_coin_delete_dialog_delte_confirm_on_TV"-->
+            <!--                android:layout_width="46dp"-->
+            <!--                android:layout_height="27dp"-->
+            <!--                android:text="삭제"-->
+            <!--                android:textSize="12dp"-->
+            <!--                android:textColor="#000000"-->
+            <!--                android:gravity="center"-->
+            <!--                android:visibility="gone"-->
+            <!--                android:background="@drawable/button_outline"-->
+            <!--                android:backgroundTint="#B3FDCC68"-->
+            <!--                app:layout_constraintStart_toStartOf="@id/possession_coin_delete_dialog_ask_TV"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/possession_coin_delete_dialog_cancel_TV"-->
+            <!--                app:layout_constraintTop_toTopOf="@id/possession_coin_delete_dialog_cancel_TV" />-->
 
             <TextView
                 android:id="@+id/possession_coin_delete_dialog_cancel_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
-                android:text="취소"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:layout_marginBottom="20dp"
-                android:textColor="#000000"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="취소"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/possession_coin_delete_dialog_ask_TV"
-                app:layout_constraintTop_toBottomOf="@id/delete_line_iv"/>
+                app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

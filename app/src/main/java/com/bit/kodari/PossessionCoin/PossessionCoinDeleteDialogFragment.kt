@@ -1,5 +1,6 @@
 package com.bit.kodari.PossessionCoin
 
+import android.R
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -21,7 +22,6 @@ class PossessionCoinDeleteDialogFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentPossessionCoinDeleteDialogBinding.inflate(inflater, container, false)
-
 //        Spannable span = binding.possessionCoinDeleteDialogAskTV.getText().setSpan(ForegroundColorSpan(Color.RED), 0, 5, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
 
         //삭제 빨갛게 만들기
