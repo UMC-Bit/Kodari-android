@@ -2,6 +2,10 @@ package com.bit.kodari.RepresentativeCoin
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -24,6 +28,7 @@ import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
 class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
@@ -142,21 +147,23 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     fun deleteDialog()
     {
         binding.representativeCoinManagementDeleteButtonIB.setOnClickListener {
-            val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_representative_coin_delete_dialog, null)
-            val deleteDialogBuilder= AlertDialog.Builder(context as MainActivity)
-                .setView(deleteDialogView)
+            val deleteAlertDialog = MaterialAlertDialogBuilder(context as MainActivity, R.style.MyRounded_MaterialComponents_MaterialAlertDialog)
+                .setView(R.layout.fragment_representative_coin_delete_dialog).show()
 
-            val deleteAlertDialog = deleteDialogBuilder.show()
+            val deleteConfirmButton=deleteAlertDialog.findViewById<TextView>(R.id.representative_coin_delete_dialog_delete_confirm_TV)
+            val cancelButton=deleteAlertDialog.findViewById<TextView>(R.id.representative_coin_delete_dialog_cancel_TV)
+            val deleteAskTextView = deleteAlertDialog.findViewById<TextView>(R.id.representative_coin_delete_dialog_ask_TV)
 
-            val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.representative_coin_delete_dialog_delete_confirm_TV)
-            val cancelButton=deleteDialogView.findViewById<TextView>(R.id.representative_coin_delete_dialog_cancel_TV)
-
-            deleteConfirmButton.setOnClickListener {
+            //글자 색 바꾸기
+            val builder = SpannableStringBuilder(deleteAskTextView!!.text)
+            builder.setSpan(ForegroundColorSpan(Color.RED) , 7,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            deleteAskTextView.setText(builder)
+            deleteConfirmButton!!.setOnClickListener {
                 deleteRcoin()       //삭제눌렀을때 삭제
                 deleteAlertDialog.dismiss()
             }
 
-            cancelButton.setOnClickListener {
+            cancelButton!!.setOnClickListener {
                 deleteAlertDialog.dismiss()
             }
         }

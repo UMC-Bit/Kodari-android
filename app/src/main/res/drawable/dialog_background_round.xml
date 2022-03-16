@@ -9,9 +9,9 @@
             <!-- 각 모서리 dip 만큼 코너형식 -->
             <corners android:radius="50dip" />
             <!-- 배경색 -->
-            <solid android:color="#fff" />
+            <solid android:color="#ffffff" />
             <!-- 라인색 및 두께 -->
-            <stroke android:width="3dp" android:color="#ff0000"/>
+            <stroke android:width="0dp" android:color="#ff0000"/>
         </shape>
     </item>
 </layer-list>

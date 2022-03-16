@@ -34,6 +34,7 @@ import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
 CoinView{
@@ -120,18 +121,8 @@ CoinView{
             val position = PossessionCoinManagementAdapter.clickPosition
             Log.d("PossessiongCoinDelete", "실행 , ${position} , 체크 : ${isClick}")
             if (isClick && position != -1) {
-                val deleteDialogView = LayoutInflater.from(context as MainActivity)
-                    .inflate(R.layout.fragment_possession_coin_delete_dialog, null)
-                val deleteDialogBuilder = AlertDialog.Builder(context as MainActivity)
-                    .setView(deleteDialogView)
-                val deleteAlertDialog = deleteDialogBuilder.create()
-                deleteDialogView.setBackgroundColor(Color.TRANSPARENT)
-                deleteAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                deleteAlertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                deleteAlertDialog.show()
                 val position = PossessionCoinManagementAdapter.clickPosition
                 deleteDialog(coinList[position].userCoinIdx)
-                deleteAlertDialog.dismiss()
             }
         }
 
@@ -147,22 +138,19 @@ CoinView{
     }
 
     fun deleteDialog(userCoinIdx: Int) {
-        val deleteDialogView=LayoutInflater.from(context as MainActivity).inflate(R.layout.fragment_possession_coin_delete_dialog, null)
-        val deleteDialogBuilder=AlertDialog.Builder(context as MainActivity)
-            .setView(deleteDialogView)
-
-        val deleteAlertDialog = deleteDialogBuilder.show()
-
-        val deleteConfirmButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
-        val cancelButton=deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
-        val deleteAskTextView = deleteDialogView.findViewById<TextView>(R.id.possession_coin_delete_dialog_ask_TV)
+        val deleteAlertDialog = MaterialAlertDialogBuilder(context as MainActivity, R.style.MyRounded_MaterialComponents_MaterialAlertDialog)
+            .setView(R.layout.fragment_possession_coin_delete_dialog).show()
+        val deleteConfirmButton=deleteAlertDialog.findViewById<TextView>(R.id.possession_coin_delete_dialog_delete_confirm_TV)
+        val cancelButton=deleteAlertDialog.findViewById<TextView>(R.id.possession_coin_delete_dialog_cancel_TV)
+        val deleteAskTextView = deleteAlertDialog.findViewById<TextView>(R.id.possession_coin_delete_dialog_ask_TV)
 
         //글자 색 바꾸기
-        val builder = SpannableStringBuilder(deleteAskTextView.text)
+        val builder = SpannableStringBuilder(deleteAskTextView!!.text)
         builder.setSpan(ForegroundColorSpan(Color.RED) , 7,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         deleteAskTextView.setText(builder)
+
         // 여기에 어댑터와 연결해서 삭제 기능 불러오기
-        deleteConfirmButton.setOnClickListener {
+        deleteConfirmButton!!.setOnClickListener {
                 // 소유코인 삭제 API 호출 ->
                 val psnCoinService = PsnCoinService()
                 psnCoinService.setPsnCoinMgtDeleteView(this)
@@ -170,7 +158,7 @@ CoinView{
                 psnCoinService.deletePsnCoin(userCoinIdx)
                 deleteAlertDialog.dismiss()
             }
-        cancelButton.setOnClickListener {
+        cancelButton!!.setOnClickListener {
             deleteAlertDialog.dismiss()
         }
     }
