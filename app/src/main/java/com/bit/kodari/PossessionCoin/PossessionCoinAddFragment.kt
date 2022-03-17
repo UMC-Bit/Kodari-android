@@ -128,7 +128,7 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
         }
 
-        binding.possessionCoinAddDateCV.setOnClickListener{
+        binding.possessionCoinAddDateInputET.setOnClickListener{
             datetimepicker()
         }
 
