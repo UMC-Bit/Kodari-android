@@ -311,7 +311,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/possession_coin_modify_price_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
@@ -324,7 +324,7 @@
                         android:paddingLeft="17dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
-                    </com.google.android.material.textfield.TextInputEditText>
+                    </EditText>
 
                 </LinearLayout>
 

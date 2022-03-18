@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Main.HomeFragment">
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:elevation="8dp">
+            app:elevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -343,6 +347,12 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_coin_container_cl"
@@ -354,7 +364,10 @@
                 android:background="@drawable/btn_outline_yellow"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:paddingBottom="30dp">
+                android:paddingBottom="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appbar">
 
                 <TextView
                     android:id="@+id/home_represent_coin_tv"
@@ -451,17 +464,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="130dp"
                             android:layout_marginTop="5dp"
+                            android:nestedScrollingEnabled="true"
                             android:padding="10dp"
+                            android:scrollbarFadeDuration="0"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/home_rpt_coin_outline_TV"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_rpt_coin_outline_TV"
                             tools:itemCount="3"
-                            tools:listitem="@layout/list_item_represent_coin"
-                            android:nestedScrollingEnabled="true"
-                            android:scrollbars="vertical"
-                            android:scrollbarFadeDuration="0" />
+                            tools:listitem="@layout/list_item_represent_coin" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -565,9 +577,9 @@
                             android:layout_height="150dp"
                             android:layout_marginTop="5dp"
                             android:padding="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_psn_coin_outline_TV"
                             tools:itemCount="3"
                             tools:listitem="@layout/list_my_coin" />
@@ -579,8 +591,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
