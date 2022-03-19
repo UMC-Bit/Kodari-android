@@ -30,6 +30,7 @@
         app:layout_constraintBottom_toBottomOf="@id/list_item_debate_mask_iv"
         app:layout_constraintStart_toEndOf="@id/list_item_debate_mask_iv"/>
 
+
     <TextView
         android:id="@+id/list_item_content_tv"
         android:layout_width="match_parent"
