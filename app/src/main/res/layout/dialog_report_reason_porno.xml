@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/dialog_report_reason_sell_title_TV"
+                android:id="@+id/dialog_report_reason_porno_title_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/dialog_report_reason_sell_content_1_TV"
+                android:id="@+id/dialog_report_reason_porno_content_1_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -45,19 +45,19 @@
                 android:textSize="13sp"
                 android:textAlignment="center"
                 android:textColor="#F36E6E"
-                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_sell_title_TV"
+                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_porno_title_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/dialog_report_reason_sell_content_2_TV"
+                android:id="@+id/dialog_report_reason_porno_content_2_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="신고 사유에 맞지 않는 신고를 했을 경우, 해당 신고는 처리되지 않습니다."
                 android:textSize="13sp"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_sell_content_1_TV"
+                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_porno_content_1_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -69,11 +69,11 @@
                 android:src="@drawable/line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_sell_content_2_TV">
+                app:layout_constraintTop_toBottomOf="@id/dialog_report_reason_porno_content_2_TV">
 
             </ImageView>
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_delete_confirm_TV"
+                android:id="@+id/dialog_report_reason_porno_cancel_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="15dp"
@@ -84,12 +84,12 @@
                 android:textColor="#000000"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/dialog_report_reason_sell_title_TV"
+                app:layout_constraintStart_toStartOf="@id/dialog_report_reason_porno_title_TV"
                 app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
 
 
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_cancel_TV"
+                android:id="@+id/dialog_report_reason_porno_confirm_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="15dp"
@@ -99,7 +99,7 @@
                 android:textColor="#000000"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/dialog_report_reason_sell_title_TV"
+                app:layout_constraintEnd_toEndOf="@id/dialog_report_reason_porno_title_TV"
                 app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

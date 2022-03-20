@@ -73,7 +73,7 @@
 
             </ImageView>
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_delete_confirm_TV"
+                android:id="@+id/dialog_report_reason_sell_cancel_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="15dp"
@@ -89,7 +89,7 @@
 
 
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_cancel_TV"
+                android:id="@+id/dialog_report_reason_sell_confirm_TV"
                 android:layout_width="46dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="15dp"
