@@ -14,6 +14,7 @@
     <color name="chartColor">#8CD4E6</color>
     <color name="chartTextColor">#0033CC</color>
     <color name="chartBackground">#3366CC</color>
+    <color name="delete_red">#F36E6E</color>
 <!--    <color name="chartColor">#BDF6FE</color>-->
 <!--    <color name="chartTextColor">#FDFDFD</color>-->
 <!--    <color name="chartBackground">#FDDC5C</color>-->
