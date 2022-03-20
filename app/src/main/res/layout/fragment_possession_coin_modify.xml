@@ -196,7 +196,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_marginTop="37dp"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -287,48 +287,31 @@
                 android:text="가격"
                 android:textStyle="bold"
                 android:textColor="#000000"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="17dp"
                 android:layout_marginTop="35dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_type_TV"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_price_input_CV"
+
+            <EditText
+                android:id="@+id/possession_coin_modify_price_input_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="43dp"
-                android:layout_marginRight="28dp"
-                app:cardCornerRadius="24dp"
+                android:layout_height="38dp"
+                android:background="@drawable/input_outline"
+                android:fontFamily="@font/font_resource_file"
+                android:hint="ex) 20"
+                android:inputType="number"
+                android:paddingLeft="17dp"
+                android:layout_marginStart="43dp"
+                android:layout_marginEnd="28dp"
+                android:textColorHint="#FF584E"
+                android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_price_TV"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/possession_coin_modify_price_TV"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_price_TV"
-                app:layout_constraintVertical_bias="0.7">
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_price_TV">
+            </EditText>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/possession_coin_modify_price_input_ET"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:drawablePadding="6dp"
-                        android:textColorHint="#FF584E"
-                        android:hint="ex) 20"
-                        android:textSize="11sp"
-                        android:inputType="number"
-                        android:background="#80D3D3D3"
-                        android:paddingLeft="17dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                    </EditText>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/possession_coin_modify_quantity_TV"
@@ -338,123 +321,73 @@
                 android:text="수량"
                 android:textStyle="bold"
                 android:textColor="#000000"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="17dp"
                 android:layout_marginTop="29dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_price_TV"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_quantity_input_CV"
+
+            <EditText
+                android:id="@+id/possession_coin_modify_quantity_input_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="43dp"
-                android:layout_marginRight="28dp"
-                app:cardCornerRadius="24dp"
+                android:layout_height="38dp"
+                android:background="@drawable/input_outline"
+                android:fontFamily="@font/font_resource_file"
+                android:hint="ex) 7.32"
+                android:inputType="number"
+                android:paddingLeft="17dp"
+                android:layout_marginStart="43dp"
+                android:layout_marginEnd="28dp"
+                android:textColorHint="#FF584E"
+                android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_quantity_TV"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/possession_coin_modify_quantity_TV"
-                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_TV"
-                app:layout_constraintVertical_bias="0.7">
+                app:layout_constraintTop_toTopOf="@id/possession_coin_modify_quantity_TV">
+            </EditText>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/possession_coin_modify_quantity_input_ET"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:drawablePadding="6dp"
-                        android:textColorHint="#FF584E"
-                        android:hint="ex) 7.32"
-                        android:textSize="11sp"
-                        android:inputType="number"
-                        android:background="#80D3D3D3"
-                        android:paddingLeft="17dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_date_CV"
+            <EditText
+                android:id="@+id/possession_coin_modify_date_input_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="21dp"
-                android:layout_marginRight="21dp"
-                app:cardCornerRadius="24dp"
+                android:layout_height="38dp"
+                android:background="@drawable/input_outline"
+                android:drawableRight="@drawable/yellow_next_btn"
+                android:gravity="center_vertical"
+                android:hint="일자"
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp"
+                android:layout_marginRight="28dp"
                 android:layout_marginTop="50dp"
+                android:textColorHint="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/font_resource_file"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_quantity_TV"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_quantity_TV"
-                app:layout_constraintVertical_bias="0.7">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/possession_coin_modify_date_input_ET"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:textColorHint="#000000"
-                        android:textStyle="bold"
-                        android:hint="일자"
-                        android:gravity="center_vertical"
-                        android:drawableRight="@drawable/yellow_next_btn"
-                        android:textSize="15sp"
-                        android:background="#80D3D3D3"
-                        android:paddingLeft="17dp"
-                        android:paddingRight="17dp">
-                    </TextView>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_quantity_TV">
+            </EditText>
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_fee_CV"
+            <EditText
+                android:id="@+id/possession_coin_modify_fee_input_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="21dp"
-                app:cardCornerRadius="24dp"
+                android:layout_height="38dp"
+                android:background="@drawable/input_outline"
+                android:fontFamily="@font/font_resource_file"
+                android:hint="수수료"
+                android:inputType="number"
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp"
+                android:textColorHint="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginRight="28dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_date_CV"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_date_CV"
-                app:layout_constraintVertical_bias="0.7">
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_date_input_ET"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_date_input_ET">
+            </EditText>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/possession_coin_modify_fee_input_ET"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:textColorHint="#000000"
-                        android:textStyle="bold"
-                        android:hint="수수료"
-                        android:textSize="15sp"
-                        android:inputType="number"
-                        android:background="#80D3D3D3"
-                        android:paddingLeft="17dp"
-                        android:paddingRight="17dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/possession_coin_modify_can_modify_TV"
@@ -462,9 +395,10 @@
                 android:layout_height="wrap_content"
                 android:text="수동으로 수정 가능합니다."
                 android:textColor="#FF584E"
+                android:textSize="11sp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_fee_CV"
-                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_fee_CV"/>
+                app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_fee_input_ET"
+                app:layout_constraintStart_toStartOf="@id/possession_coin_modify_fee_input_ET"/>
 
 
             <TextView
@@ -491,40 +425,26 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/possession_coin_modify_memo_dividing_line_TV" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/possession_coin_modify_memo_input_CV"
+
+            <EditText
+                android:id="@+id/possession_coin_modify_memo_input_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="38dp"
+                android:background="@drawable/input_outline"
+                android:fontFamily="@font/font_resource_file"
+                android:hint="기억하고 싶은 내용을 입력해주세요."
+                android:maxLength="100"
+                android:paddingLeft="17dp"
+                android:textColorHint="#FF584E"
+                android:textSize="11sp"
                 android:layout_marginLeft="43dp"
-                android:layout_marginRight="28dp"
-                app:cardCornerRadius="24dp"
+                android:layout_marginRight="30dp"
                 app:layout_constraintStart_toEndOf="@id/possession_coin_modify_memo_TV"
                 app:layout_constraintTop_toTopOf="@id/possession_coin_modify_memo_TV"
                 app:layout_constraintBottom_toBottomOf="@id/possession_coin_modify_memo_TV"
                 app:layout_constraintEnd_toEndOf="parent">
+            </EditText>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/possession_coin_modify_memo_input_ET"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:background="#80D3D3D3"
-                        android:drawablePadding="6dp"
-                        android:hint="기억하고 싶은 내용을 입력해주세요."
-                        android:maxLength="100"
-                        android:paddingLeft="17dp"
-                        android:textColorHint="#FF584E"
-                        android:textSize="11sp">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

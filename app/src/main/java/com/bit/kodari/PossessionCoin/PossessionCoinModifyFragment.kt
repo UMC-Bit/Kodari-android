@@ -81,7 +81,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
                 timePicker.show()
             }, year, month, day)
 
-        binding.possessionCoinModifyDateCV.setOnClickListener { v ->
+        binding.possessionCoinModifyDateInputET.setOnClickListener { v ->
             datePicker.show()
         }
     }
