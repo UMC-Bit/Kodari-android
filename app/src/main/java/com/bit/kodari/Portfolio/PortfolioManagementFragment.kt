@@ -39,7 +39,7 @@ class PortfolioManagementFragment :
     private lateinit var callback:OnBackPressedCallback
 
     companion object {   //static으로 다시 돌아와도 리스트 초기화 되지 않게함.
-        private var psnCoinList = ArrayList<CoinDataResponse>()     //가져온 코인을 추가하는 식으로 해야할 것 같음.
+        var psnCoinList = ArrayList<CoinDataResponse>()     //가져온 코인을 추가하는 식으로 해야할 것 같음.
         private var cnt = 0;
     }
 
@@ -76,7 +76,6 @@ class PortfolioManagementFragment :
             //managementRVAdapter.add(coinDataResponse)           //리스트에 추가하기.
             psnCoinList.add(coinDataResponse)
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -85,7 +84,6 @@ class PortfolioManagementFragment :
             hideKeyboard()
             false
         }
-
 
         binding.portfolioManagementCoinBackBtnIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
@@ -124,12 +122,11 @@ class PortfolioManagementFragment :
     }
 
     fun setRecyclerView() {
-        managementRVAdapter = ManagementRVAdapter(psnCoinList)
+        managementRVAdapter = ManagementRVAdapter(this, psnCoinList)
         binding.portfolioManagementCoinListRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.portfolioManagementCoinListRv.adapter = managementRVAdapter
     }
-
 
     override fun makePortSuccess(response: PsnCoinAddTradeResponse) {
         //생성 완료 됐을 때
@@ -142,7 +139,6 @@ class PortfolioManagementFragment :
                 .replace(R.id.main_container_fl, HomeFragment()).commit()
             //홈 화면으로 되돌리기
         }
-
     }
 
     //다른 곳 클릭시 올라온 키보드 내려가게함
@@ -174,5 +170,4 @@ class PortfolioManagementFragment :
         super.onDestroyView()
         cnt = 0
     }
-
 }

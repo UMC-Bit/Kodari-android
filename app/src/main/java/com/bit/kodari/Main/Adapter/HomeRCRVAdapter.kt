@@ -15,12 +15,17 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
         fun bind(item : RepresentCoinResult){
             val color = getPriceColor(item.change)
             binding.representUpbitPriceTv.setTextColor(color)
-            binding.representBinanacePriceTv.text = formatPrice(item.binancePrice)
             binding.representUpbitPriceTv.text = formatPrice(item.upbitPrice)
             Glide.with(binding.representCoinIv)
                 .load(item.coinImg)
                 .into(binding.representCoinIv)
-            binding.representKimchiPriceTv.text = formatD(item.kimchi) +"%"
+            if(item.binancePrice == 0.0){ // 바이낸스 미 상장 코인 시세 공백처리
+                binding.representBinanacePriceTv.text = ""
+                binding.representKimchiPriceTv.text = ""
+            }else{
+                binding.representBinanacePriceTv.text = formatPrice(item.binancePrice)
+                binding.representKimchiPriceTv.text = formatD(item.kimchi) +"%"
+            }
             binding.representCoinNameTv.text = item.coinName
             binding.representCoinSymbolTv.text = item.symbol
 

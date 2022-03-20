@@ -2,6 +2,8 @@ package com.bit.kodari.Main
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -22,8 +24,6 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
     private var _binding : DialogModifyInfoBinding? = null
     private val binding get() = _binding!!
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +32,8 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         _binding = DialogModifyInfoBinding.inflate(inflater, container, false)
         setInit()
         setListener()
+        dialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return binding.root
     }
 
@@ -44,32 +46,25 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         }
         Log.d("accountIdx " ,accountIdx.toString())
     }
-
     fun setListener() {
-
         binding.infoDialogExitBtn.setOnClickListener {
             dismiss()           //끝났을떄 다시 조회해야함 -> How?
         }
-
         binding.infoDialogModifyNameBtn.setOnClickListener {
             val accountName = binding.infoDialogInputAccountEt.text.toString()
             callModifyName(accountName)
         }
-
         binding.infoDialogModifyCashBtn.setOnClickListener {
             //val money = binding.infoDialogInputCashEt.text.toString().substring(0,binding.infoDialogInputCashEt.text.toString().length-1)
             val money = binding.infoDialogInputCashEt.text.toString().replace(",","")
             Log.d("money","${money}")
             callModifyProperty(money)
         }
-
         binding.infoDialogDeleteBtn.setOnClickListener {
             //포토폴리오 삭제 API 호출해야함.
             callDeletePort(portIdx)
        }
-
     }
-
     //이름 변경 성공했을 떄
     override fun modifyAccountNameSuccess(response: ModifyAccountNameResponse) {
         Toast.makeText(requireContext() ,"${response.result}" , Toast.LENGTH_SHORT).show()
@@ -105,16 +100,13 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         val accountService = AccountService()
         accountService.setModifyDialogView(this)
         accountService.modifyAccountName(accountIdx , modifyAccountNameRequest)
-
     }
-
     fun callModifyProperty(property : String){
         val modifyPropertyRequest = ModifyPropertyRequest(property)
         val accountService = AccountService()
         accountService.setModifyDialogView(this)
         accountService.modifyProperty(accountIdx , modifyPropertyRequest)
     }
-
     fun callDeletePort(portIdx: Int){
         val accountService = AccountService()
         accountService.setModifyDialogView(this)
@@ -126,18 +118,14 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
         dialog!!.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT)
     }
-
-
     //메모리 해제
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.main_container_fl , HomeFragment()).commit()
     }
-
 }
