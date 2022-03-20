@@ -91,7 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setListener()
         Log.d(
             "info",
-            "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()}"
+            "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()} "
         )
 
         viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
@@ -299,8 +299,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             val temp: ArrayList<String> = ArrayList()
             for (cur in profitList) {
-                temp.add(cur.createAt)
+                val date = cur.createAt.replace("-" ,"/")
+                temp.add(date)
             }
+            Log.d("setChart" , "${profitList.size}")
+            Log.d("setChart" , "${temp}")
+
 
             binding.homeChartLc.data = setChartDummyData(profitList)        //데이터추가
             binding.homeChartLc.xAxis.setDrawGridLines(false)
@@ -309,6 +313,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 resources.getColor(R.color.chartTextColor)//top line
             binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartTextColor)
             binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            binding.homeChartLc.xAxis.granularity = 1f                      //간격 설정하니까 해결 됨 -> why?
             binding.homeChartLc.axisLeft.axisLineColor =
                 resources.getColor(R.color.chartTextColor)//left line
             binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartTextColor)
@@ -323,7 +328,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             binding.homeChartLc.getRenderer().getPaintRender()
                 .setShadowLayer(3f, 5f, 3f, Color.GRAY);
-//
+
 //            binding.homeChartLc.getDescription().setEnabled(false);
 //            // enable touch gestures
 //            binding.homeChartLc.setTouchEnabled(false);
@@ -585,7 +590,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun coinPriceFailure(message: String) {
-        TODO("Not yet implemented")
+
     }
 
 
@@ -651,7 +656,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         if (response.result[0].profitIdx == 0)
             return
         val profitList: ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-
+        Log.d("주별 데이터 " , "${response}")
         for (cur in response.result) {
             cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
             profitList.add(cur)             //정보들 저장
@@ -669,6 +674,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         if (response.result[0].profitIdx == 0)
             return
         val profitList: ArrayList<GetProfitResult> = ArrayList()
+        Log.d("월별 데이터 " , "${response}")
         for (cur in response.result) {
             cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
             profitList.add(cur)             //정보들 저장

@@ -30,9 +30,11 @@ class LoadingDialog(context: Context) : Dialog(context) {
         //로딩 다이얼로그 떴을 시에 상태바 색상변경.
         window!!.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window!!.statusBarColor = ContextCompat.getColor(context, R.color.white)
-
+        window!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
     }
+
+
 
     override fun show() {
         if(!this.isShowing) super.show()

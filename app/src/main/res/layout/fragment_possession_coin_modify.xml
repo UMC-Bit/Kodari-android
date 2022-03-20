@@ -311,19 +311,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/possession_coin_modify_price_input_ET"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
-                        android:background="#80D3D3D3"
                         android:drawablePadding="6dp"
-                        android:hint="ex) 20"
-                        android:inputType="number"
-                        android:paddingLeft="17dp"
                         android:textColorHint="#FF584E"
+                        android:hint="ex) 20"
                         android:textSize="11sp"
+                        android:inputType="number"
+                        android:background="#80D3D3D3"
+                        android:paddingLeft="17dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textfield.TextInputEditText>
+                        app:layout_constraintTop_toTopOf="parent">
+                    </EditText>
 
                 </LinearLayout>
 
