@@ -48,6 +48,7 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
         holder.bind(recommentList[position])
         //인터페이스가 구현된 곳에서 처리됩니다.
         holder.binding.listItemReDeleteTv.setOnClickListener { mItemClickListener.onClickReComment(recommentList[position].postReplyIdx) }
+        holder.binding.listItemReViewMoreTv.setOnClickListener { mItemClickListener.onReMoreClick(recommentList[position].postReplyIdx) }
     }
 
     override fun getItemCount(): Int = recommentList.size

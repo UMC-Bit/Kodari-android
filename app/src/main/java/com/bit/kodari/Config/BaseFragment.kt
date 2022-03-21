@@ -30,8 +30,6 @@ abstract class BaseFragment<VB : ViewBinding>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-        //binding = inflate.invoke(inflater,container,false)
-        //바인딩 별로 구분할 수 있지 않을까 ?
 
         return binding.root
     }

@@ -24,13 +24,16 @@ import com.bit.kodari.Debate.LikeData.PostLikeResponse
 import com.bit.kodari.Debate.PostData.DebateSelectPostComment
 import com.bit.kodari.Debate.PostData.DebateSelectPostReply
 import com.bit.kodari.Debate.PostData.DebateSelectPostResponse
+import com.bit.kodari.Debate.Report.WritingMenuDialog
 import com.bit.kodari.Debate.Retrofit.DebateMineView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.Main.ModifyInfoDialog
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
+import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.Util.getRetorfit
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentDebateMineBinding
@@ -195,6 +198,13 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
 
         }
 
+        //신고하기 창 띄우기
+        binding.mineViewMoreIv.setOnClickListener {
+            //postIdx 넘겨주면서 DialogFragment 띄워야함
+            val dialog = WritingMenuDialog(postIdx , 1)
+            dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
+        }
+
         binding.mineBackBtnTv.setOnClickListener {
             if(flag == 1){
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -263,6 +273,18 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                 val commentLikeRequest = CommentLikeRequest( item.postCommentIdx , getUserIdx())
                 Log.d("like", "댓글 index : ${item.postCommentIdx} , 유저인덱스 : ${getUserIdx()}")
                 callPressCommentLike(commentLikeRequest)
+            }
+
+            //댓글 신고 기능 클릭시
+            override fun onMoreClick(item: DebateSelectPostComment) {
+                val dialog = WritingMenuDialog(item.postCommentIdx , 2)
+                dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
+            }
+
+            //대댓 신고 기능 클릭
+            override fun onReMoreClick(postReplyIdx: Int) {
+                val dialog = WritingMenuDialog(postReplyIdx , 3)
+                dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
             }
         })
 

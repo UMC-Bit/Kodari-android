@@ -70,10 +70,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/view_more_btn_gray"
             android:padding="5dp"
-            android:layout_marginStart="-5dp"
-            app:layout_constraintStart_toStartOf="@id/list_item_re_content_tv"
-            app:layout_constraintTop_toBottomOf="@id/list_item_re_content_tv"
-            android:layout_marginTop="12dp" />
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toEndOf="@id/list_item_re_delete_tv"
+            app:layout_constraintTop_toTopOf="@id/list_item_re_delete_tv"
+            app:layout_constraintBottom_toBottomOf="@id/list_item_re_delete_tv"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
