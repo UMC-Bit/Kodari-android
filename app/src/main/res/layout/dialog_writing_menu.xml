@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/representative_coin_search_exchange_logo_CV"
+        android:id="@+id/dialog_writing_menu_CV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
@@ -22,59 +22,66 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_ask_TV"
+                android:id="@+id/dialog_writing_menu_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="70dp"
-                android:bufferType="spannable"
-                android:text="대표 코인을 삭제할까요?"
-                android:textColor="#000000"
-                android:textSize="18sp"
+                android:layout_marginTop="15dp"
+                android:text="글 메뉴"
+                android:textColor="#767272"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/delete_line_iv"
+                android:id="@+id/dialog_writing_menu_upper_line_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/upper_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_title_tv" />
+
+            <TextView
+                android:id="@+id/dialog_writing_menu_content_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="70dp"
+                android:bufferType="spannable"
+                android:text="게시글 신고하기"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_upper_line_iv" />
+
+            <ImageView
+                android:id="@+id/dialog_writing_menu_under_line_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:src="@drawable/line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/representative_coin_delete_dialog_ask_TV" />
-
-            <TextView
-                android:id="@+id/representative_coin_delete_dialog_delete_confirm_TV"
-                android:layout_width="46dp"
-                android:layout_height="27dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/button_click_ripple"
-                android:gravity="center"
-                android:text="삭제"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/representative_coin_delete_dialog_ask_TV"
-                app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_content_TV" />
 
 
             <TextView
-                android:id="@+id/representative_coin_delete_dialog_cancel_TV"
-                android:layout_width="46dp"
-                android:layout_height="27dp"
+                android:id="@+id/dialog_writing_menu_cancel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:text="취소"
-                android:textColor="#000000"
-                android:textSize="15sp"
+                android:text="취소하기"
+                android:textColor="#767272"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/representative_coin_delete_dialog_ask_TV"
-                app:layout_constraintTop_toBottomOf="@id/delete_line_iv" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_under_line_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

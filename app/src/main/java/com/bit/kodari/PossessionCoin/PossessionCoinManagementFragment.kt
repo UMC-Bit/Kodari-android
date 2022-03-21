@@ -146,7 +146,7 @@ CoinView{
 
         //글자 색 바꾸기
         val builder = SpannableStringBuilder(deleteAskTextView!!.text)
-        builder.setSpan(ForegroundColorSpan(Color.RED) , 7,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder.setSpan(ForegroundColorSpan(Color.parseColor("#F36E6E")) , 7,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         deleteAskTextView.setText(builder)
 
         // 여기에 어댑터와 연결해서 삭제 기능 불러오기
