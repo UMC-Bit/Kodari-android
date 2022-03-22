@@ -38,11 +38,22 @@ class EnrollExchangeFragment : Fragment() {
     }
 
     fun setListener(){
+        //인덱스 1 줘서 업비트
         binding.enrollUpbitIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioManagementFragment().apply {
+                .replace(R.id.main_container_fl , PortfolioManagementFragment(1).apply {
                     arguments = Bundle().apply {
                         //처음에 오류 없이 실행되게하기 위해서
+                    }
+                }).commit()
+        }
+
+        //인덱스 2 줘서 빗썸
+        binding.enrollBitssumIv.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container_fl , PortfolioManagementFragment(2).apply {
+                    arguments = Bundle().apply {
+
                     }
                 }).commit()
         }

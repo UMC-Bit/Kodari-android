@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 public interface PortfolioInterface {
+
     // userId로 portIdx 받아오기
     @GET("portfolio/getAll/{userIdx}")
     fun getAllPortfolio(
@@ -21,9 +22,13 @@ public interface PortfolioInterface {
         @Header("x-access-token") jwt: String?
     ): Call<PortfolioResponse>
 
-    // 코인 목록 조회
+    // 코인 목록 조회 , 마켓 상관없이 모든 코인 조회
     @GET("/coins")
     fun getSearchCoinAll():Call<SearchCoinResponse>
+
+    //마켓별 코인 조회 -> 이걸로 전부 바꿔야함
+    @GET("/coins/market")
+    fun getSearchMarketCoin(@Query("marketIdx") marketIdx:Int):Call<SearchCoinResponse>
 
     //계좌 등록 API
     @POST("/account/post")

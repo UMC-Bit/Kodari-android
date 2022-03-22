@@ -31,7 +31,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 //뒤로가기 눌렀을때 Home으로 가게 구현해야함 , 또 기존 정보 다 날라가게 해야함..
-class PortfolioManagementFragment :
+class PortfolioManagementFragment(val marketIdx : Int) :
     BaseFragment<FragmentPortfolioManagementBinding>(FragmentPortfolioManagementBinding::inflate),
     PortManagementView {
 
@@ -66,6 +66,11 @@ class PortfolioManagementFragment :
         //argument 자체가 없음.
         //만약 코인 객체가 넘어왔다면 psnCoinList에 셋팅
         //sharedPreference에 넣어야할듯
+        if(marketIdx == 2){     //2번으로 넘어올 경우
+            binding.portfolioManagementUpbitLogoTv.text = "빗썸"
+            binding.portfolioManagementUpbitLogoIv.setImageResource(R.drawable.bithumb)
+        }
+
         if (requireArguments().isEmpty) {     //홈 화면에서 넘어왔을 경우
             psnCoinList.clear()
             return
@@ -76,6 +81,7 @@ class PortfolioManagementFragment :
             //managementRVAdapter.add(coinDataResponse)           //리스트에 추가하기.
             psnCoinList.add(coinDataResponse)
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -92,15 +98,16 @@ class PortfolioManagementFragment :
 
         binding.portfolioManagementSearchCoinBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioSearchFragment()).commit()
+                .replace(R.id.main_container_fl, PortfolioSearchFragment(marketIdx)).commit()
         }
 
+        //포토폴리오 생성 -> marketIdx 구분
         binding.portfolioManagementNextTextTv.setOnClickListener {
             //계좌생성 , 포토폴리오 생성 ,소유코인 생성 모두 해줘야함. 그 후 Home으로 돌아가게해야함.
             //Home에서 내 포토폴리오 있으면 데이터들 나오게 해야함.
             val accountName = binding.portfolioManagementInputAccountEt.text.toString()
             val property = binding.portfolioManagementInputAssetEt.text.toString()
-            val postAccountRequest = PostAccountRequest(accountName, "1", property, getUserIdx())
+            val postAccountRequest = PostAccountRequest(accountName, marketIdx.toString(), property, getUserIdx())
             //val addCoinList = ArrayList<PsnCoinAddTradeInfo>()           //추가해야할 소유코인 목록들을 가지고 있는 배열
             val addCoinList = ArrayList<PsnCoinAddTradeInfo>()
             for (cur in psnCoinList) {       //여기서 거래 생성으로 바꿔야함
@@ -122,7 +129,7 @@ class PortfolioManagementFragment :
     }
 
     fun setRecyclerView() {
-        managementRVAdapter = ManagementRVAdapter(this, psnCoinList)
+        managementRVAdapter = ManagementRVAdapter(this, psnCoinList , marketIdx)
         binding.portfolioManagementCoinListRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.portfolioManagementCoinListRv.adapter = managementRVAdapter

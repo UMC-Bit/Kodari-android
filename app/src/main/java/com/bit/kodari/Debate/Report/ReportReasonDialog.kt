@@ -2,8 +2,10 @@ package com.bit.kodari.Debate.Report
 
 import android.util.Log
 import com.bit.kodari.Config.BaseDialogFragment
+import com.bit.kodari.Debate.Report.ReportData.ReportCommentRequest
 import com.bit.kodari.Debate.Report.ReportData.ReportPostRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportPostResponse
+import com.bit.kodari.Debate.Report.ReportData.ReportRecommentRequest
+import com.bit.kodari.Debate.Report.ReportData.ReportResponse
 import com.bit.kodari.Debate.Report.ReportService.ReportService
 import com.bit.kodari.Debate.Report.Retrofit.ReportPostView
 import com.bit.kodari.Util.getUserIdx
@@ -11,7 +13,7 @@ import com.bit.kodari.databinding.DialogReportReasonBinding
 
 //Sell로 넘기는데  인덱스 다르게 해서 처리해보자
 
-class ReportReasonDialog(val postIdx: Int, val index: Int ,val flag: Int) :
+class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     BaseDialogFragment<DialogReportReasonBinding>(DialogReportReasonBinding::inflate) , ReportPostView {
     override fun initAfterBinding() {
         setInit()
@@ -43,11 +45,11 @@ class ReportReasonDialog(val postIdx: Int, val index: Int ,val flag: Int) :
         //확인 버튼 누르기 -> 게시글 신고
         binding.dialogReportReasonSellConfirmTV.setOnClickListener {
             if(flag == 1){
-                callReport()
+                callReportPost()
             } else if(flag == 2){       //댓글 신고 기능
-
+                callReportComment()
             }else{                      //대댓 신고 기능
-
+                callReportRecomment()
             }
 
         }
@@ -57,25 +59,67 @@ class ReportReasonDialog(val postIdx: Int, val index: Int ,val flag: Int) :
         }
     }
 
-    private fun callReport() {
+    private fun callReportPost() {
         val text = binding.dialogReportReasonSellTitleTV.text.toString()
-        val reportRequest : ReportPostRequest = ReportPostRequest(postIdx , getUserIdx() , text)
+        val reportRequest : ReportPostRequest = ReportPostRequest(Idx , getUserIdx() , text)
         Log.d("report" , "${reportRequest.toString()}")
         val reportService = ReportService()
         reportService.setReportPostView(this)
         reportService.reportPost(reportRequest)
     }
 
+    private fun callReportComment() {
+        val text = binding.dialogReportReasonSellTitleTV.text.toString()
+        val reportRequest : ReportCommentRequest = ReportCommentRequest(Idx , getUserIdx() , text)
+        Log.d("report" , "${reportRequest.toString()}")
+        val reportService = ReportService()
+        reportService.setReportPostView(this)
+        reportService.reportComment(reportRequest)
+    }
+
+    private fun callReportRecomment() {
+        val text = binding.dialogReportReasonSellTitleTV.text.toString()
+        val reportRequest : ReportRecommentRequest = ReportRecommentRequest(Idx , getUserIdx() , text)
+        Log.d("report" , "${reportRequest.toString()}")
+        val reportService = ReportService()
+        reportService.setReportPostView(this)
+        reportService.reportRecomment(reportRequest)
+    }
+
     //신고 성공
-    override fun getReportPostSuccess(response: ReportPostResponse) {
+    override fun getReportPostSuccess(response: ReportResponse) {
         showToast(response.message)
-        Log.d("삭제" , "삭제 성공")
-        this.dismiss()
+        Log.d("신고" , "게시글 신고 성공")
+        dismiss()
     }
 
 
     //신고 실패
     override fun getReportPostFailure(message: String) {
+        showToast(message)
+    }
+
+    //댓글 신고 성공
+    override fun getReportCommentSuccess(response: ReportResponse) {
+        showToast(response.message)
+        Log.d("신고" , "댓글 신고 성공")
+        dismiss()
+    }
+
+    //댓글 신고 실패
+    override fun getReportCommentFailure(message: String) {
+        showToast(message)
+    }
+
+
+    //대댓 신고 성공
+    override fun getReportRecommentSuccess(response: ReportResponse) {
+        showToast(response.message)
+        Log.d("신고" , "대댓 신고 성공")
+        dismiss()
+    }
+    //대댓 신고 실패
+    override fun getReportRecommentFailure(message: String) {
         showToast(message)
     }
 

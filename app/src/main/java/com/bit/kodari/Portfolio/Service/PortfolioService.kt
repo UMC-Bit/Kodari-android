@@ -105,6 +105,25 @@ class PortfolioService {
             }
         })
     }
+
+    //마켓별 코인 조회
+    fun getMarketCoin(marketIdx : Int){
+        val portfolioService = getRetorfit().create(PortfolioInterface::class.java)
+        portfolioService.getSearchMarketCoin(marketIdx).enqueue(object : Callback<SearchCoinResponse>{
+            override fun onResponse(
+                call: Call<SearchCoinResponse>,
+                response: Response<SearchCoinResponse>
+            ) {
+                searchCoinView.getSearchCoinAllSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<SearchCoinResponse>, t: Throwable) {
+                searchCoinView.getSearchCoinAllFailure("t")
+            }
+        })
+    }
+
+
     //계좌생성 API , 소유코인으로 추가할 코인 리스트도 넘겨줘야 한다.
     fun postAccount(postAccountRequest: PostAccountRequest , addCoinList : ArrayList<PsnCoinAddTradeInfo>){
         val portfolioService = getRetorfit().create(PortfolioInterface::class.java)

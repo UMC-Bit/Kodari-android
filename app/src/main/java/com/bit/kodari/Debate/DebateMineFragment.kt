@@ -311,7 +311,6 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             .error(R.drawable.ic_basic_profile)
             .placeholder(R.drawable.ic_basic_profile)
             .into(binding.mineMaskIv)
-        Log.d("imgurl" ,"${post.profileImgUrl}")
 
         if(post.profileImgUrl != null){     //null 아닐때만 넘겨주
             imgUrl = post.profileImgUrl.toString()   //이미지 URL 저장 , 이거를 수정 눌렀을떄 넘겨주면됨됨

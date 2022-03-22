@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName
 import kotlin.properties.Delegates
 
 
-class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuantityBinding>(FragmentPortfolioInputQuantityBinding::inflate) {
+class PortfolioInputQuantityFragment(val marketIdx: Int) : BaseFragment<FragmentPortfolioInputQuantityBinding>(FragmentPortfolioInputQuantityBinding::inflate) {
 
     private lateinit var coinImg:String
     private lateinit var coinSymbol:String
@@ -33,7 +33,7 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl , PortfolioSearchFragment())
+                    .replace(R.id.main_container_fl , PortfolioSearchFragment(marketIdx))
                     .commit()
             }
         }
@@ -46,6 +46,7 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
     }
 
     fun setInit(){
+        //코인 관련 정보
         if(requireArguments().containsKey("coinImage")){
             coinImg = requireArguments().getString("coinImage")!!
             Glide.with(binding.inputCoinImageIv)
@@ -67,6 +68,11 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
         if(requireArguments().containsKey("coinIdx")){
             coinIdx = requireArguments().getInt("coinIdx")
         }
+        //거래소 관련 정보
+        if(marketIdx == 2){
+            binding.inputUpbitLogoTv.text = "빗썸"
+            binding.inputUpbitLogoIv.setImageResource(R.drawable.bithumb)
+        }
 
     }
 
@@ -78,7 +84,7 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
             amount = binding.inputCountInputEt.text.toString()
             val coinDataResponse = CoinDataResponse(coinIdx,coinImg,coinName,coinSymbol, getUserIdx(),0,priceAvg,amount)
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl,PortfolioManagementFragment().apply {
+                .replace(R.id.main_container_fl,PortfolioManagementFragment(marketIdx).apply {
                     arguments = Bundle().apply {
                         //괄호 안의 Key 를 입력 하고 Object 타입으로 넘어오기 때문에 캐스팅을 통해서 데이터를 받으면 되겠습니다 .
                         //Serializable로 셋팅
@@ -88,7 +94,7 @@ class PortfolioInputQuantityFragment : BaseFragment<FragmentPortfolioInputQuanti
         }
         binding.inputQuantityPreviewBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl , PortfolioManagementFragment().apply{
+                .replace(R.id.main_container_fl , PortfolioManagementFragment(marketIdx).apply{
                     arguments = Bundle().apply{
 
                     }

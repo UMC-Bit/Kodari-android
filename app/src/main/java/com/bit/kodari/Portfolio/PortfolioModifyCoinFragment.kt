@@ -12,7 +12,7 @@ import com.bit.kodari.databinding.FragmentPortfolioModifyBinding
 import com.bumptech.glide.Glide
 import kotlin.properties.Delegates
 
-class PortfolioModifyCoinFragment(position: Int) :
+class PortfolioModifyCoinFragment(position: Int , val marketIdx: Int) :
     BaseFragment<FragmentPortfolioModifyBinding>(FragmentPortfolioModifyBinding::inflate) {
     private lateinit var coinImg: String
     private lateinit var coinSymbol: String
@@ -30,7 +30,7 @@ class PortfolioModifyCoinFragment(position: Int) :
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PortfolioSearchFragment())
+                    .replace(R.id.main_container_fl, PortfolioSearchFragment(marketIdx))
                     .commit()
             }
         }
@@ -62,6 +62,11 @@ class PortfolioModifyCoinFragment(position: Int) :
         binding.modifyUnitPriceInputEt.setText(coinPrice)
         coinAmount = PortfolioManagementFragment.psnCoinList.get(position).amount
         binding.modifyCountInputEt.setText(coinAmount)
+
+        if(marketIdx == 2){
+            binding.modifyUpbitLogoTv.text = "빗썸"
+            binding.modifyUpbitLogoIv.setImageResource(R.drawable.bithumb)
+        }
     }
 
     fun setListener() {
@@ -73,7 +78,7 @@ class PortfolioModifyCoinFragment(position: Int) :
             amount = binding.modifyCountInputEt.text.toString()
             PortfolioManagementFragment.psnCoinList.set(position, coinDataResponse)
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
+                .replace(R.id.main_container_fl, PortfolioManagementFragment(marketIdx).apply {
                     arguments = Bundle().apply {
                         putSerializable("coinModifyResponse", "true")
                     }
@@ -81,7 +86,7 @@ class PortfolioModifyCoinFragment(position: Int) :
         }
         binding.modifyQuantityPreviewBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioManagementFragment().apply {
+                .replace(R.id.main_container_fl, PortfolioManagementFragment(marketIdx).apply {
                     arguments = Bundle().apply {
                         putSerializable("coinModifyResponse", "true")
                     }

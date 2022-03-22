@@ -13,7 +13,7 @@ import com.bit.kodari.databinding.ListCoinItemBinding
 import com.bumptech.glide.Glide
 import java.io.Serializable
 
-class ManagementRVAdapter(portfolioManagementFragment: PortfolioManagementFragment, val psnCoinList:ArrayList<CoinDataResponse>) : RecyclerView.Adapter<ManagementRVAdapter.ManagementViewHolder>() {
+class ManagementRVAdapter(portfolioManagementFragment: PortfolioManagementFragment, val psnCoinList:ArrayList<CoinDataResponse> , val marketIdx:Int) : RecyclerView.Adapter<ManagementRVAdapter.ManagementViewHolder>() {
     val portfolioManagementFragment = portfolioManagementFragment
 
     inner class ManagementViewHolder(val binding:ListCoinItemBinding) :RecyclerView.ViewHolder(binding.root){
@@ -26,7 +26,7 @@ class ManagementRVAdapter(portfolioManagementFragment: PortfolioManagementFragme
             binding.coinSelectBtnIv.setOnClickListener {
                 // psnCoinList.get(position)으로 portfolioModifyCoinFragment 불러오기
                 portfolioManagementFragment.requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl , PortfolioModifyCoinFragment(position).apply{
+                    .replace(R.id.main_container_fl , PortfolioModifyCoinFragment(position ,marketIdx).apply{
                         arguments = Bundle().apply{
                             val coinModifyResponse = psnCoinList.get(position)
                             putSerializable("coinModifyResponse", coinModifyResponse)
