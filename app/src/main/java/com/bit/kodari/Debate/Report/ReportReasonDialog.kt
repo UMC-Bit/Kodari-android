@@ -14,7 +14,6 @@ import com.bit.kodari.databinding.DialogReportReasonBinding
 class ReportReasonDialog(val postIdx: Int, val index: Int ,val flag: Int) :
     BaseDialogFragment<DialogReportReasonBinding>(DialogReportReasonBinding::inflate) , ReportPostView {
     override fun initAfterBinding() {
-        showToast("${index} 와 flag : ${flag}")
         setInit()
         setListener()
     }
@@ -70,7 +69,8 @@ class ReportReasonDialog(val postIdx: Int, val index: Int ,val flag: Int) :
     //신고 성공
     override fun getReportPostSuccess(response: ReportPostResponse) {
         showToast(response.message)
-        dismiss()
+        Log.d("삭제" , "삭제 성공")
+        this.dismiss()
     }
 
 

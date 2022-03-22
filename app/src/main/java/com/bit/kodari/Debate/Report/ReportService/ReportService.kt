@@ -29,8 +29,9 @@ class ReportService {
                 ) {
                     Log.d("report", "${response.body()}")
                     val resp = response.body()!!
+
                     when (resp.code) {
-                        1000 -> {
+                        1005,1006,4088 -> {
                             reportPostView.getReportPostSuccess(resp)
                         }
                         else -> {

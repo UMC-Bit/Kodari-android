@@ -57,7 +57,7 @@ class DebateService {
     fun getCoinsAll(){
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
 
-        debateService.getCoinsAll().enqueue(object : Callback<DebateCoinResponse>{
+        debateService.getCoinsAll(getJwt()!!).enqueue(object : Callback<DebateCoinResponse>{
             override fun onResponse(
                 call: Call<DebateCoinResponse>,
                 response: Response<DebateCoinResponse>
@@ -73,12 +73,12 @@ class DebateService {
 
     fun getPostsAll(){
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
-        debateService.getPostsAll().enqueue(object : Callback<DebatePostResponse>{
+        debateService.getPostsAll(getJwt()!!).enqueue(object : Callback<DebatePostResponse>{
             override fun onResponse(
                 call: Call<DebatePostResponse>,
                 response: Response<DebatePostResponse>
             ) {
-                Log.d("debate" , "호출 성공")
+                Log.d("debate" , "호출 성공 : ${response.body()}")
                 debateMainView.getPostsAllSuccess(response.body()!!)
             }
 
@@ -91,7 +91,7 @@ class DebateService {
 
     fun getCoinPost(coinName:String){
         val debateService = getRetorfit().create(DebateRetrofitInterface::class.java)
-        debateService.getCoinPost(coinName).enqueue(object :Callback<DebateCoinPostResponse>{
+        debateService.getCoinPost(getJwt()!!,coinName).enqueue(object :Callback<DebateCoinPostResponse>{
             override fun onResponse(
                 call: Call<DebateCoinPostResponse>,
                 response: Response<DebateCoinPostResponse>

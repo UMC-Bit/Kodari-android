@@ -253,7 +253,7 @@
                 android:id="@+id/mine_comment_input_profile_iv"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/debate_mask"
+                android:src="@drawable/ic_basic_profile"
                 android:layout_weight="0"
                 android:layout_margin="7.5dp"
                 android:scaleType="centerCrop"/>
