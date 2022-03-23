@@ -267,6 +267,11 @@ CoinView{
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")
     }
+
+    override fun bithumbPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+        TODO("Not yet implemented")
+    }
+
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
     }

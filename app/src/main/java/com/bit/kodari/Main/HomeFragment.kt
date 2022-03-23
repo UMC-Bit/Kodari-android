@@ -1,4 +1,4 @@
-package com.bit.kodari.Main
+    package com.bit.kodari.Main
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -39,8 +39,9 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
+    class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView, HomeView, UsdView {
     companion object {
         var usdtPrice = 1180
@@ -589,17 +590,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    override fun coinPriceFailure(message: String) {
+        override fun bithumbPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+            TODO("Not yet implemented")
+        }
+
+        override fun coinPriceFailure(message: String) {
 
     }
 
 
     // 시세 받아오기
     fun getCoinPrice(response: PortfolioResponse) {
+        val marketName = response.result.marketName
         val userCoinNameList = ArrayList<String>()
         val representCoinNameList = ArrayList<String>()
-        setRepresentRV()
-        setRepresentPV()
         userCoinList.clear()
         representCoinList.clear()
         // 계좌
@@ -618,14 +622,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         for (i in 0 until representCoinList.size) {
             coinSymbolSet.add(representCoinList[i].symbol)
         }
-
-        // 웹 소켓 연결
+        // 거래소 별 웹 소켓 연결
+        when(marketName){
+            "업비트" ->
+        }
         upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
         upbitWebSocket?.setCoinView(this)
         upbitWebSocket?.start() // 업비트 웹 소켓 실행
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
         binanceWebSocket?.setCoinView(this)
         binanceWebSocket?.start()
+        setRepresentRV()
+        setRepresentPV()
     }
 
 
