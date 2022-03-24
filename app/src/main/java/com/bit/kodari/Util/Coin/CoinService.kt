@@ -64,9 +64,9 @@ class CoinService {
                 .subscribe({
                     val price = it[0].trade_price
                     if (price != null) {
-                        userCoinList[i].upbitPrice = price
+                        userCoinList[i].marketPrice = price
                     } else {
-                        userCoinList[i].upbitPrice = 0.0
+                        userCoinList[i].marketPrice = 0.0
                     }
                     val homeFragment = HomeFragment()
                     Log.d("결과", "성공: ${price}")

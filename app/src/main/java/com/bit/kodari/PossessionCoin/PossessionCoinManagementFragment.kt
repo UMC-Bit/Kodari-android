@@ -268,25 +268,25 @@ class PossessionCoinManagementFragment(val accountName: String) :
     }
 
     // 업비트 시세 조회 API 호출 성공
-    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(marketCoinPriceMap: HashMap<String, Double>) {
         var position = 0
         if (requireActivity() != null) {
             requireActivity().runOnUiThread() {
                 // 소유 코인
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
-                    if (upbitCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = upbitCoinPriceMap.get(symbol)!!
-                        val change = upbitCoinPriceMap.get(symbol + "change")
+                    if (marketCoinPriceMap.containsKey(symbol)) {
+                        val marketPrice = marketCoinPriceMap.get(symbol)!!
+                        val change = marketCoinPriceMap.get(symbol + "change")
                         val amount = coinList[i].amount
                         val priceAvg = coinList[i].priceAvg
-                        coinList[i].upbitPrice = upbitPrice
+                        coinList[i].marketPrice = marketPrice
                         if (change != null) {
                             coinList[i].change = change
                         }
-                        coinList[i].profit = getProfit(upbitPrice, amount, priceAvg)
+                        coinList[i].profit = getProfit(marketPrice, priceAvg, amount)
+                        position = i;
                     }
-                    position = i;
                 }
                 viewModel.getUpdateUserCoin(coinList, position)
             }

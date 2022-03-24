@@ -34,7 +34,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
             Glide.with(binding.myCoinIv)
                 .load(item.coinImg)
                 .into(binding.myCoinIv)
-            binding.myNowPriceTv.text = formatPrice(item.upbitPrice)
+            binding.myNowPriceTv.text = formatPrice(item.marketPrice)
             binding.myNowPriceTv.setTextColor(color)
             if(item.profit < 0){
                 binding.myProfitTv.setTextColor(Color.BLUE)

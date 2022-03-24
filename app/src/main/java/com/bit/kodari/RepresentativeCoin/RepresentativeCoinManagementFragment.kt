@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
 import com.bit.kodari.Main.Data.RepresentCoinResult
@@ -26,6 +27,7 @@ import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -37,7 +39,9 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
+    private val marketName = MyApplicationClass.marketName // 거래소 이름
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
+    var bithumbWebSocket: BithumbWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private var coinList = ArrayList<RepresentCoinResult>()
     private var rptCoinManagementAdapter = RptCoinManagementAdapter(coinList)
@@ -92,8 +96,10 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, HomeFragment()).commit()
         }
-
-
+        // 업비트 말고 다른 거래소 일 때 타이틀 변경
+        if(MyApplicationClass.marketName.equals("빗썸")){
+            binding.representativeCoinManagementUpbitTV.setText("빗썸")
+        }
     }
 
     fun setRecyclerView(){
@@ -212,11 +218,19 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         for (i in 0 until coinList.size) {
             coinSymbolSet.add(coinList[i].symbol)
         }
-
         // 웹 소켓 연결
-        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket?.setCoinView(this)
-        upbitWebSocket?.start() // 업비트 웹 소켓 실행
+        when (marketName) {
+            "업비트" -> {
+                upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+                upbitWebSocket?.setCoinView(this)
+                upbitWebSocket?.start() // 업비트 웹 소켓 실행
+            }
+            "빗썸" -> {
+                bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
+                bithumbWebSocket?.setCoinView(this)
+                bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+            }
+        }
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
         binanceWebSocket?.setCoinView(this)
         binanceWebSocket?.start()

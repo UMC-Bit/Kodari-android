@@ -49,7 +49,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg)
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
-            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice)
+            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.marketPrice)
             if(item.profit < 0)
                 binding.itemPossessionCoinManagementCoinListProfitPlusTV.setTextColor(Color.BLUE)
             binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit)

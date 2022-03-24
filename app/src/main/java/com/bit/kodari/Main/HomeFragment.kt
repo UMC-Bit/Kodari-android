@@ -1,4 +1,4 @@
-    package com.bit.kodari.Main
+package com.bit.kodari.Main
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -42,11 +42,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-    class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView, HomeView, UsdView {
     companion object {
         var usdtPrice = 1180
+        private const val NORMAL_STATUS_CLOSE = 1000
     }
+
     var coinPriceMap = HashMap<String, Double>(); // key:symbol, value:price
     var userCoinList = ArrayList<PossesionCoinResult>() // 유저 코인 리스트
     var representCoinList = ArrayList<RepresentCoinResult>() // 대표 코인 리스트
@@ -100,18 +102,18 @@ import kotlin.collections.HashMap
         viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
-            if(homeRCRVAdapter != null){
+            if (homeRCRVAdapter != null) {
                 var position = viewModel.getRepresentCoinPosition()
                 homeRCRVAdapter.setData(representCoinList, position)
-            }else {
+            } else {
                 setRepresentRV()
             }
         })
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
-            if(homePCRVAdapter != null){
+            if (homePCRVAdapter != null) {
                 var position = viewModel.getUserCoinPosition()
                 homePCRVAdapter.setData(userCoinList, position)
-            }else {
+            } else {
                 setRepresentPV()
             }
         })
@@ -129,7 +131,7 @@ import kotlin.collections.HashMap
     fun setRepresentRV() {
         if (checkView && binding != null) {
             val animator = binding.homeRepresentCoinRv.itemAnimator // 애니메이션 제거
-            if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+            if (animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
                 animator.supportsChangeAnimations =
                     false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
             }
@@ -143,7 +145,7 @@ import kotlin.collections.HashMap
     fun setRepresentPV() {
         if (checkView && binding != null) {
             val animator = binding.homeMyCoinRv.itemAnimator // 애니메이션 제거
-            if(animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
+            if (animator is SimpleItemAnimator) { //아이템 애니메이커 기본 하위클래스
                 animator.supportsChangeAnimations =
                     false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
             }
@@ -254,6 +256,9 @@ import kotlin.collections.HashMap
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {        //page변경됐을떄
                     super.onPageSelected(position)
+                    //webSocket close
+                    upbitWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
+                    bithumbWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
                     viewPagerPosition = position
                     when (position) {
                         0 -> {      //시작
@@ -287,8 +292,6 @@ import kotlin.collections.HashMap
             })
             //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
         }
-        // 웹소켓 초기화
-        upbitWebSocket
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
@@ -302,11 +305,11 @@ import kotlin.collections.HashMap
 
             val temp: ArrayList<String> = ArrayList()
             for (cur in profitList) {
-                val date = cur.createAt.replace("-" ,"/")
+                val date = cur.createAt.replace("-", "/")
                 temp.add(date)
             }
-            Log.d("setChart" , "${profitList.size}")
-            Log.d("setChart" , "${temp}")
+            Log.d("setChart", "${profitList.size}")
+            Log.d("setChart", "${temp}")
 
 
             binding.homeChartLc.data = setChartDummyData(profitList)        //데이터추가
@@ -512,7 +515,7 @@ import kotlin.collections.HashMap
                         val change = upbitCoinPriceMap.get(symbol + "change")
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
-                        userCoinList[i].upbitPrice = upbitPrice
+                        userCoinList[i].marketPrice = upbitPrice
                         if (change != null) {
                             userCoinList[i].change = change
                         }
@@ -529,7 +532,7 @@ import kotlin.collections.HashMap
                         val upbitPrice = coinPriceMap.get(symbol)!!
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
-                        userCoinList[i].upbitPrice = upbitPrice
+                        userCoinList[i].marketPrice = upbitPrice
                         sumBuyCoin += amount * priceAvg
                         currentSum += upbitPrice * amount
                         userCoinPosition = i;
@@ -560,10 +563,10 @@ import kotlin.collections.HashMap
                     )    //업비트 시세 받아오면 함수실행해서 총자산갱신
                 }
                 //시세 호출하면 ViewModel 내부의 LiveData Update 이 후 , observer 패턴으로
-                if(userCoinCheck){
+                if (userCoinCheck) {
                     viewModel.getUpdateUserCoin(userCoinList, userCoinPosition)
                 }
-                if(representCoinCheck){
+                if (representCoinCheck) {
                     viewModel.getUpdateRepresentCoin(representCoinList, representCoinPosition)
                 }
                 // 계좌 수익률 보내주기
@@ -593,7 +596,7 @@ import kotlin.collections.HashMap
         }
     }
 
-        override fun coinPriceFailure(message: String) {
+    override fun coinPriceFailure(message: String) {
 
     }
 
@@ -622,13 +625,13 @@ import kotlin.collections.HashMap
         for (i in 0 until representCoinList.size) {
             coinSymbolSet.add(representCoinList[i].symbol)
         }
-        when(marketName){
-            "업비트"->{
+        when (marketName) {
+            "업비트" -> {
                 upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
                 upbitWebSocket?.setCoinView(this)
                 upbitWebSocket?.start() // 업비트 웹 소켓 실행
             }
-            "빗썸"->{
+            "빗썸" -> {
                 bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
                 bithumbWebSocket?.setCoinView(this)
                 bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
@@ -669,7 +672,7 @@ import kotlin.collections.HashMap
         if (response.result[0].profitIdx == 0)
             return
         val profitList: ArrayList<GetProfitResult> = ArrayList<GetProfitResult>()
-        Log.d("주별 데이터 " , "${response}")
+        Log.d("주별 데이터 ", "${response}")
         for (cur in response.result) {
             cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
             profitList.add(cur)             //정보들 저장
@@ -687,7 +690,7 @@ import kotlin.collections.HashMap
         if (response.result[0].profitIdx == 0)
             return
         val profitList: ArrayList<GetProfitResult> = ArrayList()
-        Log.d("월별 데이터 " , "${response}")
+        Log.d("월별 데이터 ", "${response}")
         for (cur in response.result) {
             cur.createAt = cur.createAt.substring(5, 10)         //월-일만 저장
             profitList.add(cur)             //정보들 저장
@@ -729,9 +732,9 @@ import kotlin.collections.HashMap
     override fun onDestroy() {
         super.onDestroy()
         checkView = false
-        upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
-        binanceWebSocket?.webSocket?.cancel()
-        upbitWebSocket?.webSocket?.cancel()
+        upbitWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null) // 웹 소켓 닫기
+        binanceWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
+        bithumbWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
     }
 
     fun callPortfolioInfo(portIdx: Int) {
