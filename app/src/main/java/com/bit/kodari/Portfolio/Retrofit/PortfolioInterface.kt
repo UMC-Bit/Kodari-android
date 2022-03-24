@@ -3,6 +3,7 @@ package com.bit.kodari.Portfolio.Retrofit
 import com.bit.kodari.Main.Data.PortIdxResponse
 import com.bit.kodari.Main.Data.PortfolioResponse
 import com.bit.kodari.Portfolio.Data.*
+import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinSearchResponse
 import retrofit2.Call
 import retrofit2.http.*
 

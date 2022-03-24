@@ -37,7 +37,7 @@ import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PossessionCoinManagementFragment(val accountName: String) :
+class PossessionCoinManagementFragment(val accountName: String, val marketIdx: Int) :
     BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate),
     PsnCoinMgtInsquireView, PsnCoinMgtDeleteView, CoinView {
     private lateinit var viewModel: CoinViewModel
@@ -106,7 +106,7 @@ class PossessionCoinManagementFragment(val accountName: String) :
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(
                         R.id.main_container_fl,
-                        PossessionCoinModifyFragment(accountName).apply {
+                        PossessionCoinModifyFragment(accountName, marketIdx).apply {
                             arguments = Bundle().apply {
                                 putInt("coinIdx", coinList[position].coinIdx)
                                 Log.d("checkcoinidx", "${coinList[position]}")
@@ -135,7 +135,10 @@ class PossessionCoinManagementFragment(val accountName: String) :
 
         binding.possessionCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commit()
+                .replace(
+                    R.id.main_container_fl,
+                    PossessionCoinSearchFragment(accountName, marketIdx)
+                ).commit()
         }
 
         binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
@@ -231,9 +234,11 @@ class PossessionCoinManagementFragment(val accountName: String) :
                 PossessionCoinManagementAdapter.isClick = false
                 PossessionCoinManagementAdapter.clickPosition = -1
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName))
+                    .replace(
+                        R.id.main_container_fl,
+                        PossessionCoinManagementFragment(accountName, marketIdx)
+                    )
                     .commitAllowingStateLoss()
-
             }
             else -> {
                 Toast.makeText(context, "${response.message}", Toast.LENGTH_SHORT).show()

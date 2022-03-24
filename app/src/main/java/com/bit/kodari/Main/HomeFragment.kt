@@ -41,6 +41,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.properties.Delegates
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView, HomeView, UsdView {
@@ -62,7 +63,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
     lateinit var accounName: String
-
+    private var marketIdx by Delegates.notNull<Int>()       //marketIdx 선언
+    private var market : HashMap<String,Int> = hashMapOf("업비트" to 1 , "빗썸" to 2)
 
     // 수익률 리스트
     // val profitList = response.result.profitResultList
@@ -214,14 +216,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.homeNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment())
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment(marketIdx))
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
 
         binding.homeMyNextBtnIb.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName))
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accounName,marketIdx))
                 .commitNowAllowingStateLoss()
         }
 
@@ -335,42 +337,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.getRenderer().getPaintRender()
                 .setShadowLayer(3f, 5f, 3f, Color.GRAY);
 
-//            binding.homeChartLc.getDescription().setEnabled(false);
-//            // enable touch gestures
-//            binding.homeChartLc.setTouchEnabled(false);
-//
-//            // enable scaling and dragging
-//            binding.homeChartLc.setDragEnabled(false);
-//            binding.homeChartLc.setScaleEnabled(false);
-//
-//            // if disabled, scaling can be done on x- and y-axis separately
-//            binding.homeChartLc.setPinchZoom(false);
-//
-//            binding.homeChartLc.setBackgroundColor(Color.rgb(89, 199, 250))
-//
-//            // set custom chart offsets (automatic offset calculation is hereby disabled)
-//            binding.homeChartLc.setViewPortOffsets(0f, 0f, 0f, 0f);
-//
-//            binding.homeChartLc.legend.isEnabled = false            //범례 없애기
-//
-//
-//            //Y축 셋팅
-//            binding.homeChartLc.axisLeft.isEnabled = true;
-//            binding.homeChartLc.axisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)        //차트 어떻게 셋팅하지 ?
-//            binding.homeChartLc.axisLeft.spaceTop = 40f;
-//            binding.homeChartLc.axisLeft.spaceBottom = 40f;
-//            binding.homeChartLc.axisRight.isEnabled = false;
-//
-//
-//
-//            //X축 셋팅.
-//            binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-//            binding.homeChartLc.xAxis.setLabelCount(7, true)
-//            //binding.homeChartLc.xAxis.setDrawLabels(true)
-//            binding.homeChartLc.xAxis.textColor = Color.BLACK
-//            binding.homeChartLc.xAxis.axisLineColor = Color.BLACK
-//            binding.homeChartLc.xAxis.isEnabled = true
-//            binding.homeChartLc.xAxis.textSize = 7f
             binding.homeChartLc.invalidate()
         }
     }
@@ -412,18 +378,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         val set1 = LineDataSet(values, "")
-//        set1.setColor(Color.WHITE)
-//        set1.setCircleColor(Color.BLACK)
-//        set1.setLineWidth(3f)
-//        set1.setDrawCircles(false)
-//        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-//
-//        set1.setValueTextSize(9f)
-//        set1.setDrawValues(false)
-//        set1.setDrawFilled(true)
-//        set1.setFormLineWidth(1f)
-//        set1.setFormSize(15f)
-
         //수정
         set1.mode = LineDataSet.Mode.CUBIC_BEZIER
         set1.setDrawFilled(true)
@@ -463,7 +417,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         dismissLoadingDialog()
     }
 
-    // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴)
+    // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴) , 단일 포폴 조회
     override fun portfolioSuccess(response: PortfolioResponse) {
         dismissLoadingDialog()
         when (response.code) {
@@ -478,6 +432,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 MyApplicationClass.myAccountIdx = response.result.accountIdx
                 MyApplicationClass.myPortIdx = response.result.portIdx
                 MyApplicationClass.marketName = response.result.marketName
+                marketIdx = market.get(response.result.marketName)!!     //마켓 인덱스 셋팅
                 accounName = response.result.accountName                //계좌이름
                 Log.d(
                     "인덱스 정보",
@@ -485,7 +440,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 )
                 Log.d(
                     "Callidx",
-                    "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx}"
+                    "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx} , 마켓 정보 :${response.result.marketName} , 마켓 인덱스 : ${marketIdx}"
                 )
                 //계좌 인덱스 셋팅 됐을때 차트 호출
                 callGetProfit()
