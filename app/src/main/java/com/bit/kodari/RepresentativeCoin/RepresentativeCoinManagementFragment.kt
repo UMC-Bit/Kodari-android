@@ -31,7 +31,7 @@ import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 //삭제 누르면 끝나고 작업 다시 재조회 -> deletList 초기화
-class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
+class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<FragmentRepresentativeCoinManagementBinding>(FragmentRepresentativeCoinManagementBinding::inflate), RptCoinMgtInsquireView,
     CoinView {
     var usdtPrice = HomeFragment.usdtPrice
     private lateinit var viewModel: CoinViewModel
@@ -61,9 +61,11 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
 
     override fun initAfterBinding() {
         // Usdt 환율 받아옴
+        setInit()
         deleteDialog()
         setListener()
         getRptCoins()
+
         // ViewModel 적용
         viewModelFactory = CoinViewModelFactory(null, coinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
@@ -77,6 +79,12 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
         })
     }
 
+    private fun setInit() { //marketIdx 에 따른 텍스트 뷰 셋팅
+        if(marketIdx == 2) {
+            binding.representativeCoinManagementUpbitTV.text = "빗썸"
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
@@ -85,7 +93,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     fun setListener(){
         binding.representativeCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment()).commit()
+                .replace(R.id.main_container_fl, RepresentativeCoinSearchFragment(marketIdx)).commit()
         }
 
         binding.representativeCoinManagementBeforeButtonBT.setOnClickListener {

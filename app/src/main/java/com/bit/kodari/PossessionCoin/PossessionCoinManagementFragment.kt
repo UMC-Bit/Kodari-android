@@ -36,7 +36,7 @@ import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PossessionCoinManagementFragment(val accountName:String) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
+class PossessionCoinManagementFragment(val accountName:String , val marketIdx: Int) :BaseFragment<FragmentPossessionCoinManagementBinding>(FragmentPossessionCoinManagementBinding::inflate), PsnCoinMgtInsquireView, PsnCoinMgtDeleteView,
 CoinView{
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
@@ -99,7 +99,7 @@ CoinView{
             val position = PossessionCoinManagementAdapter.clickPosition
             if (isClick && position != -1) {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment(accountName).apply {
+                    .replace(R.id.main_container_fl, PossessionCoinModifyFragment(accountName,marketIdx).apply {
                         arguments = Bundle().apply {
                             putInt("coinIdx", coinList[position].coinIdx)
                             Log.d("checkcoinidx", "${coinList[position]}")
@@ -128,7 +128,7 @@ CoinView{
 
         binding.possessionCoinManagementAddTV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).commit()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName ,marketIdx)).commit()
         }
 
         binding.possessionCoinManagementBeforeButtonBT.setOnClickListener {
@@ -212,7 +212,7 @@ CoinView{
                 PossessionCoinManagementAdapter.isClick=false
                 PossessionCoinManagementAdapter.clickPosition=-1
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl , PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl , PossessionCoinManagementFragment(accountName ,marketIdx)).commitAllowingStateLoss()
 
             }
             else -> {

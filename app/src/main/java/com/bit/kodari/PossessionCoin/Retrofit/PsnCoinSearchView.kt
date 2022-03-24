@@ -6,4 +6,6 @@ interface PsnCoinSearchView {
 
     fun getCoinsAllSuccess(response: PsnCoinSearchResponse)
     fun getCoinsAllFailure(message:String)
+    fun getMarketCoinSuccess(response: PsnCoinSearchResponse)
+    fun getMarketCoinFailure(message: String)
 }

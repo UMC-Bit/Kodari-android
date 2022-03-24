@@ -1,6 +1,7 @@
 package com.bit.kodari.PossessionCoin.Retrofit
 
 import com.bit.kodari.Debate.PostData.DebateDeletePostResponse
+import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 import com.bit.kodari.PossessionCoin.RetrofitData.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -9,6 +10,10 @@ interface PsnCoinRetrofitInterface {
 
     @GET("/coins")
     fun getPsnSearchCoinAll():Call<PsnCoinSearchResponse> // 응답받는 response 형식으로 맞춰주기
+
+    //마켓별 코인 조회 -> 이걸로 전부 바꿔야함
+    @GET("/coins/market")
+    fun getSearchMarketCoin(@Query("marketIdx") marketIdx:Int):Call<PsnCoinSearchResponse>
 
     // 소유 코인 추가 API(get방식은 받는거라서 따로 만들어서 보내줄 필요가 없지만 post형식은 body를 보내줘야 response가 온다.)
     @POST("/userCoin/post")

@@ -30,7 +30,7 @@ import java.lang.StringBuilder
 import java.util.*
 import kotlin.properties.Delegates
 
-class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinModifyBinding>(FragmentPossessionCoinModifyBinding::inflate), PsnCoinAddTradeView {
+class PossessionCoinModifyFragment(val accountName:String , val marketIdx:Int) : BaseFragment<FragmentPossessionCoinModifyBinding>(FragmentPossessionCoinModifyBinding::inflate), PsnCoinAddTradeView {
     private val tradeTime = StringBuilder()
     private var coinIdx by Delegates.notNull<Int>()
 
@@ -41,7 +41,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commit()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName , marketIdx)).commit()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this,callback)
@@ -170,7 +170,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         //프래그먼트 뒤로가기
         binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commit()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
         }
     }
 
@@ -181,7 +181,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 PossessionCoinManagementAdapter.isClick = false
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commit()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
                 Log.d("psncoinaddtradesuccess", "거래내역 추가 성공, ${response}")
             }
             else -> {
