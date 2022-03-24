@@ -223,7 +223,7 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
     }
 
     // 업비트 시세 조회 API 호출 성공
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         var position = 0
         if(requireActivity() != null) {
             requireActivity().runOnUiThread() {
@@ -263,10 +263,6 @@ class RepresentativeCoinManagementFragment : BaseFragment<FragmentRepresentative
                 viewModel.getUpdateRepresentCoin(coinList, position)
             }
         }
-    }
-
-    override fun bithumbPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        TODO("Not yet implemented")
     }
 
     override fun coinPriceFailure(message: String) {

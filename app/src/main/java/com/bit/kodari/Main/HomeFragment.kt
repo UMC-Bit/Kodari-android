@@ -247,7 +247,6 @@ import kotlin.collections.HashMap
             binding.homeViewpagerVp.adapter = homeVPAdapter
             binding.homeViewpagerVp.offscreenPageLimit = 3
 
-
             binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
             binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
             //뷰페이저 화살표 설정 리스너.
@@ -284,11 +283,12 @@ import kotlin.collections.HashMap
                         }
                     }
                     binding.myRecordIndicators.animatePageSelected(position)
-
                 }
             })
             //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
         }
+        // 웹소켓 초기화
+        upbitWebSocket
     }
 
     //차트에 더미데이터 셋팅하고 차트 보여주는 함수
@@ -471,9 +471,10 @@ import kotlin.collections.HashMap
                 getCoinPrice(response)
                 // 수익률 리스트
                 val profitList = response.result.profitResultList
-                //AccountIdx 와 PortIdx 싱글톤에 셋팅
+                //AccountIdx, PortIdx, marketName 싱글톤에 셋팅
                 MyApplicationClass.myAccountIdx = response.result.accountIdx
                 MyApplicationClass.myPortIdx = response.result.portIdx
+                MyApplicationClass.marketName = response.result.marketName
                 accounName = response.result.accountName                //계좌이름
                 Log.d(
                     "인덱스 정보",
@@ -493,7 +494,7 @@ import kotlin.collections.HashMap
     }
 
     // 업비트 시세 조회 API 호출 성공
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
             var currentSum = 0.0
             var sumBuyCoin = 0.0
@@ -591,10 +592,6 @@ import kotlin.collections.HashMap
             }
         }
     }
-
-        override fun bithumbPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-            TODO("Not yet implemented")
-        }
 
         override fun coinPriceFailure(message: String) {
 

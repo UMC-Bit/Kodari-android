@@ -52,7 +52,7 @@ class BithumbWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
             }
             coinPriceMap.put(symbol + "change", changeNum)
             Log.d("Bithumb_Socket", "Receiving String : ${message}")
-            coinView.upbitPriceSuccess(coinPriceMap)
+            coinView.marketPriceSuccess(coinPriceMap)
         }catch(e: JSONException){
             webSocket.send(text) // 응답 받은 후 다시 데이터 넘겨주기
         }

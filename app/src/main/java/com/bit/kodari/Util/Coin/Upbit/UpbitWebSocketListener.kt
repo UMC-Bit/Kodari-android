@@ -45,7 +45,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         }
         coinPriceMap.put(symbol+"change",changeNum) // 전일 대비, RISE(상승), EVEN(보합), FALL(하락)
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
-        coinView.upbitPriceSuccess(coinPriceMap)
+        coinView.marketPriceSuccess(coinPriceMap)
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {

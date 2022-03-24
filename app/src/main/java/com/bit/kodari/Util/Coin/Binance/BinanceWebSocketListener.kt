@@ -73,15 +73,11 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         return sb.toString().lowercase()
     }
 
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")
     }
 
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun bithumbPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")
     }
 
