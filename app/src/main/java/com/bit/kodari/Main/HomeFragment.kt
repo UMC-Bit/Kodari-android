@@ -28,6 +28,7 @@ import com.bit.kodari.RepresentativeCoin.RepresentativeCoinManagementFragment
 import com.bit.kodari.Util.*
 import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.USD.UsdService
 import com.bit.kodari.Util.Coin.USD.UsdView
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
@@ -66,9 +67,10 @@ import kotlin.collections.HashMap
     // 유저 코인, 대표 코인 심볼 저장
     var coinSymbolSet = HashSet<String>()
 
-    // 업비트, 바이낸스 웹 소켓
+    // 업비트, 바이낸스, 빗썸 웹 소켓
     var upbitWebSocket: UpbitWebSocketListener? = null
     var binanceWebSocket: BinanceWebSocketListener? = null
+    var bithumbWebSocket: BithumbWebSocketListener? = null
     private lateinit var portFolioView: PortfolioView
 
 
@@ -606,6 +608,7 @@ import kotlin.collections.HashMap
         val representCoinNameList = ArrayList<String>()
         userCoinList.clear()
         representCoinList.clear()
+        coinSymbolSet.clear()
         // 계좌
         getAccountResult(response)
         // 유저 코인 리스트
@@ -622,13 +625,18 @@ import kotlin.collections.HashMap
         for (i in 0 until representCoinList.size) {
             coinSymbolSet.add(representCoinList[i].symbol)
         }
-        // 거래소 별 웹 소켓 연결
         when(marketName){
-            "업비트" ->
+            "업비트"->{
+                upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+                upbitWebSocket?.setCoinView(this)
+                upbitWebSocket?.start() // 업비트 웹 소켓 실행
+            }
+            "빗썸"->{
+                bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
+                bithumbWebSocket?.setCoinView(this)
+                bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+            }
         }
-        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket?.setCoinView(this)
-        upbitWebSocket?.start() // 업비트 웹 소켓 실행
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
         binanceWebSocket?.setCoinView(this)
         binanceWebSocket?.start()
@@ -726,6 +734,7 @@ import kotlin.collections.HashMap
         checkView = false
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
         binanceWebSocket?.webSocket?.cancel()
+        upbitWebSocket?.webSocket?.cancel()
     }
 
     fun callPortfolioInfo(portIdx: Int) {
