@@ -1,20 +1,24 @@
 package com.bit.kodari.Util.Coin.Binance
 
 import android.util.Log
+import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UsdtService
 import okhttp3.*
 import org.json.JSONObject
 
 class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(), CoinView {
+
     var usdtPrice: Int = 1200 // usdt 가격
     private lateinit var coinView: CoinView
     fun setCoinView(coinView: CoinView) {
         this.coinView = coinView
-        // Usdt 환율 받아옴
+        /*// Usdt 환율 받아옴
         val usdtService = UsdtService()
         usdtService.setCoinView(this)
-        usdtService.getFirsUsdtPrice()
+        usdtService.getFirsUsdtPrice()*/
     }
 
     var webSocket: WebSocket? = null
@@ -33,7 +37,7 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         symbol = symbol.replace("USDT","") // KRW- 제거
         val price = JSONObject(message).getDouble("c")
         coinPriceMap.put(symbol, price)
-        coinPriceMap.put("usdt", usdtPrice.toDouble())
+        //coinPriceMap.put("usdt", usdtPrice.toDouble())
         Log.d("Binance_Socket", "Receiving bytes : ${message}")
         // TODO HomeFragment livedata 처리
         coinView.binancePriceSuccess(coinPriceMap)
@@ -73,9 +77,10 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         return sb.toString().lowercase()
     }
 
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")
     }
+
 
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")

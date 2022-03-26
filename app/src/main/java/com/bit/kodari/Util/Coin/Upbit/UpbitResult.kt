@@ -1,6 +1,6 @@
 package com.bit.kodari.Util.Coin.Upbit
 
-data class UpbitPrice(
+data class UpbitResult(
     val acc_trade_price: Double,
     val acc_trade_price_24h: Double,
     val acc_trade_volume: Double,

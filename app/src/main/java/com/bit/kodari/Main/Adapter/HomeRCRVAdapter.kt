@@ -15,7 +15,7 @@ class HomeRCRVAdapter(var list:List<RepresentCoinResult>) :RecyclerView.Adapter<
         fun bind(item : RepresentCoinResult){
             val color = getPriceColor(item.change)
             binding.representUpbitPriceTv.setTextColor(color)
-            binding.representUpbitPriceTv.text = formatPrice(item.upbitPrice)
+            binding.representUpbitPriceTv.text = formatPrice(item.marketPrice)
             Glide.with(binding.representCoinIv)
                 .load(item.coinImg)
                 .into(binding.representCoinIv)

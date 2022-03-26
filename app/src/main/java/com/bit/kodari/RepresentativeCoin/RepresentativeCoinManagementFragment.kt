@@ -13,8 +13,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
@@ -26,7 +28,9 @@ import com.bit.kodari.RepresentativeCoin.RetrofitData.RptCoinMgtInsquireResponse
 import com.bit.kodari.RepresentativeCoin.Service.RptCoinService
 import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
+import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.Util.Upbit.CoinService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -37,12 +41,15 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var coinSymbolSet = HashSet<String>()    // 유저 코인, 대표 코인 심볼 저장
+    private val marketName = MyApplicationClass.marketName // 거래소 이름
     var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트 웹 소켓
+    var bithumbWebSocket: BithumbWebSocketListener? = null    // 업비트 웹 소켓
     var binanceWebSocket: BinanceWebSocketListener? = null // 바이낸스 웹 소켓
     private var coinList = ArrayList<RepresentCoinResult>()
     private var rptCoinManagementAdapter = RptCoinManagementAdapter(coinList)
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var coinService: CoinService
 
     companion object{
         private var cnt = 0
@@ -69,6 +76,9 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
         // ViewModel 적용
         viewModelFactory = CoinViewModelFactory(null, coinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        // 처음에 코인 시세 불러오기
+        coinService = CoinService()
+        coinService.setViewModel(viewModel)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
             if(rptCoinManagementAdapter != null){
                 var position = viewModel.getRepresentCoinPosition()
@@ -88,6 +98,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
     override fun onDestroy() {
         super.onDestroy()
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        bithumbWebSocket?.webSocket?.cancel()
         binanceWebSocket?.webSocket?.cancel()
     }
     fun setListener(){
@@ -100,8 +111,10 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, HomeFragment()).commit()
         }
-
-
+        // 업비트 말고 다른 거래소 일 때 타이틀 변경
+        if(MyApplicationClass.marketName.equals("빗썸")){
+            binding.representativeCoinManagementUpbitTV.setText("빗썸")
+        }
     }
 
     fun setRecyclerView(){
@@ -220,18 +233,29 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
         for (i in 0 until coinList.size) {
             coinSymbolSet.add(coinList[i].symbol)
         }
-
         // 웹 소켓 연결
-        upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
-        upbitWebSocket?.setCoinView(this)
-        upbitWebSocket?.start() // 업비트 웹 소켓 실행
+        when (marketName) {
+            "업비트" -> {
+                upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
+                upbitWebSocket?.setCoinView(this)
+                upbitWebSocket?.start() // 업비트 웹 소켓 실행
+                coinService.getUpbitCurrentPrice(null,coinList) // 업비트 코인 시세 받아오기
+
+            }
+            "빗썸" -> {
+                bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
+                bithumbWebSocket?.setCoinView(this)
+                bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+                coinService.getBithumbCurrentPrice(null,coinList) // 빗썸 코인 시세 받아오기
+            }
+        }
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)
         binanceWebSocket?.setCoinView(this)
         binanceWebSocket?.start()
     }
 
     // 업비트 시세 조회 API 호출 성공
-    override fun upbitPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         var position = 0
         if(requireActivity() != null) {
             requireActivity().runOnUiThread() {
@@ -240,7 +264,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
                     val symbol = coinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val change = upbitCoinPriceMap.get(symbol+"change")
-                        coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        coinList[i].marketPrice = upbitCoinPriceMap.get(symbol)!!
                         if (change != null) {
                             coinList[i].change = change
                         }
@@ -251,6 +275,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
             }
         }
     }
+
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         var position = 0
@@ -260,7 +285,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
                     if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = coinList[i].upbitPrice
+                        val upbitPrice = coinList[i].marketPrice
                         val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         coinList[i].binancePrice = binancePrice
@@ -272,6 +297,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
             }
         }
     }
+
     override fun coinPriceFailure(message: String) {
         TODO("Not yet implemented")
     }

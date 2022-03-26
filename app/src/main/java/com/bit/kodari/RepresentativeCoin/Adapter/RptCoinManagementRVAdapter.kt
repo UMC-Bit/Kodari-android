@@ -45,7 +45,7 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
                 binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice)
                 binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
             }
-            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice)
+            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.marketPrice)
             binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.setTextColor(color)
 
             //업비트, 바이낸스 가격 추가하기.
