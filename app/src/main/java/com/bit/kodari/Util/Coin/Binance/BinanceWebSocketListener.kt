@@ -4,11 +4,13 @@ import android.util.Log
 import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Util.Coin.CoinView
+import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UsdtService
 import okhttp3.*
 import org.json.JSONObject
 
 class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(), CoinView {
+
     var usdtPrice: Int = 1200 // usdt 가격
     private lateinit var coinView: CoinView
     fun setCoinView(coinView: CoinView) {
@@ -79,12 +81,6 @@ class BinanceWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
         TODO("Not yet implemented")
     }
 
-    override fun marketFirstPriceSuccess(
-        userCoinList: ArrayList<PossesionCoinResult>,
-        representCoinList: ArrayList<RepresentCoinResult>
-    ) {
-        TODO("Not yet implemented")
-    }
 
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
         TODO("Not yet implemented")

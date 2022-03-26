@@ -40,6 +40,7 @@ class HomePCRVAdapter(var list:List<PossesionCoinResult>) :RecyclerView.Adapter<
                 binding.myProfitTv.setTextColor(Color.BLUE)
                 binding.myProfitTv.text = formatPrice(item.profit)
             }else{
+                binding.myProfitPercentTv.setTextColor(Color.RED)
                 binding.myProfitTv.text = "+" + formatPrice(item.profit)
             }
             if(item.profitRate < 0){

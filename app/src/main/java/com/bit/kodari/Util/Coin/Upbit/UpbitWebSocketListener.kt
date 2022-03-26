@@ -11,7 +11,7 @@ import org.json.JSONObject
  */
 class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(){
     private lateinit var coinView: CoinView
-
+    private var checkClose = false
     fun setCoinView(coinView: CoinView) {
         this.coinView = coinView
     }
@@ -30,6 +30,12 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
 
     //onMessage로 응답 받고 HomeFragment로 넘김
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+        this.webSocket = webSocket
+        if(checkClose){
+            Log.d("Upbit_Socket","Closing")
+            webSocket?.close(NORMAL_CLOSURE_STATUS, null)
+            webSocket?.cancel()
+        }
         val coinPriceMap = HashMap<String, Double>()
         val message = bytes.utf8()
         var symbol = JSONObject(message).getString("code")
@@ -39,9 +45,9 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         val change = JSONObject(message).getString("ask_bid")
         var changeNum = 0.0
         if(change.equals("ASK")){
-            changeNum = 1.0
-        }else if(change.equals("BID")){
             changeNum = -1.0
+        }else if(change.equals("BID")){
+            changeNum = 1.0
         }
         coinPriceMap.put(symbol+"change",changeNum) // 전일 대비, RISE(상승), EVEN(보합), FALL(하락)
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
@@ -59,7 +65,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     }
 
     companion object {
-        private const val NORMAL_CLOSURE_STATUS = 1000
+        const val NORMAL_CLOSURE_STATUS = 1000
     }
     // Web socket 시작
     fun start(){
@@ -69,6 +75,9 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         var client: OkHttpClient = OkHttpClient()
         client.newWebSocket(request, this)
         client.dispatcher().executorService().shutdown()
+    }
+    fun close(){
+        checkClose = true
     }
     // symbol -> codes 변환
     private fun getCodes(): String{

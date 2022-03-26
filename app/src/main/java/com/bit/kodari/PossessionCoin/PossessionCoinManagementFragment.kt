@@ -35,6 +35,7 @@ import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.Util.Upbit.CoinService
 import com.bit.kodari.databinding.FragmentPossessionCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -52,6 +53,7 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
     private var coinList = ArrayList<PossesionCoinResult>()
     private var possessionCoinManagementAdapter = PossessionCoinManagementAdapter(coinList)
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var coinService: CoinService
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,9 +72,19 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
         // ViewModel 적용
         viewModelFactory = CoinViewModelFactory(coinList, null)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        // 처음에 코인 시세 불러오기
+        coinService = CoinService()
+        coinService.setViewModel(viewModel)
         viewModel.userCoinData.observe(this, androidx.lifecycle.Observer {
-            if (possessionCoinManagementAdapter != null) {
-                var position = viewModel.getUserCoinPosition()
+            var position = viewModel.getUserCoinPosition()
+            if (possessionCoinManagementAdapter != null && coinList.size > position) {
+                // 소유 코인 시세 받아오기, 수익률 구하기
+                val marketPrice = coinList[position].marketPrice
+                if(marketPrice == 0.0)
+                    return@Observer
+                val priceAvg = coinList[position].priceAvg
+                val amount = coinList[position].amount
+                coinList[position].profit = getProfit(marketPrice, priceAvg, amount)
                 possessionCoinManagementAdapter.setData(coinList, position)
             } else {
                 setRecyclerView()
@@ -95,6 +107,7 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
         super.onDestroy()
         checkView = false
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        bithumbWebSocket?.webSocket?.cancel()
         binanceWebSocket?.webSocket?.cancel()
     }
 
@@ -258,17 +271,18 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
         for (i in 0 until coinList.size) {
             coinSymbolSet.add(coinList[i].symbol)
         }
-        // 웹 소켓 연결
         when (marketName) {
             "업비트" -> {
                 upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
                 upbitWebSocket?.setCoinView(this)
                 upbitWebSocket?.start() // 업비트 웹 소켓 실행
+                coinService.getUpbitCurrentPrice(coinList, null) // 업비트 코인 시세 받아오기
             }
             "빗썸" -> {
                 bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
                 bithumbWebSocket?.setCoinView(this)
                 bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+                coinService.getBithumbCurrentPrice(coinList, null) // 빗썸 코인 시세 받아오기
             }
         }
     }
@@ -297,13 +311,6 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
                 viewModel.getUpdateUserCoin(coinList, position)
             }
         }
-    }
-
-    override fun marketFirstPriceSuccess(
-        userCoinList: ArrayList<PossesionCoinResult>,
-        representCoinList: ArrayList<RepresentCoinResult>
-    ) {
-        TODO("Not yet implemented")
     }
 
 

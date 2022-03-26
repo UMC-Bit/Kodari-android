@@ -267,13 +267,6 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
         }
     }
 
-    override fun marketFirstPriceSuccess(
-        userCoinList: ArrayList<PossesionCoinResult>,
-        representCoinList: ArrayList<RepresentCoinResult>
-    ) {
-        TODO("Not yet implemented")
-    }
-
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         var position = 0
