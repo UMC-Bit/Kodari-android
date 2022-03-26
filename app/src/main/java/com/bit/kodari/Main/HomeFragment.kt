@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var homePCRVAdapter = HomePCRVAdapter(userCoinList)
     private lateinit var viewModel: CoinViewModel
     private lateinit var viewModelFactory: CoinViewModelFactory
-    private var viewPagerPosition = 0;
+    private var viewPagerPosition = MyApplicationClass.pageIdx;
     private var checkView = true
     var portfolioList = ArrayList<Fragment>()
     var portIdxList = ArrayList<Int>()
@@ -115,6 +115,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 setRepresentPV()
             }
         })
+
+
     }
 
     override fun onDestroyView() {
@@ -247,9 +249,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeViewpagerVp.adapter = homeVPAdapter
             binding.homeViewpagerVp.offscreenPageLimit = 3
 
-
             binding.myRecordIndicators.setViewPager(binding.homeViewpagerVp)
             binding.myRecordIndicators.createIndicators(homeVPAdapter.itemCount, 0)
+
             //뷰페이저 화살표 설정 리스너.
             binding.homeViewpagerVp.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
@@ -263,6 +265,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             if (portIdxList.size != 0) {
                                 callPortfolioInfo(portIdxList[position])
                             }
+                            MyApplicationClass.pageIdx = position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
                             Log.d("HomeViewPager", "HomeViewPagerPosition : ${position}")
                         }
                         portfolioList.size - 1 -> {     //마지막
@@ -274,19 +277,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             setRepresentRV()
                             setRepresentPV()
                             setChartDummy(profitList = ArrayList())
-
+                            MyApplicationClass.pageIdx = position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
                         }
                         else -> {
                             Log.d("setViewpager", "else position : ${position}")
                             binding.homeVpNextBtn.visibility = View.VISIBLE
                             binding.homeVpPreviewBtn.visibility = View.VISIBLE
                             callPortfolioInfo(portIdxList[position].toInt())
+                            MyApplicationClass.pageIdx = position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
                         }
                     }
                     binding.myRecordIndicators.animatePageSelected(position)
 
                 }
             })
+            binding.homeViewpagerVp.currentItem = MyApplicationClass.pageIdx        //현재 포폴로 이동 -> 전부 불러온 뒤
+            Log.d("pageIDx", "${MyApplicationClass.pageIdx}")
             //portfolioList.clear()       //다시 조회할때 채우기 위해 기존꺼 삭제
         }
     }
@@ -521,6 +527,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 계좌 수익률 보내주기
             }
         }
+
     }
 
     // 바이낸스 시세 조회 API 호출 성공

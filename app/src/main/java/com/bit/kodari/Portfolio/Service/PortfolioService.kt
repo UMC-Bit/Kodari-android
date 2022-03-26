@@ -53,7 +53,7 @@ class PortfolioService {
                     if(response.body()!!.result.size == 0){
                         portfolioView.getPortIdxSuccess(response.body()!!)
                     } else{
-                        val portIdx = response.body()!!.result!![0].portIdx         //첫번째만 ? ? 이거 왜 이렇게해놨지 ?
+                        val portIdx = response.body()!!.result!![MyApplicationClass.pageIdx].portIdx         //첫번째만 ? ? 이거 왜 이렇게해놨지 ?
                         portfolioView.getPortIdxSuccess(response.body()!!)
                         getPortfolioInfo(portIdx)                                   //이런식이면 안되지 않을까 ?
                     }
