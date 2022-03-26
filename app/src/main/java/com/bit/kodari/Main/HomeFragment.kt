@@ -32,6 +32,7 @@ import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.USD.UsdService
 import com.bit.kodari.Util.Coin.USD.UsdView
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.Util.Upbit.CoinService
 import com.bit.kodari.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -50,9 +51,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         private const val NORMAL_STATUS_CLOSE = 1000
     }
 
-    var coinPriceMap = HashMap<String, Double>(); // key:symbol, value:price
-    var userCoinList = ArrayList<PossesionCoinResult>() // 유저 코인 리스트
-    var representCoinList = ArrayList<RepresentCoinResult>() // 대표 코인 리스트
+    private var coinPriceMap = HashMap<String, Double>(); // key:symbol, value:price
+    private var userCoinList = ArrayList<PossesionCoinResult>() // 유저 코인 리스트
+    private var representCoinList = ArrayList<RepresentCoinResult>() // 대표 코인 리스트
     private lateinit var homeVPAdapter: HomeVPAdapter
     private var homeRCRVAdapter = HomeRCRVAdapter(representCoinList)
     private var homePCRVAdapter = HomePCRVAdapter(userCoinList)
@@ -60,22 +61,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var viewModelFactory: CoinViewModelFactory
     private var viewPagerPosition = 0;
     private var checkView = true
-    var portfolioList = ArrayList<Fragment>()
-    var portIdxList = ArrayList<Int>()
+    private var portfolioList = ArrayList<Fragment>()
+    private var portIdxList = ArrayList<Int>()
     lateinit var accounName: String
     private var marketIdx by Delegates.notNull<Int>()       //marketIdx 선언
     private var market : HashMap<String,Int> = hashMapOf("업비트" to 1 , "빗썸" to 2)
 
-    // 수익률 리스트
-    // val profitList = response.result.profitResultList
-    // 유저 코인, 대표 코인 심볼 저장
-    var coinSymbolSet = HashSet<String>()
+    private var coinSymbolSet = HashSet<String>()    // 수익률 리스트    // 유저 코인, 대표 코인 심볼 저장
 
-    // 업비트, 바이낸스, 빗썸 웹 소켓
-    var upbitWebSocket: UpbitWebSocketListener? = null
-    var binanceWebSocket: BinanceWebSocketListener? = null
-    var bithumbWebSocket: BithumbWebSocketListener? = null
+    private var upbitWebSocket: UpbitWebSocketListener? = null    // 업비트, 바이낸스, 빗썸 웹 소켓
+    private var binanceWebSocket: BinanceWebSocketListener? = null
+    private var bithumbWebSocket: BithumbWebSocketListener? = null
     private lateinit var portFolioView: PortfolioView
+    private lateinit var coinService: CoinService
+
 
 
     fun setPortFolioView(portFolioView: PortfolioView) {
@@ -90,9 +89,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         portFolioService.setPortfolioView(this)
         showLoadingDialog(requireContext())
         portFolioService.getPortfolioList(getUserIdx())
+        // 환율 받아오기
         val usdService = UsdService()
         usdService.setUsdView(this)
         usdService.getUsdExchangeRate()
+        // 라이브 데이터 뷰 모델 세팅
+        viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        // 업비트, 바이낸스 서비스 세팅
+        coinService = CoinService()
+        coinService.setViewModel(viewModel)
 //        setChartDummy()          포폴 조회 or 버튼 누를떄마다 차트 생성하게해야함.
 
         setListener()
@@ -100,9 +106,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             "info",
             "jwt : ${getJwt()} , email : ${getEmail()} , pw : ${getPw()} , userIdx: ${getUserIdx()} "
         )
-
-        viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
             if (homeRCRVAdapter != null) {
                 var position = viewModel.getRepresentCoinPosition()
@@ -258,9 +261,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {        //page변경됐을떄
                     super.onPageSelected(position)
-                    //webSocket close
-                    upbitWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
-                    bithumbWebSocket?.webSocket?.close(NORMAL_STATUS_CLOSE, null)
+                    //webSocket cancel
                     viewPagerPosition = position
                     when (position) {
                         0 -> {      //시작
@@ -452,7 +453,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     // 업비트 시세 조회 API 호출 성공
-    override fun marketPriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
+    override fun marketPriceSuccess(marketCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {
             var currentSum = 0.0
             var sumBuyCoin = 0.0
@@ -464,10 +465,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 소유 코인 시세 받아오기, 수익률 구하기
                 for (i in userCoinList.indices) {
                     val symbol = userCoinList[i].symbol
-                    if (upbitCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    if (marketCoinPriceMap.containsKey(symbol)) {
+                        val upbitPrice = marketCoinPriceMap.get(symbol)!!
                         coinPriceMap.put(symbol, upbitPrice)
-                        val change = upbitCoinPriceMap.get(symbol + "change")
+                        val change = marketCoinPriceMap.get(symbol + "change")
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
                         userCoinList[i].marketPrice = upbitPrice
@@ -483,13 +484,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 소유 코인 소득 구하기
                 for (i in userCoinList.indices) {
                     val symbol = userCoinList[i].symbol
-                    if (coinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = coinPriceMap.get(symbol)!!
+                    if (marketCoinPriceMap.containsKey(symbol)) {
+                        val marketPrice = marketCoinPriceMap.get(symbol)!!
                         val amount = userCoinList[i].amount
                         val priceAvg = userCoinList[i].priceAvg
-                        userCoinList[i].marketPrice = upbitPrice
+                        userCoinList[i].marketPrice = marketPrice
                         sumBuyCoin += amount * priceAvg
-                        currentSum += upbitPrice * amount
+                        currentSum += marketPrice * amount
                         userCoinPosition = i;
                         userCoinCheck = true
                     }
@@ -497,9 +498,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 // 대표 코인 시세 받아오기
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
-                    if (upbitCoinPriceMap.containsKey(symbol)) {
-                        val change = upbitCoinPriceMap.get(symbol + "change")
-                        representCoinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                    if (marketCoinPriceMap.containsKey(symbol)) {
+                        val change = marketCoinPriceMap.get(symbol + "change")
+                        representCoinList[i].marketPrice = marketCoinPriceMap.get(symbol)!!
                         if (change != null) {
                             representCoinList[i].change = change
                         }
@@ -528,6 +529,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     }
+    // 처음에 포트폴리오 API로 시세 불러오기
+    override fun marketFirstPriceSuccess(
+        userCoinList: ArrayList<PossesionCoinResult>,
+        representCoinList: ArrayList<RepresentCoinResult>
+    ) {
+        this.userCoinList = userCoinList
+        this.representCoinList = representCoinList
+    }
 
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
@@ -538,7 +547,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 for (i in representCoinList.indices) {
                     val symbol = representCoinList[i].symbol
                     if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = representCoinList[i].upbitPrice
+                        val upbitPrice = representCoinList[i].marketPrice
                         val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         representCoinList[i].binancePrice = binancePrice
@@ -585,11 +594,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
                 upbitWebSocket?.setCoinView(this)
                 upbitWebSocket?.start() // 업비트 웹 소켓 실행
+                //coinService.getUpbitCurrentPrice(userCoinList, representCoinList) // 업비트 코인 시세 받아오기
             }
             "빗썸" -> {
                 bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
                 bithumbWebSocket?.setCoinView(this)
                 bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+                coinService.getBithumbCurrentPrice(userCoinList, representCoinList) // 빗썸 코인 시세 받아오기
             }
         }
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)

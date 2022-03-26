@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.RptCoinManagementAdapter
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
@@ -254,7 +255,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
                     val symbol = coinList[i].symbol
                     if (upbitCoinPriceMap.containsKey(symbol)) {
                         val change = upbitCoinPriceMap.get(symbol+"change")
-                        coinList[i].upbitPrice = upbitCoinPriceMap.get(symbol)!!
+                        coinList[i].marketPrice = upbitCoinPriceMap.get(symbol)!!
                         if (change != null) {
                             coinList[i].change = change
                         }
@@ -265,6 +266,14 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
             }
         }
     }
+
+    override fun marketFirstPriceSuccess(
+        userCoinList: ArrayList<PossesionCoinResult>,
+        representCoinList: ArrayList<RepresentCoinResult>
+    ) {
+        TODO("Not yet implemented")
+    }
+
     // 바이낸스 시세 조회 API 호출 성공
     override fun binancePriceSuccess(binanceCoinPriceMap: HashMap<String, Double>) {
         var position = 0
@@ -274,7 +283,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
                 for (i in coinList.indices) {
                     val symbol = coinList[i].symbol
                     if (binanceCoinPriceMap.containsKey(symbol)) {
-                        val upbitPrice = coinList[i].upbitPrice
+                        val upbitPrice = coinList[i].marketPrice
                         val binancePrice = binanceCoinPriceMap.get(symbol)!! * usdtPrice!!
                         var kimchi = ((upbitPrice - binancePrice) / upbitPrice) * 100
                         coinList[i].binancePrice = binancePrice

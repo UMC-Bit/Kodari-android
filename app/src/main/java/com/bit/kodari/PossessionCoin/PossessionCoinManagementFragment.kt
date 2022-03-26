@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Data.PossesionCoinResult
+import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
@@ -296,6 +297,13 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
                 viewModel.getUpdateUserCoin(coinList, position)
             }
         }
+    }
+
+    override fun marketFirstPriceSuccess(
+        userCoinList: ArrayList<PossesionCoinResult>,
+        representCoinList: ArrayList<RepresentCoinResult>
+    ) {
+        TODO("Not yet implemented")
     }
 
 
