@@ -30,6 +30,7 @@ import com.bit.kodari.Util.Coin.*
 import com.bit.kodari.Util.Coin.Binance.BinanceWebSocketListener
 import com.bit.kodari.Util.Coin.Bithumb.BithumbWebSocketListener
 import com.bit.kodari.Util.Coin.Upbit.UpbitWebSocketListener
+import com.bit.kodari.Util.Upbit.CoinService
 import com.bit.kodari.databinding.FragmentRepresentativeCoinManagementBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -48,6 +49,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
     private var rptCoinManagementAdapter = RptCoinManagementAdapter(coinList)
     private var deleteRcoinList = HashSet<Int>()      //대표코인 삭제할 리스트들
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var coinService: CoinService
 
     companion object{
         private var cnt = 0
@@ -74,6 +76,9 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
         // ViewModel 적용
         viewModelFactory = CoinViewModelFactory(null, coinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        // 처음에 코인 시세 불러오기
+        coinService = CoinService()
+        coinService.setViewModel(viewModel)
         viewModel.representCoinData.observe(this, androidx.lifecycle.Observer {
             if(rptCoinManagementAdapter != null){
                 var position = viewModel.getRepresentCoinPosition()
@@ -93,6 +98,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
     override fun onDestroy() {
         super.onDestroy()
         upbitWebSocket?.webSocket?.cancel() // 웹 소켓 닫기
+        bithumbWebSocket?.webSocket?.cancel()
         binanceWebSocket?.webSocket?.cancel()
     }
     fun setListener(){
@@ -233,11 +239,14 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
                 upbitWebSocket = UpbitWebSocketListener(coinSymbolSet)
                 upbitWebSocket?.setCoinView(this)
                 upbitWebSocket?.start() // 업비트 웹 소켓 실행
+                coinService.getUpbitCurrentPrice(null,coinList) // 업비트 코인 시세 받아오기
+
             }
             "빗썸" -> {
                 bithumbWebSocket = BithumbWebSocketListener(coinSymbolSet)
                 bithumbWebSocket?.setCoinView(this)
                 bithumbWebSocket?.start() // 빗썸 웹 소켓 실행
+                coinService.getBithumbCurrentPrice(null,coinList) // 빗썸 코인 시세 받아오기
             }
         }
         binanceWebSocket = BinanceWebSocketListener(coinSymbolSet)

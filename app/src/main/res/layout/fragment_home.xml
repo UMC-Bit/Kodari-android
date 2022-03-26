@@ -425,7 +425,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/home_upbit_tv"
+                            android:id="@+id/home_market_tv"
                             android:layout_width="65dp"
                             android:layout_height="23dp"
                             android:gravity="center"

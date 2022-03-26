@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewpager2.widget.ViewPager2
 import com.MyApplicationClass
+import com.MyApplicationClass.Companion.marketName
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.Adapter.HomePCRVAdapter
 import com.bit.kodari.Main.Adapter.HomeRCRVAdapter
@@ -259,7 +260,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 val current = binding.homeViewpagerVp.currentItem
                 binding.homeViewpagerVp.setCurrentItem(current + 1, false)
             }
-
         }
 
         //뷰 페이저 셋팅 -> 리스트에 더미데이터 넣어놓은 상태
@@ -450,6 +450,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     MyApplicationClass.myAccountIdx = response.result.accountIdx
                     MyApplicationClass.myPortIdx = response.result.portIdx
                     MyApplicationClass.marketName = response.result.marketName
+                    when(marketName){
+                        "빗썸" ->  binding.homeMarketTv.setText("빗썸")
+                    }
                     marketIdx = market.get(response.result.marketName)!!     //마켓 인덱스 셋팅
                     accounName = response.result.accountName                //계좌이름
                     Log.d(
