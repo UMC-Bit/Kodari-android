@@ -463,6 +463,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 MyApplicationClass.marketName = response.result.marketName
                 when (marketName) {
                     "빗썸" -> binding.homeMarketTv.setText("빗썸")
+                    "업비트" -> binding.homeMarketTv.setText("업비트")
                 }
                 marketIdx = market.get(response.result.marketName)!!     //마켓 인덱스 셋팅
                 accounName = response.result.accountName                //계좌이름
