@@ -21,6 +21,7 @@ class MyApplicationClass : Application() {
         lateinit var mSharedPreferences: SharedPreferences
         var myAccountIdx = 0                                        //기본 값으로 셋팅.
         var myPortIdx = 0
+        var pageIdx = 0
         var marketName = ""
     }
 

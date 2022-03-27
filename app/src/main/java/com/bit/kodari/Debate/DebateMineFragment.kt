@@ -304,6 +304,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             binding.mineOutlineTV.visibility = View.GONE
             binding.mineModifyTv.visibility = View.GONE
             binding.mineRemoveTv.visibility = View.GONE
+        } else{
+            binding.mineViewMoreIv.visibility = View.GONE       //신고기능 안보이기
         }
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)

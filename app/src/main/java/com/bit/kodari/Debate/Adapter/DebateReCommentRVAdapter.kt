@@ -29,8 +29,10 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
             binding.listReCommentNicknameTv.text = item.nickName
             if(item.checkReplyWriter){          //내가 쓴글이면 삭제 버튼 활성화
                 binding.listItemReDeleteTv.visibility = View.VISIBLE
+                binding.listItemReViewMoreTv.visibility = View.GONE
             }else{                              //내가 쓴글이 아니면 삭제버튼 비활성화
                 binding.listItemReDeleteTv.visibility = View.GONE
+                binding.listItemReViewMoreTv.visibility=View.VISIBLE
             }
 
             if(item.reply_status == "inactive"){

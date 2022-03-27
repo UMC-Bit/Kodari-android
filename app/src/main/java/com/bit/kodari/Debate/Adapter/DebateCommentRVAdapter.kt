@@ -62,9 +62,11 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
             if(item.checkCommentWriter){
                 binding.listItemModifyTv.visibility = View.VISIBLE
                 binding.listItemDeleteTv.visibility = View.VISIBLE
+                binding.listItemViewMoreTv.visibility = View.GONE
             } else{
                 binding.listItemModifyTv.visibility = View.GONE
                 binding.listItemDeleteTv.visibility = View.GONE
+                binding.listItemViewMoreTv.visibility = View.VISIBLE
             }
 
             //내가 좋아요 눌렀던 댓글이면 하트 채워지게
