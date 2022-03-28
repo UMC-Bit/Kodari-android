@@ -53,7 +53,7 @@
                 android:id="@+id/dialog_report_reason_sell_content_2_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="신고 사유에 맞지 않는 신고를 했을 경우, 해당 신고는 처리되지 않습니다."
+                android:text="신고 사유에 맞지 않는 신고를 했을 경우, \n해당 신고는 처리되지 않습니다."
                 android:textSize="13sp"
                 android:textAlignment="center"
                 android:textColor="#000000"
