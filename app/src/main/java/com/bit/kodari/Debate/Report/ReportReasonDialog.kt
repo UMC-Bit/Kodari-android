@@ -1,6 +1,7 @@
 package com.bit.kodari.Debate.Report
 
 import android.util.Log
+import androidx.core.os.bundleOf
 import com.bit.kodari.Config.BaseDialogFragment
 import com.bit.kodari.Debate.Report.ReportData.ReportCommentRequest
 import com.bit.kodari.Debate.Report.ReportData.ReportPostRequest
@@ -90,6 +91,9 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     override fun getReportPostSuccess(response: ReportResponse) {
         showToast(response.message)
         Log.d("신고" , "게시글 신고 성공")
+        Log.d("신고 닫기3" ,"신고 닫기 3")
+        val bundle = bundleOf("success" to true)        //신고 완료되었다고 보내기
+        requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()
     }
 
@@ -103,6 +107,8 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     override fun getReportCommentSuccess(response: ReportResponse) {
         showToast(response.message)
         Log.d("신고" , "댓글 신고 성공")
+        val bundle = bundleOf("success" to true)
+        requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()
     }
 
@@ -116,6 +122,8 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     override fun getReportRecommentSuccess(response: ReportResponse) {
         showToast(response.message)
         Log.d("신고" , "대댓 신고 성공")
+        val bundle = bundleOf("success" to true)
+        requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()
     }
     //대댓 신고 실패

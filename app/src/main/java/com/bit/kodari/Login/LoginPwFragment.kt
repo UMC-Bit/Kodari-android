@@ -67,6 +67,7 @@ class LoginPwFragment : BaseFragment<FragmentLoginPwBinding>(FragmentLoginPwBind
                 Log.d("jwt" , "${jwt} 와 ${userIdx}")
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+                requireActivity().finish()
             }
             else -> {showToast(response.message)}
         }

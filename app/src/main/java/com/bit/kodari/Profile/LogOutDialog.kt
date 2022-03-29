@@ -36,7 +36,7 @@ class LogOutDialog: DialogFragment() {
 
         //"로그아웃" 부분 빨갛게 만들기
         val builder = SpannableStringBuilder(binding.logoutMessageTv.text)
-        builder.setSpan(ForegroundColorSpan(Color.RED) , 0,3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder.setSpan(ForegroundColorSpan(Color.RED) , 0,4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.logoutMessageTv.setText(builder)
 
         setListener()

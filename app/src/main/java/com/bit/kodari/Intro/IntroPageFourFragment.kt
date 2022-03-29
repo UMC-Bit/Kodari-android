@@ -23,6 +23,7 @@ class IntroPageFourFragment : Fragment() {
         binding.introPageFourStartIv.setOnClickListener{
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
 
         return binding.root

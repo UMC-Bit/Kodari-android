@@ -318,6 +318,16 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             imgUrl = post.profileImgUrl.toString()   //이미지 URL 저장 , 이거를 수정 눌렀을떄 넘겨주면됨됨
         }
 
+        Log.d("postLike" , "${post.checkPostLike} 와 ${post.checkPostDislike}")
+        if(post.checkPostLike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up_on)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down)
+        }
+
+        if(post.checkPostDislike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down_on)
+        }
 
         commentList = post.commentList          //댓글들 셋팅
         Log.d("commentList", "commentList 사이즈 : ${commentList.size}")
@@ -333,9 +343,11 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
     override fun postLikeSuccess(response: PostLikeResponse , like:Int) {
         //임시로 올라간 것 같이 처리 -> 나중에 조회해오면 바로 반영되어 있음
         if(like == 1) {     //좋아요 눌렀으면.
+
             //좋아요 버튼 누른 후 게시물 재 조회 해서 새로 반영
             callSelectPost()        //게시글 조회 API
         } else{
+
             callSelectPost()
         }
     }
@@ -479,7 +491,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                   1000 -> {
                       Glide.with(binding.mineCommentInputProfileIv)
                           .load(response.body()!!.result[0].profileImgUrl)
-                          .error(R.drawable.profile_image)
+                          .error(R.drawable.ic_basic_profile)
+                          .placeholder(R.drawable.ic_basic_profile)
                           .into(binding.mineCommentInputProfileIv)
                   }
                   else -> {
