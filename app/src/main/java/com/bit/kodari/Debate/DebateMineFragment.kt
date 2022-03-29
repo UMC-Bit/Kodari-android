@@ -319,15 +319,21 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         }
 
         Log.d("postLike" , "${post.checkPostLike} 와 ${post.checkPostDislike}")
+
         if(post.checkPostLike){
             binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up_on)
             binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down)
-        }
-
-        if(post.checkPostDislike){
+        } else if(post.checkPostDislike){
             binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up)
             binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down_on)
+        } else if(!post.checkPostDislike && !post.checkPostDislike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down)
         }
+
+
+
+
 
         commentList = post.commentList          //댓글들 셋팅
         Log.d("commentList", "commentList 사이즈 : ${commentList.size}")
