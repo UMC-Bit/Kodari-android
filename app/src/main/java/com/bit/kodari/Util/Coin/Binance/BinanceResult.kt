@@ -4,3 +4,4 @@ data class BinanceResult(
     val symbol: String,
     val price: Double
 )
+

@@ -29,8 +29,10 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
             binding.listReCommentNicknameTv.text = item.nickName
             if(item.checkReplyWriter){          //내가 쓴글이면 삭제 버튼 활성화
                 binding.listItemReDeleteTv.visibility = View.VISIBLE
+                binding.listItemReViewMoreTv.visibility = View.GONE
             }else{                              //내가 쓴글이 아니면 삭제버튼 비활성화
                 binding.listItemReDeleteTv.visibility = View.GONE
+                binding.listItemReViewMoreTv.visibility=View.VISIBLE
             }
 
             if(item.reply_status == "inactive"){
@@ -48,6 +50,7 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
         holder.bind(recommentList[position])
         //인터페이스가 구현된 곳에서 처리됩니다.
         holder.binding.listItemReDeleteTv.setOnClickListener { mItemClickListener.onClickReComment(recommentList[position].postReplyIdx) }
+        holder.binding.listItemReViewMoreTv.setOnClickListener { mItemClickListener.onReMoreClick(recommentList[position].postReplyIdx) }
     }
 
     override fun getItemCount(): Int = recommentList.size

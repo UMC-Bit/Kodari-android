@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/list_item_re_content_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="아니 그건 됐고 이더리움 떡상 부탁 좀"
             android:textColor="@color/black"
@@ -53,6 +53,7 @@
             app:layout_constraintTop_toTopOf="@id/list_re_comment_nickname_tv"
             app:layout_constraintBottom_toBottomOf="@id/list_re_comment_nickname_tv"/>
 
+
         <TextView
             android:id="@+id/list_item_re_delete_tv"
             android:layout_width="wrap_content"
@@ -62,6 +63,18 @@
             app:layout_constraintStart_toStartOf="@id/list_item_re_content_tv"
             app:layout_constraintTop_toBottomOf="@id/list_item_re_content_tv"
             android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/list_item_re_view_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/view_more_btn_gray"
+            android:padding="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/list_item_re_delete_tv"
+            app:layout_constraintTop_toBottomOf="@id/list_item_re_content_tv"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

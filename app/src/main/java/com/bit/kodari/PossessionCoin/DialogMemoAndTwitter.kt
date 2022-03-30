@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinViewpagerAdapter
+import com.bit.kodari.R
 import com.bit.kodari.databinding.DialogMemoAndTwitterBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -60,6 +62,12 @@ class DialogMemoAndTwitter(val coinIdx:Int , val twitter: String) : DialogFragme
 //        dialog!!.window!!.setLayout(
 //            WindowManager.LayoutParams.WRAP_CONTENT,
 //            WindowManager.LayoutParams.WRAP_CONTENT)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container_fl, HomeFragment()).commit()
     }
 
 }

@@ -2,6 +2,8 @@ package com.bit.kodari.RepresentativeCoin.Service
 
 import android.util.Log
 import com.MyApplicationClass
+import com.bit.kodari.Portfolio.Data.SearchCoinResponse
+import com.bit.kodari.Portfolio.Retrofit.PortfolioInterface
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinMgtInsquireView
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinRetrofitInterface
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
@@ -53,6 +55,25 @@ class RptCoinService {
             }
         })
     }
+
+    //마켓별 코인 조회
+    fun getMarketCoin(marketIdx : Int){
+        val rptCoinService = getRetorfit().create(RptCoinRetrofitInterface::class.java)
+        rptCoinService.getMarketCoin(marketIdx).enqueue(object : Callback<RptCoinSearchResponse>{
+            override fun onResponse(
+                call: Call<RptCoinSearchResponse>,
+                response: Response<RptCoinSearchResponse>
+            ) {
+                //매개변수 생각
+                rptCoinSearchView.getMarketCoinSuccess(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<RptCoinSearchResponse>, t: Throwable) {
+                rptCoinSearchView.getMarketCoinFailure("t")
+            }
+        })
+    }
+
 
     //대표 코인 추가
     fun getRptCoinAdd(addList: HashSet<Int>){

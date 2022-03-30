@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.DebateCommentRVAdapter
@@ -23,13 +24,16 @@ import com.bit.kodari.Debate.LikeData.PostLikeResponse
 import com.bit.kodari.Debate.PostData.DebateSelectPostComment
 import com.bit.kodari.Debate.PostData.DebateSelectPostReply
 import com.bit.kodari.Debate.PostData.DebateSelectPostResponse
+import com.bit.kodari.Debate.Report.WritingMenuDialog
 import com.bit.kodari.Debate.Retrofit.DebateMineView
 import com.bit.kodari.Debate.Service.DebateService
 import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.Main.ModifyInfoDialog
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
+import com.bit.kodari.Util.formatPrice
 import com.bit.kodari.Util.getRetorfit
 import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentDebateMineBinding
@@ -53,6 +57,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
     private var commentIdx = 0
     private var coinIdx = 0
 
+    private lateinit var callback:OnBackPressedCallback
+
     override fun initAfterBinding() {
         setInit()
         setListener()
@@ -63,6 +69,27 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             coinIdx = requireArguments().getInt("coinIdx")
             Log.d("rere" , "${coinIdx}")
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(flag == 1){
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl , DebateMainFragment()).commit()
+                } else{
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
+                            arguments = Bundle().apply {
+                                putString("coinName", coinName)
+                                putInt("coinIdx" , coinIdx)
+                            }
+                        }).commit()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
     }
 
     //초기 기본 셋팅 값들 설정
@@ -128,17 +155,19 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         binding.mineModifyTv.setOnClickListener {
             //게시글별 조회해서 필요한 내용만 가져다 사용 , 게시글 수정에서 왜 coinIdx가 필요해 ?
             val tempPost = postIdx          //전역으로 선언된 postIdx를 넘겨주기 위해서 사용 ->근데 왜 Bundle()에서는 안될까?
+            val tempUrl = imgUrl
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container_fl, DebateModifyPostFragment(coinName , coinIdx).apply {
                     arguments = Bundle().apply {
                         putInt("postIdx", tempPost)
                         Log.d("postIdx", "넘기는 : ${tempPost}")
-                        putString("imgUrl", imgUrl)
+                        putString("imgUrl", tempUrl)
                         putString("nickName", binding.mineNicknameTv.text.toString())
                         putString("content", binding.mineContentTv.text.toString())
                         putInt("flag",flag)
+                        Log.d("imgUrl", "홈 : ${imgUrl}")
                     }
-                }).addToBackStack(null).commitAllowingStateLoss()
+                }).commit()
         }
 
         binding.mineLikeBtn.setOnClickListener {
@@ -167,6 +196,13 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             binding.mineCommentInputMessageEt.hint = "해당 게시글에 댓글을 달아주세요."
             binding.mineCommentInputMessageEt.text.clear()
 
+        }
+
+        //신고하기 창 띄우기
+        binding.mineViewMoreIv.setOnClickListener {
+            //postIdx 넘겨주면서 DialogFragment 띄워야함
+            val dialog = WritingMenuDialog(postIdx , 1)
+            dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
         }
 
         binding.mineBackBtnTv.setOnClickListener {
@@ -238,6 +274,18 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                 Log.d("like", "댓글 index : ${item.postCommentIdx} , 유저인덱스 : ${getUserIdx()}")
                 callPressCommentLike(commentLikeRequest)
             }
+
+            //댓글 신고 기능 클릭시
+            override fun onMoreClick(item: DebateSelectPostComment) {
+                val dialog = WritingMenuDialog(item.postCommentIdx , 2)
+                dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
+            }
+
+            //대댓 신고 기능 클릭
+            override fun onReMoreClick(postReplyIdx: Int) {
+                val dialog = WritingMenuDialog(postReplyIdx , 3)
+                dialog.show(requireActivity().supportFragmentManager,"WritingMenuDialog")
+            }
         })
 
         binding.mineCommentRv.layoutManager = LinearLayoutManager(context ,LinearLayoutManager.VERTICAL ,false)
@@ -256,16 +304,35 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             binding.mineOutlineTV.visibility = View.GONE
             binding.mineModifyTv.visibility = View.GONE
             binding.mineRemoveTv.visibility = View.GONE
+        } else{
+            binding.mineViewMoreIv.visibility = View.GONE       //신고기능 안보이기
         }
         //이미지 그리기 .
         Glide.with(binding.mineMaskIv)
             .load(post.profileImgUrl)
-            .error(R.drawable.profile_image)
+            .error(R.drawable.ic_basic_profile)
+            .placeholder(R.drawable.ic_basic_profile)
             .into(binding.mineMaskIv)
 
-        if(imgUrl != null){     //null 아닐때만 넘겨주
+        if(post.profileImgUrl != null){     //null 아닐때만 넘겨주
             imgUrl = post.profileImgUrl.toString()   //이미지 URL 저장 , 이거를 수정 눌렀을떄 넘겨주면됨됨
         }
+
+        Log.d("postLike" , "${post.checkPostLike} 와 ${post.checkPostDislike}")
+
+        if(post.checkPostLike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up_on)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down)
+        } else if(post.checkPostDislike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down_on)
+        } else if(!post.checkPostDislike && !post.checkPostDislike){
+            binding.mineLikeBtn.setImageResource(R.drawable.thumbs_up)
+            binding.mineNoLikeBtn.setImageResource(R.drawable.thumbs_down)
+        }
+
+
+
 
 
         commentList = post.commentList          //댓글들 셋팅
@@ -282,9 +349,11 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
     override fun postLikeSuccess(response: PostLikeResponse , like:Int) {
         //임시로 올라간 것 같이 처리 -> 나중에 조회해오면 바로 반영되어 있음
         if(like == 1) {     //좋아요 눌렀으면.
+
             //좋아요 버튼 누른 후 게시물 재 조회 해서 새로 반영
             callSelectPost()        //게시글 조회 API
         } else{
+
             callSelectPost()
         }
     }
@@ -428,7 +497,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                   1000 -> {
                       Glide.with(binding.mineCommentInputProfileIv)
                           .load(response.body()!!.result[0].profileImgUrl)
-                          .error(R.drawable.profile_image)
+                          .error(R.drawable.ic_basic_profile)
+                          .placeholder(R.drawable.ic_basic_profile)
                           .into(binding.mineCommentInputProfileIv)
                   }
                   else -> {
@@ -476,6 +546,11 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         val debateService = DebateService()
         debateService.setDebateMineView(this)
         debateService.pressCommentLike(commentLikeRequest)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
 }

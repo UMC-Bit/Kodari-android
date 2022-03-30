@@ -12,7 +12,7 @@ import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 
 class UsdtService {
-    companion object{
+ /*   companion object{
        var usdtPrice: Int = 1200
     }
     private lateinit var coinView: CoinView
@@ -138,5 +138,5 @@ class UsdtService {
             }, {
                 Log.d("실패", "업비트 시세 조회 실패")
             })
-    }
+    }*/
 }

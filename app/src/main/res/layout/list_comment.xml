@@ -54,6 +54,7 @@
         app:layout_constraintTop_toTopOf="@id/list_comment_nickname_tv"
         app:layout_constraintBottom_toBottomOf="@id/list_comment_nickname_tv"/>
 
+
     <ImageView
         android:id="@+id/list_item_like_on_iv"
         android:layout_width="14dp"
@@ -120,6 +121,18 @@
                 app:layout_constraintTop_toTopOf="@id/list_item_modify_tv"
                 app:layout_constraintBottom_toBottomOf="@id/list_item_modify_tv"
                 android:layout_marginStart="25dp"/>
+
+        <ImageView
+            android:id="@+id/list_item_view_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:padding="5dp"
+            android:src="@drawable/view_more_btn_gray"
+            app:layout_constraintBottom_toBottomOf="@id/list_item_delete_tv"
+            app:layout_constraintStart_toEndOf="@id/list_item_delete_tv"
+            app:layout_constraintTop_toTopOf="@id/list_item_delete_tv" />
+
 
         <ImageView
             android:id="@+id/comment_bar"

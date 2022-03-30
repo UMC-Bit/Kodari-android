@@ -11,5 +11,7 @@ data class DebatePostResult(
     @SerializedName("nickName") val nickName: String,
     @SerializedName("profileImgUrl") val profileImgUrl: String,
     @SerializedName("symbol") val symbol: String,
-    @SerializedName("time") val time: String
+    @SerializedName("time") val time: String,
+    @SerializedName("checkPostLike") var checkPostLike: Boolean ,
+    @SerializedName("checkPostDislike") var checkPostDislike: Boolean
 )

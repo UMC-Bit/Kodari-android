@@ -1,14 +1,18 @@
 package com.bit.kodari.RepresentativeCoin
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
+import com.bit.kodari.Portfolio.Data.SearchCoinResponse
 import com.bit.kodari.PossessionCoin.PossessionCoinAddFragment
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
 import com.bit.kodari.PossessionCoin.RetrofitData.PsnCoinAddInfo
@@ -27,24 +31,45 @@ import com.bit.kodari.Util.getUserIdx
 import com.bit.kodari.databinding.FragmentRepresentativeCoinSearchBinding
 import kotlin.properties.Delegates
 
-class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoinSearchBinding>(
+class RepresentativeCoinSearchFragment(val marketIdx:Int) : BaseFragment<FragmentRepresentativeCoinSearchBinding>(
     FragmentRepresentativeCoinSearchBinding::inflate), RptCoinSearchView, RptCoinAddView {
 
     private var coinList = ArrayList<RptCoinSearchResult>()
     private var filteredList  = ArrayList<RptCoinSearchResult>()
     private lateinit var rptCoinSearchRVAdapter: RptCoinSearchRVAdapter
     private var addList = HashSet<Int>()          //추가할 코인 리스트
+    private lateinit var callback: OnBackPressedCallback
 
     companion object{
         var cnt = 0
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment(marketIdx)).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
+
     override fun initAfterBinding() {
+        setInit()
         getCoins()
         setListeners()
 
         binding.representativeCoinSearchBackIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment(marketIdx)).commit()
+        }
+    }
+
+    private fun setInit() {
+        if(marketIdx==2){
+            binding.representativeCoinSearchExchangeLogoIV.setImageResource(R.drawable.bithumb)
+            binding.representativeCoinSearchExchangeNameTV.text="빗썸"
         }
     }
 
@@ -111,10 +136,10 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         rptCoinSearchRVAdapter.filterList(filteredList)
     }
 
-    fun getCoins(){
+    fun getCoins(){ //대표코인 리스트 받기
         val rptCoinService = RptCoinService()
         rptCoinService.setRptCoinSearchView(this)
-        rptCoinService.getCoinsAll()
+        rptCoinService.getMarketCoin(marketIdx)
     }
 
     // 검색용 코인 받아오기 성공
@@ -130,6 +155,18 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         Log.d("getCoinsAllFailure", "코인 목록 불러오기 실패, ${message}")
     }
 
+    override fun getMarketCoinSuccess(response: RptCoinSearchResponse) {
+        coinList=response.result as ArrayList<RptCoinSearchResult>
+        Log.d("getCoinsAllSuccess성공", "${coinList.size}")
+
+        setRecyclerView()
+    }
+
+
+    override fun getMarketCoinFailure(message: String) {
+        Log.d("getCoinsAllFailure", "코인 목록 불러오기 실패, ${message}")
+    }
+
     // 대표 코인 추가 성공
     override fun rptCoinAddAllSuccess(response: RptCoinAddResponse) {
         Log.d("addRpt ", "실행 , 사이즈 : ${addList.size}" )
@@ -138,7 +175,7 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
         if(cnt == addList.size){        //추가 성공
             dismissLoadingDialog()
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, RepresentativeCoinManagementFragment(marketIdx)).commit()
             Log.d("addRpt ", "추가 성공")
             cnt= 0
         }
@@ -148,5 +185,10 @@ class RepresentativeCoinSearchFragment : BaseFragment<FragmentRepresentativeCoin
     override fun rptCoinAddAllFailure(message: String) {
         dismissLoadingDialog()
         showToast(message)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

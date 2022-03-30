@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class RepresentCoinResult(
     @SerializedName("coinIdx") var coinIdx: Int,
     @SerializedName("binancePrice") var binancePrice: Double,
-    @SerializedName("upbitPrice") var upbitPrice: Double,
+    @SerializedName("upbitPrice") var marketPrice: Double,
     @SerializedName("kimchi") var kimchi: Double,
     @SerializedName("coinImg") var coinImg: Any,
     @SerializedName("coinName") var coinName: String,

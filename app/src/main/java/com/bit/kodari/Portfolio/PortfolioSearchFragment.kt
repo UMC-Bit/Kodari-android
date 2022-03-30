@@ -1,9 +1,11 @@
 package com.bit.kodari.Portfolio
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Main.MainActivity
@@ -15,21 +17,48 @@ import com.bit.kodari.Portfolio.Service.PortfolioService
 import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPortfolioSearchBinding
 
-class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
+class PortfolioSearchFragment(val marketIdx:Int): BaseFragment<FragmentPortfolioSearchBinding>(
     FragmentPortfolioSearchBinding::inflate), SearchCoinView {
 
     private var coinList = ArrayList<SearchCoinResult>()
     private var filteredList  = ArrayList<SearchCoinResult>()
     private lateinit var searchCoinRVAdapter: SearchCoinRVAdapter
+    private lateinit var callback : OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PortfolioManagementFragment(marketIdx).apply {
+                        arguments = Bundle().apply {
+                            putSerializable("coinSearchResponse", "true")
+                        }
+                    }).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
-
-        getCoins()
+        setInit()
+        getMarketCoins()
         setListeners()
 
         binding.portfolioSearchBackBtnIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PortfolioManagementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PortfolioManagementFragment(marketIdx).apply {
+                    arguments = Bundle().apply {
+                        putSerializable("coinSearchResponse", "true")
+                    }
+                }).commit()
+        }
+    }
+
+    private fun setInit() {
+        if(marketIdx == 2){     //2번으로 넘어왔을 경우
+            binding.portfolioSearchUpbitLogoTv.text = "빗썸"
+            binding.portfolioSearchUpbitLogoIv.setImageResource(R.drawable.bithumb)
         }
     }
 
@@ -41,7 +70,7 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
             override fun onItemClick(item: SearchCoinResult) {      //이 아이템 클릭시 작동하게해야함
 //                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PortfolioInputQuantityFragment().apply {
+                    .replace(R.id.main_container_fl, PortfolioInputQuantityFragment(marketIdx).apply {
                         arguments = Bundle().apply {
                             putString("coinImage",item.coinImg)
                             putString("coinName", item.coinName)
@@ -92,6 +121,13 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
         portfolioService.getCoinsAll()
     }
 
+    fun getMarketCoins(){
+        val portfolioService = PortfolioService()
+        portfolioService.setSearchCoinView(this)
+        showLoadingDialog(requireContext())
+        portfolioService.getMarketCoin(marketIdx)
+    }
+
     override fun getSearchCoinAllSuccess(response: SearchCoinResponse) {
         dismissLoadingDialog()
         coinList=response.result as ArrayList<SearchCoinResult>
@@ -105,5 +141,9 @@ class PortfolioSearchFragment: BaseFragment<FragmentPortfolioSearchBinding>(
         Log.d("getSearchCoinAllFailure", "코인 목록 불러오기 실패, ${message}")
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
 }

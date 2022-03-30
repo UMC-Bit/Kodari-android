@@ -1,11 +1,13 @@
 package com.bit.kodari.Login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
@@ -24,7 +26,18 @@ class LoginPwFragment : BaseFragment<FragmentLoginPwBinding>(FragmentLoginPwBind
 
     private lateinit var email :String
     private lateinit var pw :String
+    private lateinit var callback:OnBackPressedCallback
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.login_container_fl , LoginIdFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
     override fun initAfterBinding() {
         getEmail()
         setInit()
@@ -54,6 +67,7 @@ class LoginPwFragment : BaseFragment<FragmentLoginPwBinding>(FragmentLoginPwBind
                 Log.d("jwt" , "${jwt} 와 ${userIdx}")
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+                requireActivity().finish()
             }
             else -> {showToast(response.message)}
         }
@@ -81,7 +95,16 @@ class LoginPwFragment : BaseFragment<FragmentLoginPwBinding>(FragmentLoginPwBind
 
         binding.loginPwAutoLoginCb.setOnClickListener {
             saveAutoLogin(binding.loginPwAutoLoginCb.isChecked)
-
         }
+
+        binding.loginPwBackBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.login_container_fl , LoginIdFragment()).commit()
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

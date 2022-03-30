@@ -9,6 +9,8 @@ import com.bit.kodari.Main.Data.RepresentCoinResult
 class CoinViewModel(userCoinList: List<PossesionCoinResult>?, representCoinList: List<RepresentCoinResult>?): ViewModel() {
     private var userCoinList = MutableLiveData<List<PossesionCoinResult>>()
     private var representCoinList = MutableLiveData<List<RepresentCoinResult>>()
+    private var userCoinPosition = 0;
+    private var representcoinPosition = 0;
     init{
         this.userCoinList.value = userCoinList
         this.representCoinList.value = representCoinList
@@ -18,10 +20,18 @@ class CoinViewModel(userCoinList: List<PossesionCoinResult>?, representCoinList:
     val representCoinData : LiveData<List<RepresentCoinResult>>
         get() = representCoinList
 
-    fun getUpdateUserCoin(userCoinList: List<PossesionCoinResult>){
+    fun getUpdateUserCoin(userCoinList: List<PossesionCoinResult>, position: Int){
         this.userCoinList.value = userCoinList
+        userCoinPosition = position
     }
-    fun getUpdateRepresentCoin(representCoinList: List<RepresentCoinResult>){
+    fun getUpdateRepresentCoin(representCoinList: List<RepresentCoinResult>, position: Int){
         this.representCoinList.value = representCoinList
+        representcoinPosition = position
+    }
+    fun getUserCoinPosition(): Int{
+        return userCoinPosition
+    }
+    fun getRepresentCoinPosition(): Int{
+        return representcoinPosition
     }
 }

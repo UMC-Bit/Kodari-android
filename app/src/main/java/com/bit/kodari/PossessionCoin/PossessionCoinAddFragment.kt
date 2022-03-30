@@ -1,14 +1,17 @@
 package com.bit.kodari.PossessionCoin
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.number.IntegerWidth
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.LoginActivity
 import com.bit.kodari.Login.SignupPwFragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinSearchAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
@@ -22,20 +25,40 @@ import com.bumptech.glide.Glide
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.properties.Delegates
-class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinAddBinding>(FragmentPossessionCoinAddBinding::inflate) , PsnCoinAddTradeView {
+class PossessionCoinAddFragment(val accountName:String , val marketIdx:Int) : BaseFragment<FragmentPossessionCoinAddBinding>(FragmentPossessionCoinAddBinding::inflate) , PsnCoinAddTradeView {
     val tradeTime = StringBuilder()
     var coinIdx by Delegates.notNull<Int>()
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName , marketIdx)).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         binding.possessionCoinAddBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName)).addToBackStack(null)
-                .commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinSearchFragment(accountName , marketIdx)).commit()
         }
         getCoinInformation()
+        setInit()
         setListener()
         //포토폴리오 이름 ...
         binding.possessionCoinAddAccountNameTV.text = accountName
+    }
+
+    //마켓인덱스 2이면 로고와 텍스트 변경
+    private fun setInit() {
+        if(marketIdx == 2){
+            binding.possessionCoinAddExchangeLogoIV.setImageResource(R.drawable.bithumb)
+            binding.possessionCoinAddExchangeNameTV.text = "빗썸"
+        }
     }
 
     fun datetimepicker()
@@ -82,6 +105,7 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
         if(requireArguments().containsKey("coinSymbol")){
             binding.possessionCoinAddCoinSymbolTV.text=requireArguments().getString("coinSymbol")
         }
+
     }
     fun setListener()
     {
@@ -114,7 +138,7 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
             psnCoinService.getPsnCoinAddTrade(psnCoinAddTradeInfo)
         }
 
-        binding.possessionCoinAddDateCV.setOnClickListener{
+        binding.possessionCoinAddDateInputET.setOnClickListener{
             datetimepicker()
         }
 
@@ -127,7 +151,7 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
             1000 -> {
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName , marketIdx)).commitAllowingStateLoss()
             }
             else -> {
                 Toast.makeText(context,"거래내역 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
@@ -138,5 +162,10 @@ class PossessionCoinAddFragment(val accountName:String) : BaseFragment<FragmentP
     override fun psnCoinAddTradeFailure(message: String) {
         dismissLoadingDialog()
         Log.d("failaddtrade" ,"$message")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bit.kodari.Main.Data.PossesionCoinResult
 import com.bit.kodari.Main.Data.RepresentCoinResult
 import com.bit.kodari.Util.formatD
 import com.bit.kodari.Util.formatPrice
@@ -37,10 +38,15 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
             Glide.with(imageView).load(item.coinImg).into(imageView)
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
-            binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice)
-            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.upbitPrice)
+            if(item.binancePrice == 0.0){ // 바이낸스 미 상장 코인 시세 공백처리
+                binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = ""
+                binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = ""
+            }else{
+                binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice)
+                binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
+            }
+            binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.text = formatPrice(item.marketPrice)
             binding.itemRepresentativeCoinManagementCoinUpbitPriceTV.setTextColor(color)
-            binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"
 
             //업비트, 바이낸스 가격 추가하기.
 
@@ -57,7 +63,10 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
 
         }
     }
-
+    fun setData(representCoinList: ArrayList<RepresentCoinResult>, position: Int) {
+        rptCoinList = representCoinList
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RptCoinManagementAdapter.RepresentativeCoinManagementViewHolder {
         val binding = ItemRepresentativeCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepresentativeCoinManagementViewHolder(binding)

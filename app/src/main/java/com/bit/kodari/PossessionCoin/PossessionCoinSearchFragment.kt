@@ -1,5 +1,6 @@
 package com.bit.kodari.PossessionCoin
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinSearchAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinSearchView
@@ -21,15 +24,36 @@ import com.bit.kodari.R
 import com.bit.kodari.databinding.FragmentPossessionCoinSearchBinding
 
 
-class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoinSearchView {
+class PossessionCoinSearchFragment(val accountName:String , val marketIdx:Int) : Fragment(), PsnCoinSearchView {
     lateinit var binding:FragmentPossessionCoinSearchBinding
     private var coinList = ArrayList<PsnCoinSearchResult>()
     private var filteredList  = ArrayList<PsnCoinSearchResult>()
     private lateinit var possessionCoinSearchAdapter: PossessionCoinSearchAdapter
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun onStart() {
         super.onStart()
+        setInit()
         getCoins()
+    }
+
+    //marketIdx 에 따라 2면 logo와 text 바꿈
+    private fun setInit() {
+        if(marketIdx == 2){
+            binding.possessionCoinSearchExchangeLogoIV.setImageResource(R.drawable.bithumb)
+            binding.possessionCoinSearchExchangeNameTV.text = "빗썸"
+        }
     }
 
     override fun onCreateView(
@@ -44,7 +68,7 @@ class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoin
 
             binding.possessionCoinSearchBackIV.setOnClickListener {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
         }
 
         return binding.root
@@ -58,14 +82,14 @@ class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoin
             override fun onItemClick(item: PsnCoinSearchResult) {      //이 아이템 클릭시 작동하게해야함
 //                Toast.makeText(requireContext(),"${item.coinName}" , Toast.LENGTH_SHORT).show()
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinAddFragment(accountName).apply {
+                    .replace(R.id.main_container_fl, PossessionCoinAddFragment(accountName ,marketIdx).apply {
                         arguments = Bundle().apply {
                             putInt("coinIdx", item.coinIdx)
                             putString("coinImage",item.coinImg)
                             putString("coinName", item.coinName)
                             putString("coinSymbol", item.symbol)
                         }
-                    }).addToBackStack(null).commitAllowingStateLoss()
+                    }).commit()
             }
         })
 
@@ -107,7 +131,7 @@ class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoin
     fun getCoins(){
         val psnCoinService = PsnCoinService()
         psnCoinService.setPsnCoinSearchView(this)
-        psnCoinService.getCoinsAll()
+        psnCoinService.getMarketCoin(marketIdx)
     }
 
     override fun getCoinsAllSuccess(response: PsnCoinSearchResponse) {
@@ -119,5 +143,21 @@ class PossessionCoinSearchFragment(val accountName:String) : Fragment(), PsnCoin
 
     override fun getCoinsAllFailure(message: String) {
         Log.d("getCoinsAllFailure", "코인 목록 불러오기 실패, ${message}")
+    }
+
+    override fun getMarketCoinSuccess(response: PsnCoinSearchResponse) {
+        coinList=response.result as ArrayList<PsnCoinSearchResult>
+        Log.d("getCoinsAllSuccess성공", "${coinList.size}")
+
+        setRecyclerView()
+    }
+
+    override fun getMarketCoinFailure(message: String) {
+        Log.d("getCoinsAllFailure", "코인 목록 불러오기 실패, ${message}")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

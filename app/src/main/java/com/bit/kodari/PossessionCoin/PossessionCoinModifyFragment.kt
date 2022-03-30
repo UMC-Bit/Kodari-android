@@ -2,6 +2,7 @@ package com.bit.kodari.PossessionCoin
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.MyApplicationClass
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Main.HomeFragment
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.PossessionCoin.Adapter.PossessionCoinManagementAdapter
 import com.bit.kodari.PossessionCoin.Retrofit.PsnCoinAddTradeView
@@ -27,9 +30,22 @@ import java.lang.StringBuilder
 import java.util.*
 import kotlin.properties.Delegates
 
-class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<FragmentPossessionCoinModifyBinding>(FragmentPossessionCoinModifyBinding::inflate), PsnCoinAddTradeView {
-    val tradeTime = StringBuilder()
-    var coinIdx by Delegates.notNull<Int>()
+class PossessionCoinModifyFragment(val accountName:String , val marketIdx:Int) : BaseFragment<FragmentPossessionCoinModifyBinding>(FragmentPossessionCoinModifyBinding::inflate), PsnCoinAddTradeView {
+    private val tradeTime = StringBuilder()
+    private var coinIdx by Delegates.notNull<Int>()
+
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName , marketIdx)).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         datetimepicker()
@@ -65,7 +81,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
                 timePicker.show()
             }, year, month, day)
 
-        binding.possessionCoinModifyDateCV.setOnClickListener { v ->
+        binding.possessionCoinModifyDateInputET.setOnClickListener { v ->
             datePicker.show()
         }
     }
@@ -93,13 +109,16 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         }
 
         if(requireArguments().containsKey("amount")){
-            binding.possessionCoinModifyQuantityNumberTV.text=requireArguments().getString("amount")
+            Log.d("amout", "${requireArguments().getDouble("amount")}")
+            binding.possessionCoinModifyQuantityNumberTV.text=requireArguments().getDouble("amount").toString()
         }
 
         if(requireArguments().containsKey("priceAvg")){
             val value = requireArguments().getDouble("priceAvg")!!
             binding.possessionCoinModifyAverageunitPriceNumberTV.text=String.format("%.2f", value)
         }
+
+
     }
 
     fun setListener()
@@ -151,7 +170,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
         //프래그먼트 뒤로가기
         binding.possessionCoinModifyBeforeButtonIV.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
         }
     }
 
@@ -162,7 +181,7 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
                 Toast.makeText(context,"거래내역 추가 성공" , Toast.LENGTH_SHORT).show()
                 PossessionCoinManagementAdapter.isClick = false
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName)).commitAllowingStateLoss()
+                    .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
                 Log.d("psncoinaddtradesuccess", "거래내역 추가 성공, ${response}")
             }
             else -> {
@@ -175,5 +194,10 @@ class PossessionCoinModifyFragment(val accountName:String) : BaseFragment<Fragme
     override fun psnCoinAddTradeFailure(message: String) {
         dismissLoadingDialog()
         Log.d("failaddtrade" ,"$message")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

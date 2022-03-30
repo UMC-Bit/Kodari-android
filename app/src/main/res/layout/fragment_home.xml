@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Main.HomeFragment">
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,10 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:elevation="8dp">
+            app:elevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -342,6 +347,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_coin_container_cl"
                 android:layout_width="match_parent"
@@ -352,7 +364,10 @@
                 android:background="@drawable/btn_outline_yellow"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:paddingBottom="30dp">
+                android:paddingBottom="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appbar">
 
                 <TextView
                     android:id="@+id/home_represent_coin_tv"
@@ -410,7 +425,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/home_upbit_tv"
+                            android:id="@+id/home_market_tv"
                             android:layout_width="65dp"
                             android:layout_height="23dp"
                             android:gravity="center"
@@ -444,20 +459,21 @@
                             app:layout_constraintStart_toEndOf="@id/home_binance_tv"
                             app:layout_constraintTop_toTopOf="@id/home_rpt_coin_outline_TV" />
 
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/home_represent_coin_rv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="130dp"
                             android:layout_marginTop="5dp"
+                            android:nestedScrollingEnabled="true"
                             android:padding="10dp"
+                            android:scrollbarFadeDuration="0"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/home_rpt_coin_outline_TV"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_rpt_coin_outline_TV"
                             tools:itemCount="3"
                             tools:listitem="@layout/list_item_represent_coin" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -558,9 +574,10 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/home_my_coin_rv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="150dp"
                             android:layout_marginTop="5dp"
                             android:padding="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/home_psn_coin_outline_TV"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/home_psn_coin_outline_TV"
@@ -574,23 +591,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/home_btn_container_ll"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        </androidx.core.widget.NestedScrollView>
 
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <!--                android:textColor="#8B8B8B"-->
-            </LinearLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

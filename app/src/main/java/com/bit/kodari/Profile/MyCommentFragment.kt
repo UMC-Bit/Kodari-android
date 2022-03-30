@@ -1,5 +1,6 @@
 package com.bit.kodari.Profile
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Service.ProfileService
@@ -23,7 +25,18 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(FragmentMyComme
 
     private var postList = ArrayList<GetMyCommentResult>()
     private lateinit var myCommentRVAdapter: MyCommentRVAdapter
+    private lateinit var callback: OnBackPressedCallback
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
     override fun initAfterBinding() {
 
         val profileService = ProfileService()
@@ -37,7 +50,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(FragmentMyComme
     fun setListener() {
         binding.myCommentPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
         }
     }
 
@@ -64,5 +77,10 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(FragmentMyComme
 
     override fun getMyCommentFailure(message: String) {
         Log.d("getMyComment", "불러오기 실패")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

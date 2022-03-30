@@ -26,6 +26,8 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
         fun onRegReComment(item:DebateSelectPostComment)
         fun onLikeClick(item:DebateSelectPostComment)
         fun onClickReComment(postReplyIdx: Int)
+        fun onMoreClick(item:DebateSelectPostComment)
+        fun onReMoreClick(postReplyIdx: Int)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
@@ -60,9 +62,11 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
             if(item.checkCommentWriter){
                 binding.listItemModifyTv.visibility = View.VISIBLE
                 binding.listItemDeleteTv.visibility = View.VISIBLE
+                binding.listItemViewMoreTv.visibility = View.GONE
             } else{
                 binding.listItemModifyTv.visibility = View.GONE
                 binding.listItemDeleteTv.visibility = View.GONE
+                binding.listItemViewMoreTv.visibility = View.VISIBLE
             }
 
             //내가 좋아요 눌렀던 댓글이면 하트 채워지게
@@ -144,6 +148,7 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
         holder.binding.listItemModifyTv.setOnClickListener { mItemClickListener.onModifyClick(commentList[position])}
         holder.binding.listItemDeleteTv.setOnClickListener { mItemClickListener.onDeleteClick(commentList[position])}
         holder.binding.listItemCommentAskTv.setOnClickListener { mItemClickListener.onRegReComment(commentList[position]) }
+        holder.binding.listItemViewMoreTv.setOnClickListener { mItemClickListener.onMoreClick(commentList[position]) }
     }
 
 

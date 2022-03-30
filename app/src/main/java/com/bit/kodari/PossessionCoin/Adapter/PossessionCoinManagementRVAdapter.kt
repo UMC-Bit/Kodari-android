@@ -49,7 +49,7 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             binding.itemPossessionCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemPossessionCoinManagementCoinListPriceAvgTV.text = formatPrice(item.priceAvg)
             binding.itemPossessionCoinManagementCoinListCoinSymbolTV.text = item.symbol
-            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.upbitPrice)
+            binding.itemPossessionCoinManagementCoinListPriceTV.text = formatPrice(item.marketPrice)
             if(item.profit < 0)
                 binding.itemPossessionCoinManagementCoinListProfitPlusTV.setTextColor(Color.BLUE)
             binding.itemPossessionCoinManagementCoinListProfitPlusTV.text = formatPrice(item.profit)
@@ -57,21 +57,20 @@ class PossessionCoinManagementAdapter(var possessionCoinList:ArrayList<Possesion
             if(item.isChecked){
                 binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility = View.VISIBLE
                 binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility = View.GONE
-            } else{
-                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility =View.VISIBLE
+            } else {
+                binding.itemPossessionCoinManagementCoinListSelectOffIV.visibility = View.VISIBLE
                 binding.itemPossessionCoinManagementCoinListSelectOnIV.visibility = View.GONE
             }
-
         }
     }
-
+    fun setData(userCoinList: ArrayList<PossesionCoinResult>, position: Int) {
+        possessionCoinList = userCoinList
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PossessionCoinManagementAdapter.PossessionCoinManagementViewHolder {
-
         val binding = ItemPossessionCoinManagementCoinListBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return PossessionCoinManagementViewHolder(binding)
     }
-
-
     override fun onBindViewHolder(holder: PossessionCoinManagementViewHolder, position: Int) {
         holder.bind(possessionCoinList[position])
 //        isClickMap[position] = false

@@ -1,11 +1,13 @@
 package com.bit.kodari.Login
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.Retrofit.NicknameView
@@ -24,7 +26,18 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
     private lateinit var pw: String
     private lateinit var nickName: String
     private var logInService = LogInService()
+    private lateinit var callback: OnBackPressedCallback
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as LoginActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.login_container_fl, SignupPwFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
 
     override fun initAfterBinding() {
         setListener()
@@ -51,7 +64,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
         binding.signupNicknameXIb.setOnClickListener{
             (context as LoginActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.login_container_fl, SignupPwFragment()).commitAllowingStateLoss()
+                .replace(R.id.login_container_fl, SignupPwFragment()).commit()
         }
     }
 
@@ -60,7 +73,7 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
             1000 -> {
                 Toast.makeText(context,"회원가입 성공" , Toast.LENGTH_SHORT).show()
                 (context as LoginActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.login_container_fl, LoginFragment()).addToBackStack(null).commitAllowingStateLoss()
+                    .replace(R.id.login_container_fl, LoginFragment()).commit()
             }
             else -> {
                 Toast.makeText(context,"회원가입 실패 , ${resp.message}" , Toast.LENGTH_LONG).show()
@@ -94,5 +107,10 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding>(Fragm
 
     override fun setAgree(term: Boolean) {
         binding.termsCheeckBox.setChecked(true)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

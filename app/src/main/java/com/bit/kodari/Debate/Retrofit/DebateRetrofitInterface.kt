@@ -12,14 +12,14 @@ import retrofit2.http.*
 
 interface DebateRetrofitInterface {
     @GET("/coins")              //토론장 코인 목록 조회
-    fun getCoinsAll() : Call<DebateCoinResponse>
+    fun getCoinsAll(@Header("X-ACCESS-TOKEN") jwt:String) : Call<DebateCoinResponse>
 
     @GET("/posts")
-    fun getPostsAll() : Call<DebatePostResponse>
+    fun getPostsAll(@Header("X-ACCESS-TOKEN") jwt:String) : Call<DebatePostResponse>
 
     //해당 코인에 대한 게시글들만 조회
     @GET("/posts/coin")
-    fun getCoinPost(@Query("coinName") coinName: String) : Call<DebateCoinPostResponse>
+    fun getCoinPost(@Header("X-ACCESS-TOKEN") jwt:String, @Query("coinName") coinName: String) : Call<DebateCoinPostResponse>
 
     @POST("/posts/register")
     fun writePost(@Header("X-ACCESS-TOKEN") jwt:String, @Body updatePostRequest: DebateWritePostRequest) : Call<DebateWritePostResponse>

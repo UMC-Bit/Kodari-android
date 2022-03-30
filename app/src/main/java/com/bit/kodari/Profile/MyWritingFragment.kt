@@ -1,7 +1,9 @@
 package com.bit.kodari.Profile
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.MyWritingRVAdapter
@@ -18,7 +20,18 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(FragmentMyWriti
 
     private var postList = ArrayList<GetMyPostResult>()
     private lateinit var myWritingRVAdapter : MyWritingRVAdapter
+    private lateinit var callback: OnBackPressedCallback
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this,callback)
+    }
     override fun initAfterBinding() {
 
         val profileService = ProfileService()
@@ -33,7 +46,7 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(FragmentMyWriti
     fun setListener() {
         binding.myWritingPreIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, ProfileMainFragment()).addToBackStack(null).commitAllowingStateLoss()
+                .replace(R.id.main_container_fl, ProfileMainFragment()).commit()
         }
     }
 
@@ -60,7 +73,10 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(FragmentMyWriti
         Log.d("getMyPost" , "불러오기 실패")
     }
 
-
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
 
 }

@@ -50,16 +50,15 @@ class RptCoinSearchRVAdapter(var searchCoinList:ArrayList<RptCoinSearchResult>):
     override fun onBindViewHolder(holder: RptCoinSearchViewHolder, position: Int) {
         holder.bind(searchCoinList[position])
 
-        holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             mItemClickListener.onItemCheck(searchCoinList[position])
-            holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.GONE
-            holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility= View.VISIBLE
-        }
-
-        holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.setOnClickListener {
-            mItemClickListener.onItemUnCheck(searchCoinList[position])
-            holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility=View.GONE
-            holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.VISIBLE
+            if(holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility == View.VISIBLE){
+                holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.GONE
+                holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility= View.VISIBLE
+            }else{
+                holder.binding.itemRepresentativeCoinSearchCoinCheckOnIV.visibility=View.GONE
+                holder.binding.itemRepresentativeCoinSearchCoinCheckOffIV.visibility=View.VISIBLE
+            }
         }
     }
 

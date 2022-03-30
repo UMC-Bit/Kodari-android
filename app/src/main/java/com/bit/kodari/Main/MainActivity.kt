@@ -40,6 +40,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 class MainActivity : AppCompatActivity() , MainView {
     private lateinit var binding : ActivityMainBinding
     private var isImageLoaded = false
+    private var backKeyPressedTime:Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() , MainView {
         setListener()
 
         supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
-            .commitAllowingStateLoss()
+            .commit()
 
 
     }
@@ -67,34 +68,34 @@ class MainActivity : AppCompatActivity() , MainView {
                 R.id.myCoin -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl, HomeFragment())
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.debate -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl, DebateMainFragment())
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.feed -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl, FeedMainFragment())
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.add_on -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl, AddOnMainFragment())
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.profile -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl, ProfileMainFragment())
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
 
@@ -177,4 +178,5 @@ class MainActivity : AppCompatActivity() , MainView {
         homeService.setMainView(this)
         homeService.getUserFromEmail(email)
     }
+
 }

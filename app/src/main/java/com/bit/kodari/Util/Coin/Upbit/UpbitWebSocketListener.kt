@@ -11,16 +11,16 @@ import org.json.JSONObject
  */
 class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener(){
     private lateinit var coinView: CoinView
-
+    private var checkClose = false
     fun setCoinView(coinView: CoinView) {
         this.coinView = coinView
     }
 
     var webSocket: WebSocket? = null
-    private val coinPriceMap = HashMap<String, Double>()
     private val coinSymbol = coinSymbolSet
     private val symbols = getCodes()
 
+    //처음에 onOpen으로 소켓열음
     override fun onOpen(webSocket: WebSocket, response: Response) {
         val text = "[{\"ticket\":\"kodari\"},{\"type\":\"ticker\",\"codes\":[${symbols}]}]"
         webSocket.send(text)
@@ -28,7 +28,15 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         //webSocket.close(NORMAL_CLOSURE_STATUS, null) //없을 경우 끊임없이 서버와 통신함
     }
 
+    //onMessage로 응답 받고 HomeFragment로 넘김
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+        this.webSocket = webSocket
+        if(checkClose){
+            Log.d("Upbit_Socket","Closing")
+            webSocket?.close(NORMAL_CLOSURE_STATUS, null)
+            webSocket?.cancel()
+        }
+        val coinPriceMap = HashMap<String, Double>()
         val message = bytes.utf8()
         var symbol = JSONObject(message).getString("code")
         symbol = symbol.replace("KRW-","") // KRW- 제거
@@ -37,14 +45,13 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         val change = JSONObject(message).getString("ask_bid")
         var changeNum = 0.0
         if(change.equals("ASK")){
-            changeNum = 1.0
-        }else if(change.equals("BID")){
             changeNum = -1.0
+        }else if(change.equals("BID")){
+            changeNum = 1.0
         }
         coinPriceMap.put(symbol+"change",changeNum) // 전일 대비, RISE(상승), EVEN(보합), FALL(하락)
         Log.d("Upbit_Socket", "Receiving bytes : ${bytes.utf8()}")
-        // TODO HomeFragment livedata 처리
-        coinView.upbitPriceSuccess(coinPriceMap)
+        coinView.marketPriceSuccess(coinPriceMap)
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
@@ -58,7 +65,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     }
 
     companion object {
-        private const val NORMAL_CLOSURE_STATUS = 1000
+        const val NORMAL_CLOSURE_STATUS = 1000
     }
     // Web socket 시작
     fun start(){
@@ -68,6 +75,9 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         var client: OkHttpClient = OkHttpClient()
         client.newWebSocket(request, this)
         client.dispatcher().executorService().shutdown()
+    }
+    fun close(){
+        checkClose = true
     }
     // symbol -> codes 변환
     private fun getCodes(): String{
@@ -81,5 +91,4 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
         sb.deleteCharAt(sb.length-1) // "," 제거
         return sb.toString()
     }
-
 }

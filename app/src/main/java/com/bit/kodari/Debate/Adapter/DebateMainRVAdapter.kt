@@ -38,8 +38,17 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
                     .placeholder(R.drawable.ic_basic_profile)
                     .into(binding.listItemMyWritingImageIv)
             }
-            //binding.listItemMyWritingImageIv.setImageBitmap(item.profileImgUrl)
-            //Url로 프로필 그리기
+
+            if(item.checkPostLike){
+                binding.listItemMyWritingUpBtn.setImageResource(R.drawable.thumbs_up_on)
+                binding.listItemMyWritingDownBtn.setImageResource(R.drawable.thumbs_down)
+            }
+
+            if(item.checkPostDislike){
+                binding.listItemMyWritingUpBtn.setImageResource(R.drawable.thumbs_up)
+                binding.listItemMyWritingDownBtn.setImageResource(R.drawable.thumbs_down_on)
+            }
+
 
         }
     }
