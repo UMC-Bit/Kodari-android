@@ -1,51 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/addon_main_backbutton_IB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:padding="10dp"
-        android:src="@drawable/previous_button"
-        app:layout_constraintBottom_toBottomOf="@+id/addon_main_addon_TV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addon_main_addon_TV" />
+        <TextView
+            android:id="@+id/add_on_main_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="애드온"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/addon_main_addon_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="애드온"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="19dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profile_main_bg_cl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_gray"
+            android:paddingBottom="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_on_main_title_tv">
 
-    <ImageView
-        android:id="@+id/addon_main_dividing_line_IV"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:src="@drawable/dividing_line"
-        android:layout_marginTop="19dp"
-        app:layout_constraintTop_toBottomOf="@id/addon_main_addon_TV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_service_preparation"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addon_main_dividing_line_IV"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/add_on_main_rect_cl"
+                android:layout_width="345dp"
+                android:layout_height="490dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/button_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/profile_main_bg_cl">
+
+                <ImageView
+                    android:id="@+id/add_on_main_calender_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calender"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_calender_content_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_calender_content_tv"
+                    app:layout_constraintEnd_toStartOf="@id/add_on_main_calender_content_tv" />
+
+                <TextView
+                    android:id="@+id/add_on_main_calender_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="캘린더"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_on_main_calender_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일정을 쉽게 관리할 수 있는 \n기능을  제공합니다."
+                    android:textColor="#868484"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_calender_title_tv"
+                    app:layout_constraintStart_toStartOf="@id/add_on_main_calender_title_tv" />
+
+                <View
+                    android:id="@+id/add_on_main_bar1_vw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="30dp"
+                    android:background="#EDEBEB"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_calender_content_tv" />
+
+                <ImageButton
+                    android:id="@+id/add_on_main_btn1_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:src="@drawable/yellow_next_btn"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_bar1_vw"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/add_on_main_alram_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/alram"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_alram_content_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_alram_content_tv"
+                    app:layout_constraintEnd_toStartOf="@id/add_on_main_alram_content_tv" />
+
+                <TextView
+                    android:id="@+id/add_on_main_alram_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="등록 코인 시세 알림 설정"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_bar1_vw"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_on_main_alram_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="특정 지정가에 도달하면 \n자동 알림을 제공합니다."
+                    android:textColor="#868484"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_alram_title_tv"
+                    app:layout_constraintStart_toStartOf="@id/add_on_main_alram_title_tv" />
+
+                <View
+                    android:id="@+id/add_on_main_bar2_vw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="30dp"
+                    android:background="#EDEBEB"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_alram_content_tv" />
+
+                <ImageButton
+                    android:id="@+id/add_on_main_btn2_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:src="@drawable/yellow_next_btn"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_bar2_vw"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_bar1_vw" />
+
+                <ImageView
+                    android:id="@+id/add_on_main_soaring_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/soaring"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_soaring_content_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_soaring_content_tv"
+                    app:layout_constraintEnd_toStartOf="@id/add_on_main_soaring_content_tv" />
+
+
+                <TextView
+                    android:id="@+id/add_on_main_soaring_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="폭락 폭등 알림 설정"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_bar2_vw"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_on_main_soaring_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일정을 쉽게 관리할 수 있는 \n기능을 제공합니다."
+                    android:textColor="#868484"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_soaring_title_tv"
+                    app:layout_constraintStart_toStartOf="@id/add_on_main_soaring_title_tv" />
+
+                <View
+                    android:id="@+id/add_on_main_bar3_vw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="30dp"
+                    android:background="#EDEBEB"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_soaring_content_tv" />
+
+                <ImageButton
+                    android:id="@+id/add_on_main_btn3_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:src="@drawable/yellow_next_btn"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_bar3_vw"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_bar2_vw" />
+
+
+                <ImageView
+                    android:id="@+id/add_on_main_twitter_alram_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/twitter_alram"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_twitter_alram_content_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/add_on_main_twitter_alram_content_tv"
+                    app:layout_constraintEnd_toStartOf="@id/add_on_main_twitter_alram_content_tv" />
+
+
+                <TextView
+                    android:id="@+id/add_on_main_twitter_alram_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="트위터 알림 설정"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_bar3_vw"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_on_main_twitter_alram_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="실시간 알고싶은 트위터 알림 \n기능을 제공합니다."
+                    android:textColor="#868484"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_on_main_twitter_alram_title_tv"
+                    app:layout_constraintStart_toStartOf="@id/add_on_main_twitter_alram_title_tv" />
+
+                <ImageButton
+                    android:id="@+id/add_on_main_btn4_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:src="@drawable/yellow_next_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/add_on_main_bar3_vw" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
