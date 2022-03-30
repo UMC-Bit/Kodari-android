@@ -14,6 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import com.bit.kodari.AddOn.AddOnAlarmMainFragment
 import com.bit.kodari.AddOn.AddOnMainFragment
 import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Debate.DebateMainFragment
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() , MainView {
 
                 R.id.add_on -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container_fl, AddOnMainFragment())
+                        .replace(R.id.main_container_fl, AddOnAlarmMainFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }

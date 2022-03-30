@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/list_coin_alarm_logo_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/upbit_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/list_coin_alarm_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="샌드박스"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/list_coin_alarm_logo_iv"
+        app:layout_constraintTop_toTopOf="@id/list_coin_alarm_logo_iv"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/list_coin_alarm_symbol_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAND"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/list_coin_alarm_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/list_coin_alarm_name_tv"
+        app:layout_constraintBottom_toBottomOf="@id/list_coin_alarm_logo_iv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_coin_alarm_price_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_coin_alarm_symbol_tv"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/list_coin_price_alarm"
+        tools:itemCount="3"/>
+
+    <ImageView
+        android:id="@+id/list_coin_alarm_line_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_coin_alarm_price_rv"
+        android:layout_marginTop="20dp" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
