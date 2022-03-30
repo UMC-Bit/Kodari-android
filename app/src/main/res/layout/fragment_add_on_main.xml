@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <TextView
+    <ImageView
+        android:id="@+id/addon_main_backbutton_IB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:padding="10dp"
+        android:src="@drawable/previous_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
             android:id="@+id/add_on_main_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
