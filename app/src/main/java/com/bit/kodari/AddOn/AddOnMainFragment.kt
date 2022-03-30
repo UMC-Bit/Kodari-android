@@ -8,9 +8,6 @@ import com.bit.kodari.databinding.FragmentAddOnMainBinding
 
 class AddOnMainFragment : BaseFragment<FragmentAddOnMainBinding>(FragmentAddOnMainBinding::inflate) {
     override fun initAfterBinding() {
-        binding.addonMainBackbuttonIB.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
-        }
+
     }
 }
