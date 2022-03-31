@@ -31,6 +31,7 @@ import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Main.ModifyInfoDialog
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
+import com.bit.kodari.Profile.MyWritingFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
 import com.bit.kodari.Util.formatPrice
@@ -78,7 +79,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                 if(flag == 1){
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl , DebateMainFragment()).commit()
-                } else{
+                } else if(flag == 2){
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
                             arguments = Bundle().apply {
@@ -86,6 +87,9 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                                 putInt("coinIdx" , coinIdx)
                             }
                         }).commit()
+                }else{
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl , MyWritingFragment()).commit()
                 }
             }
         }
@@ -209,7 +213,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
             if(flag == 1){
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl , DebateMainFragment()).commit()
-            } else{
+            } else if(flag == 2){
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl , DebateCoinPostFragment().apply {
                         arguments = Bundle().apply {
@@ -217,6 +221,9 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                             putInt("coinIdx" , coinIdx)
                         }
                     }).commit()
+            }else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl , MyWritingFragment()).commit()
             }
         }
     }

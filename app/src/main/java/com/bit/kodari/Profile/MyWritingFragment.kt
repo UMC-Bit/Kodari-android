@@ -1,12 +1,14 @@
 package com.bit.kodari.Profile
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Debate.Adapter.MyWritingRVAdapter
+import com.bit.kodari.Debate.DebateMineFragment
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Retrofit.MyPostView
@@ -52,6 +54,17 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(FragmentMyWriti
 
     fun setRecylcerView(){
         myWritingRVAdapter = MyWritingRVAdapter(postList)
+        myWritingRVAdapter.setMyItemClickListener(object :
+            MyWritingRVAdapter.MyItemClickListener{
+            override fun onItemClick(item: GetMyPostResult) {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, DebateMineFragment(3).apply {
+                        arguments = Bundle().apply {
+                            putInt("postIdx", item.postIdx)
+                        }
+                    }).commit()
+                }
+            })
         binding.myWritingListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.myWritingListRv.adapter = myWritingRVAdapter
     }
