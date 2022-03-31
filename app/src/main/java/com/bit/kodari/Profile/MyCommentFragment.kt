@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bit.kodari.Config.BaseFragment
+import com.bit.kodari.Debate.DebateMineFragment
 import com.bit.kodari.Login.Service.ProfileService
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Profile.Adapter.MyCommentRVAdapter
@@ -56,6 +57,18 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(FragmentMyComme
 
     fun setRecylcerView(){
         myCommentRVAdapter = MyCommentRVAdapter(postList)
+        myCommentRVAdapter.setMyItemClickListener(object :
+            MyCommentRVAdapter.MyItemClickListener{
+            override fun onItemClick(item: GetMyCommentResult) {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, DebateMineFragment(4).apply {
+                        arguments = Bundle().apply {
+                            putInt("postIdx", item.postList[0].postIdx)
+                        }
+                    }).commit()
+            }
+            }
+        )
         binding.myCommentListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.myCommentListRv.adapter = myCommentRVAdapter
     }
