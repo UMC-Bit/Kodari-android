@@ -15,8 +15,8 @@ android {
         applicationId "com.bit.kodari"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 1
-        versionName "1"
+        versionCode 2
+        versionName "2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "S3_API_ACCESS_KEY", properties['s3_api_access_key']
@@ -49,7 +49,7 @@ repositories {
     maven { url "https://jitpack.io" }
 
 }
-
+apply plugin: 'com.google.gms.google-services'
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -103,5 +103,10 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.13.5'
     implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
+
+    // FireBase
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
 }
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832807627036",
+    "project_id": "kodari-de905",
+    "storage_bucket": "kodari-de905.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832807627036:android:92fa0539e7ec60633e32d9",
+        "android_client_info": {
+          "package_name": "com.bit.kodari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832807627036-m6sbuh9savaiknat7jbqh7qkki9sj99o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT0ICpkn-heIk-erp3H2udPXYraPLTUz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832807627036-m6sbuh9savaiknat7jbqh7qkki9sj99o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
