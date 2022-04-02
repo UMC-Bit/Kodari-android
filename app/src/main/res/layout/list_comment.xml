@@ -160,7 +160,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_item_re_comment_rv"
         android:layout_width="300dp"

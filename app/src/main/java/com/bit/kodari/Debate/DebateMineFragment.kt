@@ -31,6 +31,7 @@ import com.bit.kodari.Login.Retrofit.ProfileRetrofitInterface
 import com.bit.kodari.Main.MainActivity
 import com.bit.kodari.Main.ModifyInfoDialog
 import com.bit.kodari.PossessionCoin.PossessionCoinManagementFragment
+import com.bit.kodari.Profile.MyCommentFragment
 import com.bit.kodari.Profile.MyWritingFragment
 import com.bit.kodari.Profile.RetrofitData.GetProfileResponse
 import com.bit.kodari.R
@@ -87,9 +88,13 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                                 putInt("coinIdx" , coinIdx)
                             }
                         }).commit()
-                }else{
+                }else if(flag == 3){
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.main_container_fl , MyWritingFragment()).commit()
+                }
+                else {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container_fl, MyCommentFragment()).commit()
                 }
             }
         }
@@ -221,9 +226,12 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
                             putInt("coinIdx" , coinIdx)
                         }
                     }).commit()
-            }else{
+            }else if(flag == 3){
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl , MyWritingFragment()).commit()
+            }else {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container_fl, MyCommentFragment()).commit()
             }
         }
     }

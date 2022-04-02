@@ -1,8 +1,10 @@
 package com.bit.kodari.Util
 
 import android.graphics.Color
+import android.util.Log
 import com.MyApplicationClass
 import java.text.DecimalFormat
+import kotlin.math.log
 
 private var df: DecimalFormat = DecimalFormat("#,###.##")
 
@@ -12,6 +14,7 @@ public fun formatD(number: Double): String {
 
 fun formatPrice(number: Double): String {
     lateinit var price: String
+
     when (MyApplicationClass.marketName) {
         // 100, 10.x, 1.xx, 0.1xxx... 업비트 소숫점 변환
         "업비트" -> {
@@ -60,6 +63,10 @@ fun formatPrice(number: Double): String {
             } else {
                 price = String.format("%.5f", number)
             }
+        }
+        else -> {
+            Log.d("marketName", "${MyApplicationClass.marketName}")
+            price = "0"
         }
     }
     return price;

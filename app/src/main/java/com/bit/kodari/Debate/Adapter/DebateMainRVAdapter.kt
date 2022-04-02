@@ -12,7 +12,7 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
 
     //클릭했을때 해당 게시글로 가게하기 위해서.
     interface MyItemClickListener {
-        fun onItemClick(item:DebatePostResult )
+        fun onItemClick(item:DebatePostResult)
     }
 
     //리스너 객체를 전달받는 함수와 리스너 객체를 저장할 변수
