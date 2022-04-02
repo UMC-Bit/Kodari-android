@@ -88,8 +88,12 @@ class MainActivity : AppCompatActivity() , MainView {
                 }
 
                 R.id.add_on -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_container_fl, AddOnAlarmMainFragment())
+//                        .commit()
+//                    return@setOnItemSelectedListener true
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container_fl, AddOnAlarmMainFragment())
+                        .replace(R.id.main_container_fl, FeedMainFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
