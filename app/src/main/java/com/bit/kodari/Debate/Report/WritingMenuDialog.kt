@@ -1,6 +1,7 @@
 package com.bit.kodari.Debate.Report
 
 import android.util.Log
+import android.view.View
 import androidx.core.os.bundleOf
 import com.bit.kodari.Config.BaseDialogFragment
 import com.bit.kodari.databinding.DialogWritingMenuBinding
@@ -27,8 +28,12 @@ class WritingMenuDialog(val Idx: Int, val flag: Int) :
     private fun setInit() {
         if (flag == 2) {
             binding.dialogWritingMenuContentTV.text = "댓글 신고하기"
+            binding.dialogWritingMenuUserBlockTV.visibility = View.GONE
+            binding.dialogWritingMenuUnderLine2Iv.visibility = View.GONE
         } else if (flag == 3) {
             binding.dialogWritingMenuContentTV.text = "답글 신고하기"
+            binding.dialogWritingMenuUserBlockTV.visibility = View.GONE
+            binding.dialogWritingMenuUnderLine2Iv.visibility = View.GONE
         }
     }
 
@@ -38,6 +43,12 @@ class WritingMenuDialog(val Idx: Int, val flag: Int) :
         binding.dialogWritingMenuContentTV.setOnClickListener {
             val dialog = ReportMenuDialog(Idx, flag)
             dialog.show(requireActivity().supportFragmentManager, "ReportMenuDialog")
+        }
+
+        binding.dialogWritingMenuUserBlockTV.setOnClickListener {
+            //유저 차단하기 확인 다이얼로그 호출
+            val dialog = UserBlockConfirmDialog(Idx)
+            dialog.show(requireActivity().supportFragmentManager, "UserBlockConfirmDialog")
         }
 
         binding.dialogWritingMenuCancelTv.setOnClickListener {

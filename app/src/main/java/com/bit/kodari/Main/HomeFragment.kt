@@ -86,13 +86,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //BaseFragment에서 onStart 에서 실행시켜줌
     override fun initAfterBinding() {
         //Get FireBase device Token
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d("device token", task.exception.toString())
-            }
-            val token = task.result
-            Log.d("device token", token)
-        }
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.d("device token", task.exception.toString())
+//            }
+//            val token = task.result
+//            Log.d("device token", token)
+//        }
 
         Log.d("device token", "초기화")
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴

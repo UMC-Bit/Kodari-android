@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/upper_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,9 +64,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/line"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_content_TV" />
+
+            <TextView
+                android:id="@+id/dialog_writing_menu_user_block_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="70dp"
+                android:bufferType="spannable"
+                android:text="유저 차단하기"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_under_line_iv" />
+
+            <ImageView
+                android:id="@+id/dialog_writing_menu_under_line2_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/line"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_user_block_TV" />
 
 
             <TextView
@@ -81,7 +109,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_under_line_iv" />
+                app:layout_constraintTop_toBottomOf="@id/dialog_writing_menu_under_line2_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
