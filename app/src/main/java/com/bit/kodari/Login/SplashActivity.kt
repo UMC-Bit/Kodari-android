@@ -28,6 +28,7 @@ import com.bit.kodari.Util.getEmail
 import com.bit.kodari.Util.getPw
 import com.bit.kodari.Util.saveLoginInfo
 import com.bit.kodari.databinding.ActivitySplashBinding
+import com.google.firebase.messaging.FirebaseMessaging
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) ,LogInView {
     var anim_fade_in_1: Animation? = null
