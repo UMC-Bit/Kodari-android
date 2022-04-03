@@ -4,8 +4,6 @@ plugins {
     id 'kotlin-kapt'
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdkVersion 31
@@ -19,8 +17,7 @@ android {
         versionName "1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "S3_API_ACCESS_KEY", properties['s3_api_access_key']
-        buildConfigField "String", "S3_API_SECRET_KEY", properties['s3_api_secret_key']
+
 
     }
 
@@ -31,6 +28,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -103,5 +101,15 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.13.5'
     implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
+
+    // Amplify core dependency
+    implementation 'com.amplifyframework:core:1.16.11'
+
+    // Support for Java 8 features
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
+
+    //amplify s3 연결
+    implementation 'com.amplifyframework:aws-storage-s3:1.6.11'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.6.11'
 }
 

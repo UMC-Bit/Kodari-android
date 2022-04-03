@@ -48,6 +48,7 @@ import com.amazonaws.regions.Regions
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.amplifyframework.core.Amplify
 import com.bit.kodari.BuildConfig
 import com.bit.kodari.Config.BaseActivity
 import com.bit.kodari.Main.Service.HomeService
@@ -286,7 +287,7 @@ class EditProfileActivity :
     }
 
     private fun callUpdateImage(){
-        val url = "https://kodari-s3.s3.ap-northeast-2.amazonaws.com/"+uploadFileName       //Url 저장
+        val url = "https://kodari-s3.s3.ap-northeast-2.amazonaws.com/public/"+uploadFileName       //Url 저장
         val profileService = ProfileService()
         Log.d("updateImage" , url)
         profileService.setProfileEditView(this)
@@ -296,42 +297,54 @@ class EditProfileActivity :
 
     //S3에 이미지 업로드하기 , 코드 분석하기
     fun uploadWithTransferUtility(fileName: String, file: File) {
-        val awsCredentials =
-            BasicAWSCredentials("${BuildConfig.S3_API_ACCESS_KEY}", "${BuildConfig.S3_API_SECRET_KEY}")
-        val s3Client = AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2))
-
-        val transferUtility = TransferUtility.builder().s3Client(s3Client).context(
-            this.applicationContext
-        ).build()
-        TransferNetworkLossHandler.getInstance(this.applicationContext)
+//        val awsCredentials =
+//            BasicAWSCredentials("${BuildConfig.S3_API_ACCESS_KEY}", "${BuildConfig.S3_API_SECRET_KEY}")
+//        val s3Client = AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2))
+//
+//        val transferUtility = TransferUtility.builder().s3Client(s3Client).context(
+//            this.applicationContext
+//        ).build()
+//        TransferNetworkLossHandler.getInstance(this.applicationContext)
 
         uploadFileName = "profile/" + UUID.randomUUID()
             .toString() + fileName           //저장할 File이름 저장 -> 이걸 이용해서 url 만들거임
 
-        val uploadObserver = transferUtility.upload(
-            "kodari-s3",
-            uploadFileName,
-            file, CannedAccessControlList.PublicRead
-        ) // (bucket api, file이름, file객체)
+        Amplify.Storage.uploadFile(
+            uploadFileName!!,
+            file,
+            { result ->
+                Log.d("MyAmplifyApp", "Successfully uploaded: " + result)
+                Log.d("MyAmplifyApp", "업로드 성공 파일 이름 : ${fileName} , 업로드 파일 이름 : ${uploadFileName}")
+                callUpdateImage()
+            },
+            { error -> Log.d("MyAmplifyApp", "Upload failed", error) }
+        )
 
-        uploadObserver.setTransferListener(object : TransferListener {
-            override fun onStateChanged(id: Int, state: TransferState) {
-                if (state === TransferState.COMPLETED) {
-                    // Handle a completed upload
-                    Log.d("MYTAG", "업로드 성공 파일 이름 : ${fileName}")
-                    callUpdateImage()                   //업로드 성공했으면 갱신
-                }
-            }
-
-            override fun onProgressChanged(id: Int, current: Long, total: Long) {
-                val done = (current.toDouble() / total * 100.0).toInt()
-                Log.d("MYTAG", "UPLOAD - - ID: \$id, percent done = \$done")
-            }
-
-            override fun onError(id: Int, ex: java.lang.Exception) {
-                Log.d("MYTAG", "UPLOAD ERROR - - ID: \$id - - EX:$ex")
-            }
-        })
+//
+//        val uploadObserver = transferUtility.upload(
+//            "kodari-s3",
+//            uploadFileName,
+//            file, CannedAccessControlList.PublicRead
+//        ) // (bucket api, file이름, file객체)
+//
+//        uploadObserver.setTransferListener(object : TransferListener {
+//            override fun onStateChanged(id: Int, state: TransferState) {
+//                if (state === TransferState.COMPLETED) {
+//                    // Handle a completed upload
+//                    Log.d("MYTAG", "업로드 성공 파일 이름 : ${fileName}")
+//                    callUpdateImage()                   //업로드 성공했으면 갱신
+//                }
+//            }
+//
+//            override fun onProgressChanged(id: Int, current: Long, total: Long) {
+//                val done = (current.toDouble() / total * 100.0).toInt()
+//                Log.d("MYTAG", "UPLOAD - - ID: \$id, percent done = \$done")
+//            }
+//
+//            override fun onError(id: Int, ex: java.lang.Exception) {
+//                Log.d("MYTAG", "UPLOAD ERROR - - ID: \$id - - EX:$ex")
+//            }
+//        })
     }
 
     //uri 로 전역변수 file 에 file 만들기
