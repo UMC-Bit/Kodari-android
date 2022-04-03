@@ -40,10 +40,11 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.properties.Delegates
+
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), PortfolioView,
     CoinView, HomeView, UsdView {
@@ -82,8 +83,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-    //BaseFragment에서 onStart에서 실행시켜줌
+    //BaseFragment에서 onStart 에서 실행시켜줌
     override fun initAfterBinding() {
+        //Get FireBase device Token
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("device token", task.exception.toString())
+            }
+            val token = task.result
+            Log.d("device token", token)
+        }
+
+        Log.d("device token", "초기화")
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
