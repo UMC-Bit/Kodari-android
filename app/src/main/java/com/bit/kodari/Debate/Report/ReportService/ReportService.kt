@@ -1,12 +1,10 @@
 package com.bit.kodari.Debate.Report.ReportService
 
 import android.util.Log
-import com.bit.kodari.Debate.Report.ReportData.ReportCommentRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportPostRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportRecommentRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportResponse
+import com.bit.kodari.Debate.Report.ReportData.*
 import com.bit.kodari.Debate.Report.Retrofit.ReportPostView
 import com.bit.kodari.Debate.Report.Retrofit.ReportRetrofitInterface
+import com.bit.kodari.Debate.Report.Retrofit.ReportUserView
 import com.bit.kodari.Util.getJwt
 import com.bit.kodari.Util.getRetorfit
 import retrofit2.Call
@@ -16,9 +14,14 @@ import retrofit2.Response
 class ReportService {
 
     private lateinit var reportPostView: ReportPostView
+    private lateinit var reportUserView : ReportUserView
 
     fun setReportPostView(reportPostView: ReportPostView) {
         this.reportPostView = reportPostView
+    }
+
+    fun setReportUserView(reportUserView: ReportUserView){
+        this.reportUserView = reportUserView
     }
 
     fun reportPost(reportPostRequest: ReportPostRequest) {
@@ -29,7 +32,6 @@ class ReportService {
                     call: Call<ReportResponse>,
                     response: Response<ReportResponse>
                 ) {
-                    Log.d("report", "${response.body()}")
                     val resp = response.body()!!
 
                     when (resp.code) {
@@ -56,7 +58,6 @@ class ReportService {
                 call: Call<ReportResponse>,
                 response: Response<ReportResponse>
             ) {
-                Log.d("reportComment", "${response.body()}")
                 val resp = response.body()!!
                 when (resp.code) {
                     1007,1008,4088 -> {
@@ -81,7 +82,6 @@ class ReportService {
                 call: Call<ReportResponse>,
                 response: Response<ReportResponse>
             ) {
-                Log.d("reportRecomment", "${response.body()}")
                 val resp = response.body()!!
                 when (resp.code) {
                     1007,1008,4088 -> {
@@ -97,6 +97,33 @@ class ReportService {
                 reportPostView.getReportRecommentFailure("${t}")
             }
         })
+    }
+
+    //유저 신고 기능
+    fun reportUser(reportUserReqeust: ReportUserReqeust){
+        val reportService = getRetorfit().create(ReportRetrofitInterface::class.java)
+        reportService.reportUser(getJwt()!! , reportUserReqeust).enqueue(object : Callback<ReportUserResponse>{
+            override fun onResponse(
+                call: Call<ReportUserResponse>,
+                response: Response<ReportUserResponse>
+            ) {
+                val resp = response.body()!!
+                when(resp.code){
+                    1000->{
+                        //성공
+                        reportUserView.getReportUserSuccess(resp)
+                    } else->{
+                        //실패
+                        reportUserView.getReportUserFailure(resp.message)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ReportUserResponse>, t: Throwable) {
+                reportUserView.getReportUserFailure(t.toString())
+            }
+        })
+
     }
 
 }

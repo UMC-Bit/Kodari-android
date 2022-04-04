@@ -104,13 +104,11 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
 
     override fun getCoinPostSuccess(response: DebateCoinPostResponse) {
         coinPostList = response.result
-        Log.d("coinPost" ,"성공 , ${response.result.size}")
         setRecyclerView()
         dismissLoadingDialog()
     }
 
     override fun getCoinPostFailure(message: String) {
-        Log.d("coinPost" ,"성공 ,${message}")
         dismissLoadingDialog()
     }
 

@@ -63,7 +63,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     private fun callReportPost() {
         val text = binding.dialogReportReasonSellTitleTV.text.toString()
         val reportRequest : ReportPostRequest = ReportPostRequest(Idx , getUserIdx() , text)
-        Log.d("report" , "${reportRequest.toString()}")
         val reportService = ReportService()
         reportService.setReportPostView(this)
         reportService.reportPost(reportRequest)
@@ -72,7 +71,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     private fun callReportComment() {
         val text = binding.dialogReportReasonSellTitleTV.text.toString()
         val reportRequest : ReportCommentRequest = ReportCommentRequest(Idx , getUserIdx() , text)
-        Log.d("report" , "${reportRequest.toString()}")
         val reportService = ReportService()
         reportService.setReportPostView(this)
         reportService.reportComment(reportRequest)
@@ -81,7 +79,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     private fun callReportRecomment() {
         val text = binding.dialogReportReasonSellTitleTV.text.toString()
         val reportRequest : ReportRecommentRequest = ReportRecommentRequest(Idx , getUserIdx() , text)
-        Log.d("report" , "${reportRequest.toString()}")
         val reportService = ReportService()
         reportService.setReportPostView(this)
         reportService.reportRecomment(reportRequest)
@@ -90,8 +87,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     //신고 성공
     override fun getReportPostSuccess(response: ReportResponse) {
         showToast(response.message)
-        Log.d("신고" , "게시글 신고 성공")
-        Log.d("신고 닫기3" ,"신고 닫기 3")
         val bundle = bundleOf("success" to true)        //신고 완료되었다고 보내기
         requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()
@@ -106,7 +101,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     //댓글 신고 성공
     override fun getReportCommentSuccess(response: ReportResponse) {
         showToast(response.message)
-        Log.d("신고" , "댓글 신고 성공")
         val bundle = bundleOf("success" to true)
         requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()
@@ -121,7 +115,6 @@ class ReportReasonDialog(val Idx: Int, val index: Int ,val flag: Int) :
     //대댓 신고 성공
     override fun getReportRecommentSuccess(response: ReportResponse) {
         showToast(response.message)
-        Log.d("신고" , "대댓 신고 성공")
         val bundle = bundleOf("success" to true)
         requireActivity().supportFragmentManager.setFragmentResult("request",bundle)
         dismiss()

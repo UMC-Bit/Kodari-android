@@ -15,7 +15,6 @@ class ReportMenuDialog(val Idx: Int, val flag: Int) :
             { key, bundle ->
                 if (key == "request") {
                     if (bundle.containsKey("success")) {       //삭제되었다고 하고 넘어오면
-                        Log.d("신고 닫기" ,"${bundle.toString()}")
                         val bundle = bundleOf("success2" to true) //삭제되었다고 보내기
                         requireActivity().supportFragmentManager.setFragmentResult(
                             "request2",

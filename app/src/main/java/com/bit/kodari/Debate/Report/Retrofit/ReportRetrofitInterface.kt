@@ -1,9 +1,6 @@
 package com.bit.kodari.Debate.Report.Retrofit
 
-import com.bit.kodari.Debate.Report.ReportData.ReportCommentRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportPostRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportRecommentRequest
-import com.bit.kodari.Debate.Report.ReportData.ReportResponse
+import com.bit.kodari.Debate.Report.ReportData.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -19,4 +16,7 @@ interface ReportRetrofitInterface {
 
     @POST("/reports/post/reply")
     fun reportRecomment(@Header("X-ACCESS-TOKEN") jwt:String, @Body reportRecommentRequest: ReportRecommentRequest) : Call<ReportResponse>
+
+    @POST("/reports/post/user/report")
+    fun reportUser(@Header("X-ACCESS-TOKEN") jwt:String, @Body reportUserRequest: ReportUserReqeust) : Call<ReportUserResponse>
 }

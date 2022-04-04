@@ -18,7 +18,6 @@ class WritingMenuDialog(val Idx: Int, val flag: Int) :
             { key, bundle ->
                 if (key == "request2") {
                     if (bundle.containsKey("success2")) {       //삭제되었다고 하고 넘어오면 -> 이전꺼와 같으면 안됨
-                        Log.d("신고 닫기1" ,"${bundle.toString()}")
                         dismiss()
                     }
                 }
@@ -46,7 +45,7 @@ class WritingMenuDialog(val Idx: Int, val flag: Int) :
         }
 
         binding.dialogWritingMenuUserBlockTV.setOnClickListener {
-            //유저 차단하기 확인 다이얼로그 호출
+            //유저 차단하기 확인 다이얼로그 호출 ,idx는 postIdx 가 넘어가는게 맞음
             val dialog = UserBlockConfirmDialog(Idx)
             dialog.show(requireActivity().supportFragmentManager, "UserBlockConfirmDialog")
         }
