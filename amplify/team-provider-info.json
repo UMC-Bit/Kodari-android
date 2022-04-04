@@ -11,5 +11,18 @@
       "StackId": "arn:aws:cloudformation:ap-northeast-2:478428545155:stack/amplify-kodari-dev-23722/b9d07f30-b374-11ec-baca-06d9937313b2",
       "AmplifyAppId": "d2x6k3pu7hf8vw"
     }
+  },
+  "kodari": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-kodari-kodari-40402-authRole",
+      "UnauthRoleArn": "arn:aws:iam::478428545155:role/amplify-kodari-kodari-40402-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::478428545155:role/amplify-kodari-kodari-40402-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-kodari-kodari-40402-deployment",
+      "UnauthRoleName": "amplify-kodari-kodari-40402-unauthRole",
+      "StackName": "amplify-kodari-kodari-40402",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:478428545155:stack/amplify-kodari-kodari-40402/d2ece8d0-b380-11ec-899a-02de934a8966",
+      "AmplifyAppId": "d2x6k3pu7hf8vw"
+    }
   }
 }

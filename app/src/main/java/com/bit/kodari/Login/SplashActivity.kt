@@ -15,6 +15,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.AmplifyConfiguration
 import com.bit.kodari.Config.BaseActivity
 import com.bit.kodari.Intro.IntroActivity
 import com.bit.kodari.Login.Retrofit.LogInView
