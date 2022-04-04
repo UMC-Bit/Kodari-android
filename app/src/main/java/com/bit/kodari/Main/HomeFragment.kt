@@ -467,38 +467,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     // 포트폴리오 API 호출 성공(계좌, 유저코인 리스트, 대표코인 리스트, 수익률 리스트 받아옴) , 단일 포폴 조회
     override fun portfolioSuccess(response: PortfolioResponse) {
-        dismissLoadingDialog()
-        when (response.code) {
-            1000 -> {
-                // 계좌
-                getAccountResult(response)
-                // 코인 시세 받아오기
-                getCoinPrice(response)
-                // 수익률 리스트
-                val profitList = response.result.profitResultList
-                //AccountIdx, PortIdx, marketName 싱글톤에 셋팅
-                MyApplicationClass.myAccountIdx = response.result.accountIdx
-                MyApplicationClass.myPortIdx = response.result.portIdx
-                MyApplicationClass.marketName = response.result.marketName
-                when (marketName) {
-                    "빗썸" -> binding.homeMarketTv.setText("빗썸")
-                    "업비트" -> binding.homeMarketTv.setText("업비트")
+        if(checkView){
+            dismissLoadingDialog()
+            when (response.code) {
+                1000 -> {
+                    // 계좌
+                    getAccountResult(response)
+                    // 코인 시세 받아오기
+                    getCoinPrice(response)
+                    // 수익률 리스트
+                    val profitList = response.result.profitResultList
+                    //AccountIdx, PortIdx, marketName 싱글톤에 셋팅
+                    MyApplicationClass.myAccountIdx = response.result.accountIdx
+                    MyApplicationClass.myPortIdx = response.result.portIdx
+                    MyApplicationClass.marketName = response.result.marketName
+                    when (marketName) {
+                        "빗썸" -> binding.homeMarketTv.setText("빗썸")
+                        "업비트" -> binding.homeMarketTv.setText("업비트")
+                    }
+                    marketIdx = market.get(response.result.marketName)!!     //마켓 인덱스 셋팅
+                    accounName = response.result.accountName                //계좌이름
+                    Log.d(
+                        "인덱스 정보",
+                        "account : ${MyApplicationClass.myAccountIdx} , Port : ${MyApplicationClass.myPortIdx}"
+                    )
+                    Log.d(
+                        "Callidx",
+                        "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx} , 마켓 정보 :${response.result.marketName} , 마켓 인덱스 : ${marketIdx}"
+                    )
+                    //계좌 인덱스 셋팅 됐을때 차트 호출
+                    callGetProfit()
                 }
-                marketIdx = market.get(response.result.marketName)!!     //마켓 인덱스 셋팅
-                accounName = response.result.accountName                //계좌이름
-                Log.d(
-                    "인덱스 정보",
-                    "account : ${MyApplicationClass.myAccountIdx} , Port : ${MyApplicationClass.myPortIdx}"
-                )
-                Log.d(
-                    "Callidx",
-                    "포트 : ${MyApplicationClass.myPortIdx}  , 계좌 : ${MyApplicationClass.myAccountIdx} , 마켓 정보 :${response.result.marketName} , 마켓 인덱스 : ${marketIdx}"
-                )
-                //계좌 인덱스 셋팅 됐을때 차트 호출
-                callGetProfit()
-            }
-            else -> {
-                showToast(response.message)
+                else -> {
+                    showToast(response.message)
+                }
             }
         }
     }

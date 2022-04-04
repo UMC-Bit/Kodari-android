@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.MyApplicationClass
 import com.bit.kodari.Main.Account.Data.*
 import com.bit.kodari.Main.Account.Retrofit.ModifyDialogView
 import com.bit.kodari.Main.Account.Servcie.AccountService
@@ -86,6 +87,7 @@ class ModifyInfoDialog(val accountIdx: Int , val portIdx:Int) : DialogFragment()
     //삭제 버튼 눌렀을때 포토폴리오 삭제 성공
     override fun deletePortSuccess(response: DeletePortResponse) {
         Toast.makeText(requireContext() ,"${response.result}" , Toast.LENGTH_SHORT).show()
+        MyApplicationClass.pageIdx = 0
         requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container_fl,HomeFragment())
             .commit()
         dismiss()
