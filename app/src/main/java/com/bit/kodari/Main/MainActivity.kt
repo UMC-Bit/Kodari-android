@@ -14,6 +14,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.AmplifyConfiguration
 import com.bit.kodari.AddOn.AddOnAlarmMainFragment
 import com.bit.kodari.AddOn.AddOnMainFragment
 import com.bit.kodari.databinding.ActivityMainBinding
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() , MainView {
 
         supportFragmentManager.beginTransaction().replace(R.id.main_container_fl, HomeFragment())
             .commit()
+
 
 
     }

@@ -7,6 +7,7 @@ import android.util.Log
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.AmplifyConfiguration
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -35,9 +36,10 @@ class MyApplicationClass : Application() {
 
         mSharedPreferences = applicationContext.getSharedPreferences(TAG, Context.MODE_PRIVATE)
         try {
+            val config = AmplifyConfiguration.builder(applicationContext).devMenuEnabled(false).build()
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.addPlugin(AWSS3StoragePlugin())
-            Amplify.configure(applicationContext)
+            Amplify.configure(config, applicationContext)
             Log.i("MyAmplifyApp", "Initialized Amplify")
         } catch (error: AmplifyException) {
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
