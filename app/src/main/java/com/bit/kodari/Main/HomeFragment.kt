@@ -198,7 +198,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeIncomeOnTv.visibility = View.VISIBLE
             binding.homeYieldOnTv.visibility = View.GONE
             binding.homeYieldOffTv.visibility = View.VISIBLE
-            callGetProfit()
+            if(MyApplicationClass.myAccountIdx != 0){
+                callGetProfit()
+            }
+
         }
         //수익률 클릭시 변경
         binding.homeYieldOffTv.setOnClickListener {
@@ -206,7 +209,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeIncomeOnTv.visibility = View.GONE
             binding.homeYieldOnTv.visibility = View.VISIBLE
             binding.homeYieldOffTv.visibility = View.GONE
-            callGetProfit()
+            if(MyApplicationClass.myAccountIdx != 0) {
+                callGetProfit()
+            }
         }
 
         //일 클릭시 변경
@@ -217,7 +222,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeWeekOnTv.visibility = View.GONE
             binding.homeMonthOffTv.visibility = View.VISIBLE
             binding.homeMonthOnTv.visibility = View.GONE
-            callGetProfit()
+            if(MyApplicationClass.myAccountIdx != 0) {
+                callGetProfit()
+            }
         }
 
         binding.homeWeekOffTv.setOnClickListener {
@@ -227,7 +234,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeWeekOnTv.visibility = View.VISIBLE
             binding.homeMonthOffTv.visibility = View.VISIBLE
             binding.homeMonthOnTv.visibility = View.GONE
-            callGetProfit()
+            if (MyApplicationClass.myAccountIdx != 0) {
+                callGetProfit()
+            }
         }
 
         binding.homeMonthOffTv.setOnClickListener {
@@ -237,7 +246,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeWeekOnTv.visibility = View.GONE
             binding.homeMonthOffTv.visibility = View.GONE
             binding.homeMonthOnTv.visibility = View.VISIBLE
-            callGetProfit()
+            if(MyApplicationClass.myAccountIdx != 0) {
+                callGetProfit()
+            }
         }
 
         binding.homeNextBtnIb.setOnClickListener {
@@ -300,12 +311,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             }
                             MyApplicationClass.pageIdx =
                                 position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
-                            Log.d("HomeViewPager", "HomeViewPagerPosition : ${position}")
                         }
                         portfolioList.size - 1 -> {     //마지막
                             binding.homeVpNextBtn.visibility = View.GONE
                             binding.homeVpPreviewBtn.visibility = View.VISIBLE
-                            Log.d("HomeViewPager", "HomeViewPagerPosition : ${position}")
                             userCoinList.clear()
                             representCoinList.clear()
                             setRepresentRV()
@@ -315,7 +324,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                                 position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
                         }
                         else -> {
-                            Log.d("setViewpager", "else position : ${position}")
                             binding.homeVpNextBtn.visibility = View.VISIBLE
                             binding.homeVpPreviewBtn.visibility = View.VISIBLE
                             callPortfolioInfo(portIdxList[position].toInt())
