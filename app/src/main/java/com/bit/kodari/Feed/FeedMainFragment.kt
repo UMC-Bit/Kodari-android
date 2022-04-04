@@ -8,9 +8,6 @@ import com.bit.kodari.databinding.FragmentFeedMainBinding
 
 class FeedMainFragment : BaseFragment<FragmentFeedMainBinding>(FragmentFeedMainBinding::inflate) {
     override fun initAfterBinding() {
-        binding.feedMainBackbuttonIB.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container_fl, HomeFragment()).commitAllowingStateLoss()
-        }
+
     }
 }

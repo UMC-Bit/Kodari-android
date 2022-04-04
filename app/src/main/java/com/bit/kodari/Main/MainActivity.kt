@@ -17,6 +17,7 @@ import androidx.core.view.children
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.AmplifyConfiguration
 import com.bit.kodari.AddOn.AddOnAlarmMainFragment
+import com.bit.kodari.AddOn.AddOnEmptyMainFragment
 import com.bit.kodari.AddOn.AddOnMainFragment
 import com.bit.kodari.databinding.ActivityMainBinding
 import com.bit.kodari.Debate.DebateMainFragment
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() , MainView {
 //                        .commit()
 //                    return@setOnItemSelectedListener true
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container_fl, FeedMainFragment())
+                        .replace(R.id.main_container_fl, AddOnEmptyMainFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }

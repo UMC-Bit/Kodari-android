@@ -9,7 +9,7 @@
         android:id="@+id/feed_main_feed_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="피드"
+        android:text="애드온"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20dp"
