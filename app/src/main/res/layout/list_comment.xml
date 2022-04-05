@@ -76,18 +76,28 @@
         android:visibility="invisible"
         android:layout_marginEnd="27dp"/>
 
+        <TextView
+            android:id="@+id/list_item_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1시간전"
+            android:textColor="#949494"
+            android:textSize="10sp"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="@id/list_comment_nickname_tv"
+            app:layout_constraintTop_toBottomOf="@id/list_comment_nickname_tv"
+            app:layout_constraintBottom_toBottomOf="@id/list_comment_mask_iv"/>
+
             <TextView
                 android:id="@+id/list_item_comment_ask_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="답글 달기"
                 android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@id/list_comment_nickname_tv"
-                app:layout_constraintTop_toBottomOf="@id/list_comment_nickname_tv"
-                app:layout_constraintBottom_toBottomOf="@+id/list_comment_mask_iv"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="20dp"/>
-
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/list_item_time_tv"
+                app:layout_constraintTop_toTopOf="@id/list_item_time_tv"
+                app:layout_constraintBottom_toBottomOf="@id/list_item_time_tv" />
 
             <TextView
                 android:id="@+id/list_item_comment_like_cnt_tv"
