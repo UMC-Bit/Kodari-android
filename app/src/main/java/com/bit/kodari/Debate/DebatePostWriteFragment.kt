@@ -156,7 +156,8 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
     override fun getUserInfoSuccess(response: GetProfileResponse) {
         Glide.with(binding.postWriteProfileIv)
             .load(response.result[0].profileImgUrl)                 //왜 리스트지 ?
-            .error(R.drawable.profile_image)
+            .placeholder(R.drawable.ic_basic_profile)
+            .error(R.drawable.ic_basic_profile)
             .into(binding.postWriteProfileIv)
 
         binding.postWriteNicknameTv.text = response.result[0].nickName  //닉네임 셋팅.
