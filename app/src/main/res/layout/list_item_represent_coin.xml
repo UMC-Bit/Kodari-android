@@ -59,7 +59,8 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/represent_coin_iv"
         app:layout_constraintEnd_toStartOf="@id/represent_binanace_price_tv"
-        app:layout_constraintTop_toTopOf="@id/represent_coin_iv" />
+        app:layout_constraintTop_toTopOf="@id/represent_coin_iv"
+        />
 
     <TextView
             android:id="@+id/represent_binanace_price_tv"
