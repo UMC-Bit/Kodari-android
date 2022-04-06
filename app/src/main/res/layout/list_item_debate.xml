@@ -30,6 +30,18 @@
         app:layout_constraintBottom_toBottomOf="@id/list_item_debate_mask_iv"
         app:layout_constraintStart_toEndOf="@id/list_item_debate_mask_iv"/>
 
+    <TextView
+        android:id="@+id/list_item_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1시간전"
+        android:textColor="#949494"
+        android:textSize="11sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/list_item_id_tv"
+        app:layout_constraintTop_toTopOf="@id/list_item_id_tv"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_id_tv"/>
+
 
     <TextView
         android:id="@+id/list_item_content_tv"

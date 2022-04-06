@@ -129,6 +129,18 @@
                 app:layout_constraintBottom_toBottomOf="@id/mine_mask_iv"
                 app:layout_constraintStart_toEndOf="@id/mine_mask_iv"/>
 
+            <TextView
+                android:id="@+id/mine_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04/05 23:44"
+                android:textColor="#949494"
+                android:textSize="12sp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/mine_nickname_tv"
+                app:layout_constraintTop_toTopOf="@id/mine_nickname_tv"
+                app:layout_constraintBottom_toBottomOf="@id/mine_nickname_tv" />
+
 
             <ImageView
                 android:id="@+id/mine_view_more_iv"
