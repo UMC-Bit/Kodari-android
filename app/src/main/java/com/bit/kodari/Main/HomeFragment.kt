@@ -320,8 +320,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             setRepresentRV()
                             setRepresentPV()
                             setChartDummy(profitList = ArrayList())
-                            MyApplicationClass.pageIdx =
-                                position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
+                            MyApplicationClass.pageIdx = 0               //홈으로 돌아왔을떄 보던 포토폴리오 유지 단 마지막 포폴 생성일 때는 0번으로
                         }
                         else -> {
                             binding.homeVpNextBtn.visibility = View.VISIBLE
