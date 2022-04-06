@@ -48,7 +48,6 @@ class PortfolioService {
                 call: Call<PortIdxResponse>,
                 response: Response<PortIdxResponse>
             ) {
-                Log.d("portIdx", "포트폴리오 리스트 불러오기 성공!")
                 if(response.body()!!.result.size >= 0){
                     if(response.body()!!.result.size == 0){
                         portfolioView.getPortIdxSuccess(response.body()!!)
@@ -61,7 +60,6 @@ class PortfolioService {
                 }
             }
             override fun onFailure(call: Call<PortIdxResponse>, t: Throwable) {
-                Log.d("portIdx", "불러오기 실패")
 
                 portfolioView.getPortIdxFailure("${t}")
             }

@@ -18,7 +18,7 @@ class DebateReCommentRVAdapter(var recommentList:ArrayList<DebateSelectPostReply
     inner class MyViewHolder(val binding: ListReCommentBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : DebateSelectPostReply){
             binding.listItemReContentTv.text = item.content
-
+            binding.listRecommentTimeTv.text = item.time
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listReCommentMaskIv)
                     .load(item.profileImgUrl)

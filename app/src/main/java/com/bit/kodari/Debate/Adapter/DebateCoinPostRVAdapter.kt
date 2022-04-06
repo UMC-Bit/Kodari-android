@@ -31,6 +31,7 @@ class DebateCoinPostRVAdapter(var coinPostList:ArrayList<DebateCoinPostResult>) 
             binding.listItemMyWritingLikeCnt.text = item.like.toString()
             binding.listItemMyWritingDislikeCnt.text = item.dislike.toString()
             binding.listItemMyWritingContentTv.text = item.content
+            binding.mineTimeTv.text = item.time
             if(item.profileImgUrl != ""){       //값이 있으면
                 Glide.with(binding.listItemMyWritingImageIv)
                     .load(item.profileImgUrl)

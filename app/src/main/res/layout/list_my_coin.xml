@@ -45,6 +45,13 @@
         app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"
         app:layout_constraintTop_toBottomOf="@id/my_coin_name_tv"/>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="85dp" />
+
     <TextView
         android:id="@+id/my_now_price_tv"
         android:layout_width="57dp"
@@ -55,7 +62,8 @@
         android:gravity="center"
         app:layout_constraintEnd_toStartOf="@id/myProfit_percentTv"
         app:layout_constraintTop_toTopOf="@id/my_coin_iv"
-        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"/>
+        app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"
+        app:layout_constraintStart_toEndOf="@id/guideline2"/>
 
     <TextView
         android:id="@+id/myProfit_percentTv"

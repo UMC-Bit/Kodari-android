@@ -31,6 +31,8 @@ class DebateMainRVAdapter(var postList:ArrayList<DebatePostResult>) : RecyclerVi
             binding.listItemMyWritingLikeCnt.text = item.like.toString()
             binding.listItemMyWritingDislikeCnt.text = item.dislike.toString()
             binding.listItemMyWritingContentTv.text = item.content
+            binding.mineTimeTv.text = item.time
+
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listItemMyWritingImageIv)
                     .load(item.profileImgUrl)

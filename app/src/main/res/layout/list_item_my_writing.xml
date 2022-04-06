@@ -32,6 +32,19 @@
         app:layout_constraintStart_toEndOf="@id/list_item_my_writing_image_iv"/>
 
     <TextView
+        android:id="@+id/mine_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="04/05 23:44"
+        android:textColor="#949494"
+        android:textSize="12sp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@id/list_item_my_writing_nickname_tv"
+        app:layout_constraintTop_toTopOf="@id/list_item_my_writing_nickname_tv"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_my_writing_nickname_tv" />
+
+
+    <TextView
         android:id="@+id/list_item_my_writing_coin_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -38,7 +38,27 @@
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@id/list_re_comment_mask_iv"
             app:layout_constraintTop_toTopOf="@id/list_re_comment_mask_iv"
-            app:layout_constraintBottom_toBottomOf="@id/list_re_comment_mask_iv" />
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="150dp" />
+
+
+        <TextView
+            android:id="@+id/list_recomment_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="1시간전"
+            android:textColor="#949494"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/list_re_comment_mask_iv"
+            app:layout_constraintStart_toStartOf="@id/list_re_comment_nickname_tv"
+            app:layout_constraintTop_toBottomOf="@id/list_re_comment_nickname_tv" />
 
         <TextView
             android:id="@+id/list_item_re_content_tv"
@@ -47,22 +67,12 @@
             android:text="아니 그건 됐고 이더리움 떡상 부탁 좀"
             android:textColor="@color/black"
             android:textSize="12.5sp"
-            android:layout_marginStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/list_re_comment_nickname_tv"
+            app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toTopOf="@id/list_re_comment_nickname_tv"
             app:layout_constraintBottom_toBottomOf="@id/list_re_comment_nickname_tv"/>
 
 
-        <TextView
-            android:id="@+id/list_item_re_delete_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="삭제"
-            android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@id/list_item_re_content_tv"
-            app:layout_constraintTop_toBottomOf="@id/list_item_re_content_tv"
-            android:layout_marginTop="10dp"/>
 
         <ImageView
             android:id="@+id/list_item_re_view_more_tv"
@@ -70,11 +80,22 @@
             android:layout_height="wrap_content"
             android:src="@drawable/view_more_btn_gray"
             android:padding="5dp"
+            app:layout_constraintStart_toStartOf="@id/list_item_re_content_tv"
+            app:layout_constraintTop_toTopOf="@id/list_recomment_time_tv"
+            app:layout_constraintBottom_toBottomOf="@id/list_recomment_time_tv" />
+
+        <TextView
+            android:id="@+id/list_item_re_delete_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:textSize="10sp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/list_item_re_delete_tv"
-            app:layout_constraintTop_toBottomOf="@id/list_item_re_content_tv"
+            app:layout_constraintStart_toEndOf="@id/list_item_re_view_more_tv"
+            app:layout_constraintTop_toTopOf="@id/list_recomment_time_tv"
+            app:layout_constraintBottom_toBottomOf="@id/list_recomment_time_tv"
             />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,6 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     lateinit var accounName: String
     private var marketIdx by Delegates.notNull<Int>()       //marketIdx 선언
     private var market: HashMap<String, Int> = hashMapOf("업비트" to 1, "빗썸" to 2)
+    private var canClick:Boolean = false
 
     private var coinSymbolSet = HashSet<String>()    // 수익률 리스트    // 유저 코인, 대표 코인 심볼 저장
 
@@ -250,24 +251,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 callGetProfit()
             }
         }
-
+        //대표코인 클릭했을 때
         binding.homeNextBtnIb.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.main_container_fl,
-                    RepresentativeCoinManagementFragment(marketIdx)
-                )
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            if(portfolioList.size == 1 || canClick){
+                showToast("포트폴리오를 추가해주세요.")
+            } else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.main_container_fl,
+                        RepresentativeCoinManagementFragment(marketIdx)
+                    )
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
+        //소유코인 클릭했을때
         binding.homeMyNextBtnIb.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.main_container_fl,
-                    PossessionCoinManagementFragment(accounName, marketIdx)
-                )
-                .commitNowAllowingStateLoss()
+            if(portfolioList.size == 1 || canClick){
+               showToast("포트폴리오를 추가해주세요.")
+            } else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.main_container_fl,
+                        PossessionCoinManagementFragment(accounName, marketIdx)
+                    )
+                    .commitNowAllowingStateLoss()
+            }
+
         }
 
         //화살표 관련 리스너
@@ -311,6 +322,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             }
                             MyApplicationClass.pageIdx =
                                 position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
+                            canClick = false
                         }
                         portfolioList.size - 1 -> {     //마지막
                             binding.homeVpNextBtn.visibility = View.GONE
@@ -321,6 +333,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             setRepresentPV()
                             setChartDummy(profitList = ArrayList())
                             MyApplicationClass.pageIdx = 0               //홈으로 돌아왔을떄 보던 포토폴리오 유지 단 마지막 포폴 생성일 때는 0번으로
+                            canClick = true
                         }
                         else -> {
                             binding.homeVpNextBtn.visibility = View.VISIBLE
@@ -328,6 +341,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             callPortfolioInfo(portIdxList[position].toInt())
                             MyApplicationClass.pageIdx =
                                 position               //홈으로 돌아왔을떄 보던 포토폴리오 유지
+                            canClick = false
                         }
                     }
                     binding.myRecordIndicators.animatePageSelected(position)

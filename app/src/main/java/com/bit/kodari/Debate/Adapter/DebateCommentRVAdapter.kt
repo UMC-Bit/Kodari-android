@@ -43,6 +43,7 @@ class DebateCommentRVAdapter(var commentList : ArrayList<DebateSelectPostComment
             binding.listCommentNicknameTv.text = item.nickName
             binding.listItemContentTv.text = item.content
             binding.listItemCommentLikeCntTv.text = "좋아요 ${item.like}개"
+            binding.listItemTimeTv.text = item.time
             if(item.profileImgUrl != ""){
                 Glide.with(binding.listCommentMaskIv)
                     .load(item.profileImgUrl)
