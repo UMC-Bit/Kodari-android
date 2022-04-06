@@ -9,14 +9,13 @@
 
     <ImageView
         android:id="@+id/terms_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:padding="10dp"
         android:src="@drawable/x_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/terms_title"
+        app:layout_constraintBottom_toBottomOf="@id/terms_title"/>
 
     <TextView
         android:id="@+id/terms_title"
@@ -26,30 +25,27 @@
         android:gravity="center"
         android:text="이용 약관"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="405dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="14dp"
-        android:background="#E0E0E0"
-        android:scrollbarSize="3dp"
-        android:text="TextView"
-        android:textSize="1dp"
+    <ImageView
+        android:id="@+id/terms_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terms_exit" />
+        app:layout_constraintTop_toBottomOf="@id/terms_title" />
 
     <ScrollView
         android:id="@+id/terms_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarSize="10dp"
         android:scrollbarThumbVertical="@color/scrollView_color"
@@ -57,9 +53,10 @@
         app:layout_constraintBottom_toTopOf="@id/terms_success_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/terms_exit">
+        app:layout_constraintTop_toBottomOf="@id/terms_line"
+        android:layout_marginBottom="5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -69,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="start"
+                android:padding="20dp"
                 android:text="회원가입 이용약관 :\n
 &lt; 비트 팀 &gt;('http://codari-app.shop'이하 '코다리')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.\n
 ○ 이 개인정보처리방침은2022년2월20부터 적용됩니다.\n
@@ -175,13 +173,9 @@
 ① 이 개인정보처리방침은 2022년 2월 20부터 적용됩니다. (편집됨)\n
 "
                 android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="14sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
     </ScrollView>
 
@@ -190,7 +184,6 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:background="@drawable/dialog_button_background_round_yellow"
         android:text="동의"
         android:textColor="@color/black"
@@ -198,6 +191,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
