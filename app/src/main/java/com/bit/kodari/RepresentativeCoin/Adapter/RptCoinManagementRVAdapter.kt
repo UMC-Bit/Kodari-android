@@ -39,8 +39,8 @@ class RptCoinManagementAdapter(var rptCoinList:ArrayList<RepresentCoinResult>): 
             binding.itemRepresentativeCoinManagementCoinListCoinNameTV.text = item.coinName
             binding.itemRepresentativeCoinManagementCoinListCoinSymbolTV.text = item.symbol
             if(item.binancePrice == 0.0){ // 바이낸스 미 상장 코인 시세 공백처리
-                binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = ""
-                binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = ""
+                binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = "x"
+                binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = "x"
             }else{
                 binding.itemRepresentativeCoinManagementCoinListBitfinexPriceTV.text = formatPrice(item.binancePrice)
                 binding.itemRepresentativeCoinManagementCoinListKimchiPremiumTV.text = formatD(item.kimchi) +"%"

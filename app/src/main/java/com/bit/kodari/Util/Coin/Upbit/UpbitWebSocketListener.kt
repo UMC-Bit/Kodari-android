@@ -88,7 +88,8 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
             sb.append(it.toString())
             sb.append("\",")
         }
-        sb.deleteCharAt(sb.length-1) // "," 제거
+        if(sb.length > 0)
+            sb.deleteCharAt(sb.length-1) // "," 제거
         return sb.toString()
     }
 }
