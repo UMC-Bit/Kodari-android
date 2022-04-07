@@ -137,6 +137,7 @@ class CoinService {
             .build()
         val bithumbApi = bithumbRetrofit.create(CoinInterface::class.java)
         // 빗썸 소유코인 시세 받아오기
+        var cnt = 0
         if (userCoinList != null) {
             for (i in 0 until userCoinList!!.size) {
                 bithumbApi.getCurrentBithumbPrice(userCoinList!![i].symbol + "_KRW")
@@ -154,7 +155,11 @@ class CoinService {
                                 } else {
                                     userCoinList!![i].marketPrice = 0.0
                                 }
+                                cnt++
                                 viewModel.getUpdateUserCoin(userCoinList!!, i)
+                                if(cnt == userCoinList!!.size){
+                                    viewModel.getUpdateUserCoin(userCoinList!!, i)
+                                }
                                 Log.d("빗썸 API", "성공: ${price}")
                             }
 
