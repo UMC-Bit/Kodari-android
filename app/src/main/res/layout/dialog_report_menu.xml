@@ -167,7 +167,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dialog_report_menu_content_spam_TV" />
 
-            <TextView
+            <Button
                 android:id="@+id/dialog_report_menu_cancel_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,6 +177,7 @@
                 android:text="취소하기"
                 android:textColor="#767272"
                 android:textSize="18sp"
+                android:background="@drawable/button_click_ripple"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
