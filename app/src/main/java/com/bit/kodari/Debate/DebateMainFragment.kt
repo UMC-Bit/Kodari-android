@@ -29,11 +29,10 @@ class DebateMainFragment : BaseFragment<FragmentDebateMainBinding>(FragmentDebat
     private lateinit var callback:OnBackPressedCallback
 
     override fun initAfterBinding() {
+        showLoadingDialog(requireContext())
         setListener()
-        Log.d("debate" , "onStart실행")
         val debateService = DebateService()
         debateService.setDebateMainView(this)
-        showLoadingDialog(requireContext())
         debateService.getPostsAll()
     }
 

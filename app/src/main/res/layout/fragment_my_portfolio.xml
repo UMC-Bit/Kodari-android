@@ -45,7 +45,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1,020원"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -55,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:text="(+13.5%)"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/my_portfolio_asset_tv"
         app:layout_constraintStart_toEndOf="@id/my_portfolio_asset_tv"

@@ -66,7 +66,6 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         setListener()
         callSelectPost()
         callMyProfile()
-        Log.d("nowPostIdx" , "지금 게시판의 postIdx : ${postIdx}")
         if(requireArguments().containsKey("coinIdx")){
             coinIdx = requireArguments().getInt("coinIdx")
             Log.d("rere" , "${coinIdx}")
@@ -109,7 +108,6 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         //넘어온 postIdx 받기
         if(requireArguments().containsKey("postIdx")){
             postIdx = requireArguments().getInt("postIdx")
-            Log.d("selectPost" , "넘어온 postIdx : ${postIdx}")
         } else{
             showToast("통신 실패")
         }
@@ -477,9 +475,9 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
 
     //게시글 조회 함수
     fun callSelectPost(){
+        showLoadingDialog(requireContext())
         val debateService = DebateService()
         debateService.setDebateMineView(this)
-        showLoadingDialog(requireContext())
         debateService.selectPost(postIdx)
     }
 
@@ -500,7 +498,7 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
 
     //프로필 이미지 가져오기
     fun callMyProfile(){
-        Log.d("getProfile", "실행")
+
         val profileService = getRetorfit().create(ProfileRetrofitInterface::class.java)
         profileService.getProfile(getUserIdx()).enqueue(object : Callback<GetProfileResponse> {
             override fun onResponse(

@@ -129,7 +129,6 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
                                 putString("coinSymbol", coinList[position].symbol)
                                 putDouble("priceAvg", coinList[position].priceAvg)
                                 putDouble("amount", coinList[position].amount)
-                                Log.d("amout", "매니지 : ${coinList[position].amount}")
                             }
                         }).commit()
             }
@@ -138,9 +137,7 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
         binding.possessionCoinManagementDeleteButtonIB.setOnClickListener {
             // 선택 버튼 클릭 시에만 삭제 다이얼로그가 띄워짐
             val isClick = PossessionCoinManagementAdapter.isClick
-            Log.d("PossessiongCoinDelete", "실행 ,  체크 : ${isClick}")
             val position = PossessionCoinManagementAdapter.clickPosition
-            Log.d("PossessiongCoinDelete", "실행 , ${position} , 체크 : ${isClick}")
             if (isClick && position != -1) {
                 val position = PossessionCoinManagementAdapter.clickPosition
                 deleteDialog(coinList[position].userCoinIdx)
@@ -221,14 +218,13 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
     }
 
     fun getPossessionCoins() {
+        showLoadingDialog(requireContext())
         val psnCoinService = PsnCoinService()
         psnCoinService.setPsnCoinMgtInsquireView(this)
-        showLoadingDialog(requireContext())
         psnCoinService.getPsnCoinMgtInsquire(MyApplicationClass.myPortIdx)
     }
 
     override fun psnCoinInsquireSuccess(response: PsnCoinMgtInsquireResponse) {
-        Log.d("InsquireSuccess", "${response}")
         dismissLoadingDialog()
         coinList = response.result
         //Log.d("psnSuccesscoinSize", "${coinList.size}")
@@ -315,11 +311,11 @@ class PossessionCoinManagementFragment(val accountName: String, val marketIdx: I
 
 
     override fun binancePriceSuccess(upbitCoinPriceMap: HashMap<String, Double>) {
-        TODO("Not yet implemented")
+
     }
 
     override fun coinPriceFailure(message: String) {
-        TODO("Not yet implemented")
+
     }
 
     // 평가순익 구하는 메서드

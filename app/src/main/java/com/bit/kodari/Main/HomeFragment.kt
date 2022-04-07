@@ -95,11 +95,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 //            Log.d("device token", token)
 //        }
 
-        Log.d("device token", "초기화")
+        showLoadingDialog(requireContext())
         // 사용자의 포트폴리오 리스트 가져오기, 바이낸스, 업비트 시세 받아옴
         val portFolioService = PortfolioService()
         portFolioService.setPortfolioView(this)
-        showLoadingDialog(requireContext())
         portFolioService.getPortfolioList(getUserIdx())
         // 환율 받아오기
         val usdService = UsdService()

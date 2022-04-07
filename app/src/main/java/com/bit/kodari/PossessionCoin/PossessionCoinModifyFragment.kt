@@ -141,11 +141,7 @@ class PossessionCoinModifyFragment(val accountName:String , val marketIdx:Int) :
                 amount, fee, category,
                 memo, date
             )
-            Log.d(
-                "psnCoinTradeAdd",
-                "거래 내역 정보 : ${portIdx}, ${coinIdx}, ${price}, " +
-                        "${psnCoinAddTradeInfo.amount}, ${psnCoinAddTradeInfo.fee}, ${psnCoinAddTradeInfo.category}, ${psnCoinAddTradeInfo.memo}, ${psnCoinAddTradeInfo.date}"
-            )
+
             val psnCoinService = PsnCoinService()
             psnCoinService.setPsnCoinAddTradeView(this)
             showLoadingDialog(requireContext())
@@ -182,11 +178,10 @@ class PossessionCoinModifyFragment(val accountName:String , val marketIdx:Int) :
                 PossessionCoinManagementAdapter.isClick = false
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container_fl, PossessionCoinManagementFragment(accountName ,marketIdx)).commit()
-                Log.d("psncoinaddtradesuccess", "거래내역 추가 성공, ${response}")
+
             }
             else -> {
                 Toast.makeText(context,"거래내역 추가 실패 , ${response.message}" , Toast.LENGTH_LONG).show()
-                Log.d("psncoinaddtradefailure", "거래내역 추가 실패, ${response}")
             }
         }
     }

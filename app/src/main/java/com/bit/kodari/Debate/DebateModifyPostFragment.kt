@@ -42,7 +42,6 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
     override fun initAfterBinding() {
         getPostInfo()                //게시글 Index가져오기
         setListener()
-        Log.d("modifyPost" , "postIdx : ${postIdx}")
     }
 
     //작성되어 있는 게시글 정보 가져오기
@@ -74,10 +73,10 @@ class DebateModifyPostFragment(var coinName :String , var coinIdx: Int) : BaseFr
 
     fun setListener(){
         binding.modifyCompleteBtnTv.setOnClickListener {
+            showLoadingDialog(requireContext())
             val debateModifyRequest = DebateModifyRequest(binding.modifyContentEt.text.toString())
             val debateService = DebateService()
             debateService.setDebateModifyPostView(this)
-            showLoadingDialog(requireContext())
             debateService.modifyPost(postIdx , debateModifyRequest)
         }
 
