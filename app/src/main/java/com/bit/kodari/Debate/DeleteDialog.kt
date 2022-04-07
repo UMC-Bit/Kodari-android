@@ -1,15 +1,13 @@
 package com.bit.kodari.Debate
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.bit.kodari.Debate.PostData.DebateDeletePostResponse
@@ -29,6 +27,8 @@ class DeleteDialog: DialogFragment() , DebateDeletePostView{
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogDeleteBinding.inflate(inflater,container,false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         if(requireArguments().containsKey("postIdx")){
             postIdx = requireArguments().getInt("postIdx")
         }

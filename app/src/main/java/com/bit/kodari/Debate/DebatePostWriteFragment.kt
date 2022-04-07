@@ -53,6 +53,7 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
 
     //초기 기본 셋팅 값들 설정
     fun setInit(){
+        showLoadingDialog(requireContext())
         //인스타그램처럼 보내기 , 자동 개행 기능 부여
         binding.postWriteContentEt.imeOptions = EditorInfo.IME_ACTION_SEND
         binding.postWriteContentEt.setRawInputType(InputType.TYPE_CLASS_TEXT)
@@ -61,7 +62,6 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
         //유저 Index로 유저 정보 얻어와야함.     ->그래야지 셋팅 가능 , 닉네임 프로필 사진 등 얻어오는 과정.
         val debateService = DebateService()
         debateService.setDebatePostWriteVIew(this)
-        showLoadingDialog(requireContext())
         debateService.getUserInfo()
     }
 
@@ -90,11 +90,10 @@ class DebatePostWriteFragment : BaseFragment<FragmentDebatePostWriteBinding>(Fra
 
         binding.postWriteCompleteBtnTv.setOnClickListener {
             //게시글 올리기 API 활성화
+            showLoadingDialog(requireContext())
             var post = DebateWritePostRequest(coinIdx, getUserIdx(),binding.postWriteContentEt.text.toString())
-            Log.d("post" , "${coinIdx} , ${getUserIdx()} ,${binding.postWriteContentEt.text.toString()} ")
             val debateService = DebateService()
             debateService.setDebatePostWriteVIew(this)
-            showLoadingDialog(requireContext())
             debateService.writePost(post)
        }
 

@@ -1,9 +1,13 @@
 package com.bit.kodari.Profile
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.bit.kodari.Config.BaseFragment
 import com.bit.kodari.Login.LoginActivity
@@ -26,13 +30,12 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
 
     override fun initAfterBinding() {
         Log.d("initAfterBinding", "실행")
+        showLoadingDialog(requireContext())
         val profileService = ProfileService()
         profileService.setProfileMainView(this)
-        showLoadingDialog(requireContext())
         profileService.getProfile(getUserIdx())
 
         setListener()
-
     }
 
     fun setListener(){
@@ -94,7 +97,6 @@ class ProfileMainFragment: BaseFragment<FragmentProfileMainBinding>(FragmentProf
         imgUrl = response.result[0].profileImgUrl
         binding.profileMainNameTv.text = nickName
         binding.profileMainEmailTv.text = email
-        Log.d("getprofile" , "닉네임 : ${nickName} , 이메일 : ${email}")
         Glide.with(binding.profileMainImageIv)
             .load(response.result[0].profileImgUrl)
             .centerCrop()

@@ -37,6 +37,7 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
     }
 
     override fun initAfterBinding() {
+        showLoadingDialog(requireContext())
         getCoinName()       //이름 가져오기
         getCoinIndex()      //코인 인덱스 가져오기
         //가져온 이름으로 API 호출 밑 View 셋팅
@@ -45,7 +46,6 @@ class DebateCoinPostFragment : BaseFragment<FragmentDebateCoinPostBinding>(Fragm
         //API 호출
         val debateService = DebateService()
         debateService.setDebateCoinPostView(this)
-        showLoadingDialog(requireContext())
         debateService.getCoinPost(coinName) //코인 별 포스트 검색
     }
 
