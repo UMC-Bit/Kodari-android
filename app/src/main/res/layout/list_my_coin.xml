@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="85dp" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <TextView
         android:id="@+id/my_now_price_tv"
@@ -60,6 +60,7 @@
         android:textColor="@color/black"
         android:textSize="10sp"
         android:gravity="center"
+        android:layout_marginStart="10dp"
         app:layout_constraintEnd_toStartOf="@id/myProfit_percentTv"
         app:layout_constraintTop_toTopOf="@id/my_coin_iv"
         app:layout_constraintBottom_toBottomOf="@id/my_coin_iv"
