@@ -130,7 +130,6 @@
                         android:layout_height="26dp"
                         android:background="#FFF7E7"
                         android:drawablePadding="6dp"
-                        android:hint="전일 종가로 무조건 팔기 (흔들리지 않고)"
                         android:inputType="text"
                         android:textSize="10sp"
                         android:gravity="center">
