@@ -86,6 +86,7 @@ class BithumbWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
     }
     // symbol -> 빗썸 symbols 변환
     private fun getCodes(): String {
+
         val sb = StringBuilder()
         coinSymbol.forEach { it ->
             sb.append("\"")
@@ -93,7 +94,8 @@ class BithumbWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListen
             sb.append("_KRW")
             sb.append("\",")
         }
-        sb.deleteCharAt(sb.length - 1) // "," 제거
+        if(sb.length > 0)
+            sb.deleteCharAt(sb.length - 1) // "," 제거
         return sb.toString()
     }
 }
