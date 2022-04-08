@@ -313,6 +313,8 @@ class DebateMineFragment(val flag:Int , var coinName:String ="") : BaseFragment<
         binding.mineLikeNumTv.text = post.like.toString()
         binding.mineNoLikeNumTv.text = post.dislike.toString()
         binding.mineCoinSymbolTv.text = post.symbol
+        binding.mineTimeTv.text = post.time
+        Log.d("tiem" ,"${post.time}")
         if(!post.checkWriter){                                  //체크 writer가 false 면 버튼 안보이게해야함
             binding.mineOutlineTV.visibility = View.GONE
             binding.mineModifyTv.visibility = View.GONE
