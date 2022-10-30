@@ -72,7 +72,7 @@ class RepresentativeCoinManagementFragment(val marketIdx:Int) : BaseFragment<Fra
         deleteDialog()
         setListener()
         getRptCoins()
-
+        //getRptCoins()에서 시세 불러오던데 ViewModel을 미리 선언해야하지 않앗을까?
         // ViewModel 적용
         viewModelFactory = CoinViewModelFactory(null, coinList)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)

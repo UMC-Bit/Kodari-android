@@ -58,7 +58,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 if(getEmail() == null || getPw() == null){          //저장된 아이디와 패스워드가 없으면
                     startNextActivity(IntroActivity::class.java)
                     finish()
-                } else if(getEmail() != null && getPw() != null){                                             //로그인 정보가 있으면
+                } else if(getEmail() != null && getPw() != null){   //로그인 정보가 있으면
                     val loginInfo = LogInInfo(getEmail()!! , getPw()!!)
                     val logInService = LogInService()
                     logInService.setLogInView(this)

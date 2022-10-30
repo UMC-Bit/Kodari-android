@@ -105,8 +105,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         usdService.setUsdView(this)
         usdService.getUsdExchangeRate()
         // 라이브 데이터 뷰 모델 세팅
-        viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)
+        viewModelFactory = CoinViewModelFactory(userCoinList, representCoinList)    //사실 굳이 안해도됨 -> 해당 하는 ViewModel 생성을 위해 선언
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CoinViewModel::class.java)    //해당하는 ViewModel 선언
         // 업비트, 바이낸스 서비스 세팅
         coinService = CoinService()
         coinService.setViewModel(viewModel)
@@ -366,7 +366,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             val temp: ArrayList<String> = ArrayList()
             for (cur in profitList) {
-                val date = cur.createAt.replace("-", "/")
+                val date = cur.createAt.replace("-", "/")   //언제 만들어졌는지 저장
                 temp.add(date)
             }
             Log.d("setChart", "${profitList.size}")
@@ -380,8 +380,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 resources.getColor(R.color.chartTextColor)//top line
             binding.homeChartLc.xAxis.textColor = resources.getColor(R.color.chartTextColor)
             binding.homeChartLc.xAxis.position = XAxis.XAxisPosition.BOTTOM
-            binding.homeChartLc.xAxis.granularity =
-                1f                      //간격 설정하니까 해결 됨 -> why?
+            binding.homeChartLc.xAxis.granularity = 1f                      //간격 설정하니까 해결 됨 -> why?
             binding.homeChartLc.axisLeft.axisLineColor =
                 resources.getColor(R.color.chartTextColor)//left line
             binding.homeChartLc.axisLeft.textColor = resources.getColor(R.color.chartTextColor)
@@ -392,10 +391,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.homeChartLc.isAutoScaleMinMaxEnabled = false
             binding.homeChartLc.setBackgroundDrawable(resources.getDrawable(R.drawable.chart_background))
             binding.homeChartLc.legend.isEnabled = false
-            binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)
-            binding.homeChartLc.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            binding.homeChartLc.xAxis.valueFormatter = IndexAxisValueFormatter(temp)    //ValueFormatter에 새로운 형식 등록
+            binding.homeChartLc.setLayerType(View.LAYER_TYPE_SOFTWARE, null);   //굴곡지게
             binding.homeChartLc.getRenderer().getPaintRender()
-                .setShadowLayer(3f, 5f, 3f, Color.GRAY);
+                .setShadowLayer(3f, 5f, 3f, Color.GRAY);    //그림자
 
             binding.homeChartLc.invalidate()
         }
@@ -405,7 +404,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //7일치만 먼저 불러와보자 .
     @SuppressLint("UseCompatLoadingForDrawables")
     fun setChartDummyData(profitList: ArrayList<GetProfitResult>): LineData {
-        val values: ArrayList<Entry> = ArrayList()
+        val values: ArrayList<Entry> = ArrayList()  //데이터 셋
 
         //소득이 체크되어있을떄
         if (binding.homeIncomeOnTv.visibility == View.VISIBLE) {
@@ -516,7 +515,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     }
-
+    //웹 소켓에서 받아온 후
     // 업비트 시세 조회 API 호출 성공
     override fun marketPriceSuccess(marketCoinPriceMap: HashMap<String, Double>) {
         if (requireActivity() != null && checkView) {

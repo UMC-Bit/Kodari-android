@@ -16,7 +16,7 @@ fun saveJwt(jwtToken: String) {
 
 fun saveAutoLogin(autoLogin: Boolean){
     val editor = mSharedPreferences.edit()
-    editor.putBoolean(AUTO_LOGIN , autoLogin)
+    editor.putBoolean(AUTO_LOGIN , autoLogin)       //autoLogin이라는 이름으로 자동로그인 사용 여부 체크
 
     editor.apply()
 }

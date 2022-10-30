@@ -31,7 +31,7 @@ class UpbitWebSocketListener(coinSymbolSet: HashSet<String>) : WebSocketListener
     //onMessage로 응답 받고 HomeFragment로 넘김
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         this.webSocket = webSocket
-        if(checkClose){
+        if(checkClose){ //close에서 true로 하면 아래에서 닫음
             Log.d("Upbit_Socket","Closing")
             webSocket?.close(NORMAL_CLOSURE_STATUS, null)
             webSocket?.cancel()

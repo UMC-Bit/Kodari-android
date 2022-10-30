@@ -120,7 +120,6 @@ class PortfolioManagementFragment(val marketIdx : Int) :
                 //var addCoin = PsnCoinAddInfo(getUserIdx(), cur.coinIdx,0,cur.priceAvg ,cur.amount)  //accountIdx는 다시 추가해야함
                 addCoinList.add(addCoin)
             }
-            Log.d("버튼 클릭", "${psnCoinList.size}")
             val portfolioService = PortfolioService()
             portfolioService.setPortManagementView(this)
             showLoadingDialog(requireContext())

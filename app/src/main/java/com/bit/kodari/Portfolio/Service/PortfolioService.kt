@@ -81,6 +81,8 @@ class PortfolioService {
             override fun onFailure(call: Call<PortfolioResponse>, t: Throwable) {
                 Log.d("portIdx", "불러오기 실패")
                 Log.d("portIdxTTTTTT" , t.toString())
+
+                
             }
 
         })
