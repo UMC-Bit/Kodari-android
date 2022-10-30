@@ -82,7 +82,7 @@ class PortfolioService {
                 Log.d("portIdx", "불러오기 실패")
                 Log.d("portIdxTTTTTT" , t.toString())
 
-                
+
             }
 
         })
